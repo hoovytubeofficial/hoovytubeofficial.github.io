@@ -1,12 +1,12 @@
 {
-  "version": "v260806.01 11:13p",
-  "release": 1,
-  "sha": "1137f3d",
-  "fullSha": "1137f3d4f79ea11dc97a0de29db3b5790bfd8b51",
+  "version": "v260806.02 11:57p",
+  "release": 2,
+  "sha": "7910e38",
+  "fullSha": "7910e38019dde1de9b3c44bd776c5f7ed9f15366",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T00:59:18+02:00",
-  "commits": [{"sha":"1137f3d","message":"Re-theme site to cream + slate-blue + steel-grey palette","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T01:57:21+02:00",
+  "commits": [{"sha":"7910e38","message":"Add welcome email + honeypot to newsletter-signup function","author":"HoovyTube"}]
 }
