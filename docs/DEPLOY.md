@@ -1,8 +1,12 @@
 # Deployment Workflow
 
-## Cloudflare Pages (Static Site)
+> **STATUS: Hosting not configured yet.** Cloudflare Pages was intentionally skipped during
+> setup (no custom domain yet). Pushing to `main` runs the version-bump CI but does **not**
+> deploy a live site. When ready, follow "Cloudflare Pages Setup" below (or pick another host).
 
-Deploys from `main` branch via GitHub Actions → Cloudflare Pages. Push to main and it's live.
+## Cloudflare Pages (Static Site) — PLANNED, not yet connected
+
+Once connected, deploys from `main` branch via GitHub Actions → Cloudflare Pages.
 
 ### Push Workflow
 ```bash
@@ -41,13 +45,11 @@ Every pull request automatically gets a preview deployment URL:
 
 | Environment | URL |
 |---|---|
-| Custom domain | https://YOUR_DOMAIN/ |
-| Cloudflare Pages | https://YOUR_PROJECT.pages.dev/ |
-| Resident portal | https://YOUR_DOMAIN/residents/ |
-| Admin | https://YOUR_DOMAIN/spaces/admin/manage.html |
-| Public spaces | https://YOUR_DOMAIN/spaces/ |
-| Payments | https://YOUR_DOMAIN/pay/ |
-| Repository | https://github.com/USERNAME/REPO |
+| Live site | _not deployed yet — no host configured_ |
+| Admin | `/spaces/admin/manage.html` (once hosted; login-gated) |
+| Contact / newsletter | `/contact/` |
+| Repository | https://github.com/hoovytubeofficial/hoovytubewebsite |
+| Supabase project | https://supabase.com/dashboard/project/iglbfojatowaxbhjubvz |
 
 ## Tailwind CSS
 

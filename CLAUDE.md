@@ -1,34 +1,29 @@
 ## Project Identity Check
 
-This is **alpacapps-infra**. If the user mentions **finleg**, **portsie**, or **sponic** and the request doesn't match this project, **STOP** and warn:
-> "You mentioned **{keyword}** but this session is in **alpacapps-infra**. Did you mean to run this in the other project?"
+This is **hoovytubewebsite** (HoovyTube). If the user mentions **finleg**, **portsie**, or **sponic** and the request doesn't match this project, **STOP** and warn:
+> "You mentioned **{keyword}** but this session is in **hoovytubewebsite**. Did you mean to run this in the other project?"
 
-# [Your Project Name] — Project Directives
+# HoovyTube — Project Directives
+
+Public portfolio + community + marketing site for the HoovyTube content creator.
+**No user accounts / no public registration.** Admin login exists for site management only.
+
+Enabled features: **core**, **email (Resend)**, **media galleries (Supabase Storage)**.
+Everything else (payments, smart-home, vehicles, maker-tools, SMS/voice, e-sign, AI) was pruned.
 
 > **On-demand docs — load when the task matches:**
-> - `docs/CREDENTIALS.md` — **load for:** SQL queries, deploying functions, SSH, API calls
+> - `docs/CREDENTIALS.md` — **load for:** SQL queries, deploying functions, API keys (gitignored)
 > - `docs/SCHEMA.md` — **load for:** writing queries, modifying tables, debugging data
-> - `docs/PATTERNS.md` — **load for:** writing UI code, Tailwind styling, code review, testing
-> - `docs/KEY-FILES.md` — **load for:** finding files, understanding project structure
+> - `docs/PATTERNS.md` — **load for:** writing UI code, Tailwind styling, code review
 > - `docs/DEPLOY.md` — **load for:** pushing, deploying, version questions
-> - `docs/INTEGRATIONS.md` — **load for:** external APIs, vendor setup, pricing
-> - `docs/CHANGELOG.md` — **load for:** understanding recent changes, migration context
-> - `docs/SECRETS-BITWARDEN.md` — **load for:** Bitwarden CLI, secrets management, vault organization, sharing credentials
-> - `docs/OPEN-BRAIN-SETUP.md` — **load for:** Open Brain session dashboard, AI memory, embeddings
-
-> **IMPORTANT: First-time setup!**
-> Run `/setup-alpacapps-infra` to set up the full infrastructure interactively.
-
-> **Upgrading from the template?**
-> Read `infra/infra-upgrade-guide.md` for step-by-step instructions to sync new features from
-> the alpacapps-infra template repo. Machine-readable feature index: `infra/updates.json`
+> - `docs/INTEGRATIONS.md` — **load for:** external APIs (Resend), vendor setup, pricing
 
 ## Mandatory Behaviors
 
 1. After code changes: end response with `vYYMMDD.NN H:MMa [model]` + affected URLs (read `version.json`)
-2. Push immediately — Cloudflare Pages deploys on push to main. See `docs/DEPLOY.md`
+2. Push to `main` — CI bumps the version. **Hosting/Cloudflare Pages is NOT configured yet**, so a push does not deploy a live site.
 3. CI bumps version — never bump locally
-4. Run SQL migrations directly — never ask the user to run SQL manually
+4. Run SQL migrations directly via `npx supabase db push` — never ask the user to run SQL manually
 
 ## Code Guards
 
@@ -36,12 +31,14 @@ This is **alpacapps-infra**. If the user mentions **finleg**, **portsie**, or **
 - No personal info in consumer/public views
 - `showToast()` not `alert()` in admin
 - `openLightbox(url)` for images
+- Media served from the public Supabase Storage `media` bucket via `shared/media-service.js`
 - Tailwind: use design tokens from `@theme` block (see `docs/PATTERNS.md`). Run `npm run css:build` after new classes.
 
 ## Quick Refs
 
-- **Tech:** Vanilla HTML/JS + Tailwind v4 | Supabase | Cloudflare Pages
-- **Live:** https://YOUR_PROJECT.pages.dev/ (or custom domain)
-- **Architecture:** Browser → Cloudflare Pages → Supabase (no server-side code)
-- **Template repo:** https://github.com/rsonnad/alpacapps-infra
-- **Upgrade guide:** `infra/infra-upgrade-guide.md`
+- **Tech:** Vanilla HTML/JS + Tailwind v4 | Supabase | (hosting TBD — Cloudflare Pages planned)
+- **Live:** _not deployed yet — no host configured_
+- **Supabase project ref:** `iglbfojatowaxbhjubvz`
+- **Architecture:** Browser → static site → Supabase (no server-side code)
+- **Repo:** https://github.com/hoovytubeofficial/hoovytubewebsite
+- **Supabase CLI:** installed as devDependency — invoke with `npx supabase ...`
