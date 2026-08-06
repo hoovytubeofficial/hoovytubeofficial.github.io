@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Liquid Chrome — Scroll-Driven Canvas</title>
+<meta name="description" content="A scroll-scrubbed canvas animation. 121 frames, preloaded and painted to a canvas as you scroll." />
+<style>
+  :root {
+    --ink: #f4f7fb;
+    --dim: #8b95a6;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: auto; }
+  body {
+    background: #000;
+    color: var(--ink);
+    font-family: "Helvetica Neue", Helvetica, Arial, "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* ---- Fixed stage: canvas fills the viewport and stays put ---- */
+  #stage {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    background: #000;
+  }
+  #frameCanvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  /* subtle vignette so text always reads */
+  #stage::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 80% at 50% 50%, transparent 55%, rgba(0,0,0,0.55) 100%);
+  }
+
+  /* ---- Scroll spacer: gives the scrub its length ---- */
+  #scroller { position: relative; z-index: 2; }
+  .panel {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 8vw;
+    pointer-events: none;
+  }
+  .beat {
+    max-width: 720px;
+    text-align: center;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .05s linear;
+    will-change: opacity, transform;
+  }
+
+  .eyebrow {
+    font-size: clamp(11px, 1.4vw, 13px);
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 22px;
+  }
+  h1 {
+    font-size: clamp(48px, 12vw, 150px);
+    line-height: 0.92;
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    background: linear-gradient(178deg, #ffffff 0%, #d6deea 40%, #98a3b6 58%, #f2f6fb 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 1px 40px rgba(150,190,255,0.15);
+  }
+  .lead {
+    font-size: clamp(20px, 3.4vw, 40px);
+    line-height: 1.18;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .sub {
+    margin-top: 18px;
+    font-size: clamp(14px, 1.9vw, 19px);
+    color: var(--dim);
+    font-weight: 400;
+    line-height: 1.5;
+  }
+  .mono {
+    font-family: "SFMono-Regular", ui-monospace, "Cascadia Code", Consolas, monospace;
+    font-size: clamp(12px, 1.6vw, 15px);
+    color: #6fb4ff;
+    letter-spacing: 0.02em;
+  }
+
+  /* scroll hint */
+  #hint {
+    position: fixed;
+    left: 50%;
+    bottom: 30px;
+    transform: translateX(-50%);
+    z-index: 3;
+    color: var(--dim);
+    font-size: 11px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transition: opacity .4s ease;
+    pointer-events: none;
+  }
+  #hint .arrow {
+    width: 1px; height: 42px;
+    background: linear-gradient(180deg, transparent, var(--dim));
+    animation: drop 1.8s ease-in-out infinite;
+  }
+  @keyframes drop {
+    0%, 100% { transform: scaleY(0.4); opacity: .3; transform-origin: top; }
+    50%      { transform: scaleY(1);   opacity: 1;  transform-origin: top; }
+  }
+
+  /* progress rail */
+  #rail {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    z-index: 4;
+    background: linear-gradient(90deg, #4d8fff, #bcd4ff);
+    box-shadow: 0 0 14px rgba(110,180,255,0.7);
+  }
+
+  /* ---- Loader ---- */
+  #loader {
+    position: fixed;
+    inset: 0;
+    z-index: 10;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 26px;
+    transition: opacity .6s ease;
+  }
+  #loader .lbl {
+    font-size: 11px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--dim);
+  }
+  #bar {
+    width: min(240px, 60vw);
+    height: 2px;
+    background: rgba(255,255,255,0.12);
+    overflow: hidden;
+  }
+  #barFill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #4d8fff, #eaf2ff);
+    transition: width .15s ease;
+  }
+  #pct { font-family: ui-monospace, monospace; font-size: 12px; color: #6fb4ff; }
+  .hidden { opacity: 0 !important; pointer-events: none; }
+</style>
+</head>
+<body>
+
+  <div id="stage">
+    <canvas id="frameCanvas"></canvas>
+  </div>
+
+  <div id="rail"></div>
+
+  <div id="hint">
+    <span>Scroll</span>
+    <span class="arrow"></span>
+  </div>
+
+  <!-- Scrollytelling beats -->
+  <div id="scroller">
+    <section class="panel">
+      <div class="beat" data-at="0.04" data-window="0.14">
+        <div class="eyebrow">Scroll-driven canvas</div>
+        <h1>LIQUID<br>CHROME</h1>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="beat" data-at="0.32" data-window="0.12">
+        <p class="lead">The animation doesn't play.<br>You play it.</p>
+        <p class="sub">Every pixel you see is a single frame, painted to a &lt;canvas&gt; the instant your scroll position asks for it.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="beat" data-at="0.56" data-window="0.12">
+        <p class="lead">No video seeking.<br>No jank.</p>
+        <p class="sub">121 frames are decoded and held in memory up front, so scrubbing is instant in either direction.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="beat" data-at="0.80" data-window="0.12">
+        <p class="mono">frame = round(progress &times; 120)</p>
+        <p class="sub">That one line — mapped through a little smoothing — is the whole trick.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="beat" data-at="0.965" data-window="0.09">
+        <div class="eyebrow">HoovyTube · build test</div>
+        <p class="lead">Shipped through GitHub.</p>
+        <p class="sub">Static HTML + canvas, served from the repo. Scroll back up to run it in reverse.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Loader -->
+  <div id="loader">
+    <div class="lbl">Loading frames</div>
+    <div id="bar"><div id="barFill"></div></div>
+    <div id="pct">0%</div>
+  </div>
+
+<script>
+(function () {
+  var TOTAL = 121;
+  var PAD = 4;
+  var pathFor = function (i) {
+    var n = String(i).padStart(PAD, "0");
+    return "frames/frame_" + n + ".jpg";
+  };
+
+  var canvas = document.getElementById("frameCanvas");
+  var ctx = canvas.getContext("2d", { alpha: false });
+  var images = new Array(TOTAL);
+  var loaded = 0;
+
+  var loader = document.getElementById("loader");
+  var barFill = document.getElementById("barFill");
+  var pct = document.getElementById("pct");
+  var rail = document.getElementById("rail");
+  var hint = document.getElementById("hint");
+  var beats = Array.prototype.slice.call(document.querySelectorAll(".beat"));
+
+  var dpr = Math.min(window.devicePixelRatio || 1, 2);
+  var vw = 0, vh = 0;
+
+  function resize() {
+    vw = window.innerWidth;
+    vh = window.innerHeight;
+    canvas.width = Math.round(vw * dpr);
+    canvas.height = Math.round(vh * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    drawFrame(current, true);
+  }
+
+  // cover-fit draw (like background-size: cover)
+  function drawFrame(idx, force) {
+    var i = Math.max(0, Math.min(TOTAL - 1, Math.round(idx)));
+    var img = images[i];
+    if (!img || !img.complete || !img.naturalWidth) return;
+    if (!force && i === lastDrawn) return;
+    lastDrawn = i;
+
+    var iw = img.naturalWidth, ih = img.naturalHeight;
+    var scale = Math.max(vw / iw, vh / ih);
+    var dw = iw * scale, dh = ih * scale;
+    var dx = (vw - dw) / 2, dy = (vh - dh) / 2;
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, vw, vh);
+    ctx.drawImage(img, dx, dy, dw, dh);
+  }
+
+  // ----- scroll → frame with smoothing -----
+  var current = 0, target = 0, lastDrawn = -1;
+  var ticking = false;
+
+  function scrollProgress() {
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    if (max <= 0) return 0;
+    return Math.min(1, Math.max(0, window.scrollY / max));
+  }
+
+  function updateOverlays(p) {
+    rail.style.width = (p * 100).toFixed(2) + "%";
+    hint.style.opacity = p > 0.03 ? "0" : "1";
+    for (var k = 0; k < beats.length; k++) {
+      var b = beats[k];
+      var at = parseFloat(b.getAttribute("data-at"));
+      var win = parseFloat(b.getAttribute("data-window")) || 0.12;
+      var d = Math.abs(p - at);
+      var o = d > win ? 0 : 1 - (d / win);
+      o = o * o * (3 - 2 * o); // smoothstep
+      b.style.opacity = o.toFixed(3);
+      b.style.transform = "translateY(" + ((1 - o) * 24).toFixed(1) + "px)";
+    }
+  }
+
+  function onScroll() {
+    var p = scrollProgress();
+    target = p * (TOTAL - 1);
+    updateOverlays(p);
+    if (!ticking) { ticking = true; requestAnimationFrame(loop); }
+  }
+
+  function loop() {
+    // ease current toward target for silky scrubbing
+    current += (target - current) * 0.18;
+    if (Math.abs(target - current) < 0.05) current = target;
+    drawFrame(current, false);
+    if (Math.abs(target - current) > 0.01) {
+      requestAnimationFrame(loop);
+    } else {
+      ticking = false;
+    }
+  }
+
+  // ----- preload -----
+  function bumpLoader() {
+    var frac = loaded / TOTAL;
+    barFill.style.width = (frac * 100).toFixed(0) + "%";
+    pct.textContent = Math.round(frac * 100) + "%";
+  }
+
+  function start() {
+    resize();
+    onScroll();
+    loader.classList.add("hidden");
+    setTimeout(function () { loader.style.display = "none"; }, 700);
+  }
+
+  function preload() {
+    // Concurrency-limited loader: keeps a few requests in flight at a time
+    // instead of firing all 121 at once (kinder to servers, avoids drops).
+    var CONCURRENCY = 6;
+    var next = 1;
+    var started = false;
+
+    function pump() {
+      while (next <= TOTAL && inFlight < CONCURRENCY) {
+        loadOne(next++);
+      }
+    }
+
+    var inFlight = 0;
+    function loadOne(i, attempt) {
+      attempt = attempt || 0;
+      inFlight++;
+      var img = new Image();
+      img.onload = function () {
+        inFlight--;
+        loaded++;
+        bumpLoader();
+        if (i === 1) { resize(); }             // paint frame 1 asap
+        // start once the opening frames are ready; rest streams in behind
+        if (!started && loaded >= Math.min(16, TOTAL)) { started = true; start(); }
+        pump();
+      };
+      img.onerror = function () {
+        inFlight--;
+        if (attempt < 3) {                     // retry transient failures
+          setTimeout(function () { loadOne(i, attempt + 1); pump(); }, 200 * (attempt + 1));
+          return;
+        }
+        loaded++;                              // give up on this one, keep moving
+        bumpLoader();
+        if (!started && loaded >= Math.min(16, TOTAL)) { started = true; start(); }
+        pump();
+      };
+      img.src = pathFor(i);
+      images[i - 1] = img;
+    }
+
+    pump();
+  }
+
+  window.addEventListener("resize", resize, { passive: true });
+  window.addEventListener("scroll", onScroll, { passive: true });
+  preload();
+})();
+</script>
+</body>
+</html>
