@@ -28,7 +28,7 @@ const CONFIG = {
 
   // Bucket names
   buckets: {
-    images: 'housephotos',
+    images: 'media',
     // videos: 'videos', // Future: GCS bucket
   },
 
