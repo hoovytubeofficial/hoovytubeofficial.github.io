@@ -1,56 +1,42 @@
 # Deployment Workflow
 
-> **STATUS: Hosting not configured yet.** Cloudflare Pages was intentionally skipped during
-> setup (no custom domain yet). Pushing to `main` runs the version-bump CI but does **not**
-> deploy a live site. When ready, follow "Cloudflare Pages Setup" below (or pick another host).
+## Hosting: GitHub Pages (org-root)
 
-## Cloudflare Pages (Static Site) — PLANNED, not yet connected
+The site is served by **GitHub Pages** from the repo root of
+`hoovytubeofficial/hoovytubeofficial.github.io`, deploying from the `main` branch,
+root folder (`/`). No build step is needed — `styles/tailwind.out.css` is committed.
 
-Once connected, deploys from `main` branch via GitHub Actions → Cloudflare Pages.
+- **Live URL:** https://hoovytubeofficial.github.io/
+- Absolute `/…` asset paths work because the site is served at the domain root
+  (this is why an org-root Pages repo was chosen over a project page).
+- `.nojekyll` at the repo root disables Jekyll so files are served as-is.
 
-### Push Workflow
+### Push workflow
 ```bash
 git add -A && git commit -m "message"
-./scripts/push-main.sh   # pull --rebase, then push
+git pull --rebase origin main && git push origin main
 ```
+A push to `main` republishes the site within ~1 minute.
 
-### Post-Push Verification
-1. Wait ~60s for CI to run (Tailwind build + Cloudflare Pages deploy)
-2. `git pull --rebase origin main`
-3. Read `version.json` — report version
+### First-time Pages setup (one-time, GitHub UI)
+1. Repo renamed to `hoovytubeofficial.github.io` (org-root site).
+2. Settings → Pages → Build and deployment → Source: **Deploy from a branch** →
+   Branch: `main` / `/ (root)` → Save.
+3. Wait ~1 min, then load https://hoovytubeofficial.github.io/.
 
-### Version Format
-`vYYMMDD.NN H:MMa` — date + daily counter + Austin time.
-CI bumps automatically via GitHub Action on every push. **Never bump locally.**
-
-### Post-Push Output Format
-- **Main branch:** "Deployed to main — ..." with test URLs
-- **Feature branch:** "Pushed to branch `name` (not yet deployed)" with changed files list
-
-### Cloudflare Pages Setup
-
-1. Create a Cloudflare Pages project connected to your GitHub repo
-2. Build command: `npm run css:build`
-3. Build output directory: `.` (root — the entire repo is the site)
-4. Add GitHub secrets:
-   - `CLOUDFLARE_API_TOKEN` — API token with Pages edit permissions
-   - `CLOUDFLARE_ACCOUNT_ID` — Your Cloudflare account ID
-5. Set GitHub variable `CLOUDFLARE_PAGES_PROJECT` to your project name
-
-### Preview Deployments
-Every pull request automatically gets a preview deployment URL:
-`https://<branch>.<project>.pages.dev`
+### Version
+`version.json` is stamped by a GitHub Action (`.github/workflows/bump-version-on-push.yml`)
+if Actions are enabled. Never bump locally.
 
 ## Live URLs
 
 | Environment | URL |
 |---|---|
-| Live site | _not deployed yet — no host configured_ |
-| Admin | `/spaces/admin/manage.html` (once hosted; login-gated) |
-| Contact / newsletter | `/contact/` |
-| Repository | https://github.com/hoovytubeofficial/hoovytubewebsite |
+| Live site | https://hoovytubeofficial.github.io/ |
+| Contact / newsletter | https://hoovytubeofficial.github.io/contact/ |
+| Admin (login-gated) | https://hoovytubeofficial.github.io/spaces/admin/manage.html |
+| Repository | https://github.com/hoovytubeofficial/hoovytubeofficial.github.io |
 | Supabase project | https://supabase.com/dashboard/project/iglbfojatowaxbhjubvz |
 
 ## Tailwind CSS
-
 After adding new Tailwind classes, run: `npm run css:build`
