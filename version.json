@@ -1,12 +1,12 @@
 {
-  "version": "v260505.01 8:26p",
+  "version": "v260806.01 11:13p",
   "release": 1,
-  "sha": "e2bf42b",
-  "fullSha": "e2bf42b2b63c0e6813cae9a04da5fe6a6257b366",
-  "actor": "rsonnad",
+  "sha": "1137f3d",
+  "fullSha": "1137f3d4f79ea11dc97a0de29db3b5790bfd8b51",
+  "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmeorf1",
-  "pushedAt": "2026-05-05T15:25:54-05:00",
-  "commits": [{"sha":"e2bf42b","message":"chore: relicense from AGPL-3.0 to MIT","author":"Rahul"}]
+  "machine": "runnervmvrwv9",
+  "pushedAt": "2026-08-07T00:59:18+02:00",
+  "commits": [{"sha":"1137f3d","message":"Re-theme site to cream + slate-blue + steel-grey palette","author":"HoovyTube"}]
 }
