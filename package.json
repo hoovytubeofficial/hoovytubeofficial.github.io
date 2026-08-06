@@ -10,11 +10,17 @@
     "css:build": "tailwindcss -i styles/tailwind.css -o styles/tailwind.out.css --minify",
     "css:watch": "tailwindcss -i styles/tailwind.css -o styles/tailwind.out.css --watch"
   },
-  "keywords": ["property-management", "supabase", "tailwind", "github-pages"],
+  "keywords": [
+    "property-management",
+    "supabase",
+    "tailwind",
+    "github-pages"
+  ],
   "author": "",
   "license": "MIT",
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.18",
+    "supabase": "^2.111.0",
     "tailwindcss": "^4.1.18"
   }
 }
