@@ -21,7 +21,7 @@ Everything else (payments, smart-home, vehicles, maker-tools, SMS/voice, e-sign,
 ## Mandatory Behaviors
 
 1. After code changes: end response with `vYYMMDD.NN H:MMa [model]` + affected URLs (read `version.json`)
-2. Push to `main` — **GitHub Pages** serves the repo root at https://hoovytubeofficial.github.io/ (deploy from `main` / root). A push republishes the site.
+2. Push to `main` — **GitHub Pages** serves the repo root at https://hoovytube.com/ (custom domain; deploy from `main` / root). A push republishes the site. Keep the root `CNAME` file (`hoovytube.com`) intact.
 3. CI bumps version — never bump locally
 4. Run SQL migrations directly via `npx supabase db push` — never ask the user to run SQL manually
 
@@ -36,8 +36,8 @@ Everything else (payments, smart-home, vehicles, maker-tools, SMS/voice, e-sign,
 
 ## Quick Refs
 
-- **Tech:** Vanilla HTML/JS + Tailwind v4 | Supabase | GitHub Pages (org-root)
-- **Live:** https://hoovytubeofficial.github.io/
+- **Tech:** Vanilla HTML/JS + Tailwind v4 | Supabase | GitHub Pages (org-root) + custom domain
+- **Live:** https://hoovytube.com/
 - **Supabase project ref:** `iglbfojatowaxbhjubvz`
 - **Architecture:** Browser → static site → Supabase (no server-side code)
 - **Repo:** https://github.com/hoovytubeofficial/hoovytubewebsite
