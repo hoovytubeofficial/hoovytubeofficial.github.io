@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="/styles/site.css">
   <link rel="stylesheet" href="/styles/tailwind.out.css">
   <style>
-    :root { --ht-accent: #d4883a; --ht-bg: #14110f; --ht-card: #1f1b18; --ht-text: #f3ede7; --ht-muted: #b8ada3; --ht-line: #35302b; }
+    :root { --ht-accent: #3f6288; --ht-accent-ink: #f4ebd1; --ht-bg: #cbd4dd; --ht-card: #f7f3e6; --ht-text: #2b4056; --ht-muted: #5d7083; --ht-line: #c3ccd6; --ht-input: #fffdf5; }
     * { box-sizing: border-box; }
     body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--ht-bg); color: var(--ht-text); line-height: 1.55; }
     .wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
@@ -22,12 +22,12 @@
     .card { background: var(--ht-card); border: 1px solid var(--ht-line); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.75rem; }
     .card h2 { margin: 0 0 1rem; font-size: 1.2rem; }
     label { display: block; font-size: .85rem; color: var(--ht-muted); margin: 0 0 .3rem; }
-    input, textarea { width: 100%; padding: .7rem .8rem; margin-bottom: 1rem; background: #17130f; border: 1px solid var(--ht-line); border-radius: 8px; color: var(--ht-text); font: inherit; }
+    input, textarea { width: 100%; padding: .7rem .8rem; margin-bottom: 1rem; background: var(--ht-input); border: 1px solid var(--ht-line); border-radius: 8px; color: var(--ht-text); font: inherit; }
     input:focus, textarea:focus { outline: none; border-color: var(--ht-accent); }
     textarea { min-height: 130px; resize: vertical; }
     .row { display: flex; gap: 1rem; }
     .row > div { flex: 1; }
-    button { background: var(--ht-accent); color: #1a1206; border: none; border-radius: 8px; padding: .8rem 1.4rem; font-weight: 600; font-size: 1rem; cursor: pointer; }
+    button { background: var(--ht-accent); color: var(--ht-accent-ink); border: none; border-radius: 8px; padding: .8rem 1.4rem; font-weight: 600; font-size: 1rem; cursor: pointer; }
     button:disabled { opacity: .6; cursor: default; }
     .msg { font-size: .9rem; margin-top: .5rem; min-height: 1.2em; }
     .msg.ok { color: #6fcf7f; }
