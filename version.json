@@ -1,12 +1,12 @@
 {
-  "version": "v260807.19 6:04p",
-  "release": 19,
-  "sha": "525e5f9",
-  "fullSha": "525e5f93808248bed6ef4683605190050ef18d59",
+  "version": "v260807.20 6:13p",
+  "release": 20,
+  "sha": "6130a9d",
+  "fullSha": "6130a9db89829176754db4461af6c7d5ad737fb9",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:04:29+02:00",
-  "commits": [{"sha":"525e5f9","message":"Products: scroll-driven 3D orbit, green-screen tier cutouts; homepage videos hover-to-play","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:13:26+02:00",
+  "commits": [{"sha":"6130a9d","message":"Learn: inline expanding list (no modal); Products orbit: out of the box, bigger, wheel-spin","author":"HoovyTube"}]
 }
