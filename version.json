@@ -1,12 +1,12 @@
 {
-  "version": "v260807.17 5:27p",
-  "release": 17,
-  "sha": "2f0d04a",
-  "fullSha": "2f0d04afe96d4bce1904e87fdf1ac81c54c9aefd",
+  "version": "v260807.18 5:49p",
+  "release": 18,
+  "sha": "5c70385",
+  "fullSha": "5c70385b2b05930c0b9823fcd5b93de4cb2a3b28",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T19:27:14+02:00",
-  "commits": [{"sha":"2f0d04a","message":"Redesign pass 2: full-bleed hero, feature sections, sharp corners, ghost dock, Products hero","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T19:48:51+02:00",
+  "commits": [{"sha":"5c70385","message":"Redesign pass 3: nav search, media features, Products full-bleed hero, centered titles","author":"HoovyTube"}]
 }
