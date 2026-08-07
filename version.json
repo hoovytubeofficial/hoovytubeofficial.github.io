@@ -1,12 +1,12 @@
 {
-  "version": "v260807.10 3:31a",
-  "release": 10,
-  "sha": "cb5471d",
-  "fullSha": "cb5471d477f7dc751c5e3b9a56ff3c47661d5220",
+  "version": "v260807.11 3:51a",
+  "release": 11,
+  "sha": "b9763d1",
+  "fullSha": "b9763d14ac9b4d6b0e2409dc4e1844bd6acf70e7",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T05:31:29+02:00",
-  "commits": [{"sha":"cb5471d","message":"Dock to top + scroll progress; rebuild HoovyTools; gif in welcome","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T05:51:41+02:00",
+  "commits": [{"sha":"b9763d1","message":"Redesign welcome email (Gemini-style) + scroll-in reveal","author":"HoovyTube"}]
 }
