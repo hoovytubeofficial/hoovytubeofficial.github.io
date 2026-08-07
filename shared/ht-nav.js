@@ -13,8 +13,8 @@
   };
   var ITEMS = [
     { label: 'Home', href: '/', ic: 'home', match: ['/', '/index.html'] },
-    { label: 'Assets & Products', href: '/products/', ic: 'product', match: ['/products/', '/products/index.html'] },
-    { label: 'HoovyTools', href: '/hoovytools/', ic: 'tools', match: ['/hoovytools/', '/hoovytools/index.html'] },
+    { label: 'HoovyTools SFM', href: '/products/', ic: 'product', match: ['/products/', '/products/index.html'] },
+    { label: 'HoovyTools Blender', href: '/hoovytools/', ic: 'tools', match: ['/hoovytools/', '/hoovytools/index.html'] },
     { label: 'Learn SFM & Blender', href: '/learn/', ic: 'learn', match: ['/learn/', '/learn/index.html'] },
     { label: 'Contact', href: '/contact/', ic: 'contact', match: ['/contact/', '/contact/index.html'] }
   ];
@@ -84,8 +84,8 @@
   (function () {
     var SEARCH = [
       { t: 'Home', d: 'HoovyTube - animations, assets, tutorials', href: '/', k: 'home hoovytube start main' },
-      { t: 'Assets & Products', d: 'SFM particles, scenebuilds & animations', href: '/products/', k: 'assets products particles scenebuilds animations patreon steam workshop library packs tiers membership sfm' },
-      { t: 'HoovyTools', d: 'Blender add-on - import SFM sessions into Blender', href: '/hoovytools/', k: 'hoovytools blender addon add-on sfm importer session dmx download audio tool' },
+      { t: 'HoovyTools SFM', d: 'SFM particles, scenebuilds & animations', href: '/products/', k: 'assets products particles scenebuilds animations patreon steam workshop library packs tiers membership sfm hoovytools' },
+      { t: 'HoovyTools Blender', d: 'Blender addon: import SFM sessions into Blender', href: '/hoovytools/', k: 'hoovytools blender addon sfm to blender importer session dmx download audio tool transposition' },
       { t: 'Learn SFM & Blender', d: 'Tutorials, sorted by difficulty', href: '/learn/', k: 'learn tutorials sfm blender easy medium hard playlist guide howto beginner advanced' },
       { t: 'Contact', d: 'Get in touch', href: '/contact/', k: 'contact email message support hello' },
       { t: 'Newsletter', d: 'Subscribe for updates', href: '/#newsletter', k: 'newsletter subscribe email updates signup' },

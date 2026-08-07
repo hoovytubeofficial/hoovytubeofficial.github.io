@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css?v=8">
+  <link rel="stylesheet" href="/styles/ht.css?v=9">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
     /* Big scroll-driven 3D orbit of community animations (no box - sits on the page) */
@@ -23,11 +23,16 @@
     .orbit-item .credit { position: absolute; left: 0; right: 0; bottom: 0; padding: .5rem .8rem; font-size: .82rem; color: #fff;
       background: linear-gradient(transparent, rgba(0,0,0,.85)); }
     .orbit-caption { max-width: 1000px; margin: .9rem auto 0; padding: 0 1.4rem; text-align: center; color: var(--muted); font-size: .82rem; position: relative; z-index: 45; transition: color .4s ease, text-shadow .4s ease; }
-    body { padding-top: 0; }                 /* orbit sits flush under the floating dock */
-    .cinema-dim { position: fixed; inset: 0; background: #05080c; opacity: 0; pointer-events: none; z-index: 40; transition: opacity .55s ease; }
-    body.cinema .cinema-dim { opacity: .62; }
+    .cinema-dim { position: fixed; inset: 0; background: #05080c; opacity: 0; pointer-events: none; z-index: 40; transition: opacity .6s ease; }
+    body.showcase .cinema-dim { opacity: .6; }
     .orbit-hero { z-index: 45; }
-    body.cinema .orbit-caption { color: var(--cream); text-shadow: 0 0 14px var(--glow), 0 0 6px var(--accent); }
+    body.showcase .orbit-caption { color: var(--cream); text-shadow: 0 0 14px var(--glow), 0 0 6px var(--accent); }
+    /* blue "you don't pay" callout */
+    .free-callout { display: block; text-decoration: none; margin: 2.6rem 0 0; padding: 1.2rem 1.4rem;
+      border: 1px solid #4a86c9; background: color-mix(in srgb, #4a86c9 15%, transparent); color: var(--text); line-height: 1.55; transition: background .2s; }
+    .free-callout:hover { background: color-mix(in srgb, #4a86c9 26%, transparent); }
+    .free-callout strong { color: #6fb0f0; }
+    .free-callout .arrow { color: #6fb0f0; font-weight: 700; }
     @media (max-width: 640px) { .orbit-stage { height: 50vh; min-height: 340px; } .orbit-ring { width: 380px; height: 214px; margin: -107px 0 0 -190px; --r: 344px; } }
 
     /* About box - glowing rim on hover (.spot) */
@@ -106,9 +111,9 @@
     <!-- About - glowing-rim showcase -->
     <section class="about spot">
       <h2 class="about-title">The $10,000 SFM asset library is yours</h2>
-      <p class="about-sub">Join 2,500+ Patreon members, or grab it all free on the Steam Workshop.</p>
+      <p class="about-sub">Join 2,500+ Patreon members, or grab the free packs on my Steam Workshop.</p>
       <div class="about-body">
-        <p>I've belonged to this community since I was thirteen. Five years ago, at the fork where most people choose to study, I chose the craft instead, and spent that time building a team of artists rather than a résumé. Together we made <strong style="color:var(--text)">HoovyTools</strong>, alongside the scripts, models, animations and scenebuilds that get newcomers up to speed on realizing exactly what they picture in their heads.</p>
+        <p>I've belonged to this community since I was thirteen. Five years ago, at the fork where most people choose to study, I chose the craft instead, and spent that time building a team of artists rather than a résumé. Together we made HoovyTools, alongside the scripts, models, animations and scenebuilds that get newcomers up to speed on realizing exactly what they picture in their heads.</p>
         <p>At fourteen, whatever I earned online went straight back into source trade secrets, which I then gave away in tutorials, servers and forums. Two years ago I gathered it all into one place: a Patreon with <a href="https://youtu.be/bLZtRoqMRf0?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">900+ particle effects, 30+ scenebuilds and 600+ animations</a>. What began as a habit of organizing my own work has quietly become the go-to shortcut for anyone who'd rather skip the asset building grind and get straight to creating.</p>
       </div>
       <div class="about-stats">
@@ -118,9 +123,11 @@
       </div>
       <div class="btns" style="justify-content:center">
         <a class="btn btn-primary" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
-        <a class="btn btn-ghost" href="https://steamcommunity.com/workshop/" target="_blank" rel="noopener">Free on Steam Workshop</a>
+        <a class="btn btn-ghost" href="https://steamcommunity.com/workshop/" target="_blank" rel="noopener">My Steam Workshop</a>
       </div>
     </section>
+
+    <a class="free-callout" href="/learn/"><strong>You don't have to pay a cent.</strong> Every skill used to create these is taught free on my YouTube. I walk through how to recreate all of it in the <strong>Tutorials</strong>. <span class="arrow">Learn it free →</span></a>
 
     <!-- Membership - in its own box -->
     <section class="membership-box">
@@ -199,8 +206,6 @@
       var end = function () { dragging = false; hero.style.cursor = 'grab'; };
       hero.addEventListener('pointerup', end);
       hero.addEventListener('pointercancel', end);
-      hero.addEventListener('pointerenter', function () { document.body.classList.add('cinema'); });
-      hero.addEventListener('pointerleave', function () { document.body.classList.remove('cinema'); });
       (function tick() {
         if (!reduced) idle += 0.04;
         cur += (target - cur) * 0.1;           // ease toward target for a smooth glide
@@ -209,17 +214,24 @@
       })();
     })();
 
-    /* Home-style ghost dock: transparent over the showcase, solid once scrolled past */
-    document.addEventListener('DOMContentLoaded', function () {
-      var wrap = document.querySelector('.dock-wrap'), hero = document.querySelector('.orbit-hero');
-      if (!wrap || !hero) return;
-      var upd = function () { wrap.classList.toggle('ghost', window.scrollY < hero.offsetHeight - 90); };
+    /* Cinematic showcase: page darkens + ghost dock while the orbit holds the top;
+       it escapes (brightens, dock solidifies) as you scroll down. */
+    (function () {
+      var hero = document.querySelector('.orbit-hero'); if (!hero) return;
+      var upd = function () {
+        var on = hero.getBoundingClientRect().bottom > 150;
+        document.body.classList.toggle('showcase', on);
+        var wrap = document.querySelector('.dock-wrap');
+        if (wrap) wrap.classList.toggle('ghost', on);
+      };
       window.addEventListener('scroll', upd, { passive: true });
-      window.addEventListener('resize', upd); upd();
-    });
+      window.addEventListener('resize', upd);
+      document.addEventListener('DOMContentLoaded', upd);
+      upd();
+    })();
   </script>
-  <script defer src="/shared/ht-nav.js?v=8"></script>
-  <script defer src="/shared/ht-ui.js?v=8"></script>
-  <script defer src="/shared/ht-newsletter.js?v=8"></script>
+  <script defer src="/shared/ht-nav.js?v=9"></script>
+  <script defer src="/shared/ht-ui.js?v=9"></script>
+  <script defer src="/shared/ht-newsletter.js?v=9"></script>
 </body>
 </html>
