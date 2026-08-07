@@ -1,12 +1,12 @@
 {
-  "version": "v260807.23 6:20p",
-  "release": 23,
-  "sha": "28b146f",
-  "fullSha": "28b146f14ec7d8e7b80db461387168b4270e205c",
+  "version": "v260807.24 6:27p",
+  "release": 24,
+  "sha": "abf1e04",
+  "fullSha": "abf1e04bbca91867c7e07e920ff18196499429df",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:20:07+02:00",
-  "commits": [{"sha":"28b146f","message":"Products orbit: enlarge the panels (scale ring + items together to keep the tight gap)","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:27:15+02:00",
+  "commits": [{"sha":"abf1e04","message":"Fix: remove HOVER TO PLAY overlay; taller orbit stage so panels aren't clipped","author":"HoovyTube"}]
 }
