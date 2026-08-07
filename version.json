@@ -1,12 +1,12 @@
 {
-  "version": "v260807.05 1:35a",
-  "release": 5,
-  "sha": "2092340",
-  "fullSha": "2092340588a08b2b3427b8b97f94edc9b7031278",
+  "version": "v260807.06 1:46a",
+  "release": 6,
+  "sha": "c098d3f",
+  "fullSha": "c098d3fafe6d9635429ddc5c34ce57ae9676b519",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmd93pd",
-  "pushedAt": "2026-08-07T03:35:14+02:00",
-  "commits": [{"sha":"2092340","message":"Upgrade monthly newsletter template (image-ready, feature blocks)","author":"HoovyTube"}]
+  "machine": "runnervmvrwv9",
+  "pushedAt": "2026-08-07T03:46:39+02:00",
+  "commits": [{"sha":"c098d3f","message":"Redesign welcome email (dark-hero, Gemini-style)","author":"HoovyTube"}]
 }
