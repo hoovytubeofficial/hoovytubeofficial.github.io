@@ -123,14 +123,15 @@
       var hero = ring && ring.closest('.orbit-hero');
       if (!ring || !hero) return;
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var manual = 0, idle = 0;
+      var target = 0, cur = 0, idle = 0;
       hero.addEventListener('wheel', function (e) {
         e.preventDefault();                 // spin the animation instead of scrolling the page
-        manual += e.deltaY * 0.18;
+        target += e.deltaY * 0.18;
       }, { passive: false });
       (function tick() {
         if (!reduced) idle += 0.04;
-        ring.style.transform = 'rotateY(' + (idle + manual) + 'deg)';
+        cur += (target - cur) * 0.08;       // ease toward target for a smooth glide
+        ring.style.transform = 'rotateY(' + (idle + cur) + 'deg)';
         requestAnimationFrame(tick);
       })();
     })();
