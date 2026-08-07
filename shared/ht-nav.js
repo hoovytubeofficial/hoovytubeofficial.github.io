@@ -12,22 +12,23 @@
     theme: '<path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>'
   };
   var ITEMS = [
-    { label: 'Home', href: '/', icon: ICON.home, match: ['/', '/index.html'] },
-    { label: 'Assets & Products', href: '/products/', icon: ICON.box, match: ['/products/', '/products/index.html'] },
-    { label: 'HoovyTools', href: '/hoovytools/', icon: ICON.wrench, match: ['/hoovytools/', '/hoovytools/index.html'] },
-    { label: 'Learn SFM & Blender', href: '/learn/', icon: ICON.cap, match: ['/learn/', '/learn/index.html'] },
-    { label: 'Contact', href: '/contact/', icon: ICON.mail, match: ['/contact/', '/contact/index.html'] }
+    { label: 'Home', href: '/', ic: 'home', match: ['/', '/index.html'] },
+    { label: 'Assets & Products', href: '/products/', ic: 'product', match: ['/products/', '/products/index.html'] },
+    { label: 'HoovyTools', href: '/hoovytools/', ic: 'tools', match: ['/hoovytools/', '/hoovytools/index.html'] },
+    { label: 'Learn SFM & Blender', href: '/learn/', ic: 'learn', match: ['/learn/', '/learn/index.html'] },
+    { label: 'Contact', href: '/contact/', ic: 'contact', match: ['/contact/', '/contact/index.html'] }
   ];
   var svg = function (p) { return '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; };
+  var ic = function (n) { return '<img class="dock-ic" src="/assets/icons/' + n + '.png" alt="" draggable="false">'; };
   var path = location.pathname.replace(/\/index\.html$/, '/');
 
   var html = '<nav class="dock" aria-label="Primary">';
   ITEMS.forEach(function (it) {
     var active = it.match.indexOf(path) !== -1 ? ' active' : '';
-    html += '<a class="dock-item' + active + '" href="' + it.href + '"><span class="dock-label">' + it.label + '</span>' + svg(it.icon) + '</a>';
+    html += '<a class="dock-item' + active + '" href="' + it.href + '"><span class="dock-label">' + it.label + '</span>' + ic(it.ic) + '</a>';
   });
-  html += '<button class="dock-item" id="htSearch" type="button" aria-label="Search"><span class="dock-label">Search</span>' + svg(ICON.search) + '</button>';
-  html += '<button class="dock-item" id="htThemeToggle" type="button" aria-label="Toggle theme"><span class="dock-label">Theme</span>' + svg(ICON.theme) + '</button>';
+  html += '<button class="dock-item" id="htSearch" type="button" aria-label="Search"><span class="dock-label">Search</span>' + ic('search') + '</button>';
+  html += '<button class="dock-item" id="htThemeToggle" type="button" aria-label="Toggle theme"><span class="dock-label">Theme</span>' + ic('theme') + '</button>';
   html += '</nav>';
 
   var wrap = document.createElement('div');

@@ -135,6 +135,7 @@ footer.site small { font-size: .85rem; }
 .dock-item:hover, .dock-item.active { color: var(--accent); }
 .dock-item.active { box-shadow: inset 0 0 0 2px var(--accent); }
 .dock-item svg { width: 55%; height: 55%; stroke: currentColor; fill: none; }
+.dock-item img.dock-ic { width: 70%; height: 70%; object-fit: contain; display: block; pointer-events: none; }
 .dock-label { position: absolute; top: calc(100% + 10px); bottom: auto; left: 50%; transform: translateX(-50%) translateY(-4px);
   background: var(--panel); color: var(--text); border: 1px solid var(--line); padding: .25rem .55rem; border-radius: 8px;
   font-size: .78rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .15s, transform .15s; box-shadow: 0 4px 14px rgba(0,0,0,.25); }
@@ -150,6 +151,7 @@ footer.site small { font-size: .85rem; }
 .dock-wrap.ghost .dock { background: transparent; border-color: transparent; box-shadow: none; backdrop-filter: none; }
 .dock-wrap.ghost .dock-item { background: transparent; border-color: transparent; color: var(--cream); }
 .dock-wrap.ghost .dock-item svg { filter: drop-shadow(0 1px 4px rgba(0,0,0,.55)); }
+.dock-wrap.ghost .dock-item img.dock-ic { filter: drop-shadow(0 1px 4px rgba(0,0,0,.55)); }
 .dock-wrap.ghost .dock-item:hover, .dock-wrap.ghost .dock-item.active { color: #fff; }
 .dock-wrap.ghost .dock-item.active { box-shadow: inset 0 0 0 2px rgba(255,255,255,.85); }
 .dock-wrap.ghost .dock-label { color: var(--text); }

@@ -38,8 +38,7 @@
     tab.className = 'htnews-tab';
     tab.type = 'button';
     tab.setAttribute('aria-label', 'Open newsletter signup');
-    tab.innerHTML = '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
-      '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>' +
+    tab.innerHTML = '<img src="/assets/icons/newsletter.png" alt="" draggable="false" style="width:20px;height:20px;object-fit:contain">' +
       '<span>Newsletter</span>';
 
     document.body.appendChild(pop);
