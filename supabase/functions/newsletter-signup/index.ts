@@ -16,6 +16,13 @@ function esc(s: string) {
   return String(s).replace(/[&<>"']/g, (c) =>
     ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c] as string));
 }
+// Must match the unsubscribe function's token (HMAC-SHA256(email, secret), first 20 hex).
+async function unsubToken(email: string) {
+  const secret = Deno.env.get("UNSUB_SECRET") || "hoovytube-unsub";
+  const key = await crypto.subtle.importKey("raw", new TextEncoder().encode(secret), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  const sig = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(email));
+  return [...new Uint8Array(sig)].map((b) => b.toString(16).padStart(2, "0")).join("").slice(0, 20);
+}
 
 function welcomeHtml(firstName: string) {
   const name = firstName ? `, ${esc(firstName)}` : "";
@@ -120,18 +127,37 @@ Deno.serve(async (req) => {
   const send = (payload: Record<string, unknown>) =>
     fetch("https://api.resend.com/emails", { method: "POST", headers: authHeaders, body: JSON.stringify(payload) });
 
+  // Per-recipient unsubscribe URL + Gmail one-click header (RFC 8058).
+  const unsubUrl = `${Deno.env.get("SUPABASE_URL")}/functions/v1/unsubscribe?email=${encodeURIComponent(email)}&t=${await unsubToken(email)}`;
+  const listHeaders = { "List-Unsubscribe": `<${unsubUrl}>`, "List-Unsubscribe-Post": "List-Unsubscribe=One-Click" };
+
   let sent = false;
   if (templateId) {
     try {
-      // Resend requires a subject even when sending a template.
-      const r = await send({ from, to: [email], subject, template: { id: templateId, variables: { FIRST_NAME: first_name || "there" } } });
-      sent = r.ok;
-      if (!r.ok) console.error("Template welcome failed:", r.status, await r.text());
+      // Fetch the template's HTML (works even for drafts) and send it as the body,
+      // so we don't depend on the template being published in Resend's UI.
+      const tr = await fetch(`https://api.resend.com/templates/${templateId}`, { headers: authHeaders });
+      if (tr.ok) {
+        const tj = await tr.json();
+        const thtml = String(tj.html || "")
+          .split("{{{FIRST_NAME}}}").join(first_name || "there")
+          .split("%%UNSUB%%").join(unsubUrl)
+          .split("{{{RESEND_UNSUBSCRIBE_URL}}}").join(unsubUrl);
+        if (thtml) {
+          const r = await send({ from, to: [email], subject, html: thtml, headers: listHeaders });
+          sent = r.ok;
+          if (!r.ok) console.error("Template html send failed:", r.status, await r.text());
+        }
+      } else {
+        console.error("Template fetch failed:", tr.status);
+      }
     } catch (e) { console.error("Template welcome error:", (e as Error).message); }
   }
   if (!sent) {
     try {
-      const r = await send({ from, to: [email], subject, html: welcomeHtml(first_name) });
+      const html = welcomeHtml(first_name) +
+        `<div style="text-align:center;font-size:11px;color:#8494a5;padding:8px 0 20px;font-family:Arial,sans-serif"><a href="${unsubUrl}" style="color:#8494a5">Unsubscribe</a></div>`;
+      const r = await send({ from, to: [email], subject, html, headers: listHeaders });
       if (!r.ok) console.error("Welcome email failed:", r.status, await r.text());
     } catch (e) { console.error("Welcome email error:", (e as Error).message); }
   }
