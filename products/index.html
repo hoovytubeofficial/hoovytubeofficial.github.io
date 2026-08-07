@@ -25,6 +25,16 @@
     .orbit-caption { max-width: 1000px; margin: .9rem auto 0; padding: 0 1.4rem; text-align: right; color: var(--muted); font-size: .82rem; }
     @media (max-width: 640px) { .orbit-stage { height: 50vh; min-height: 340px; } .orbit-ring { width: 380px; height: 214px; margin: -107px 0 0 -190px; --r: 344px; } }
 
+    /* About box — glowing rim on hover (.spot) */
+    .about { border: 1px solid var(--line); background: var(--panel); padding: 2.8rem 2.4rem; text-align: center; }
+    .about-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.08; margin: 0 0 .6rem; color: var(--text); }
+    .about-sub { color: var(--accent); font-weight: 600; font-size: clamp(1rem, 2.2vw, 1.2rem); margin: 0 0 1.7rem; }
+    .about-body { color: var(--muted); line-height: 1.75; max-width: 680px; margin: 0 auto 1.8rem; text-align: left; }
+    .about-body p { margin: 0 0 1rem; }
+    .about-stats { display: flex; flex-wrap: wrap; gap: 1.6rem 2.4rem; justify-content: center; margin: 0 0 1.9rem; }
+    .about-stats div { font-size: .88rem; color: var(--muted); }
+    .about-stats b { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; color: var(--accent); line-height: 1; margin-bottom: .15rem; }
+
     /* Membership block — its own framed box */
     .membership-box { border: 1px solid var(--line); background: var(--panel-2); padding: 2.2rem; margin-top: 3.2rem; }
     .membership-box .section-head { margin-bottom: 1.6rem; }
@@ -34,7 +44,10 @@
     .tier { border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem; background: var(--panel); display: flex; flex-direction: column; }
     .tier.best { border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
     .tier .tag { align-self: flex-start; font-size: .68rem; font-weight: 700; letter-spacing: .05em; background: var(--accent); color: var(--accent-ink); padding: .22rem .55rem; border-radius: 999px; margin-bottom: .6rem; text-transform: uppercase; }
-    .tier-img { display: block; width: calc(100% + 3.2rem); margin: -1.6rem -1.6rem 1.1rem; aspect-ratio: 4/3; object-fit: contain; padding: 1.5rem; background: var(--hero-dark); border-bottom: 1px solid var(--line); }
+    .tier-imgbox { width: calc(100% + 3.2rem); margin: -1.6rem -1.6rem 1.1rem; aspect-ratio: 4/3; background: var(--hero-dark);
+      border-bottom: 1px solid var(--line); overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .tier-ic { width: 66%; height: 66%; object-fit: contain; transition: transform .3s cubic-bezier(.16,1,.3,1); }
+    .tier:hover .tier-ic { transform: scale(1.22); }
     .tier .price { font-family: 'Space Grotesk', sans-serif; font-size: 2.1rem; font-weight: 700; color: var(--accent); line-height: 1; }
     .tier .price span { font-size: .85rem; color: var(--muted); font-weight: 500; }
     .tier h3 { margin: .5rem 0 .8rem; font-size: 1.1rem; }
@@ -42,15 +55,15 @@
     .tier li { padding: .28rem 0; color: var(--muted); font-size: .92rem; display: flex; gap: .5rem; }
     .tier li::before { content: "✓"; color: var(--accent); font-weight: 700; }
     .tier .btn { margin-top: auto; justify-content: center; }
-    .tier-more { margin-bottom: 1.1rem; border-top: 1px solid var(--line); }
-    .tier-more summary { cursor: pointer; color: var(--accent); font-weight: 700; font-size: .82rem; padding: .7rem 0 0; list-style: none; }
-    .tier-more summary::-webkit-details-marker { display: none; }
-    .tier-more summary::after { content: " +"; }
-    .tier-more[open] summary::after { content: " \2013"; }
-    .tier-more ul { margin: .7rem 0 0; }
-    .tier-more li { display: flex; gap: .55rem; align-items: flex-start; font-size: .84rem; line-height: 1.45; padding: .32rem 0; color: var(--muted); }
-    .tier-more li::before { content: none; }
-    .tier-more .pt-ic { width: 16px; height: 16px; flex: 0 0 auto; margin-top: 2px; color: var(--accent); }
+    .tier-playlist { display: flex; align-items: center; gap: .5rem; margin: 0 0 1rem; padding: .6rem .85rem;
+      border: 1px solid var(--accent); color: var(--accent); font-weight: 700; font-size: .84rem; text-decoration: none;
+      background: color-mix(in srgb, var(--accent) 12%, transparent); transition: background .2s; }
+    .tier-playlist:hover { background: color-mix(in srgb, var(--accent) 24%, transparent); }
+    .tier-playlist svg { width: 18px; height: 18px; flex: 0 0 auto; }
+    .tier-points { margin-bottom: 1.1rem; }
+    .tier-points li { display: flex; gap: .55rem; align-items: flex-start; font-size: .84rem; line-height: 1.45; padding: .32rem 0; color: var(--muted); }
+    .tier-points li::before { content: none; }
+    .tier-points .pt-ic { width: 16px; height: 16px; flex: 0 0 auto; margin-top: 2px; color: var(--accent); }
   </style>
 </head>
 <body>
@@ -86,13 +99,26 @@
 
   <p class="orbit-caption">Made by the community — animations by community creators using HoovyTube effects</p>
 
-  <main class="wrap page" style="padding-top:2.8rem">
-    <!-- About — the standout -->
-    <section style="text-align:center">
-      <div class="section-head"><h2 style="font-size:clamp(1.9rem,4.2vw,2.7rem)">About my SFM library project</h2></div>
-      <p class="ph-lead" style="margin:0 auto 1.8rem">600+ particle effects, 30+ scenebuilds and 400+ animations — free on the Steam Workshop, or all-in-one on Patreon.</p>
-      <p style="color:var(--muted);margin:0 auto 1rem;max-width:660px;line-height:1.7">For the past <strong style="color:var(--text)">8–9 years</strong> I've worked hand-in-hand with SFM animators — and I never left the community, because I genuinely love collaborating with people.</p>
-      <p style="color:var(--muted);margin:0 auto;max-width:660px;line-height:1.7">Work that used to be <strong style="color:var(--text)">exclusive to other creators</strong> is now free on the <a href="https://steamcommunity.com/workshop/" target="_blank" rel="noopener" style="color:var(--accent)">Steam Workshop</a>, or accessible on <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon / HoovyTube</a> — grab individual packs from the Patreon Shop, or claim the full library with a membership below.</p>
+  <main class="wrap page" style="padding-top:2.2rem">
+    <div class="divider" style="margin-top:0"></div>
+
+    <!-- About — glowing-rim showcase -->
+    <section class="about spot">
+      <h2 class="about-title">The $10,000 SFM asset library is yours</h2>
+      <p class="about-sub">Join 2,500+ Patreon members — or grab it all free on the Steam Workshop.</p>
+      <div class="about-body">
+        <p>I've belonged to this community since I was thirteen. Five years ago, at the fork where most people choose to study, I chose the craft instead — and spent that time building a team of artists rather than a résumé. Together we made <strong style="color:var(--text)">HoovyTools</strong>, alongside the scripts, models, animations and scenebuilds that get newcomers up to speed on realizing exactly what they picture in their heads.</p>
+        <p>At fourteen, whatever I earned online went straight back into source trade-secrets — which I then gave away, in tutorials, servers and forums. Two years ago I gathered it all into one place: a Patreon with <strong style="color:var(--text)">900+ particle effects, 30+ scenebuilds and 600+ animations</strong>. What began as a habit of organizing my own work has quietly become the go-to shortcut for anyone who'd rather skip the asset-building grind and get straight to creating.</p>
+      </div>
+      <div class="about-stats">
+        <div><b>900+</b> particle effects</div>
+        <div><b>30+</b> scenebuilds</div>
+        <div><b>600+</b> animations</div>
+      </div>
+      <div class="btns" style="justify-content:center">
+        <a class="btn btn-primary" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
+        <a class="btn btn-ghost" href="https://steamcommunity.com/workshop/" target="_blank" rel="noopener">Free on Steam Workshop</a>
+      </div>
     </section>
 
     <!-- Membership — in its own box -->
@@ -100,54 +126,48 @@
       <div class="section-head"><h2>Membership</h2></div>
       <div class="tiers">
         <div class="tier spot">
-          <img class="tier-img" src="/assets/tiers/particles.png" alt="SFM Particles">
+          <div class="tier-imgbox"><img class="tier-ic" src="/assets/tiers/particles.png" alt="SFM Particles"></div>
           <span class="tag">Tier 1</span>
           <div class="price">$20<span> /mo</span></div>
           <h3>All Particles</h3>
-          <ul><li>600+ particle effects</li><li>New effects as they drop</li></ul>
-          <details class="tier-more"><summary>Read more</summary>
-            <ul>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>1GB+ of new SFM sprites — a library larger than L4D2 + TF2 + CS2 particles combined</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>300+ particles with size variations for every scene, from ants to giant mechs</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Thoughtful folder naming and expanded documentation, with PNG previews for easy navigation</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Split by purpose: ENVIRONMENT / PHYSICS / IMPACTS / MISC</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Inspired by realistic 1980s movies and toon shading — a vibrant mix that can replace volumetric lights, sometimes even lighting altogether</span></li>
-            </ul>
-          </details>
+          <a class="tier-playlist" href="https://youtu.be/bLZtRoqMRf0?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch the particles playlist</a>
+          <div class="tier-points"><ul>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>900+ particle effects — 1GB+ of new SFM sprites, a library larger than L4D2 + TF2 + CS2 combined</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>300+ particles with size variations for every scene, from ants to giant mechs</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Thoughtful folder naming and expanded docs, with PNG previews for easy navigation</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Split by purpose: ENVIRONMENT / PHYSICS / IMPACTS / MISC</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Inspired by 1980s film and toon shading — can replace volumetric lights, sometimes even lighting altogether</span></li>
+          </ul></div>
           <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
         <div class="tier spot">
-          <img class="tier-img" src="/assets/tiers/scenebuilds.png" alt="SFM Scenebuilds">
+          <div class="tier-imgbox"><img class="tier-ic" src="/assets/tiers/scenebuilds.png" alt="SFM Scenebuilds"></div>
           <span class="tag">Tier 2</span>
           <div class="price">$25<span> /mo</span></div>
           <h3>Scenebuilds + Particles</h3>
-          <ul><li>30+ scenebuilds</li><li>All 600+ particles</li></ul>
-          <details class="tier-more"><summary>Read more</summary>
-            <ul>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>1GB+ of new SFM models &amp; scenebuilds spanning urban / sci-fi / nature settings</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Built for stronger setups — a strong GPU is recommended</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Biome types and HDRI setups to build your own scenebuilds with</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Consolidated in usermod folders with no exterior model usage — all ported by me</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the All Particles tier</span></li>
-            </ul>
-          </details>
+          <a class="tier-playlist" href="https://youtu.be/805SFFr-L6M?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch the scenebuilds playlist</a>
+          <div class="tier-points"><ul>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>1GB+ of new SFM models &amp; scenebuilds spanning urban / sci-fi / nature settings</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Built for stronger setups — a strong GPU is recommended</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Biome types and HDRI setups to build your own scenebuilds with</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Consolidated in usermod folders with no exterior model usage — all ported by me</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the All Particles tier</span></li>
+          </ul></div>
           <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
         <div class="tier best spot">
-          <img class="tier-img" src="/assets/tiers/animations.png" alt="SFM Animations">
+          <div class="tier-imgbox"><img class="tier-ic" src="/assets/tiers/animations.png" alt="SFM Animations"></div>
           <span class="tag">Best value</span>
           <div class="price">$30<span> /mo</span></div>
           <h3>The full library</h3>
-          <ul><li>All scenebuilds</li><li>All particles</li><li>400+ animations</li></ul>
-          <details class="tier-more"><summary>Read more</summary>
-            <ul>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>700+ animations for HWM characters, HL2 rigs &amp; cameras</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Fully transposable with the <a href="https://youtu.be/SEUJu0mizQQ" target="_blank" rel="noopener" style="color:var(--accent)">HoovyTools SFM Transposition addon</a></span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Categories: Idle · Walking · Running · Fighting · Combat · Shooting</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>…and Dialog · Scene Setup · Crowd · Acrobatics · Parkour · Props</span></li>
-              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the earlier tiers</span></li>
-            </ul>
-          </details>
+          <a class="tier-playlist" href="https://youtu.be/qmqYMkfuaNs?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch the animations playlist</a>
+          <div class="tier-points"><ul>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>600+ animations for HWM characters, HL2 rigs &amp; cameras</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Fully transposable with the <a href="https://youtu.be/SEUJu0mizQQ" target="_blank" rel="noopener" style="color:var(--accent)">HoovyTools SFM Transposition addon</a></span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Categories: Idle · Walking · Running · Fighting · Combat · Shooting</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>…and Dialog · Scene Setup · Crowd · Acrobatics · Parkour · Props</span></li>
+            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the earlier tiers</span></li>
+          </ul></div>
           <a class="btn btn-primary magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Claim everything</a>
         </div>
       </div>
@@ -164,14 +184,23 @@
       var hero = ring && ring.closest('.orbit-hero');
       if (!ring || !hero) return;
       var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var target = 0, cur = 0, idle = 0;
-      hero.addEventListener('wheel', function (e) {
-        e.preventDefault();                 // spin the animation instead of scrolling the page
-        target += e.deltaY * 0.18;
-      }, { passive: false });
+      var target = 0, cur = 0, idle = 0, dragging = false, lastX = 0;
+      hero.style.cursor = 'grab';
+      hero.addEventListener('pointerdown', function (e) {
+        dragging = true; lastX = e.clientX; hero.style.cursor = 'grabbing';
+        try { hero.setPointerCapture(e.pointerId); } catch (x) {}
+      });
+      hero.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        target += (e.clientX - lastX) * 0.4;   // drag to spin
+        lastX = e.clientX;
+      });
+      var end = function () { dragging = false; hero.style.cursor = 'grab'; };
+      hero.addEventListener('pointerup', end);
+      hero.addEventListener('pointercancel', end);
       (function tick() {
         if (!reduced) idle += 0.04;
-        cur += (target - cur) * 0.08;       // ease toward target for a smooth glide
+        cur += (target - cur) * 0.1;           // ease toward target for a smooth glide
         ring.style.transform = 'rotateY(' + (idle + cur) + 'deg)';
         requestAnimationFrame(tick);
       })();
