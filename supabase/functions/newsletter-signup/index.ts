@@ -110,6 +110,7 @@ Deno.serve(async (req) => {
   //    If WELCOME_TEMPLATE_ID is set (a PUBLISHED Resend editor template), use it;
   //    otherwise fall back to the built-in HTML below.
   const from = Deno.env.get("NEWSLETTER_FROM") || "HoovyTube <newsletter@hoovytube.com>";
+  const subject = Deno.env.get("WELCOME_SUBJECT") || "Welcome to HoovyTube 👋";
   const templateId = Deno.env.get("WELCOME_TEMPLATE_ID");
   const send = (payload: Record<string, unknown>) =>
     fetch("https://api.resend.com/emails", { method: "POST", headers: authHeaders, body: JSON.stringify(payload) });
@@ -117,14 +118,15 @@ Deno.serve(async (req) => {
   let sent = false;
   if (templateId) {
     try {
-      const r = await send({ from, to: [email], template: { id: templateId, variables: { FIRST_NAME: first_name || "there" } } });
+      // Resend requires a subject even when sending a template.
+      const r = await send({ from, to: [email], subject, template: { id: templateId, variables: { FIRST_NAME: first_name || "there" } } });
       sent = r.ok;
       if (!r.ok) console.error("Template welcome failed:", r.status, await r.text());
     } catch (e) { console.error("Template welcome error:", (e as Error).message); }
   }
   if (!sent) {
     try {
-      const r = await send({ from, to: [email], subject: "Welcome to HoovyTube 👋", html: welcomeHtml(first_name) });
+      const r = await send({ from, to: [email], subject, html: welcomeHtml(first_name) });
       if (!r.ok) console.error("Welcome email failed:", r.status, await r.text());
     } catch (e) { console.error("Welcome email error:", (e as Error).message); }
   }
