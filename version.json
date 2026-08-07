@@ -1,12 +1,12 @@
 {
-  "version": "v260807.11 3:51a",
-  "release": 11,
-  "sha": "b9763d1",
-  "fullSha": "b9763d14ac9b4d6b0e2409dc4e1844bd6acf70e7",
+  "version": "v260807.12 4:51a",
+  "release": 12,
+  "sha": "9097ca2",
+  "fullSha": "9097ca2c1d5cb5567ddc10039e57a69b62fe7e7a",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T05:51:41+02:00",
-  "commits": [{"sha":"b9763d1","message":"Redesign welcome email (Gemini-style) + scroll-in reveal","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T06:50:43+02:00",
+  "commits": [{"sha":"9097ca2","message":"Add working unsubscribe (endpoint + Gmail one-click + in-body link)","author":"HoovyTube"}]
 }
