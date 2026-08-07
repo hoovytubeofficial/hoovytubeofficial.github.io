@@ -1,12 +1,12 @@
 {
-  "version": "v260807.04 1:33a",
-  "release": 4,
-  "sha": "064f891",
-  "fullSha": "064f89100d4ed4b58f6d32c206f3cb0050a7fe63",
+  "version": "v260807.05 1:35a",
+  "release": 5,
+  "sha": "2092340",
+  "fullSha": "2092340588a08b2b3427b8b97f94edc9b7031278",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T03:32:41+02:00",
-  "commits": [{"sha":"064f891","message":"Autoplay active carousel video (muted)","author":"HoovyTube"}]
+  "machine": "runnervmd93pd",
+  "pushedAt": "2026-08-07T03:35:14+02:00",
+  "commits": [{"sha":"2092340","message":"Upgrade monthly newsletter template (image-ready, feature blocks)","author":"HoovyTube"}]
 }
