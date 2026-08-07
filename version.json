@@ -1,12 +1,12 @@
 {
-  "version": "v260807.18 5:49p",
-  "release": 18,
-  "sha": "5c70385",
-  "fullSha": "5c70385b2b05930c0b9823fcd5b93de4cb2a3b28",
+  "version": "v260807.19 6:04p",
+  "release": 19,
+  "sha": "525e5f9",
+  "fullSha": "525e5f93808248bed6ef4683605190050ef18d59",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T19:48:51+02:00",
-  "commits": [{"sha":"5c70385","message":"Redesign pass 3: nav search, media features, Products full-bleed hero, centered titles","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:04:29+02:00",
+  "commits": [{"sha":"525e5f9","message":"Products: scroll-driven 3D orbit, green-screen tier cutouts; homepage videos hover-to-play","author":"HoovyTube"}]
 }
