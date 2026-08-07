@@ -22,7 +22,7 @@
     .orbit-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .orbit-item .credit { position: absolute; left: 0; right: 0; bottom: 0; padding: .5rem .8rem; font-size: .82rem; color: #fff;
       background: linear-gradient(transparent, rgba(0,0,0,.85)); }
-    .orbit-hint { position: absolute; bottom: 4px; left: 0; right: 0; text-align: center; color: var(--muted); font-size: .78rem; z-index: 2; }
+    .orbit-caption { max-width: 1000px; margin: .9rem auto 0; padding: 0 1.4rem; text-align: right; color: var(--muted); font-size: .82rem; }
     @media (max-width: 640px) { .orbit-stage { height: 44vh; } .orbit-ring { width: 320px; height: 180px; margin: -90px 0 0 -160px; --r: 360px; } }
 
     /* Membership block — its own framed box */
@@ -67,9 +67,10 @@
         <div class="orbit-item" style="--a:240deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/hoovytube.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">HoovyTube</span></div>
         <div class="orbit-item" style="--a:300deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/virlance.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">Virlance</span></div>
       </div>
-      <div class="orbit-hint">Made by the community — animations by community creators using HoovyTube effects</div>
     </div>
   </section>
+
+  <p class="orbit-caption">Made by the community — animations by community creators using HoovyTube effects</p>
 
   <main class="wrap page" style="padding-top:2.8rem">
     <!-- About — the standout -->
