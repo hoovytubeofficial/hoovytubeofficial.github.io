@@ -1,12 +1,12 @@
 {
-  "version": "v260807.28 7:42p",
-  "release": 28,
-  "sha": "12bbefd",
-  "fullSha": "12bbefd557187627d0170a2596bc73abb3a99a55",
+  "version": "v260807.29 7:58p",
+  "release": 29,
+  "sha": "cd6c19a",
+  "fullSha": "cd6c19a044428f3edd41ffdfd40986263dc3ab64",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T21:42:15+02:00",
-  "commits": [{"sha":"12bbefd","message":"Products: hover-grow tier icons, always-shown points + playlist links, drag-spin orbit, new About","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T21:57:53+02:00",
+  "commits": [{"sha":"cd6c19a","message":"Products cinematic pass + SEO naming + remove em-dashes","author":"HoovyTube"}]
 }
