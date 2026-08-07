@@ -1,12 +1,12 @@
 {
-  "version": "v260807.09 3:03a",
-  "release": 9,
-  "sha": "d514165",
-  "fullSha": "d514165171efd8b1cedf3e1ebc92a6fa807f13fe",
+  "version": "v260807.10 3:31a",
+  "release": 10,
+  "sha": "cb5471d",
+  "fullSha": "cb5471d477f7dc751c5e3b9a56ff3c47661d5220",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T05:02:58+02:00",
-  "commits": [{"sha":"d514165","message":"Revamp Assets & Products: community orbit showcase + Patreon tiers","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T05:31:29+02:00",
+  "commits": [{"sha":"cb5471d","message":"Dock to top + scroll progress; rebuild HoovyTools; gif in welcome","author":"HoovyTube"}]
 }
