@@ -40,6 +40,7 @@
     .tier { border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem; background: var(--panel); display: flex; flex-direction: column; }
     .tier.best { border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
     .tier .tag { align-self: flex-start; font-size: .68rem; font-weight: 700; letter-spacing: .05em; background: var(--accent); color: var(--accent-ink); padding: .22rem .55rem; border-radius: 999px; margin-bottom: .6rem; text-transform: uppercase; }
+    .tier-img { width: 100%; aspect-ratio: 20/9; object-fit: cover; border-radius: 10px; margin-bottom: .9rem; border: 1px solid var(--line); }
     .tier .price { font-family: 'Space Grotesk', sans-serif; font-size: 2.1rem; font-weight: 700; color: var(--accent); line-height: 1; }
     .tier .price span { font-size: .85rem; color: var(--muted); font-weight: 500; }
     .tier h3 { margin: .5rem 0 .8rem; font-size: 1.1rem; }
@@ -55,16 +56,10 @@
     <a class="cta" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon ↗</a>
   </div>
 
-  <header class="hero" style="padding-bottom:1.5rem">
-    <p class="eyebrow">Assets &amp; Products</p>
-    <h1 style="font-size:clamp(2.2rem,6vw,3.6rem)">A world of possibilities</h1>
-    <p class="lead">Particles, animations, and scenebuilds for Source Filmmaker &amp; Blender — see what the community makes with them, then grab the packs.</p>
-  </header>
-
-  <main class="wrap page">
+  <main class="wrap page" style="padding-top:1.5rem">
     <!-- COMMUNITY ORBIT SHOWCASE -->
     <section style="margin-bottom:3rem">
-      <div class="section-head"><h2>Made with my assets</h2><span class="muted">by the community</span></div>
+      <div class="section-head"><h2>Made by the community</h2><span class="muted">effects by HoovyTube</span></div>
       <div class="orbit-wrap">
         <div class="orbit-stage">
           <div class="orbit-ring">
@@ -80,31 +75,9 @@
       </div>
     </section>
 
-    <!-- PRODUCT PACKS -->
-    <section style="margin-bottom:3.5rem">
-      <div class="section-head"><h2>The packs</h2><span class="muted">hover for details</span></div>
-      <div class="products-grid">
-        <a class="product" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">
-          <span class="badge">600+ EFFECTS</span>
-          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-particles.png" alt="SFM Particles">
-          <span class="over"><h3>SFM Particles</h3><p>600+ particle effects — explosions, magic, weather, impacts and more.</p><span class="pill">View on Patreon →</span></span>
-        </a>
-        <a class="product" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">
-          <span class="badge">400+ ANIMATIONS</span>
-          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-animations.png" alt="SFM Animations">
-          <span class="over"><h3>SFM Animations</h3><p>400+ ready-to-use animations — walks, runs, gestures and more.</p><span class="pill">View on Patreon →</span></span>
-        </a>
-        <a class="product" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">
-          <span class="badge">30+ SCENEBUILDS</span>
-          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-scenebuilds.png" alt="SFM Scenebuilds">
-          <span class="over"><h3>SFM Scenebuilds</h3><p>30+ detailed scenebuilds — full environments to stage your shots.</p><span class="pill">View on Patreon →</span></span>
-        </a>
-      </div>
-    </section>
-
-    <!-- STORY + TIERS -->
+    <!-- ABOUT MY SFM LIBRARY + TIERS -->
     <section>
-      <div class="section-head"><h2>Get everything</h2><span class="muted">Steam Workshop · Patreon</span></div>
+      <div class="section-head"><h2>About my SFM library project</h2><span class="muted">Steam Workshop · Patreon</span></div>
       <div class="card" style="margin-bottom:1.6rem">
         <p>For the past <strong style="color:var(--text)">8–9 years</strong> I've worked hand-in-hand with SFM animators — and I never left the community, because I genuinely love collaborating with people.</p>
         <p style="margin-bottom:0">Work that used to be <strong style="color:var(--text)">exclusive to other creators</strong> is now free on the <a href="https://steamcommunity.com/workshop/" target="_blank" rel="noopener" style="color:var(--accent)">Steam Workshop</a>, or accessible on <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon / HoovyTube</a> — grab individual packs from the Patreon Shop, or claim the full library with a membership below.</p>
@@ -112,6 +85,7 @@
 
       <div class="tiers">
         <div class="tier">
+          <img class="tier-img" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-particles.png" alt="SFM Particles">
           <span class="tag">Tier 1</span>
           <div class="price">$20<span> /mo</span></div>
           <h3>All Particles</h3>
@@ -119,6 +93,7 @@
           <a class="btn btn-ghost" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
         <div class="tier">
+          <img class="tier-img" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-scenebuilds.png" alt="SFM Scenebuilds">
           <span class="tag">Tier 2</span>
           <div class="price">$25<span> /mo</span></div>
           <h3>Scenebuilds + Particles</h3>
@@ -126,6 +101,7 @@
           <a class="btn btn-ghost" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
         <div class="tier best">
+          <img class="tier-img" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-animations.png" alt="SFM Animations">
           <span class="tag">Best value</span>
           <div class="price">$30<span> /mo</span></div>
           <h3>The full library</h3>

@@ -16,10 +16,10 @@
     .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
     .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
     @media (max-width: 560px) { .levels { grid-template-columns: 1fr; } }
-    .level { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 1.6rem 1.2rem; text-align: center; cursor: pointer; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .level { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 3rem 1.2rem 1.6rem; text-align: center; cursor: pointer; overflow: visible; transition: transform .2s, border-color .2s, box-shadow .2s; }
     .level:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
-    .level .emoji { font-size: 2.6rem; line-height: 1; }
-    .level img { width: 104px; height: 104px; object-fit: contain; display: block; margin: 0 auto; }
+    .level img { width: 168px; height: 168px; object-fit: contain; display: block; margin: -4.4rem auto .4rem; transition: transform .3s cubic-bezier(.16,1,.3,1); filter: drop-shadow(0 10px 18px rgba(0,0,0,.4)); }
+    .level:hover img { transform: scale(1.22) rotate(-7deg); }
     .level h3 { margin: .6rem 0 .3rem; font-size: 1.3rem; }
     .level p { margin: 0; color: var(--muted); font-size: .9rem; }
     .level .count { display: inline-block; margin-top: .7rem; font-size: .72rem; font-weight: 700; color: var(--accent-ink); background: var(--accent); padding: .2rem .65rem; border-radius: 999px; }
@@ -49,13 +49,13 @@
       <div class="section-head"><h2>Pick your level</h2><span class="muted">tap one</span></div>
       <div class="levels">
         <div class="level" data-level="easy">
-          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-easy.png" alt="Easy"><h3>Easy</h3><p>Absolute basics — start here.</p><span class="count">7 tutorials</span>
+          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-easy.png" alt="Easy"><p>Absolute basics — start here.</p><span class="count">7 tutorials</span>
         </div>
         <div class="level" data-level="medium">
-          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-medium.png" alt="Medium"><h3>Medium</h3><p>Level up your scenes.</p><span class="count">5 tutorials</span>
+          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-medium.png" alt="Medium"><p>Level up your scenes.</p><span class="count">5 tutorials</span>
         </div>
         <div class="level" data-level="hard">
-          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-hard.png" alt="Hard"><h3>Hard</h3><p>Advanced deep-dives.</p><span class="count">4 tutorials</span>
+          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-hard.png" alt="Hard"><p>Advanced deep-dives.</p><span class="count">4 tutorials</span>
         </div>
       </div>
     </section>

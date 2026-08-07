@@ -26,6 +26,13 @@
     .xcard h3 { margin: .5rem 0 .3rem; font-size: 1.15rem; }
     .xcard p { margin: 0; color: var(--muted); font-size: .92rem; }
     .xcard .go { color: var(--accent); font-weight: 600; font-size: .9rem; margin-top: .6rem; display: inline-block; }
+    .faq { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--panel); }
+    .faq-item + .faq-item { border-top: 1px solid var(--line); }
+    .faq-q { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: 1.1rem 1.2rem; font: inherit; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: .7rem; transform-origin: left center; will-change: transform; }
+    .faq-q .chev { transition: transform .2s ease; color: var(--accent); flex: 0 0 auto; }
+    .faq-item.open .faq-q .chev { transform: rotate(90deg); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
+    .faq-a .inner { padding: 0 1.2rem 1.1rem 2.9rem; color: var(--muted); line-height: 1.65; }
   </style>
 </head>
 <body>
@@ -83,18 +90,29 @@
 
     <!-- ABOUT -->
     <section class="page" id="about">
-      <div class="section-head"><h2>About</h2></div>
-      <div class="card">
-        <p>HoovyTube is [PLACEHOLDER: a short description of who you are and what the channel is about] — SFM &amp; Blender animation, tools, and assets for the community.</p>
-        <p>Tell me your real story and I'll drop it in.</p>
+      <div class="section-head"><h2>FAQ</h2><span class="muted">the basics</span></div>
+      <div class="faq" id="faq">
+        <div class="faq-item">
+          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>What is HoovyTube?</button>
+          <div class="faq-a"><div class="inner">Home base for a Source Filmmaker &amp; Blender creator — animations, asset packs, tutorials, and the HoovyTools add-on, from someone who's been part of the SFM community for 8–9 years.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>What can I download?</button>
+          <div class="faq-a"><div class="inner">600+ SFM particle effects, 400+ animations, and 30+ scenebuilds — free on the Steam Workshop, or all-in-one via Patreon. See <a href="/products/" style="color:var(--accent)">Assets &amp; Products</a>.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>What's HoovyTools?</button>
+          <div class="faq-a"><div class="inner">A Blender add-on that imports your SFM sessions straight into Blender — models, animation, and now audio, auto-timed to the frame. See <a href="/hoovytools/" style="color:var(--accent)">HoovyTools</a>.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>Do you teach SFM &amp; Blender?</button>
+          <div class="faq-a"><div class="inner">Yep — my tutorials live on the <a href="/learn/" style="color:var(--accent)">Learn</a> page, sorted Easy, Medium and Hard so you can jump in at your level.</div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>How do I support you &amp; stay in touch?</button>
+          <div class="faq-a"><div class="inner">Join the <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon</a> for the full asset library, and subscribe to the newsletter below for new videos, drops and updates.</div></div>
+        </div>
       </div>
-    </section>
-
-    <!-- GALLERY -->
-    <section class="page" id="gallery" style="padding-top:.5rem">
-      <div class="section-head"><h2>Gallery</h2><span class="muted">latest media</span></div>
-      <div class="grid" id="galleryGrid"></div>
-      <p class="muted" id="galleryNote" style="margin-top:1rem;font-size:.9rem"></p>
     </section>
 
     <!-- NEWSLETTER -->
@@ -146,16 +164,32 @@
       go(0);
     })();
 
-    /* Gallery */
-    (async function () {
-      const grid = document.getElementById('galleryGrid'), note = document.getElementById('galleryNote');
-      function ph(msg) { grid.innerHTML = Array.from({ length: 4 }).map(() => '<div class="tile placeholder">Coming soon</div>').join(''); note.textContent = msg; }
-      try {
-        const res = await fetch(SUPABASE_URL + '/rest/v1/media?select=id,url,title,caption&is_archived=eq.false&order=uploaded_at.desc&limit=8', { headers: { apikey: ANON, Authorization: 'Bearer ' + ANON } });
-        const rows = res.ok ? await res.json() : [];
-        if (!rows.length) { ph('No media yet — sign in to the admin and upload to populate this gallery.'); return; }
-        grid.innerHTML = rows.map(m => { const cap = m.caption || m.title || ''; return '<div class="tile"><img loading="lazy" src="' + m.url + '" alt="' + (m.title || 'HoovyTube').replace(/"/g, '&quot;') + '">' + (cap ? '<div class="cap">' + cap.replace(/</g, '&lt;') + '</div>' : '') + '</div>'; }).join('');
-      } catch (e) { ph('Gallery is warming up — check back soon.'); }
+    /* FAQ accordion + proximity magnify (closer cursor = bigger, like the dock) */
+    (function () {
+      const faq = document.getElementById('faq'); if (!faq) return;
+      const qs = [].slice.call(faq.querySelectorAll('.faq-q'));
+      qs.forEach(function (q) {
+        q.addEventListener('click', function () {
+          const item = q.parentElement, a = item.querySelector('.faq-a');
+          const open = item.classList.toggle('open');
+          a.style.maxHeight = open ? (a.querySelector('.inner').offsetHeight + 'px') : '0';
+        });
+      });
+      if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+        let mouseY = -9999;
+        faq.addEventListener('pointermove', function (e) { mouseY = e.clientY; });
+        faq.addEventListener('pointerleave', function () { mouseY = -9999; });
+        const cur = qs.map(function () { return 1; });
+        (function tick() {
+          for (let i = 0; i < qs.length; i++) {
+            const r = qs[i].getBoundingClientRect(), c = r.top + r.height / 2, d = Math.abs(mouseY - c);
+            let target = 1; if (d < 130) { const t = 1 - d / 130; target = 1 + 0.07 * t * t; }
+            cur[i] += (target - cur[i]) * 0.2;
+            qs[i].style.transform = 'scale(' + cur[i].toFixed(3) + ')';
+          }
+          requestAnimationFrame(tick);
+        })();
+      }
     })();
 
     /* Newsletter */
