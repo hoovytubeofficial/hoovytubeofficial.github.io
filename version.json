@@ -1,12 +1,12 @@
 {
-  "version": "v260807.14 4:59a",
-  "release": 14,
-  "sha": "0ec1ec9",
-  "fullSha": "0ec1ec99603c09b4db60e573793d35eb1058f991",
+  "version": "v260807.15 5:18a",
+  "release": 15,
+  "sha": "4c8d23e",
+  "fullSha": "4c8d23e68cc6851d609d7958ed061a1d16db27f4",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmd93pd",
-  "pushedAt": "2026-08-07T06:59:13+02:00",
-  "commits": [{"sha":"0ec1ec9","message":"Use custom EASY/MEDIUM/HARD badge images in Learn picker","author":"HoovyTube"}]
+  "machine": "runnervmvrwv9",
+  "pushedAt": "2026-08-07T07:17:51+02:00",
+  "commits": [{"sha":"4c8d23e","message":"Polish: Learn badges escape+rotate, Products restructure, Main FAQ","author":"HoovyTube"}]
 }
