@@ -1,12 +1,12 @@
 {
-  "version": "v260807.31 8:21p",
-  "release": 31,
-  "sha": "3720e5b",
-  "fullSha": "3720e5b7766ebde2e2d637d79839174f070925c6",
+  "version": "v260807.32 8:43p",
+  "release": 32,
+  "sha": "4ce9d13",
+  "fullSha": "4ce9d13cbb9ed670cff69940d008eacc547de182",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T22:21:00+02:00",
-  "commits": [{"sha":"3720e5b","message":"HoovyTools page: full SFM-to-Blender documentation + SEO","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T22:43:23+02:00",
+  "commits": [{"sha":"4ce9d13","message":"Products: link Steam button to real Steam Workshop","author":"HoovyTube"}]
 }
