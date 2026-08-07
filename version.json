@@ -1,12 +1,12 @@
 {
-  "version": "v260807.06 1:46a",
-  "release": 6,
-  "sha": "c098d3f",
-  "fullSha": "c098d3fafe6d9635429ddc5c34ce57ae9676b519",
+  "version": "v260807.07 1:54a",
+  "release": 7,
+  "sha": "8288426",
+  "fullSha": "8288426d2b2c8956f1711b428b6dbdd61e04a67b",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T03:46:39+02:00",
-  "commits": [{"sha":"c098d3f","message":"Redesign welcome email (dark-hero, Gemini-style)","author":"HoovyTube"}]
+  "machine": "runnervmd93pd",
+  "pushedAt": "2026-08-07T03:54:24+02:00",
+  "commits": [{"sha":"8288426","message":"Wire welcome email to published Resend template (WELCOME_TEMPLATE_ID)","author":"HoovyTube"}]
 }
