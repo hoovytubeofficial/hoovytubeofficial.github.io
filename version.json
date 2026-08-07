@@ -1,12 +1,12 @@
 {
-  "version": "v260807.15 5:18a",
-  "release": 15,
-  "sha": "4c8d23e",
-  "fullSha": "4c8d23e68cc6851d609d7958ed061a1d16db27f4",
+  "version": "v260807.16 4:51p",
+  "release": 16,
+  "sha": "9abc7a4",
+  "fullSha": "9abc7a4d8a5d9511e70ea4ec1f15b8d3f82ae7b6",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T07:17:51+02:00",
-  "commits": [{"sha":"4c8d23e","message":"Polish: Learn badges escape+rotate, Products restructure, Main FAQ","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T18:51:01+02:00",
+  "commits": [{"sha":"9abc7a4","message":"Redesign v2: unified headers, giant hero carousel, spotlight + magnetic, newsletter popover","author":"HoovyTube"}]
 }
