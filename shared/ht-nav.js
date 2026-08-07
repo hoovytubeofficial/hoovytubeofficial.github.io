@@ -33,6 +33,21 @@
   wrap.innerHTML = html;
   document.body.appendChild(wrap);
 
+  // Scroll progress bar (top)
+  var sp = document.createElement('div');
+  sp.className = 'scroll-progress';
+  sp.innerHTML = '<div class="scroll-progress-fill"></div>';
+  document.body.appendChild(sp);
+  var fill = sp.firstChild;
+  var onScroll = function () {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    fill.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
   // Theme toggle (persisted)
   var root = document.documentElement;
   document.getElementById('htThemeToggle').addEventListener('click', function () {

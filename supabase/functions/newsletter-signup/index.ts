@@ -25,8 +25,11 @@ function welcomeHtml(firstName: string) {
   return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0;padding:0;background:#cbd4dd">
     <tr><td align="center" style="padding:28px 14px">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;font-family:Arial,Helvetica,sans-serif">
-        <tr><td align="center" style="padding:2px 0 18px">
+        <tr><td align="center" style="padding:2px 0 14px">
           <span style="font-size:26px;font-weight:800;letter-spacing:-.5px;color:#2b4056">Hoovy<span style="color:#3f6288">Tube</span></span>
+        </td></tr>
+        <tr><td style="padding-bottom:14px">
+          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/giftest.gif" width="600" alt="HoovyTube" style="width:100%;max-width:600px;border-radius:16px;display:block;border:1px solid #c3ccd6">
         </td></tr>
         <tr><td style="background:#1b2937;border-radius:20px;padding:42px 34px;text-align:center">
           <div style="font-size:42px;line-height:1;margin-bottom:12px">👋</div>
