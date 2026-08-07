@@ -1,12 +1,12 @@
 {
-  "version": "v260807.16 4:51p",
-  "release": 16,
-  "sha": "9abc7a4",
-  "fullSha": "9abc7a4d8a5d9511e70ea4ec1f15b8d3f82ae7b6",
+  "version": "v260807.17 5:27p",
+  "release": 17,
+  "sha": "2f0d04a",
+  "fullSha": "2f0d04afe96d4bce1904e87fdf1ac81c54c9aefd",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T18:51:01+02:00",
-  "commits": [{"sha":"9abc7a4","message":"Redesign v2: unified headers, giant hero carousel, spotlight + magnetic, newsletter popover","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T19:27:14+02:00",
+  "commits": [{"sha":"2f0d04a","message":"Redesign pass 2: full-bleed hero, feature sections, sharp corners, ghost dock, Products hero","author":"HoovyTube"}]
 }
