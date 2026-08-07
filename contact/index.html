@@ -1,17 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png">
   <title>Contact — HoovyTube</title>
   <meta name="description" content="Get in touch with HoovyTube and subscribe to the newsletter.">
-  <link rel="stylesheet" href="/styles/site.css">
-  <link rel="stylesheet" href="/styles/tailwind.out.css">
+  <link rel="stylesheet" href="/styles/ht.css">
+  <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
     :root { --ht-accent: #3f6288; --ht-accent-ink: #f4ebd1; --ht-bg: #cbd4dd; --ht-card: #f7f3e6; --ht-text: #2b4056; --ht-muted: #5d7083; --ht-line: #c3ccd6; --ht-input: #fffdf5; }
     * { box-sizing: border-box; }
-    body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--ht-bg); color: var(--ht-text); line-height: 1.55; }
+    body { margin: 0; padding-bottom: 120px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--ht-bg); color: var(--ht-text); line-height: 1.55; }
     .wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
     header.site { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--ht-line); }
     header.site a.brand { font-weight: 700; font-size: 1.15rem; color: var(--ht-text); text-decoration: none; letter-spacing: .3px; }
@@ -142,5 +142,6 @@
       finally { nSubmit.disabled = false; nSubmit.textContent = 'Subscribe'; }
     });
   </script>
+  <script defer src="/shared/ht-nav.js"></script>
 </body>
 </html>
