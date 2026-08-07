@@ -1,12 +1,12 @@
 {
-  "version": "v260807.24 6:27p",
-  "release": 24,
-  "sha": "abf1e04",
-  "fullSha": "abf1e04bbca91867c7e07e920ff18196499429df",
+  "version": "v260807.25 6:29p",
+  "release": 25,
+  "sha": "411590a",
+  "fullSha": "411590a897922d5884193fbeb8faea2f0d3d7dd6",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:27:15+02:00",
-  "commits": [{"sha":"abf1e04","message":"Fix: remove HOVER TO PLAY overlay; taller orbit stage so panels aren't clipped","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:29:25+02:00",
+  "commits": [{"sha":"411590a","message":"Products orbit: ease wheel-spin toward target for a smooth glide","author":"HoovyTube"}]
 }
