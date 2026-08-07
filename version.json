@@ -1,12 +1,12 @@
 {
-  "version": "v260807.02 12:16a",
-  "release": 2,
-  "sha": "e3002e9",
-  "fullSha": "e3002e98d946eaf7967112b719032dac3c476840",
+  "version": "v260807.03 1:30a",
+  "release": 3,
+  "sha": "24bef86",
+  "fullSha": "24bef8666b09ce9f733008b21b8c0d3a42d63c30",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T02:15:57+02:00",
-  "commits": [{"sha":"e3002e9","message":"Support Resend editor templates for the welcome email","author":"HoovyTube"}]
+  "machine": "runnervmd93pd",
+  "pushedAt": "2026-08-07T03:30:08+02:00",
+  "commits": [{"sha":"24bef86","message":"Add animation carousel (SFM + Blender) to homepage top","author":"HoovyTube"}]
 }
