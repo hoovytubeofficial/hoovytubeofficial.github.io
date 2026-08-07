@@ -48,6 +48,18 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
+  // Ghost dock: transparent while over a full-bleed hero, solid once scrolled past it
+  var heroEl = document.querySelector('.hero-carousel');
+  if (heroEl) {
+    var ghostUpdate = function () {
+      var limit = heroEl.offsetHeight - 90;
+      wrap.classList.toggle('ghost', window.scrollY < limit);
+    };
+    window.addEventListener('scroll', ghostUpdate, { passive: true });
+    window.addEventListener('resize', ghostUpdate);
+    ghostUpdate();
+  }
+
   // Scroll-in reveal for page sections
   var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!reduced && typeof IntersectionObserver !== 'undefined') {

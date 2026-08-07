@@ -141,6 +141,19 @@ footer.site small { font-size: .85rem; }
 .dock-item:hover .dock-label { opacity: 1; transform: translateX(-50%) translateY(0); }
 @media (max-width: 560px) { .dock { gap: 7px; padding: 8px 10px; } .dock-item { width: 40px; height: 40px; } }
 
+/* Ghost dock: transparent while over a full-bleed hero, solid once scrolled past it.
+   NB: don't transition background/border-color — the base dock uses color-mix()/token
+   colors that Chrome can't interpolate to `transparent`, which visually sticks the dock
+   at its opaque state. Switch those instantly; fade only box-shadow and icon color. */
+.dock { transition: box-shadow .3s ease; }
+.dock-item { transition: color .2s ease; }
+.dock-wrap.ghost .dock { background: transparent; border-color: transparent; box-shadow: none; backdrop-filter: none; }
+.dock-wrap.ghost .dock-item { background: transparent; border-color: transparent; color: var(--cream); }
+.dock-wrap.ghost .dock-item svg { filter: drop-shadow(0 1px 4px rgba(0,0,0,.55)); }
+.dock-wrap.ghost .dock-item:hover, .dock-wrap.ghost .dock-item.active { color: #fff; }
+.dock-wrap.ghost .dock-item.active { box-shadow: inset 0 0 0 2px rgba(255,255,255,.85); }
+.dock-wrap.ghost .dock-label { color: var(--text); }
+
 /* Topbar removed in favour of top dock */
 .topbar { display: none; }
 
@@ -161,23 +174,12 @@ footer.site small { font-size: .85rem; }
 /* --- Unified minimal page header (replaces per-page heros) --- */
 .pagehead { padding: 2.4rem 0 1.6rem; }
 .pagehead .inner { max-width: 1000px; margin: 0 auto; padding: 0 1.25rem; }
-.pagehead .eyebrow { display: inline-flex; align-items: center; gap: .6rem; color: var(--accent);
+.pagehead .eyebrow { display: block; color: var(--accent);
   font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .74rem; margin: 0 0 .7rem; }
-.pagehead .eyebrow::before { content: ""; width: 26px; height: 2px; border-radius: 2px;
-  background: linear-gradient(to right, var(--accent), transparent); }
 .pagehead h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; letter-spacing: -.02em;
   font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.05; margin: 0; color: var(--text); }
 .pagehead .ph-lead { color: var(--muted); font-size: clamp(1rem, 2.1vw, 1.12rem); max-width: 620px; margin: .8rem 0 0; }
-.pagehead .rule { max-width: 1000px; margin: 1.5rem auto 0; padding: 0 1.25rem; }
-.pagehead .rule::after { content: ""; display: block; height: 1px;
-  background: linear-gradient(to right, var(--accent), var(--line) 45%, transparent); opacity: .7; }
-/* draw-in underline accent under the title */
-.pagehead h1 { position: relative; display: inline-block; }
-.pagehead h1::after { content: ""; position: absolute; left: 0; bottom: -.34rem; height: 3px; width: 0;
-  border-radius: 3px; background: linear-gradient(to right, var(--accent), transparent);
-  animation: ph-underline 1s cubic-bezier(.16,1,.3,1) .15s forwards; }
-@keyframes ph-underline { to { width: 62%; } }
-@media (prefers-reduced-motion: reduce) { .pagehead h1::after { animation: none; width: 62%; } }
+.pagehead .rule { display: none; }
 
 /* --- Spotlight border (cursor-tracked ring glow) --- */
 .spot { position: relative; isolation: isolate; }
@@ -197,14 +199,13 @@ footer.site small { font-size: .85rem; }
 /* --- Big hero carousel (homepage) --- */
 body.home { padding-top: 0; }            /* hero sits flush at top; dock floats over it */
 .home-hero { position: relative; }
-.hero-carousel { position: relative; height: min(92vh, 900px); min-height: 460px; overflow: hidden;
-  background: #0b131c; border-bottom: 1px solid var(--line); }
+.hero-carousel { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: #0b131c; }
 .hero-carousel .hc-track { display: flex; height: 100%; transition: transform .6s cubic-bezier(.16,1,.3,1); }
 .hero-carousel .hc-slide { flex: 0 0 100%; height: 100%; position: relative; }
 .hero-carousel .hc-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .hero-carousel .hc-scrim { position: absolute; inset: 0; pointer-events: none;
   background: linear-gradient(to top, rgba(8,14,20,.86) 0%, rgba(8,14,20,.28) 42%, rgba(8,14,20,.08) 70%, rgba(8,14,20,.34) 100%); }
-.hero-lockup { position: absolute; left: 0; right: 0; bottom: clamp(3rem, 9vh, 6rem); z-index: 4;
+.hero-lockup { position: absolute; left: 0; right: 0; bottom: clamp(4.25rem, 10vh, 6.5rem); z-index: 4;
   text-align: center; padding: 0 1.25rem; color: #fff; }
 .hero-lockup .eyebrow { color: var(--cream); font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
   font-size: clamp(.72rem, 1.6vw, .86rem); margin: 0 0 .8rem; opacity: .92; }
@@ -223,23 +224,25 @@ body.home { padding-top: 0; }            /* hero sits flush at top; dock floats 
 .hero-carousel .hc-btn.prev { left: 18px; } .hero-carousel .hc-btn.next { right: 18px; }
 .hero-carousel .hc-sound { position: absolute; top: 18px; right: 18px; z-index: 5; width: 44px; height: 44px;
   border-radius: 50%; border: 1px solid rgba(255,255,255,.28); background: rgba(10,16,22,.42);
-  backdrop-filter: blur(6px); color: #fff; font-size: 18px; cursor: pointer; }
-.hero-carousel .hc-dots { position: absolute; left: 0; right: 0; bottom: 18px; z-index: 5;
+  backdrop-filter: blur(6px); color: #fff; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; }
+.hero-carousel .hc-sound svg { width: 18px; height: 18px; stroke: currentColor; fill: none; }
+.hero-carousel .hc-sound .i-on { display: none; }
+.hero-carousel .hc-sound.on .i-on { display: block; }
+.hero-carousel .hc-sound.on .i-off { display: none; }
+.hero-carousel .hc-dots { position: absolute; left: 0; right: 0; bottom: 50px; z-index: 5;
   display: flex; gap: 9px; justify-content: center; }
 .hero-carousel .hc-dots button { width: 30px; height: 4px; border-radius: 3px; border: none; padding: 0; cursor: pointer;
   background: rgba(255,255,255,.34); transition: background .2s, transform .2s; }
 .hero-carousel .hc-dots button.active { background: var(--cream); transform: scaleY(1.6); }
-.hero-scroll { position: absolute; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 5;
-  width: 40px; height: 40px; border: none; background: transparent; color: var(--cream); cursor: pointer;
+.hero-scroll { position: absolute; left: 50%; bottom: 8px; transform: translateX(-50%); z-index: 5;
+  width: 40px; height: 28px; border: none; background: transparent; color: var(--cream); cursor: pointer;
   opacity: .85; animation: hs-bob 1.8s ease-in-out infinite; }
-@keyframes hs-bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 7px); } }
+@keyframes hs-bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 6px); } }
 @media (prefers-reduced-motion: reduce) { .hero-scroll { animation: none; } }
-@media (max-width: 560px) { .hero-carousel { height: 78vh; } .hero-carousel .hc-btn { display: none; } }
+@media (max-width: 560px) { .hero-carousel { height: 100svh; } .hero-carousel .hc-btn { display: none; } }
 
-/* --- Section rhythm: consistent spacing + tick accent on headings --- */
-.section-head h2 { position: relative; padding-left: .95rem; }
-.section-head h2::before { content: ""; position: absolute; left: 0; top: .12em; bottom: .12em; width: 4px;
-  border-radius: 3px; background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 30%, transparent)); }
+/* --- Section rhythm: consistent spacing + neutral dividers --- */
 .divider { max-width: 1000px; margin: 2.6rem auto; height: 1px;
   background: linear-gradient(to right, transparent, var(--line) 20%, var(--line) 80%, transparent); }
 
@@ -278,3 +281,8 @@ body.home { padding-top: 0; }            /* hero sits flush at top; dock floats 
   .htnews { transition: opacity .2s ease; transform: none; filter: none; }
   .htnews.open { transform: none; }
 }
+
+/* --- Sharp corners: no rounded content boxes (pill buttons + dock stay round) --- */
+.card, .feat-inner, .tier, .tier-img, .orbit-wrap, .orbit-item, .embed, .product, .tile,
+.showcase-img, .htnews, .htnews input, .news-form input, .modal-box, .carousel,
+.faq, .level, .vid, .lesson { border-radius: 0 !important; }

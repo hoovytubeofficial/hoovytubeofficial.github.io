@@ -6,10 +6,11 @@
   <link rel="icon" type="image/png" href="/favicon.png">
   <title>Contact — HoovyTube</title>
   <meta name="description" content="Get in touch with HoovyTube and subscribe to the newsletter.">
-  <link rel="stylesheet" href="/styles/ht.css">
+  <link rel="stylesheet" href="/styles/ht.css?v=4">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
-    :root { --ht-accent: #3f6288; --ht-accent-ink: #f4ebd1; --ht-bg: #cbd4dd; --ht-card: #f7f3e6; --ht-text: #2b4056; --ht-muted: #5d7083; --ht-line: #c3ccd6; --ht-input: #fffdf5; }
+    /* Map to shared themeable tokens (ht.css) so the theme toggle repaints this page */
+    :root { --ht-accent: var(--accent); --ht-accent-ink: var(--accent-ink); --ht-bg: var(--bg); --ht-card: var(--panel); --ht-text: var(--text); --ht-muted: var(--muted); --ht-line: var(--line); --ht-input: var(--panel-2); }
     * { box-sizing: border-box; }
     body { margin: 0; padding-bottom: 120px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--ht-bg); color: var(--ht-text); line-height: 1.55; }
     .wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }

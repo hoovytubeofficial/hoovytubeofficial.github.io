@@ -89,7 +89,7 @@
     if (prev) prev.addEventListener('click', function () { go(idx - 1); rearm(); });
     if (next) next.addEventListener('click', function () { go(idx + 1); rearm(); });
     if (sound) sound.addEventListener('click', function () {
-      muted = !muted; sound.textContent = muted ? '🔇' : '🔊';
+      muted = !muted; sound.classList.toggle('on', !muted);
       if (vids[idx]) { vids[idx].muted = muted; if (!muted) { var p = vids[idx].play(); if (p && p.catch) p.catch(function () {}); } }
     });
 
