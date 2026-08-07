@@ -16,7 +16,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css">
+  <link rel="stylesheet" href="/styles/ht.css?v=2">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
     .explore-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.1rem; }
@@ -35,53 +35,53 @@
     .faq-a .inner { padding: 0 1.2rem 1.1rem 2.9rem; color: var(--muted); line-height: 1.65; }
   </style>
 </head>
-<body>
+<body class="home">
   <h1 class="sr-only">HoovyTube — official site</h1>
-  <div class="topbar">
-    <a class="wordmark" href="/">Hoovy<span class="dot">Tube</span></a>
-    <a class="cta" href="https://youtube.com/@HoovyTube" target="_blank" rel="noopener">Subscribe ↗</a>
-  </div>
 
-  <header class="hero">
-    <p class="eyebrow">Welcome to</p>
-    <h1>HoovyTube</h1>
-    <p class="lead">SFM &amp; Blender animations, asset packs, tutorials, and the HoovyTools add-on — all in one place.</p>
-    <div class="btns">
-      <a class="btn btn-primary" href="https://youtube.com/@HoovyTube" target="_blank" rel="noopener">▶ Watch on YouTube</a>
-      <a class="btn btn-ghost" href="#newsletter">Join the newsletter</a>
+  <!-- GIANT HERO CAROUSEL -->
+  <header class="home-hero">
+    <div class="hero-carousel" id="heroCarousel">
+      <div class="hc-track">
+        <div class="hc-slide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/animations/preview-1.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+        <div class="hc-slide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/animations/preview-2.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+        <div class="hc-slide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/animations/preview-3.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
+      </div>
+      <div class="hc-scrim"></div>
+      <button class="hc-btn prev" aria-label="Previous animation">‹</button>
+      <button class="hc-btn next" aria-label="Next animation">›</button>
+      <button class="hc-sound" aria-label="Toggle sound">🔇</button>
+
+      <div class="hero-lockup">
+        <p class="eyebrow">SFM &amp; Blender · animations · assets · tools</p>
+        <h1>HoovyTube</h1>
+        <p class="sub">Animations, asset packs, tutorials, and the HoovyTools add-on — all in one place.</p>
+        <div class="btns" style="margin-top:1.6rem">
+          <a class="btn btn-primary magnetic" data-magnetic="0.4" href="https://youtube.com/@HoovyTube" target="_blank" rel="noopener">▶ Watch on YouTube</a>
+          <a class="btn btn-ghost magnetic" data-magnetic="0.4" href="#newsletter" style="color:#fff;border-color:rgba(255,255,255,.4)">Join the newsletter</a>
+        </div>
+      </div>
+
+      <div class="hc-dots"></div>
+      <button class="hero-scroll" aria-label="Scroll down">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+      </button>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- ANIMATIONS CAROUSEL -->
-    <section class="page" id="reel" style="padding-top:1rem">
-      <div class="section-head"><h2>Animations</h2><span class="muted">SFM &amp; Blender</span></div>
-      <div class="carousel">
-        <div class="carousel-track" id="carTrack">
-          <div class="slide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/animations/preview-1.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
-          <div class="slide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/animations/preview-2.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
-          <div class="slide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/animations/preview-3.mp4" autoplay muted loop playsinline preload="metadata"></video></div>
-        </div>
-        <button class="car-btn prev" id="carPrev" aria-label="Previous animation">‹</button>
-        <button class="car-btn next" id="carNext" aria-label="Next animation">›</button>
-        <button class="car-sound" id="carSound" aria-label="Toggle sound">🔇</button>
-      </div>
-      <div class="car-dots" id="carDots"></div>
-    </section>
-
     <!-- EXPLORE (simplified links to the other pages) -->
-    <section class="page" style="padding-top:.5rem">
-      <div class="section-head"><h2>Explore</h2></div>
+    <section class="page" style="padding-top:3rem">
+      <div class="section-head"><h2>Explore</h2><span class="muted">three ways in</span></div>
       <div class="explore-grid">
-        <a class="xcard" href="/products/">
+        <a class="xcard spot" href="/products/">
           <div class="ico">📦</div><h3>Assets &amp; Products</h3>
           <p>SFM particles, animations &amp; scenebuilds on Patreon.</p><span class="go">Browse packs →</span>
         </a>
-        <a class="xcard" href="/hoovytools/">
+        <a class="xcard spot" href="/hoovytools/">
           <div class="ico">🛠️</div><h3>HoovyTools</h3>
           <p>The Blender add-on that bridges SFM into Blender.</p><span class="go">See the add-on →</span>
         </a>
-        <a class="xcard" href="/learn/">
+        <a class="xcard spot" href="/learn/">
           <div class="ico">🎓</div><h3>Learn SFM &amp; Blender</h3>
           <p>My tutorials, advanced down to beginner.</p><span class="go">Start learning →</span>
         </a>
@@ -110,21 +110,8 @@
         </div>
         <div class="faq-item">
           <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>How do I support you &amp; stay in touch?</button>
-          <div class="faq-a"><div class="inner">Join the <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon</a> for the full asset library, and subscribe to the newsletter below for new videos, drops and updates.</div></div>
+          <div class="faq-a"><div class="inner">Join the <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon</a> for the full asset library, and <a href="#newsletter" style="color:var(--accent)">subscribe to the newsletter</a> for new videos, drops and updates.</div></div>
         </div>
-      </div>
-    </section>
-
-    <!-- NEWSLETTER -->
-    <section class="page newsletter" id="newsletter">
-      <div class="card">
-        <h2>Stay in the loop</h2>
-        <p>New videos, animations, asset drops &amp; HoovyTools updates. No spam.</p>
-        <form class="news-form" id="newsForm" novalidate>
-          <input id="nEmail" type="email" placeholder="you@example.com" autocomplete="email" required aria-label="Email">
-          <button class="btn btn-primary" type="submit" id="nSubmit">Subscribe</button>
-        </form>
-        <div class="msg" id="nMsg" role="status" aria-live="polite"></div>
       </div>
     </section>
   </main>
@@ -145,25 +132,6 @@
   </footer>
 
   <script>
-    const SUPABASE_URL = 'https://iglbfojatowaxbhjubvz.supabase.co';
-    const ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnbGJmb2phdG93YXhiaGp1YnZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzgyODUsImV4cCI6MjEwMTYxNDI4NX0.H7EeaGn3qQGn6pwFnDI_QRFW3uILnwDaWB54pUbWv6g';
-
-    /* Carousel */
-    (function () {
-      const track = document.getElementById('carTrack'); if (!track) return;
-      const slides = [...track.children], vids = slides.map(s => s.querySelector('video'));
-      const dotsWrap = document.getElementById('carDots'), sound = document.getElementById('carSound');
-      let idx = 0, muted = true;
-      slides.forEach((_, i) => { const b = document.createElement('button'); if (i === 0) b.className = 'active'; b.addEventListener('click', () => go(i)); dotsWrap.appendChild(b); });
-      const dots = [...dotsWrap.children];
-      function playActive() { vids.forEach((v, i) => { if (i === idx) { v.muted = muted; v.play().catch(() => {}); } else v.pause(); }); }
-      function go(i) { idx = (i + slides.length) % slides.length; track.style.transform = 'translateX(-' + idx * 100 + '%)'; dots.forEach((d, j) => d.classList.toggle('active', j === idx)); playActive(); }
-      document.getElementById('carPrev').addEventListener('click', () => go(idx - 1));
-      document.getElementById('carNext').addEventListener('click', () => go(idx + 1));
-      sound.addEventListener('click', () => { muted = !muted; sound.textContent = muted ? '🔇' : '🔊'; vids[idx].muted = muted; if (!muted) vids[idx].play().catch(() => {}); });
-      go(0);
-    })();
-
     /* FAQ accordion + proximity magnify (closer cursor = bigger, like the dock) */
     (function () {
       const faq = document.getElementById('faq'); if (!faq) return;
@@ -191,23 +159,9 @@
         })();
       }
     })();
-
-    /* Newsletter */
-    const nForm = document.getElementById('newsForm'), nMsg = document.getElementById('nMsg'), nSubmit = document.getElementById('nSubmit');
-    nForm.addEventListener('submit', async (e) => {
-      e.preventDefault(); nMsg.textContent = ''; nMsg.className = 'msg';
-      const email = document.getElementById('nEmail').value.trim();
-      if (!email) { nMsg.textContent = 'Please enter your email.'; nMsg.className = 'msg err'; return; }
-      nSubmit.disabled = true; nSubmit.textContent = 'Subscribing…';
-      try {
-        const res = await fetch(SUPABASE_URL + '/functions/v1/newsletter-signup', { method: 'POST', headers: { 'Content-Type': 'application/json', apikey: ANON, Authorization: 'Bearer ' + ANON }, body: JSON.stringify({ email, source: 'homepage' }) });
-        const data = await res.json().catch(() => ({}));
-        if (res.ok) { nMsg.textContent = "You're subscribed — thanks!"; nMsg.className = 'msg ok'; nForm.reset(); }
-        else { nMsg.textContent = data.error || 'Could not subscribe. Please try again.'; nMsg.className = 'msg err'; }
-      } catch { nMsg.textContent = 'Network error. Please try again.'; nMsg.className = 'msg err'; }
-      finally { nSubmit.disabled = false; nSubmit.textContent = 'Subscribe'; }
-    });
   </script>
-  <script defer src="/shared/ht-nav.js"></script>
+  <script defer src="/shared/ht-nav.js?v=2"></script>
+  <script defer src="/shared/ht-ui.js?v=2"></script>
+  <script defer src="/shared/ht-newsletter.js?v=2"></script>
 </body>
 </html>

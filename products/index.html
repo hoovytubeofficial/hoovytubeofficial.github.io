@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css">
+  <link rel="stylesheet" href="/styles/ht.css?v=2">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
     /* Cosmos orbit showcase */
@@ -56,7 +56,16 @@
     <a class="cta" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon ↗</a>
   </div>
 
-  <main class="wrap page" style="padding-top:1.5rem">
+  <header class="pagehead">
+    <div class="inner">
+      <p class="eyebrow">Assets &amp; Products</p>
+      <h1>SFM asset library</h1>
+      <p class="ph-lead">600+ particle effects, 30+ scenebuilds and 400+ animations — free on the Steam Workshop, or all-in-one on Patreon.</p>
+    </div>
+    <div class="rule"></div>
+  </header>
+
+  <main class="wrap page" style="padding-top:1.6rem">
     <!-- COMMUNITY ORBIT SHOWCASE -->
     <section style="margin-bottom:3rem">
       <div class="section-head"><h2>Made by the community</h2><span class="muted">effects by HoovyTube</span></div>
@@ -75,6 +84,8 @@
       </div>
     </section>
 
+    <div class="divider"></div>
+
     <!-- ABOUT MY SFM LIBRARY + TIERS -->
     <section>
       <div class="section-head"><h2>About my SFM library project</h2><span class="muted">Steam Workshop · Patreon</span></div>
@@ -84,29 +95,29 @@
       </div>
 
       <div class="tiers">
-        <div class="tier">
+        <div class="tier spot">
           <img class="tier-img" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-particles.png" alt="SFM Particles">
           <span class="tag">Tier 1</span>
           <div class="price">$20<span> /mo</span></div>
           <h3>All Particles</h3>
           <ul><li>600+ particle effects</li><li>New effects as they drop</li></ul>
-          <a class="btn btn-ghost" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
+          <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
-        <div class="tier">
+        <div class="tier spot">
           <img class="tier-img" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-scenebuilds.png" alt="SFM Scenebuilds">
           <span class="tag">Tier 2</span>
           <div class="price">$25<span> /mo</span></div>
           <h3>Scenebuilds + Particles</h3>
           <ul><li>30+ scenebuilds</li><li>All 600+ particles</li></ul>
-          <a class="btn btn-ghost" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
+          <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
-        <div class="tier best">
+        <div class="tier best spot">
           <img class="tier-img" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-animations.png" alt="SFM Animations">
           <span class="tag">Best value</span>
           <div class="price">$30<span> /mo</span></div>
           <h3>The full library</h3>
           <ul><li>All scenebuilds</li><li>All particles</li><li>400+ animations</li></ul>
-          <a class="btn btn-primary" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Claim everything</a>
+          <a class="btn btn-primary magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Claim everything</a>
         </div>
       </div>
     </section>
@@ -115,6 +126,8 @@
   <footer class="site">
     <small>© 2026 HoovyTube. Community animations © their respective creators.</small>
   </footer>
-  <script defer src="/shared/ht-nav.js"></script>
+  <script defer src="/shared/ht-nav.js?v=2"></script>
+  <script defer src="/shared/ht-ui.js?v=2"></script>
+  <script defer src="/shared/ht-newsletter.js?v=2"></script>
 </body>
 </html>

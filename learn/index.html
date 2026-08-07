@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css">
+  <link rel="stylesheet" href="/styles/ht.css?v=2">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
     .embed { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16/9; background: #10171f; }
@@ -37,33 +37,38 @@
   </style>
 </head>
 <body>
-  <header class="hero" style="padding-bottom:1.5rem">
-    <p class="eyebrow">Tutorials</p>
-    <h1 style="font-size:clamp(2.2rem,6vw,3.6rem)">Learn SFM &amp; Blender</h1>
-    <p class="lead">Pick your level and I'll hand you the right tutorials — from first-timer basics to advanced deep-dives.</p>
+  <header class="pagehead">
+    <div class="inner">
+      <p class="eyebrow">Tutorials</p>
+      <h1>Learn SFM &amp; Blender</h1>
+      <p class="ph-lead">Pick your level and I'll hand you the right tutorials — from first-timer basics to advanced deep-dives.</p>
+    </div>
+    <div class="rule"></div>
   </header>
 
-  <main class="wrap page">
+  <main class="wrap page" style="padding-top:1.6rem">
     <!-- DIFFICULTY PICKER -->
     <section style="margin-bottom:2.6rem">
       <div class="section-head"><h2>Pick your level</h2><span class="muted">tap one</span></div>
       <div class="levels">
-        <div class="level" data-level="easy">
+        <div class="level spot" data-level="easy">
           <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-easy.png" alt="Easy"><p>Absolute basics — start here.</p><span class="count">7 tutorials</span>
         </div>
-        <div class="level" data-level="medium">
+        <div class="level spot" data-level="medium">
           <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-medium.png" alt="Medium"><p>Level up your scenes.</p><span class="count">5 tutorials</span>
         </div>
-        <div class="level" data-level="hard">
+        <div class="level spot" data-level="hard">
           <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-hard.png" alt="Hard"><p>Advanced deep-dives.</p><span class="count">4 tutorials</span>
         </div>
       </div>
     </section>
 
+    <div class="divider"></div>
+
     <!-- FULL PLAYLIST -->
     <section>
       <div class="section-head"><h2>Full playlist</h2><span class="muted">everything</span></div>
-      <div class="embed">
+      <div class="embed spot">
         <iframe src="https://www.youtube.com/embed/videoseries?list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn"
           title="HoovyTube SFM & Blender tutorials" loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -109,6 +114,8 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('open'); });
   </script>
-  <script defer src="/shared/ht-nav.js"></script>
+  <script defer src="/shared/ht-nav.js?v=2"></script>
+  <script defer src="/shared/ht-ui.js?v=2"></script>
+  <script defer src="/shared/ht-newsletter.js?v=2"></script>
 </body>
 </html>

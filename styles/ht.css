@@ -152,3 +152,129 @@ footer.site small { font-size: .85rem; }
 .reveal { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s cubic-bezier(.16,1,.3,1); }
 .reveal.in { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; } }
+
+/* ============================================================
+   v2 design language — unified header, spotlight, magnetic,
+   hero carousel, section rhythm, newsletter popover.
+   ============================================================ */
+
+/* --- Unified minimal page header (replaces per-page heros) --- */
+.pagehead { padding: 2.4rem 0 1.6rem; }
+.pagehead .inner { max-width: 1000px; margin: 0 auto; padding: 0 1.25rem; }
+.pagehead .eyebrow { display: inline-flex; align-items: center; gap: .6rem; color: var(--accent);
+  font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .74rem; margin: 0 0 .7rem; }
+.pagehead .eyebrow::before { content: ""; width: 26px; height: 2px; border-radius: 2px;
+  background: linear-gradient(to right, var(--accent), transparent); }
+.pagehead h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; letter-spacing: -.02em;
+  font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.05; margin: 0; color: var(--text); }
+.pagehead .ph-lead { color: var(--muted); font-size: clamp(1rem, 2.1vw, 1.12rem); max-width: 620px; margin: .8rem 0 0; }
+.pagehead .rule { max-width: 1000px; margin: 1.5rem auto 0; padding: 0 1.25rem; }
+.pagehead .rule::after { content: ""; display: block; height: 1px;
+  background: linear-gradient(to right, var(--accent), var(--line) 45%, transparent); opacity: .7; }
+/* draw-in underline accent under the title */
+.pagehead h1 { position: relative; display: inline-block; }
+.pagehead h1::after { content: ""; position: absolute; left: 0; bottom: -.34rem; height: 3px; width: 0;
+  border-radius: 3px; background: linear-gradient(to right, var(--accent), transparent);
+  animation: ph-underline 1s cubic-bezier(.16,1,.3,1) .15s forwards; }
+@keyframes ph-underline { to { width: 62%; } }
+@media (prefers-reduced-motion: reduce) { .pagehead h1::after { animation: none; width: 62%; } }
+
+/* --- Spotlight border (cursor-tracked ring glow) --- */
+.spot { position: relative; isolation: isolate; }
+.spot::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.4px;
+  z-index: 3; pointer-events: none; opacity: 0; transition: opacity .35s ease;
+  background: radial-gradient(180px circle at var(--mx, -200px) var(--my, -200px),
+    color-mix(in srgb, var(--accent) 92%, #fff), transparent 62%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude; }
+.spot.lit::after { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .spot::after { transition: none; } }
+
+/* --- Magnetic (cursor-drift) — JS sets transform; this just smooths spring-back --- */
+.magnetic { will-change: transform; }
+
+/* --- Big hero carousel (homepage) --- */
+body.home { padding-top: 0; }            /* hero sits flush at top; dock floats over it */
+.home-hero { position: relative; }
+.hero-carousel { position: relative; height: min(92vh, 900px); min-height: 460px; overflow: hidden;
+  background: #0b131c; border-bottom: 1px solid var(--line); }
+.hero-carousel .hc-track { display: flex; height: 100%; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+.hero-carousel .hc-slide { flex: 0 0 100%; height: 100%; position: relative; }
+.hero-carousel .hc-slide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hero-carousel .hc-scrim { position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to top, rgba(8,14,20,.86) 0%, rgba(8,14,20,.28) 42%, rgba(8,14,20,.08) 70%, rgba(8,14,20,.34) 100%); }
+.hero-lockup { position: absolute; left: 0; right: 0; bottom: clamp(3rem, 9vh, 6rem); z-index: 4;
+  text-align: center; padding: 0 1.25rem; color: #fff; }
+.hero-lockup .eyebrow { color: var(--cream); font-weight: 700; letter-spacing: .18em; text-transform: uppercase;
+  font-size: clamp(.72rem, 1.6vw, .86rem); margin: 0 0 .8rem; opacity: .92; }
+.hero-lockup h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; letter-spacing: -.02em;
+  font-size: clamp(2.8rem, 10vw, 6.2rem); line-height: .98; margin: 0; color: var(--cream);
+  text-shadow: 0 2px 0 rgba(0,0,0,.35), 0 14px 40px rgba(0,0,0,.55); }
+.hero-lockup .sub { margin: 1rem 0 0; color: #e7edf3; font-size: clamp(.95rem, 2.2vw, 1.2rem);
+  text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+/* hero controls */
+.hero-carousel .hc-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,.28); cursor: pointer; z-index: 5;
+  background: rgba(10,16,22,.42); backdrop-filter: blur(6px); color: #fff; font-size: 26px;
+  display: flex; align-items: center; justify-content: center; opacity: .7; transition: opacity .2s, background .2s; }
+.hero-carousel:hover .hc-btn { opacity: 1; }
+.hero-carousel .hc-btn:hover { background: color-mix(in srgb, var(--accent) 78%, #000); }
+.hero-carousel .hc-btn.prev { left: 18px; } .hero-carousel .hc-btn.next { right: 18px; }
+.hero-carousel .hc-sound { position: absolute; top: 18px; right: 18px; z-index: 5; width: 44px; height: 44px;
+  border-radius: 50%; border: 1px solid rgba(255,255,255,.28); background: rgba(10,16,22,.42);
+  backdrop-filter: blur(6px); color: #fff; font-size: 18px; cursor: pointer; }
+.hero-carousel .hc-dots { position: absolute; left: 0; right: 0; bottom: 18px; z-index: 5;
+  display: flex; gap: 9px; justify-content: center; }
+.hero-carousel .hc-dots button { width: 30px; height: 4px; border-radius: 3px; border: none; padding: 0; cursor: pointer;
+  background: rgba(255,255,255,.34); transition: background .2s, transform .2s; }
+.hero-carousel .hc-dots button.active { background: var(--cream); transform: scaleY(1.6); }
+.hero-scroll { position: absolute; left: 50%; bottom: 1rem; transform: translateX(-50%); z-index: 5;
+  width: 40px; height: 40px; border: none; background: transparent; color: var(--cream); cursor: pointer;
+  opacity: .85; animation: hs-bob 1.8s ease-in-out infinite; }
+@keyframes hs-bob { 0%,100% { transform: translate(-50%, 0); } 50% { transform: translate(-50%, 7px); } }
+@media (prefers-reduced-motion: reduce) { .hero-scroll { animation: none; } }
+@media (max-width: 560px) { .hero-carousel { height: 78vh; } .hero-carousel .hc-btn { display: none; } }
+
+/* --- Section rhythm: consistent spacing + tick accent on headings --- */
+.section-head h2 { position: relative; padding-left: .95rem; }
+.section-head h2::before { content: ""; position: absolute; left: 0; top: .12em; bottom: .12em; width: 4px;
+  border-radius: 3px; background: linear-gradient(var(--accent), color-mix(in srgb, var(--accent) 30%, transparent)); }
+.divider { max-width: 1000px; margin: 2.6rem auto; height: 1px;
+  background: linear-gradient(to right, transparent, var(--line) 20%, var(--line) 80%, transparent); }
+
+/* --- Newsletter popover (bottom-right, dismissible) --- */
+.htnews { position: fixed; right: 20px; bottom: 20px; z-index: 90; width: min(360px, calc(100vw - 32px));
+  border: 1px solid var(--line); border-radius: 18px; padding: 1.25rem 1.25rem 1.35rem;
+  background: linear-gradient(160deg, var(--panel), var(--panel-2));
+  box-shadow: 0 22px 55px rgba(0,0,0,.4);
+  opacity: 0; transform: translateY(18px) scale(.94); filter: blur(10px); pointer-events: none;
+  transition: opacity .3s ease, transform .35s cubic-bezier(.16,1,.3,1), filter .3s ease; }
+.htnews.open { opacity: 1; transform: none; filter: none; pointer-events: auto; }
+.htnews .hn-close { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; border-radius: 50%;
+  border: none; background: color-mix(in srgb, var(--line) 55%, transparent); color: var(--text);
+  font-size: 1rem; line-height: 1; cursor: pointer; transition: background .2s; }
+.htnews .hn-close:hover { background: var(--line); }
+.htnews .hn-eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  font-size: .68rem; margin: 0 0 .35rem; }
+.htnews h3 { font-family: 'Space Grotesk', system-ui, sans-serif; margin: 0 0 .35rem; font-size: 1.25rem; color: var(--text); }
+.htnews p { color: var(--muted); font-size: .9rem; margin: 0 0 .9rem; line-height: 1.5; }
+.htnews .hn-form { display: flex; flex-direction: column; gap: .55rem; }
+.htnews input { width: 100%; padding: .72rem .9rem; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--bg); color: var(--text); font: inherit; }
+.htnews input:focus { outline: none; border-color: var(--accent); }
+.htnews .hn-submit { justify-content: center; width: 100%; }
+.htnews .hn-msg { min-height: 1.1em; font-size: .84rem; margin-top: .1rem; }
+.htnews .hn-msg.ok { color: #4caf6d; } .htnews .hn-msg.err { color: #e06b6b; }
+/* reopen tab shown when closed */
+.htnews-tab { position: fixed; right: 20px; bottom: 20px; z-index: 89; display: inline-flex; align-items: center; gap: .5rem;
+  border: 1px solid var(--line); border-radius: 999px; padding: .6rem .95rem; cursor: pointer;
+  background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(12px);
+  color: var(--text); font: inherit; font-weight: 600; font-size: .86rem; box-shadow: 0 10px 30px rgba(0,0,0,.28);
+  transform: translateY(16px); opacity: 0; pointer-events: none; transition: opacity .25s, transform .25s; }
+.htnews-tab.show { opacity: 1; transform: none; pointer-events: auto; }
+.htnews-tab svg { width: 16px; height: 16px; stroke: var(--accent); fill: none; }
+@media (prefers-reduced-motion: reduce) {
+  .htnews { transition: opacity .2s ease; transform: none; filter: none; }
+  .htnews.open { transform: none; }
+}
