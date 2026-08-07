@@ -1,12 +1,12 @@
 {
-  "version": "v260807.13 4:54a",
-  "release": 13,
-  "sha": "eafbbb9",
-  "fullSha": "eafbbb9f655fa9bcb9a7bafdc9a8d39a40af2f9e",
+  "version": "v260807.14 4:59a",
+  "release": 14,
+  "sha": "0ec1ec9",
+  "fullSha": "0ec1ec99603c09b4db60e573793d35eb1058f991",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T06:53:55+02:00",
-  "commits": [{"sha":"eafbbb9","message":"Learn difficulty picker + HoovyTools Blender→SFM tab","author":"HoovyTube"}]
+  "machine": "runnervmd93pd",
+  "pushedAt": "2026-08-07T06:59:13+02:00",
+  "commits": [{"sha":"0ec1ec9","message":"Use custom EASY/MEDIUM/HARD badge images in Learn picker","author":"HoovyTube"}]
 }
