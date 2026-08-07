@@ -4,9 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <title>Contact — HoovyTube</title>
+  <title>Contact - HoovyTube</title>
   <meta name="description" content="Get in touch with HoovyTube and subscribe to the newsletter.">
-  <link rel="stylesheet" href="/styles/ht.css?v=7">
+  <link rel="stylesheet" href="/styles/ht.css?v=8">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
     /* Map to shared themeable tokens (ht.css) so the theme toggle repaints this page */
@@ -47,7 +47,7 @@
 
   <main class="wrap">
     <h1>Get in touch</h1>
-    <p class="lead">Questions, collaborations, or just want to say hi? Send a message — or subscribe to hear about what's next.</p>
+    <p class="lead">Questions, collaborations, or just want to say hi? Send a message - or subscribe to hear about what's next.</p>
 
     <section class="card">
       <h2>Contact</h2>
@@ -119,7 +119,7 @@
       cSubmit.disabled = true; cSubmit.textContent = 'Sending…';
       try {
         const { ok, data } = await callFn('contact-form', payload);
-        if (ok) { cMsg.textContent = 'Thanks — your message was sent!'; cMsg.className = 'msg ok'; cForm.reset(); }
+        if (ok) { cMsg.textContent = 'Thanks - your message was sent!'; cMsg.className = 'msg ok'; cForm.reset(); }
         else { cMsg.textContent = data.error || 'Something went wrong. Please try again.'; cMsg.className = 'msg err'; }
       } catch { cMsg.textContent = 'Network error. Please try again.'; cMsg.className = 'msg err'; }
       finally { cSubmit.disabled = false; cSubmit.textContent = 'Send message'; }
@@ -137,12 +137,12 @@
       nSubmit.disabled = true; nSubmit.textContent = 'Subscribing…';
       try {
         const { ok, data } = await callFn('newsletter-signup', { email, source: 'contact-page' });
-        if (ok) { nMsg.textContent = "You're subscribed — thanks!"; nMsg.className = 'msg ok'; nForm.reset(); }
+        if (ok) { nMsg.textContent = "You're subscribed - thanks!"; nMsg.className = 'msg ok'; nForm.reset(); }
         else { nMsg.textContent = data.error || 'Could not subscribe. Please try again.'; nMsg.className = 'msg err'; }
       } catch { nMsg.textContent = 'Network error. Please try again.'; nMsg.className = 'msg err'; }
       finally { nSubmit.disabled = false; nSubmit.textContent = 'Subscribe'; }
     });
   </script>
-  <script defer src="/shared/ht-nav.js?v=7"></script>
+  <script defer src="/shared/ht-nav.js?v=8"></script>
 </body>
 </html>

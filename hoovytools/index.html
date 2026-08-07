@@ -4,12 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <title>HoovyTools — HoovyTube</title>
-  <meta name="description" content="HoovyTools — the Blender add-on that imports SFM sessions into Blender. SFM → Blender session importer.">
+  <title>HoovyTools: SFM to Blender &amp; Blender to SFM Addon | HoovyTube</title>
+  <meta name="description" content="HoovyTools: the Blender addon that imports Source Filmmaker (SFM) sessions into Blender and transposes Blender work back into SFM. HoovyTools: SFM to Blender, and HoovyTools: Blender to SFM.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css?v=7">
+  <link rel="stylesheet" href="/styles/ht.css?v=8">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
     .tabs { display: flex; gap: .5rem; justify-content: center; margin: 0 0 1.8rem; flex-wrap: wrap; }
@@ -35,9 +35,9 @@
 <body>
   <header class="pagehead">
     <div class="inner">
-      <p class="eyebrow">Blender Add-on</p>
+      <p class="eyebrow">SFM ↔ Blender Addon</p>
       <h1>HoovyTools</h1>
-      <p class="ph-lead">Bring your Source Filmmaker sessions straight into Blender — models, animation, and audio — no rebuilding by hand.</p>
+      <p class="ph-lead">HoovyTools bridges Source Filmmaker and Blender, both ways. Bring your SFM sessions straight into Blender with models, animation and audio, then send your Blender work back to SFM. No rebuilding by hand.</p>
     </div>
     <div class="rule"></div>
   </header>
@@ -51,6 +51,7 @@
 
     <!-- SFM to Blender -->
     <section class="panel active" id="sfm2blender">
+      <h2 style="text-align:center;margin:0 0 1.2rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools: SFM to Blender</h2>
       <div class="embed spot">
         <iframe src="https://www.youtube.com/embed/SGEVbgdZYaY" title="HoovyTools SFM → Blender tutorial" loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -71,11 +72,11 @@
         </div>
         <div class="faq-item">
           <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>How does it work?</button>
-          <div class="faq-a"><div class="inner">Point it at your SFM session and it reads the <code>.dmx</code>, then pulls your models, animation, and now <strong>audio</strong> onto the Blender timeline — auto-timed to the frame and FPS-aware (24 → 30). No manual re-timing.</div></div>
+          <div class="faq-a"><div class="inner">Point it at your SFM session and it reads the <code>.dmx</code>, then pulls your models, animation, and now <strong>audio</strong> onto the Blender timeline - auto-timed to the frame and FPS-aware (24 → 30). No manual re-timing.</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>What's new in v1.3.1?</button>
-          <div class="faq-a"><div class="inner"><strong>Session Sounds Auto-Importer</strong> — pulls every voice line from your SFM session onto the Blender timeline, on the frame. Now faster (up to 100× on big sessions).</div></div>
+          <div class="faq-a"><div class="inner"><strong>Session Sounds Auto-Importer</strong> - pulls every voice line from your SFM session onto the Blender timeline, on the frame. Now faster (up to 100× on big sessions).</div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>Where do I get it (and updates)?</button>
@@ -83,20 +84,21 @@
         </div>
         <div class="faq-item">
           <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>Is a Blender → SFM importer coming?</button>
-          <div class="faq-a"><div class="inner">Yes — it's in the works. It'll bring Blender work back into SFM. Join the <a href="/#newsletter" style="color:var(--accent)">newsletter</a> to hear when it drops.</div></div>
+          <div class="faq-a"><div class="inner">Yes - it's in the works. It'll bring Blender work back into SFM. Join the <a href="/#newsletter" style="color:var(--accent)">newsletter</a> to hear when it drops.</div></div>
         </div>
       </div>
     </section>
 
     <!-- Blender to SFM -->
     <section class="panel" id="blender2sfm">
+      <h2 style="text-align:center;margin:0 0 1.2rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools: Blender to SFM</h2>
       <div class="embed spot">
         <iframe src="https://www.youtube.com/embed/KBpNWf9fU6Y" title="Blender → SFM tutorial" loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
       <div class="card">
-        <p style="margin:0">This tutorial shows the manual Blender → SFM workflow — but I've built an <strong style="color:var(--text)">automatic tool that does all of this by itself</strong>. It takes your Blender work and brings it back into Source Filmmaker for you, no hand-work required.</p>
+        <p style="margin:0">This tutorial shows the manual Blender → SFM workflow - but I've built an <strong style="color:var(--text)">automatic tool that does all of this by itself</strong>. It takes your Blender work and brings it back into Source Filmmaker for you, no hand-work required.</p>
       </div>
     </section>
   </main>
@@ -125,8 +127,8 @@
       });
     });
   </script>
-  <script defer src="/shared/ht-nav.js?v=7"></script>
-  <script defer src="/shared/ht-ui.js?v=7"></script>
-  <script defer src="/shared/ht-newsletter.js?v=7"></script>
+  <script defer src="/shared/ht-nav.js?v=8"></script>
+  <script defer src="/shared/ht-ui.js?v=8"></script>
+  <script defer src="/shared/ht-newsletter.js?v=8"></script>
 </body>
 </html>

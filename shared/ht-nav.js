@@ -1,4 +1,4 @@
-/* HoovyTube shared nav — injects the magnetic dock on every page + theme toggle.
+/* HoovyTube shared nav - injects the magnetic dock on every page + theme toggle.
    Include on any page with:  <script defer src="/shared/ht-nav.js"></script>
    (Set data-theme early in <head> to avoid a flash.) */
 (function () {
@@ -83,9 +83,9 @@
   // ---- Search (⌘K / "/" / dock button) ----
   (function () {
     var SEARCH = [
-      { t: 'Home', d: 'HoovyTube — animations, assets, tutorials', href: '/', k: 'home hoovytube start main' },
+      { t: 'Home', d: 'HoovyTube - animations, assets, tutorials', href: '/', k: 'home hoovytube start main' },
       { t: 'Assets & Products', d: 'SFM particles, scenebuilds & animations', href: '/products/', k: 'assets products particles scenebuilds animations patreon steam workshop library packs tiers membership sfm' },
-      { t: 'HoovyTools', d: 'Blender add-on — import SFM sessions into Blender', href: '/hoovytools/', k: 'hoovytools blender addon add-on sfm importer session dmx download audio tool' },
+      { t: 'HoovyTools', d: 'Blender add-on - import SFM sessions into Blender', href: '/hoovytools/', k: 'hoovytools blender addon add-on sfm importer session dmx download audio tool' },
       { t: 'Learn SFM & Blender', d: 'Tutorials, sorted by difficulty', href: '/learn/', k: 'learn tutorials sfm blender easy medium hard playlist guide howto beginner advanced' },
       { t: 'Contact', d: 'Get in touch', href: '/contact/', k: 'contact email message support hello' },
       { t: 'Newsletter', d: 'Subscribe for updates', href: '/#newsletter', k: 'newsletter subscribe email updates signup' },

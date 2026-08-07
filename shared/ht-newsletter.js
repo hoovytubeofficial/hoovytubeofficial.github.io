@@ -1,5 +1,5 @@
-/* HoovyTube newsletter popover — dismissible bottom-right card.
-   Opens shortly after page load, re-opens every 10–15 "button pushes",
+/* HoovyTube newsletter popover - dismissible bottom-right card.
+   Opens shortly after page load, re-opens every 10-15 "button pushes",
    closable (with a reopen tab), opens on #newsletter, and stops for good
    once the visitor subscribes. Include on every page:
      <script defer src="/shared/ht-newsletter.js"></script>                 */
@@ -27,7 +27,7 @@
       '<button class="hn-close" type="button" aria-label="Close">✕</button>' +
       '<p class="hn-eyebrow">Newsletter</p>' +
       '<h3>Stay in the loop</h3>' +
-      '<p>New videos, animations, asset drops &amp; HoovyTools updates — straight to your inbox. No spam.</p>' +
+      '<p>New videos, animations, asset drops &amp; HoovyTools updates - straight to your inbox. No spam.</p>' +
       '<form class="hn-form" novalidate>' +
         '<input type="email" placeholder="you@example.com" autocomplete="email" aria-label="Email" required>' +
         '<button class="btn btn-primary hn-submit" type="submit">Subscribe</button>' +
@@ -124,7 +124,7 @@
       }).then(function (r) {
         if (r.ok) {
           subscribed = true; set(LS, 'htnews:sub', '1');
-          msg.textContent = "You're in — thanks! 🎉"; msg.className = 'hn-msg ok';
+          msg.textContent = "You're in - thanks! 🎉"; msg.className = 'hn-msg ok';
           form.reset();
           setTimeout(function () { pop.classList.remove('open'); tab.remove(); }, 2600);
         } else {

@@ -1,4 +1,4 @@
-/* HoovyTube shared UI enhancements — loaded on every page (after ht-nav).
+/* HoovyTube shared UI enhancements - loaded on every page (after ht-nav).
    Vanilla ports of: Spotlight (cursor-tracked border glow), Magnetic (cursor drift),
    plus the homepage hero-carousel controller with scroll parallax.
    Include with:  <script defer src="/shared/ht-ui.js"></script>            */
@@ -32,7 +32,7 @@
       };
     });
     if (!els.length) return;
-    var MAX = 10;      // px — hard cap so the drift stays subtle
+    var MAX = 10;      // px - hard cap so the drift stays subtle
     var SCALE = 0.45;  // global damp on top of each element's intensity
     var clamp = function (v) { return v < -MAX ? -MAX : (v > MAX ? MAX : v); };
     var mx = -99999, my = -99999;
