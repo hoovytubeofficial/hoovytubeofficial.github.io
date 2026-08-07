@@ -1,12 +1,12 @@
 {
-  "version": "v260807.27 7:23p",
-  "release": 27,
-  "sha": "3cc96ad",
-  "fullSha": "3cc96ad330db486f4963d74dbf34a6a6004d87de",
+  "version": "v260807.28 7:42p",
+  "release": 28,
+  "sha": "12bbefd",
+  "fullSha": "12bbefd557187627d0170a2596bc73abb3a99a55",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T21:23:16+02:00",
-  "commits": [{"sha":"3cc96ad","message":"Products tiers: add expandable Read more (5 points each, gear icon per point)","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T21:42:15+02:00",
+  "commits": [{"sha":"12bbefd","message":"Products: hover-grow tier icons, always-shown points + playlist links, drag-spin orbit, new About","author":"HoovyTube"}]
 }
