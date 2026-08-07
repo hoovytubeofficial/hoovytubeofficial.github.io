@@ -14,16 +14,16 @@
   <style>
     /* Big scroll-driven 3D orbit of community animations (no box — sits on the page) */
     .orbit-hero { position: relative; width: 100%; overflow: hidden; }
-    .orbit-stage { height: min(64vh, 680px); min-height: 420px; perspective: 1600px; position: relative; }
+    .orbit-stage { height: min(62vh, 660px); min-height: 620px; perspective: 1600px; position: relative; }
     .orbit-ring { position: absolute; top: 50%; left: 50%; width: 620px; height: 349px; margin: -175px 0 0 -310px;
       --r: 560px; transform-style: preserve-3d; will-change: transform; }
     .orbit-item { position: absolute; inset: 0; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,.16);
-      box-shadow: 0 16px 40px rgba(0,0,0,.6); backface-visibility: hidden; transform: rotateY(var(--a)) translateZ(var(--r)); }
+      box-shadow: 0 14px 32px rgba(0,0,0,.45); backface-visibility: hidden; transform: rotateY(var(--a)) translateZ(var(--r)); }
     .orbit-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
     .orbit-item .credit { position: absolute; left: 0; right: 0; bottom: 0; padding: .5rem .8rem; font-size: .82rem; color: #fff;
       background: linear-gradient(transparent, rgba(0,0,0,.85)); }
     .orbit-caption { max-width: 1000px; margin: .9rem auto 0; padding: 0 1.4rem; text-align: right; color: var(--muted); font-size: .82rem; }
-    @media (max-width: 640px) { .orbit-stage { height: 46vh; } .orbit-ring { width: 380px; height: 214px; margin: -107px 0 0 -190px; --r: 344px; } }
+    @media (max-width: 640px) { .orbit-stage { height: 50vh; min-height: 340px; } .orbit-ring { width: 380px; height: 214px; margin: -107px 0 0 -190px; --r: 344px; } }
 
     /* Membership block — its own framed box */
     .membership-box { border: 1px solid var(--line); background: var(--panel-2); padding: 2.2rem; margin-top: 3.2rem; }
