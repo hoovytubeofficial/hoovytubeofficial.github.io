@@ -27,11 +27,14 @@
       return {
         el: el,
         intensity: parseFloat(el.getAttribute('data-magnetic')) || 0.3,
-        range: parseFloat(el.getAttribute('data-magnetic-range')) || 200,
+        range: parseFloat(el.getAttribute('data-magnetic-range')) || 120,
         cx: 0, cy: 0, tx: 0, ty: 0
       };
     });
     if (!els.length) return;
+    var MAX = 10;      // px — hard cap so the drift stays subtle
+    var SCALE = 0.45;  // global damp on top of each element's intensity
+    var clamp = function (v) { return v < -MAX ? -MAX : (v > MAX ? MAX : v); };
     var mx = -99999, my = -99999;
     window.addEventListener('pointermove', function (e) { mx = e.clientX; my = e.clientY; }, { passive: true });
     (function tick() {
@@ -39,7 +42,7 @@
         var m = els[i], r = m.el.getBoundingClientRect();
         var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
         var dx = mx - cx, dy = my - cy, dist = Math.hypot(dx, dy);
-        if (dist < m.range) { m.tx = dx * m.intensity; m.ty = dy * m.intensity; }
+        if (dist < m.range) { m.tx = clamp(dx * m.intensity * SCALE); m.ty = clamp(dy * m.intensity * SCALE); }
         else { m.tx = 0; m.ty = 0; }
         m.cx += (m.tx - m.cx) * 0.18;
         m.cy += (m.ty - m.cy) * 0.18;

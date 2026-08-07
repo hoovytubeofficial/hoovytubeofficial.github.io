@@ -52,7 +52,7 @@ h1, h2, h3, .wordmark { font-family: 'Space Grotesk', system-ui, sans-serif; let
 
 /* Sections */
 section { scroll-margin-top: 2rem; }
-.section-head { display: flex; align-items: baseline; justify-content: space-between; margin: 0 0 1.5rem; gap: 1rem; }
+.section-head { display: flex; align-items: baseline; justify-content: center; text-align: center; margin: 0 0 1.5rem; gap: 1rem; }
 .section-head h2 { font-size: 1.6rem; margin: 0; }
 .section-head .muted { font-size: .95rem; }
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 2rem; }
@@ -173,12 +173,12 @@ footer.site small { font-size: .85rem; }
 
 /* --- Unified minimal page header (replaces per-page heros) --- */
 .pagehead { padding: 2.4rem 0 1.6rem; }
-.pagehead .inner { max-width: 1000px; margin: 0 auto; padding: 0 1.25rem; }
+.pagehead .inner { max-width: 1000px; margin: 0 auto; padding: 0 1.25rem; text-align: center; }
 .pagehead .eyebrow { display: block; color: var(--accent);
   font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .74rem; margin: 0 0 .7rem; }
 .pagehead h1 { font-family: 'Space Grotesk', system-ui, sans-serif; font-weight: 700; letter-spacing: -.02em;
   font-size: clamp(1.9rem, 4.6vw, 2.9rem); line-height: 1.05; margin: 0; color: var(--text); }
-.pagehead .ph-lead { color: var(--muted); font-size: clamp(1rem, 2.1vw, 1.12rem); max-width: 620px; margin: .8rem 0 0; }
+.pagehead .ph-lead { color: var(--muted); font-size: clamp(1rem, 2.1vw, 1.12rem); max-width: 620px; margin: .8rem auto 0; }
 .pagehead .rule { display: none; }
 
 /* --- Spotlight border (cursor-tracked ring glow) --- */
@@ -222,6 +222,7 @@ body.home { padding-top: 0; }            /* hero sits flush at top; dock floats 
 .hero-carousel:hover .hc-btn { opacity: 1; }
 .hero-carousel .hc-btn:hover { background: color-mix(in srgb, var(--accent) 78%, #000); }
 .hero-carousel .hc-btn.prev { left: 18px; } .hero-carousel .hc-btn.next { right: 18px; }
+.hero-carousel .hc-btn svg { width: 24px; height: 24px; stroke: currentColor; fill: none; }
 .hero-carousel .hc-sound { position: absolute; top: 18px; right: 18px; z-index: 5; width: 44px; height: 44px;
   border-radius: 50%; border: 1px solid rgba(255,255,255,.28); background: rgba(10,16,22,.42);
   backdrop-filter: blur(6px); color: #fff; cursor: pointer;
@@ -243,6 +244,7 @@ body.home { padding-top: 0; }            /* hero sits flush at top; dock floats 
 @media (max-width: 560px) { .hero-carousel { height: 100svh; } .hero-carousel .hc-btn { display: none; } }
 
 /* --- Section rhythm: consistent spacing + neutral dividers --- */
+.section-head .muted { display: none; }   /* drop the right-side grey subtitles */
 .divider { max-width: 1000px; margin: 2.6rem auto; height: 1px;
   background: linear-gradient(to right, transparent, var(--line) 20%, var(--line) 80%, transparent); }
 
@@ -281,6 +283,24 @@ body.home { padding-top: 0; }            /* hero sits flush at top; dock floats 
   .htnews { transition: opacity .2s ease; transform: none; filter: none; }
   .htnews.open { transform: none; }
 }
+
+/* --- Nav search overlay (command palette) --- */
+.search-overlay { position: fixed; inset: 0; z-index: 120; display: none; align-items: flex-start; justify-content: center;
+  padding: 12vh 1rem 1rem; background: rgba(10,18,26,.55); backdrop-filter: blur(4px); }
+.search-overlay.open { display: flex; }
+.search-box { width: min(560px, 100%); background: var(--panel); border: 1px solid var(--line);
+  box-shadow: 0 26px 64px rgba(0,0,0,.45); overflow: hidden; }
+.search-inputwrap { display: flex; align-items: center; gap: .7rem; padding: .9rem 1.1rem; border-bottom: 1px solid var(--line); }
+.search-inputwrap svg { width: 20px; height: 20px; stroke: var(--muted); fill: none; flex: 0 0 auto; }
+.search-input { flex: 1; border: none; background: none; color: var(--text); font: inherit; font-size: 1.05rem; outline: none; }
+.search-results { max-height: 56vh; overflow: auto; }
+.search-result { display: flex; flex-direction: column; gap: .12rem; padding: .8rem 1.1rem; text-decoration: none; color: var(--text);
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 55%, transparent); }
+.search-result:last-child { border-bottom: none; }
+.search-result:hover, .search-result.sel { background: var(--panel-2); }
+.search-result .st { font-weight: 600; }
+.search-result .sd { color: var(--muted); font-size: .85rem; }
+.search-empty { padding: 1.2rem; color: var(--muted); text-align: center; }
 
 /* --- Sharp corners: no rounded content boxes (pill buttons + dock stay round) --- */
 .card, .feat-inner, .tier, .tier-img, .orbit-wrap, .orbit-item, .embed, .product, .tile,

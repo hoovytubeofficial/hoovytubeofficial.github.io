@@ -138,14 +138,15 @@
       });
     });
 
-    // Auto-open: on #newsletter immediately, else shortly after load
-    // (unless the visitor closed it in the last 30s while navigating).
+    // Auto-open once per browser session (i.e. when they first arrive at the
+    // site), plus immediately on #newsletter. Internal page-to-page navigation
+    // in the same session will NOT re-pop it.
     tab.classList.add('show');
     if (location.hash === '#newsletter') {
       setTimeout(open, 250);
-    } else {
-      var closedAt = parseInt(get(LS, 'htnews:closedAt') || '0', 10) || 0;
-      if (Date.now() - closedAt > 30000) setTimeout(open, 3200);
+    } else if (!get(SS, 'htnews:autoOpened')) {
+      set(SS, 'htnews:autoOpened', '1');
+      setTimeout(open, 3200);
     }
 
     // let other scripts open it via location.hash change

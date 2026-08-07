@@ -9,38 +9,34 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css?v=4">
+  <link rel="stylesheet" href="/styles/ht.css?v=6">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
-    /* Cosmos orbit showcase */
-    .orbit-wrap { position: relative; border: 1px solid var(--line); border-radius: 20px; overflow: hidden;
-      background: radial-gradient(circle at 50% 38%, #1c2c3e, #0b131c); }
-    .orbit-wrap::before { content: ""; position: absolute; inset: 0; opacity: .5; pointer-events: none;
-      background-image:
-        radial-gradient(1px 1px at 15% 25%, #fff, transparent), radial-gradient(1px 1px at 70% 60%, #cfe6ff, transparent),
-        radial-gradient(1px 1px at 40% 80%, #fff, transparent), radial-gradient(1.5px 1.5px at 85% 30%, #fff, transparent),
-        radial-gradient(1px 1px at 25% 65%, #bcd, transparent), radial-gradient(1px 1px at 60% 15%, #fff, transparent); }
-    .orbit-stage { height: 620px; perspective: 1500px; position: relative; }
-    .orbit-ring { position: absolute; top: 50%; left: 50%; width: 400px; height: 225px; margin: -112px 0 0 -200px;
-      --r: 480px; transform-style: preserve-3d; animation: orbit 48s linear infinite; }
-    .orbit-stage:hover .orbit-ring { animation-play-state: paused; }
-    .orbit-item { position: absolute; inset: 0; border-radius: 12px; overflow: hidden; background: #000;
-      border: 1px solid rgba(255,255,255,.16); box-shadow: 0 12px 34px rgba(0,0,0,.55); backface-visibility: hidden;
-      transform: rotateY(var(--a)) translateZ(var(--r)); }
-    .orbit-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .orbit-item .credit { position: absolute; left: 0; right: 0; bottom: 0; padding: .4rem .7rem; font-size: .74rem; color: #fff;
-      background: linear-gradient(transparent, rgba(0,0,0,.85)); }
-    .orbit-hint { position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; color: #9fb3c8; font-size: .78rem; }
-    @keyframes orbit { from { transform: rotateY(0); } to { transform: rotateY(360deg); } }
-    @media (max-width: 640px) { .orbit-stage { height: 380px; } .orbit-ring { width: 240px; height: 135px; margin: -68px 0 0 -120px; --r: 260px; } }
-    @media (prefers-reduced-motion: reduce) { .orbit-ring { animation: none; } }
+    /* Full-bleed community animations hero */
+    .fbhero { position: relative; width: 100%; height: min(74vh, 760px); min-height: 420px; overflow: hidden;
+      background: #0b131c; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .fbhero-track { display: flex; height: 100%; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+    .fbslide { flex: 0 0 100%; height: 100%; position: relative; }
+    .fbslide video { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .fbslide .fbcredit { position: absolute; left: 0; bottom: 0; padding: .6rem 1.1rem; color: #fff; font-size: .9rem;
+      background: linear-gradient(transparent, rgba(0,0,0,.82)); }
+    .fbbtn { position: absolute; top: 50%; transform: translateY(-50%); width: 50px; height: 50px; border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.28); background: rgba(10,16,22,.42); backdrop-filter: blur(6px); color: #fff;
+      font-size: 26px; cursor: pointer; z-index: 3; display: flex; align-items: center; justify-content: center; opacity: .75; transition: opacity .2s; }
+    .fbhero:hover .fbbtn { opacity: 1; } .fbbtn.prev { left: 16px; } .fbbtn.next { right: 16px; }
+    .fbbtn svg { width: 24px; height: 24px; stroke: currentColor; fill: none; }
+    .fbdots { position: absolute; left: 0; right: 0; bottom: 14px; z-index: 3; display: flex; gap: 8px; justify-content: center; }
+    .fbdots button { width: 30px; height: 4px; border: none; padding: 0; cursor: pointer; background: rgba(255,255,255,.35); }
+    .fbdots button.active { background: var(--cream); }
+    @media (max-width: 640px) { .fbhero { height: 62vh; } .fbbtn { display: none; } }
+    @media (prefers-reduced-motion: reduce) { .fbhero-track { transition: none; } }
 
     /* Patreon tiers */
     .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem; }
     .tier { border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem; background: var(--panel); display: flex; flex-direction: column; }
     .tier.best { border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
     .tier .tag { align-self: flex-start; font-size: .68rem; font-weight: 700; letter-spacing: .05em; background: var(--accent); color: var(--accent-ink); padding: .22rem .55rem; border-radius: 999px; margin-bottom: .6rem; text-transform: uppercase; }
-    .tier-img { width: 100%; aspect-ratio: 3/2; object-fit: cover; margin-bottom: .9rem; border: 1px solid var(--line); }
+    .tier-img { display: block; width: calc(100% + 3.2rem); margin: -1.6rem -1.6rem 1.1rem; aspect-ratio: 4/3; object-fit: cover; border-bottom: 1px solid var(--line); }
     .tier .price { font-family: 'Space Grotesk', sans-serif; font-size: 2.1rem; font-weight: 700; color: var(--accent); line-height: 1; }
     .tier .price span { font-size: .85rem; color: var(--muted); font-weight: 500; }
     .tier h3 { margin: .5rem 0 .8rem; font-size: 1.1rem; }
@@ -62,36 +58,36 @@
     </div>
   </header>
 
-  <main class="wrap page" style="padding-top:1rem">
-    <!-- COMMUNITY ORBIT SHOWCASE (page hero) -->
-    <section style="margin-bottom:3rem">
-      <div class="section-head"><h2>Made by the community</h2><span class="muted">effects by HoovyTube</span></div>
-      <p class="muted" style="max-width:680px;margin:0 0 1.8rem;font-size:1.05rem;line-height:1.6">600+ particle effects, 30+ scenebuilds and 400+ animations — free on the Steam Workshop, or all-in-one on Patreon. Below, animations by community creators using HoovyTube effects.</p>
-      <div class="orbit-wrap">
-        <div class="orbit-stage">
-          <div class="orbit-ring">
-            <div class="orbit-item" style="--a:0deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/dafuqboom.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">DaFuq!?Boom!</span></div>
-            <div class="orbit-item" style="--a:60deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/dydder.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">Dydder Floutin</span></div>
-            <div class="orbit-item" style="--a:120deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/winglet.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">The Winglet</span></div>
-            <div class="orbit-item" style="--a:180deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/thunderdroid.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">ThunderDroid</span></div>
-            <div class="orbit-item" style="--a:240deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/hoovytube.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">HoovyTube</span></div>
-            <div class="orbit-item" style="--a:300deg"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/virlance.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">Virlance</span></div>
-          </div>
-          <div class="orbit-hint">hover to pause · animations by community creators using HoovyTube effects</div>
-        </div>
-      </div>
+  <!-- Full-bleed community animations hero -->
+  <section class="fbhero">
+    <div class="fbhero-track" id="fbTrack">
+      <div class="fbslide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/dafuqboom.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="fbcredit">DaFuq!?Boom!</span></div>
+      <div class="fbslide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/dydder.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="fbcredit">Dydder Floutin</span></div>
+      <div class="fbslide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/winglet.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="fbcredit">The Winglet</span></div>
+      <div class="fbslide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/thunderdroid.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="fbcredit">ThunderDroid</span></div>
+      <div class="fbslide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/hoovytube.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="fbcredit">HoovyTube</span></div>
+      <div class="fbslide"><video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/community/virlance.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="fbcredit">Virlance</span></div>
+    </div>
+    <button class="fbbtn prev" aria-label="Previous animation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+    <button class="fbbtn next" aria-label="Next animation"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+    <div class="fbdots" id="fbDots"></div>
+  </section>
+
+  <main class="wrap page" style="padding-top:2.2rem">
+    <section style="margin-bottom:2.4rem">
+      <div class="section-head"><h2>Made by the community</h2></div>
+      <p class="muted" style="max-width:680px;margin:0;font-size:1.05rem;line-height:1.6">600+ particle effects, 30+ scenebuilds and 400+ animations — free on the Steam Workshop, or all-in-one on Patreon. The animations above are by community creators using HoovyTube effects.</p>
     </section>
 
     <div class="divider"></div>
 
     <!-- ABOUT MY SFM LIBRARY + TIERS -->
     <section>
-      <div class="section-head"><h2>About my SFM library project</h2><span class="muted">Steam Workshop · Patreon</span></div>
-      <div class="card" style="margin-bottom:1.6rem">
-        <p>For the past <strong style="color:var(--text)">8–9 years</strong> I've worked hand-in-hand with SFM animators — and I never left the community, because I genuinely love collaborating with people.</p>
-        <p style="margin-bottom:0">Work that used to be <strong style="color:var(--text)">exclusive to other creators</strong> is now free on the <a href="https://steamcommunity.com/workshop/" target="_blank" rel="noopener" style="color:var(--accent)">Steam Workshop</a>, or accessible on <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon / HoovyTube</a> — grab individual packs from the Patreon Shop, or claim the full library with a membership below.</p>
-      </div>
+      <div class="section-head"><h2>About my SFM library project</h2></div>
+      <p style="color:var(--muted);margin:0 0 1rem;max-width:720px;line-height:1.65">For the past <strong style="color:var(--text)">8–9 years</strong> I've worked hand-in-hand with SFM animators — and I never left the community, because I genuinely love collaborating with people.</p>
+      <p style="color:var(--muted);margin:0;max-width:720px;line-height:1.65">Work that used to be <strong style="color:var(--text)">exclusive to other creators</strong> is now free on the <a href="https://steamcommunity.com/workshop/" target="_blank" rel="noopener" style="color:var(--accent)">Steam Workshop</a>, or accessible on <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon / HoovyTube</a> — grab individual packs from the Patreon Shop, or claim the full library with a membership below.</p>
 
+      <div class="section-head" style="margin-top:2.6rem"><h2>Membership</h2></div>
       <div class="tiers">
         <div class="tier spot">
           <img class="tier-img" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/product-particles.png" alt="SFM Particles">
@@ -124,8 +120,30 @@
   <footer class="site">
     <small>© 2026 HoovyTube. Community animations © their respective creators.</small>
   </footer>
-  <script defer src="/shared/ht-nav.js?v=2"></script>
-  <script defer src="/shared/ht-ui.js?v=2"></script>
-  <script defer src="/shared/ht-newsletter.js?v=2"></script>
+  <script>
+    /* Full-bleed community animations carousel */
+    (function () {
+      var track = document.getElementById('fbTrack'); if (!track) return;
+      var slides = [].slice.call(track.children), vids = slides.map(function (s) { return s.querySelector('video'); });
+      var dotsWrap = document.getElementById('fbDots'), hero = track.closest('.fbhero');
+      var idx = 0, timer = null;
+      slides.forEach(function (_, i) {
+        var b = document.createElement('button'); b.setAttribute('aria-label', 'Animation ' + (i + 1));
+        if (i === 0) b.className = 'active';
+        b.addEventListener('click', function () { go(i); rearm(); });
+        dotsWrap.appendChild(b);
+      });
+      var dots = [].slice.call(dotsWrap.children);
+      function playActive() { vids.forEach(function (v, i) { if (!v) return; if (i === idx) { var p = v.play(); if (p && p.catch) p.catch(function () {}); } else v.pause(); }); }
+      function go(i) { idx = (i + slides.length) % slides.length; track.style.transform = 'translateX(-' + idx * 100 + '%)'; dots.forEach(function (d, j) { d.classList.toggle('active', j === idx); }); playActive(); }
+      function rearm() { if (timer) clearInterval(timer); timer = setInterval(function () { go(idx + 1); }, 7000); }
+      hero.querySelector('.fbbtn.prev').addEventListener('click', function () { go(idx - 1); rearm(); });
+      hero.querySelector('.fbbtn.next').addEventListener('click', function () { go(idx + 1); rearm(); });
+      go(0); rearm();
+    })();
+  </script>
+  <script defer src="/shared/ht-nav.js?v=6"></script>
+  <script defer src="/shared/ht-ui.js?v=6"></script>
+  <script defer src="/shared/ht-newsletter.js?v=6"></script>
 </body>
 </html>
