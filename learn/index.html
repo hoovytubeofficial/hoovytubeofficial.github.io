@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png">
   <title>Learn SFM & Blender — HoovyTube</title>
-  <meta name="description" content="HoovyTube's Source Filmmaker and Blender tutorials.">
+  <meta name="description" content="HoovyTube's Source Filmmaker and Blender tutorials, by difficulty.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -14,47 +14,100 @@
   <style>
     .embed { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16/9; background: #10171f; }
     .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+    @media (max-width: 560px) { .levels { grid-template-columns: 1fr; } }
+    .level { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 1.6rem 1.2rem; text-align: center; cursor: pointer; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .level:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
+    .level .emoji { font-size: 2.6rem; line-height: 1; }
+    .level h3 { margin: .6rem 0 .3rem; font-size: 1.3rem; }
+    .level p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .level .count { display: inline-block; margin-top: .7rem; font-size: .72rem; font-weight: 700; color: var(--accent-ink); background: var(--accent); padding: .2rem .65rem; border-radius: 999px; }
+    .modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; background: rgba(10,18,26,.62); backdrop-filter: blur(5px); }
+    .modal.open { display: flex; }
+    .modal-box { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; max-width: 780px; width: 100%; max-height: 86vh; overflow: auto; padding: 1.6rem; }
+    .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
+    .modal-head h2 { margin: 0; font-size: 1.4rem; }
+    .modal-close { border: none; background: var(--panel-2); color: var(--text); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
+    .vid-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; }
+    .vid { display: block; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); text-decoration: none; position: relative; }
+    .vid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .vid .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2rem; background: rgba(0,0,0,.18); opacity: 0; transition: opacity .2s; }
+    .vid:hover .play { opacity: 1; }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <a class="wordmark" href="/">Hoovy<span class="dot">Tube</span></a>
-    <a class="cta" href="https://www.youtube.com/watch?v=SGEVbgdZYaY&list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn" target="_blank" rel="noopener">YouTube ↗</a>
-  </div>
-
   <header class="hero" style="padding-bottom:1.5rem">
     <p class="eyebrow">Tutorials</p>
     <h1 style="font-size:clamp(2.2rem,6vw,3.6rem)">Learn SFM &amp; Blender</h1>
-    <p class="lead">My Source Filmmaker &amp; Blender tutorials — from advanced deep-dives down to the beginner basics.</p>
+    <p class="lead">Pick your level and I'll hand you the right tutorials — from first-timer basics to advanced deep-dives.</p>
   </header>
 
   <main class="wrap page">
-    <div class="embed">
-      <iframe src="https://www.youtube.com/embed/videoseries?list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn"
-        title="HoovyTube SFM & Blender tutorials" loading="lazy"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-    </div>
+    <!-- DIFFICULTY PICKER -->
+    <section style="margin-bottom:2.6rem">
+      <div class="section-head"><h2>Pick your level</h2><span class="muted">tap one</span></div>
+      <div class="levels">
+        <div class="level" data-level="easy">
+          <div class="emoji">🍼</div><h3>Easy</h3><p>Absolute basics — start here.</p><span class="count">7 tutorials</span>
+        </div>
+        <div class="level" data-level="medium">
+          <div class="emoji">🎓</div><h3>Medium</h3><p>Level up your scenes.</p><span class="count">5 tutorials</span>
+        </div>
+        <div class="level" data-level="hard">
+          <div class="emoji">☕</div><h3>Hard</h3><p>Advanced deep-dives.</p><span class="count">4 tutorials</span>
+        </div>
+      </div>
+    </section>
 
-    <div class="btns" style="margin-top:1.5rem">
-      <a class="btn btn-primary" href="https://www.youtube.com/watch?v=SGEVbgdZYaY&list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn" target="_blank" rel="noopener">▶ Open full playlist</a>
-    </div>
-
-    <!-- Hand-ordered hardest → easiest list. Paste your video titles + links and I'll fill this in. -->
-    <section style="margin-top:2.5rem">
-      <div class="section-head"><h2>Hardest → easiest</h2><span class="muted">curated order</span></div>
-      <div class="lesson-list">
-        <a class="lesson" href="https://www.youtube.com/watch?v=SGEVbgdZYaY&list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn" target="_blank" rel="noopener">
-          <span class="num">1</span><span class="t">Start the playlist</span><span class="lvl">▶</span>
-        </a>
-        <div class="lesson" style="cursor:default"><span class="num" style="background:var(--muted)">•</span><span class="t muted">Give me the tutorial titles and I'll list each one here, ordered advanced → beginner.</span></div>
+    <!-- FULL PLAYLIST -->
+    <section>
+      <div class="section-head"><h2>Full playlist</h2><span class="muted">everything</span></div>
+      <div class="embed">
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn"
+          title="HoovyTube SFM & Blender tutorials" loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
     </section>
   </main>
 
-  <footer class="site">
-    <small>© 2026 HoovyTube. All rights reserved.</small>
-  </footer>
+  <!-- MODAL -->
+  <div class="modal" id="lvlModal" aria-hidden="true">
+    <div class="modal-box" role="dialog" aria-modal="true">
+      <div class="modal-head">
+        <h2 id="mTitle">Tutorials</h2>
+        <button class="modal-close" id="mClose" aria-label="Close">✕</button>
+      </div>
+      <div class="vid-grid" id="vidGrid"></div>
+    </div>
+  </div>
+
+  <footer class="site"><small>© 2026 HoovyTube. All rights reserved.</small></footer>
+
+  <script>
+    var LEVELS = {
+      easy:   { title: '🍼 Easy · Start here', ids: ['YmSwhRcUjhE','x1QJcaWRu80','_szeNOlH1iM','JJ0fv2nM-WY','KaL8Ox3yCyU','GqgOMOyz6_Q','C4-EtGZaT9g'] },
+      medium: { title: '🎓 Medium · Level up', ids: ['SEUJu0mizQQ','GqgOMOyz6_Q','2DxrbY0qxrE','KBpNWf9fU6Y','B2SGgXCNj20'] },
+      hard:   { title: '☕ Hard · Deep dives', ids: ['wFKL-Ncl6Vc','THCqLcG8MqM','bzLlSpB_sMQ','0nK5XmZHeec'] }
+    };
+    var modal = document.getElementById('lvlModal');
+    var grid = document.getElementById('vidGrid');
+    var mTitle = document.getElementById('mTitle');
+    function openLevel(k) {
+      var L = LEVELS[k]; if (!L) return;
+      mTitle.textContent = L.title;
+      grid.innerHTML = L.ids.map(function (id, i) {
+        return '<a class="vid" href="https://youtu.be/' + id + '" target="_blank" rel="noopener">' +
+          '<img loading="lazy" src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="Tutorial ' + (i + 1) + '">' +
+          '<span class="play">▶</span></a>';
+      }).join('');
+      modal.classList.add('open');
+    }
+    document.querySelectorAll('.level').forEach(function (el) { el.addEventListener('click', function () { openLevel(el.dataset.level); }); });
+    document.getElementById('mClose').addEventListener('click', function () { modal.classList.remove('open'); });
+    modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('open'); });
+  </script>
   <script defer src="/shared/ht-nav.js"></script>
 </body>
 </html>

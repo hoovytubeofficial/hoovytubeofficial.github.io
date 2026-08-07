@@ -35,7 +35,7 @@
 <body>
   <header class="hero" style="padding-bottom:.5rem">
     <p class="eyebrow">Blender Add-on</p>
-    <img class="ht-logo" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/hoovytools-logo.jpg" alt="HoovyTools logo">
+    <h1 style="font-size:clamp(2.2rem,6vw,3.4rem)">HoovyTools</h1>
     <p class="lead">Bring your Source Filmmaker sessions straight into Blender — models, animation, and audio — no rebuilding by hand.</p>
   </header>
 
@@ -43,7 +43,7 @@
     <!-- Direction toggle -->
     <div class="tabs">
       <button class="tab active" data-tab="sfm2blender">SFM → Blender</button>
-      <button class="tab" data-tab="blender2sfm" disabled>Blender → SFM <span class="soon">Coming soon</span></button>
+      <button class="tab" data-tab="blender2sfm">Blender → SFM</button>
     </div>
 
     <!-- SFM to Blender -->
@@ -84,11 +84,15 @@
       </div>
     </section>
 
-    <!-- Blender to SFM (coming soon) -->
+    <!-- Blender to SFM -->
     <section class="panel" id="blender2sfm">
-      <div class="coming">
-        <h2 style="margin:0 0 .5rem">Blender → SFM</h2>
-        <p>Coming soon. It'll bring your Blender work back into Source Filmmaker.<br>Subscribe to the <a href="/#newsletter" style="color:var(--accent)">newsletter</a> to be first to know.</p>
+      <div class="embed">
+        <iframe src="https://www.youtube.com/embed/KBpNWf9fU6Y" title="Blender → SFM tutorial" loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+      </div>
+      <div class="card">
+        <p style="margin:0">This tutorial shows the manual Blender → SFM workflow — but I've built an <strong style="color:var(--text)">automatic tool that does all of this by itself</strong>. It takes your Blender work and brings it back into Source Filmmaker for you, no hand-work required.</p>
       </div>
     </section>
   </main>
