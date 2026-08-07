@@ -1,12 +1,12 @@
 {
-  "version": "v260807.29 7:58p",
-  "release": 29,
-  "sha": "cd6c19a",
-  "fullSha": "cd6c19a044428f3edd41ffdfd40986263dc3ab64",
+  "version": "v260807.30 8:06p",
+  "release": 30,
+  "sha": "f2a1319",
+  "fullSha": "f2a13197cf169c8080502f99c603088b7e7b249b",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T21:57:53+02:00",
-  "commits": [{"sha":"cd6c19a","message":"Products cinematic pass + SEO naming + remove em-dashes","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T22:06:32+02:00",
+  "commits": [{"sha":"f2a1319","message":"Products: fix dock overlap, scroll-driven cinematic, blue free callout; rename nav items","author":"HoovyTube"}]
 }
