@@ -1,12 +1,12 @@
 {
-  "version": "v260807.20 6:13p",
-  "release": 20,
-  "sha": "6130a9d",
-  "fullSha": "6130a9db89829176754db4461af6c7d5ad737fb9",
+  "version": "v260807.21 6:17p",
+  "release": 21,
+  "sha": "d1d8ea6",
+  "fullSha": "d1d8ea6eacb6e169fdc819eea14e8dc7382f1ee7",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:13:26+02:00",
-  "commits": [{"sha":"6130a9d","message":"Learn: inline expanding list (no modal); Products orbit: out of the box, bigger, wheel-spin","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:17:30+02:00",
+  "commits": [{"sha":"d1d8ea6","message":"Products: move the community caption below the orbit, right-aligned","author":"HoovyTube"}]
 }
