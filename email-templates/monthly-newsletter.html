@@ -1,85 +1,83 @@
 <!--
-  HoovyTube — Monthly Newsletter template
-  =======================================
+  HoovyTube — Monthly Newsletter template (image-ready)
+  =====================================================
   HOW TO USE (about 2 minutes each month):
    1. Resend → Broadcasts → Create broadcast
    2. Audience: "HoovyTube Newsletter"  |  From: newsletter@hoovytube.com
    3. Switch the editor to "Code"/HTML and paste this whole file.
-   4. Edit only the bits marked  << EDIT >>  (subject, intro, the story blocks, the video link).
-   5. Leave {{{RESEND_UNSUBSCRIBE_URL}}} and the address line — they're legally required.
-   6. Send now, or Schedule.
-  Tip: keep this as a saved draft and DUPLICATE it each month so you only ever change words.
+   4. Edit the bits marked  << EDIT >>  (subject, headline, text, links).
+   5. IMAGES: replace each  << IMAGE >>  block with:  <img src="URL" width="552" style="width:100%;border-radius:12px;display:block" alt="...">
+      Host images in your Supabase "media" bucket (same place as the videos) and use the public URL.
+      Ask Claude to upload an image and you'll get a ready-to-paste <img> tag.
+   6. Leave {{{RESEND_UNSUBSCRIBE_URL}}} and the address line (legally required).
+   7. Send now, or Schedule.  Tip: duplicate this draft each month so you only change words.
 
-  Built with email-safe tables + inline styles so it renders in Gmail, Outlook, Apple Mail, etc.
+  Email-safe: tables + inline styles. Renders in Gmail, Outlook, Apple Mail, etc.
 -->
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0;padding:0;background:#cbd4dd">
   <tr>
     <td align="center" style="padding:28px 12px">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;font-family:Arial,Helvetica,sans-serif">
 
-        <!-- Header / wordmark -->
+        <!-- Header -->
         <tr>
-          <td align="center" style="padding:8px 0 20px">
-            <span style="font-size:30px;font-weight:800;letter-spacing:-.5px;color:#2b4056">Hoovy<span style="color:#3f6288">Tube</span></span>
-            <div style="font-size:13px;color:#5d7083;margin-top:4px;text-transform:uppercase;letter-spacing:.14em">
-              <!-- << EDIT: issue label >> -->Monthly Update — Month YEAR
-            </div>
+          <td align="center" style="padding:4px 0 18px">
+            <span style="font-size:28px;font-weight:800;letter-spacing:-.5px;color:#2b4056">Hoovy<span style="color:#3f6288">Tube</span></span>
+            <div style="font-size:12px;color:#5d7083;margin-top:4px;text-transform:uppercase;letter-spacing:.16em"><!-- << EDIT >> -->Monthly Update · Month YEAR</div>
           </td>
         </tr>
 
         <!-- Card -->
         <tr>
-          <td style="background:#f7f3e6;border:1px solid #c3ccd6;border-radius:16px;padding:30px 28px">
+          <td style="background:#f7f3e6;border:1px solid #c3ccd6;border-radius:18px;padding:0;overflow:hidden">
 
-            <!-- Headline + intro -->
-            <h1 style="margin:0 0 10px;font-size:24px;color:#2b4056">
-              <!-- << EDIT: headline >> -->What's new this month
-            </h1>
-            <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#2b4056">
-              <!-- << EDIT: intro paragraph >> -->
-              Hey everyone — here's the latest from HoovyTube. A quick rundown of new videos and what's coming up.
-            </p>
+            <!-- Hero image (<< IMAGE >>: swap this block for an <img>) -->
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+              <td style="height:240px;background:#3f6288;color:#f4ebd1;text-align:center;font-size:14px;font-family:Arial" align="center" valign="middle">
+                &lt;&lt; IMAGE &gt;&gt; hero image — 552&nbsp;px wide
+              </td>
+            </tr></table>
 
-            <!-- Featured video button -->
-            <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 24px">
-              <tr>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td style="padding:28px 26px">
+              <!-- Headline + intro -->
+              <h1 style="margin:0 0 10px;font-size:25px;color:#2b4056"><!-- << EDIT >> -->What's new this month</h1>
+              <p style="margin:0 0 20px;font-size:16px;line-height:1.6;color:#2b4056"><!-- << EDIT >> -->A quick rundown of new videos, animations, and what's coming next on HoovyTube.</p>
+
+              <!-- Primary CTA -->
+              <table role="presentation" cellpadding="0" cellspacing="0" style="margin:0 0 26px"><tr>
                 <td align="center" bgcolor="#3f6288" style="border-radius:999px">
-                  <!-- << EDIT: link to the video you're featuring >> -->
-                  <a href="https://youtube.com/@HoovyTube"
-                     style="display:inline-block;padding:13px 26px;font-size:15px;font-weight:700;color:#f4ebd1;text-decoration:none">
-                    ▶ Watch the latest
-                  </a>
+                  <a href="https://youtube.com/@HoovyTube" style="display:inline-block;padding:13px 28px;font-size:15px;font-weight:700;color:#f4ebd1;text-decoration:none"><!-- << EDIT link >> -->▶ Watch the latest</a>
                 </td>
-              </tr>
-            </table>
+              </tr></table>
 
-            <!-- Story block 1 -->
-            <h2 style="margin:22px 0 6px;font-size:18px;color:#3f6288"><!-- << EDIT >> -->Story one</h2>
-            <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b4056">
-              <!-- << EDIT >> -->A sentence or two about this. Link out to a video, post, or page if you like.
-            </p>
+              <hr style="border:none;border-top:1px solid #e0d8c4;margin:6px 0 24px">
 
-            <!-- Story block 2 -->
-            <h2 style="margin:22px 0 6px;font-size:18px;color:#3f6288"><!-- << EDIT >> -->Story two</h2>
-            <p style="margin:0 0 4px;font-size:15px;line-height:1.6;color:#2b4056">
-              <!-- << EDIT >> -->Another quick update. Keep it short and skimmable.
-            </p>
+              <!-- Feature block 1 (image + text) -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+                <td style="height:150px;background:#e7ddc4;color:#7a6f5a;text-align:center;border-radius:12px;font-size:13px" align="center" valign="middle">&lt;&lt; IMAGE &gt;&gt;</td>
+              </tr></table>
+              <h2 style="margin:16px 0 6px;font-size:19px;color:#3f6288"><!-- << EDIT >> -->Feature one</h2>
+              <p style="margin:0 0 22px;font-size:15px;line-height:1.6;color:#2b4056"><!-- << EDIT >> -->A sentence or two about it, with a <a href="#" style="color:#3f6288">link</a> if you like.</p>
 
-            <hr style="border:none;border-top:1px solid #d9d2c0;margin:26px 0 18px">
+              <!-- Feature block 2 -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+                <td style="height:150px;background:#e7ddc4;color:#7a6f5a;text-align:center;border-radius:12px;font-size:13px" align="center" valign="middle">&lt;&lt; IMAGE &gt;&gt;</td>
+              </tr></table>
+              <h2 style="margin:16px 0 6px;font-size:19px;color:#3f6288"><!-- << EDIT >> -->Feature two</h2>
+              <p style="margin:0 0 6px;font-size:15px;line-height:1.6;color:#2b4056"><!-- << EDIT >> -->Keep it short and skimmable.</p>
 
-            <p style="margin:0;font-size:15px;line-height:1.6;color:#2b4056">
-              Thanks for reading — see you next month.<br>— The HoovyTube team
-            </p>
+              <hr style="border:none;border-top:1px solid #e0d8c4;margin:24px 0 16px">
+              <p style="margin:0;font-size:15px;line-height:1.6;color:#2b4056">Thanks for reading — see you next month.<br>— The HoovyTube team</p>
+            </td></tr></table>
+
           </td>
         </tr>
 
-        <!-- Footer (unsubscribe + address are legally required for marketing email) -->
+        <!-- Footer -->
         <tr>
           <td align="center" style="padding:18px 16px 4px;font-size:12px;line-height:1.6;color:#5d7083">
-            You're getting this because you subscribed at
-            <a href="https://hoovytube.com" style="color:#3f6288;text-decoration:none">hoovytube.com</a>.<br>
-            <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#3f6288">Unsubscribe</a>
-            &nbsp;•&nbsp; <!-- << EDIT: your real mailing address (required by anti-spam law) >> -->HoovyTube, [street, city, state, ZIP]
+            You're getting this because you subscribed at <a href="https://hoovytube.com" style="color:#3f6288;text-decoration:none">hoovytube.com</a>.<br>
+            <a href="{{{RESEND_UNSUBSCRIBE_URL}}}" style="color:#3f6288">Unsubscribe</a> &nbsp;•&nbsp; <!-- << EDIT: real mailing address (required) >> -->HoovyTube, [street, city, state, ZIP]
           </td>
         </tr>
 
