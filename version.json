@@ -1,12 +1,12 @@
 {
-  "version": "v260807.22 6:18p",
-  "release": 22,
-  "sha": "5e0dcce",
-  "fullSha": "5e0dcceafb710cd1068e6e4daa6c1eab6ad83ba6",
+  "version": "v260807.23 6:20p",
+  "release": 23,
+  "sha": "28b146f",
+  "fullSha": "28b146f14ec7d8e7b80db461387168b4270e205c",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:18:36+02:00",
-  "commits": [{"sha":"5e0dcce","message":"Products orbit: tighten radius so panels nearly touch (geometric hexagon ring)","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:20:07+02:00",
+  "commits": [{"sha":"28b146f","message":"Products orbit: enlarge the panels (scale ring + items together to keep the tight gap)","author":"HoovyTube"}]
 }
