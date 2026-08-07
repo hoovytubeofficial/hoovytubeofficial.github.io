@@ -1,12 +1,12 @@
 {
-  "version": "v260807.12 4:51a",
-  "release": 12,
-  "sha": "9097ca2",
-  "fullSha": "9097ca2c1d5cb5567ddc10039e57a69b62fe7e7a",
+  "version": "v260807.13 4:54a",
+  "release": 13,
+  "sha": "eafbbb9",
+  "fullSha": "eafbbb9f655fa9bcb9a7bafdc9a8d39a40af2f9e",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T06:50:43+02:00",
-  "commits": [{"sha":"9097ca2","message":"Add working unsubscribe (endpoint + Gmail one-click + in-body link)","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T06:53:55+02:00",
+  "commits": [{"sha":"eafbbb9","message":"Learn difficulty picker + HoovyTools Blender→SFM tab","author":"HoovyTube"}]
 }
