@@ -1,12 +1,12 @@
 {
-  "version": "v260807.25 6:29p",
-  "release": 25,
-  "sha": "411590a",
-  "fullSha": "411590a897922d5884193fbeb8faea2f0d3d7dd6",
+  "version": "v260807.26 6:49p",
+  "release": 26,
+  "sha": "d9c38bd",
+  "fullSha": "d9c38bdc49cfc3857342f092f474a1582c4a1850",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:29:25+02:00",
-  "commits": [{"sha":"411590a","message":"Products orbit: ease wheel-spin toward target for a smooth glide","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:49:18+02:00",
+  "commits": [{"sha":"d9c38bd","message":"Dock + newsletter: use custom cream/slate PNG icons","author":"HoovyTube"}]
 }
