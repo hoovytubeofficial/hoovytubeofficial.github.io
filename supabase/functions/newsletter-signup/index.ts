@@ -18,39 +18,41 @@ function esc(s: string) {
 }
 
 function welcomeHtml(firstName: string) {
-  const hi = firstName ? `Hi ${esc(firstName)},` : "Hey there,";
-  // Dark-hero design (cream + slate-blue), email-safe tables.
-  const row = (emoji: string, text: string) =>
-    `<tr><td style="padding:8px 0;font-size:15px;color:#2b4056;line-height:1.5"><span style="font-size:18px">${emoji}</span>&nbsp;&nbsp;${text}</td></tr>`;
-  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0;padding:0;background:#cbd4dd">
-    <tr><td align="center" style="padding:28px 14px">
+  const name = firstName ? `, ${esc(firstName)}` : "";
+  const A = "https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets";
+  // Gemini-style: light canvas, dark rounded hero, feature rows with thumbnails.
+  const feature = (img: string, title: string, body: string, link: string, href: string) =>
+    `<tr><td style="padding:24px 2px 0">
+       <table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr>
+         <td valign="middle" style="padding-right:18px">
+           <div style="font-size:18px;font-weight:700;color:#1f2d3d;margin:0 0 6px">${title}</div>
+           <div style="font-size:14px;line-height:1.55;color:#5d7083;margin:0 0 8px">${body}</div>
+           <a href="${href}" style="font-size:14px;font-weight:700;color:#3f6288;text-decoration:none">${link} &rsaquo;</a>
+         </td>
+         <td width="190" style="width:190px"><a href="${href}"><img src="${img}" width="190" alt="" style="width:190px;max-width:190px;border-radius:12px;display:block;border:1px solid #dfe4ea"></a></td>
+       </tr></table>
+     </td></tr>`;
+  return `<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin:0;padding:0;background:#eef1f5">
+    <tr><td align="center" style="padding:26px 14px">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;font-family:Arial,Helvetica,sans-serif">
-        <tr><td align="center" style="padding:2px 0 14px">
-          <span style="font-size:26px;font-weight:800;letter-spacing:-.5px;color:#2b4056">Hoovy<span style="color:#3f6288">Tube</span></span>
+        <tr><td align="right" style="padding:0 4px 14px;font-size:12px;color:#6b7a8d">
+          Follow us&nbsp;&nbsp;<a href="https://youtube.com/@HoovyTube" style="color:#3f6288;text-decoration:none;font-weight:700">YouTube</a> &middot; <a href="https://www.patreon.com/c/hoovytube308/membership" style="color:#3f6288;text-decoration:none;font-weight:700">Patreon</a>
         </td></tr>
-        <tr><td style="padding-bottom:14px">
-          <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/giftest.gif" width="600" alt="HoovyTube" style="width:100%;max-width:600px;border-radius:16px;display:block;border:1px solid #c3ccd6">
-        </td></tr>
-        <tr><td style="background:#1b2937;border-radius:20px;padding:42px 34px;text-align:center">
-          <div style="font-size:42px;line-height:1;margin-bottom:12px">👋</div>
-          <h1 style="margin:0 0 12px;font-size:28px;line-height:1.15;color:#ffffff">Welcome to <span style="color:#ecdfb0">HoovyTube</span></h1>
-          <p style="margin:0 auto 24px;max-width:430px;font-size:16px;line-height:1.6;color:#b9c6d3">${hi} you're on the list — thanks for subscribing. No spam, ever.</p>
+        <tr><td style="background:#0c1622;border-radius:24px;padding:44px 34px;text-align:center">
+          <img src="${A}/giftest.gif" width="72" alt="HoovyTube" style="width:72px;height:72px;border-radius:16px;display:inline-block;margin-bottom:16px">
+          <div style="font-size:30px;line-height:1.12;font-weight:800;color:#ffffff">Welcome to HoovyTube</div>
+          <div style="font-size:30px;line-height:1.12;font-weight:800;color:#6ea8e6;margin:2px 0 16px">glad you're here${name}</div>
+          <div style="font-size:15px;line-height:1.6;color:#9fb2c6;max-width:410px;margin:0 auto 24px">New videos, SFM &amp; Blender animations, asset drops and HoovyTools updates — straight to your inbox. No spam, ever.</div>
           <table role="presentation" cellpadding="0" cellspacing="0" align="center"><tr>
-            <td align="center" bgcolor="#ecdfb0" style="border-radius:999px">
-              <a href="https://youtube.com/@HoovyTube" style="display:inline-block;padding:13px 30px;font-size:15px;font-weight:700;color:#22384c;text-decoration:none">▶ Watch on YouTube</a>
+            <td align="center" bgcolor="#3f6288" style="border-radius:999px">
+              <a href="https://youtube.com/@HoovyTube" style="display:inline-block;padding:13px 30px;font-size:15px;font-weight:700;color:#f4ebd1;text-decoration:none">&#9654;&nbsp; Watch on YouTube</a>
             </td>
           </tr></table>
         </td></tr>
-        <tr><td style="padding:26px 30px 4px">
-          <h2 style="margin:0 0 10px;font-size:18px;color:#2b4056">What to expect</h2>
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
-            ${row("🎬", "New videos as they drop")}
-            ${row("🎞️", "SFM &amp; Blender animations")}
-            ${row("💬", "Community updates &amp; more")}
-          </table>
-          <p style="font-size:15px;line-height:1.6;color:#2b4056;margin:16px 0 0">— The HoovyTube team</p>
-        </td></tr>
-        <tr><td align="center" style="padding:18px 16px 4px;font-size:12px;color:#5d7083">
+        ${feature(`${A}/product-particles.png`, "600+ SFM particles", "Explosions, magic, weather, impacts — drop them straight into your scenes.", "Browse the packs", "https://hoovytube.com/products/")}
+        ${feature(`${A}/hoovytools-logo.jpg`, "HoovyTools add-on", "Import SFM sessions into Blender — models, animation &amp; audio, auto-timed.", "See HoovyTools", "https://hoovytube.com/hoovytools/")}
+        <tr><td align="center" style="padding:28px 16px 4px;font-size:12px;line-height:1.6;color:#8494a5">
+          &mdash; The HoovyTube team<br>
           You're receiving this because you signed up at <a href="https://hoovytube.com" style="color:#3f6288;text-decoration:none">hoovytube.com</a>.
         </td></tr>
       </table>

@@ -48,6 +48,15 @@
   window.addEventListener('resize', onScroll);
   onScroll();
 
+  // Scroll-in reveal for page sections
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduced && typeof IntersectionObserver !== 'undefined') {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('main > section').forEach(function (el) { el.classList.add('reveal'); io.observe(el); });
+  }
+
   // Theme toggle (persisted)
   var root = document.documentElement;
   document.getElementById('htThemeToggle').addEventListener('click', function () {
