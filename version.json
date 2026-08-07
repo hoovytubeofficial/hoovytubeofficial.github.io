@@ -1,12 +1,12 @@
 {
-  "version": "v260807.03 1:30a",
-  "release": 3,
-  "sha": "24bef86",
-  "fullSha": "24bef8666b09ce9f733008b21b8c0d3a42d63c30",
+  "version": "v260807.04 1:33a",
+  "release": 4,
+  "sha": "064f891",
+  "fullSha": "064f89100d4ed4b58f6d32c206f3cb0050a7fe63",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmd93pd",
-  "pushedAt": "2026-08-07T03:30:08+02:00",
-  "commits": [{"sha":"24bef86","message":"Add animation carousel (SFM + Blender) to homepage top","author":"HoovyTube"}]
+  "machine": "runnervmvrwv9",
+  "pushedAt": "2026-08-07T03:32:41+02:00",
+  "commits": [{"sha":"064f891","message":"Autoplay active carousel video (muted)","author":"HoovyTube"}]
 }
