@@ -23,17 +23,22 @@
     .level h3 { margin: .6rem 0 .3rem; font-size: 1.3rem; }
     .level p { margin: 0; color: var(--muted); font-size: .9rem; }
     .level .count { display: inline-block; margin-top: .7rem; font-size: .72rem; font-weight: 700; color: var(--accent-ink); background: var(--accent); padding: .2rem .65rem; border-radius: 999px; }
-    .modal { position: fixed; inset: 0; z-index: 100; display: none; align-items: center; justify-content: center; padding: 1rem; background: rgba(10,18,26,.62); backdrop-filter: blur(5px); }
-    .modal.open { display: flex; }
-    .modal-box { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; max-width: 780px; width: 100%; max-height: 86vh; overflow: auto; padding: 1.6rem; }
-    .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
-    .modal-head h2 { margin: 0; font-size: 1.4rem; }
-    .modal-close { border: none; background: var(--panel-2); color: var(--text); width: 36px; height: 36px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; }
+    /* Inline expanding panel (replaces the modal) */
+    .level-panel { margin-top: 1.4rem; border: 1px solid var(--line); background: var(--panel); padding: 1.6rem;
+      animation: lp-in .35s cubic-bezier(.16,1,.3,1); }
+    .level-panel[hidden] { display: none; }
+    @keyframes lp-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+    .level-panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
+    .level-panel-head h3 { margin: 0; font-size: 1.3rem; }
+    .lp-close { border: none; background: var(--panel-2); color: var(--text); width: 34px; height: 34px; cursor: pointer; font-size: 1rem; line-height: 1; }
+    .level.active { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
     .vid-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; }
-    .vid { display: block; border-radius: 12px; overflow: hidden; border: 1px solid var(--line); text-decoration: none; position: relative; }
+    .vid { display: block; overflow: hidden; border: 1px solid var(--line); text-decoration: none; position: relative; }
     .vid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-    .vid .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: 2rem; background: rgba(0,0,0,.18); opacity: 0; transition: opacity .2s; }
+    .vid .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(0,0,0,.18); opacity: 0; transition: opacity .2s; }
+    .vid .play svg { width: 44px; height: 44px; }
     .vid:hover .play { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) { .level-panel { animation: none; } }
   </style>
 </head>
 <body>
@@ -61,6 +66,14 @@
           <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/assets/level-hard.png" alt="Hard"><p>Advanced deep-dives.</p><span class="count">4 tutorials</span>
         </div>
       </div>
+
+      <div class="level-panel" id="levelPanel" hidden>
+        <div class="level-panel-head">
+          <h3 id="lpTitle">Tutorials</h3>
+          <button class="lp-close" id="lpClose" aria-label="Collapse">✕</button>
+        </div>
+        <div class="vid-grid" id="vidGrid"></div>
+      </div>
     </section>
 
     <div class="divider"></div>
@@ -77,42 +90,44 @@
     </section>
   </main>
 
-  <!-- MODAL -->
-  <div class="modal" id="lvlModal" aria-hidden="true">
-    <div class="modal-box" role="dialog" aria-modal="true">
-      <div class="modal-head">
-        <h2 id="mTitle">Tutorials</h2>
-        <button class="modal-close" id="mClose" aria-label="Close">✕</button>
-      </div>
-      <div class="vid-grid" id="vidGrid"></div>
-    </div>
-  </div>
-
   <footer class="site"><small>© 2026 HoovyTube. All rights reserved.</small></footer>
 
   <script>
     var LEVELS = {
-      easy:   { title: '🍼 Easy · Start here', ids: ['YmSwhRcUjhE','x1QJcaWRu80','_szeNOlH1iM','JJ0fv2nM-WY','KaL8Ox3yCyU','GqgOMOyz6_Q','C4-EtGZaT9g'] },
-      medium: { title: '🎓 Medium · Level up', ids: ['SEUJu0mizQQ','GqgOMOyz6_Q','2DxrbY0qxrE','KBpNWf9fU6Y','B2SGgXCNj20'] },
-      hard:   { title: '☕ Hard · Deep dives', ids: ['wFKL-Ncl6Vc','THCqLcG8MqM','bzLlSpB_sMQ','0nK5XmZHeec'] }
+      easy:   { title: 'Easy · Start here', ids: ['YmSwhRcUjhE','x1QJcaWRu80','_szeNOlH1iM','JJ0fv2nM-WY','KaL8Ox3yCyU','GqgOMOyz6_Q','C4-EtGZaT9g'] },
+      medium: { title: 'Medium · Level up', ids: ['SEUJu0mizQQ','GqgOMOyz6_Q','2DxrbY0qxrE','KBpNWf9fU6Y','B2SGgXCNj20'] },
+      hard:   { title: 'Hard · Deep dives', ids: ['wFKL-Ncl6Vc','THCqLcG8MqM','bzLlSpB_sMQ','0nK5XmZHeec'] }
     };
-    var modal = document.getElementById('lvlModal');
+    var panel = document.getElementById('levelPanel');
     var grid = document.getElementById('vidGrid');
-    var mTitle = document.getElementById('mTitle');
-    function openLevel(k) {
-      var L = LEVELS[k]; if (!L) return;
-      mTitle.textContent = L.title;
+    var lpTitle = document.getElementById('lpTitle');
+    var cards = [].slice.call(document.querySelectorAll('.level'));
+    var current = null;
+    var PLAY = '<span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>';
+    function render(k) {
+      var L = LEVELS[k];
+      lpTitle.textContent = L.title;
       grid.innerHTML = L.ids.map(function (id, i) {
         return '<a class="vid" href="https://youtu.be/' + id + '" target="_blank" rel="noopener">' +
-          '<img loading="lazy" src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="Tutorial ' + (i + 1) + '">' +
-          '<span class="play">▶</span></a>';
+          '<img loading="lazy" src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="Tutorial ' + (i + 1) + '">' + PLAY + '</a>';
       }).join('');
-      modal.classList.add('open');
     }
-    document.querySelectorAll('.level').forEach(function (el) { el.addEventListener('click', function () { openLevel(el.dataset.level); }); });
-    document.getElementById('mClose').addEventListener('click', function () { modal.classList.remove('open'); });
-    modal.addEventListener('click', function (e) { if (e.target === modal) modal.classList.remove('open'); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') modal.classList.remove('open'); });
+    function collapse() {
+      current = null; panel.hidden = true;
+      cards.forEach(function (c) { c.classList.remove('active'); });
+    }
+    function openLevel(k) {
+      if (!LEVELS[k]) return;
+      if (current === k) { collapse(); return; }   // click the active level again to collapse
+      current = k;
+      render(k);
+      panel.hidden = false;
+      cards.forEach(function (c) { c.classList.toggle('active', c.dataset.level === k); });
+      panel.style.animation = 'none'; void panel.offsetHeight; panel.style.animation = '';  // restart reveal
+      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    cards.forEach(function (el) { el.addEventListener('click', function () { openLevel(el.dataset.level); }); });
+    document.getElementById('lpClose').addEventListener('click', collapse);
   </script>
   <script defer src="/shared/ht-nav.js?v=6"></script>
   <script defer src="/shared/ht-ui.js?v=6"></script>
