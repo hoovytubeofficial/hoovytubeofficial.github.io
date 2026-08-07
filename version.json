@@ -1,12 +1,12 @@
 {
-  "version": "v260807.26 6:49p",
-  "release": 26,
-  "sha": "d9c38bd",
-  "fullSha": "d9c38bdc49cfc3857342f092f474a1582c4a1850",
+  "version": "v260807.27 7:23p",
+  "release": 27,
+  "sha": "3cc96ad",
+  "fullSha": "3cc96ad330db486f4963d74dbf34a6a6004d87de",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:49:18+02:00",
-  "commits": [{"sha":"d9c38bd","message":"Dock + newsletter: use custom cream/slate PNG icons","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T21:23:16+02:00",
+  "commits": [{"sha":"3cc96ad","message":"Products tiers: add expandable Read more (5 points each, gear icon per point)","author":"HoovyTube"}]
 }
