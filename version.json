@@ -1,12 +1,12 @@
 {
-  "version": "v260807.21 6:17p",
-  "release": 21,
-  "sha": "d1d8ea6",
-  "fullSha": "d1d8ea6eacb6e169fdc819eea14e8dc7382f1ee7",
+  "version": "v260807.22 6:18p",
+  "release": 22,
+  "sha": "5e0dcce",
+  "fullSha": "5e0dcceafb710cd1068e6e4daa6c1eab6ad83ba6",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T20:17:30+02:00",
-  "commits": [{"sha":"d1d8ea6","message":"Products: move the community caption below the orbit, right-aligned","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T20:18:36+02:00",
+  "commits": [{"sha":"5e0dcce","message":"Products orbit: tighten radius so panels nearly touch (geometric hexagon ring)","author":"HoovyTube"}]
 }
