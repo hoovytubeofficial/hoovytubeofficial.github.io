@@ -5,7 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png">
   <title>HoovyTools: SFM to Blender &amp; Blender to SFM Addon | HoovyTube</title>
-  <meta name="description" content="HoovyTools: the Blender addon that imports Source Filmmaker (SFM) sessions into Blender and transposes Blender work back into SFM. HoovyTools: SFM to Blender, and HoovyTools: Blender to SFM.">
+  <meta name="description" content="HoovyTools: the Blender addon that imports Source Filmmaker (SFM) sessions into Blender - shape keys, cameras, sounds and animations - working alongside SourceIO. HoovyTools: SFM to Blender.">
+  <meta property="og:title" content="HoovyTools: SFM to Blender Addon">
+  <meta property="og:description" content="Import full Source Filmmaker sessions into Blender: shape keys, cameras, sounds and animations. Free, works with SourceIO.">
+  <meta property="og:url" content="https://hoovytube.com/hoovytools/">
+  <link rel="canonical" href="https://hoovytube.com/hoovytools/">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "HoovyTools: SFM to Blender",
+    "alternateName": ["HoovyTools", "HoovyTools Blender", "SFM to Blender Addon", "HoovyTools SFM to Blender"],
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Blender (Windows, macOS, Linux)",
+    "description": "HoovyTools is a Blender addon that imports Source Filmmaker (SFM) sessions into Blender - shape keys, cameras, sounds and animations - working in harmony with SourceIO.",
+    "url": "https://hoovytube.com/hoovytools/",
+    "author": { "@type": "Person", "name": "HoovyTube" },
+    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+    "softwareRequirements": "Blender, SourceIO (https://github.com/REDxEYE/SourceIO)"
+  }
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,14 +49,34 @@
     .faq-a .inner { padding: 0 1.2rem 1.1rem 2.9rem; color: var(--muted); line-height: 1.65; }
     .faq-a .inner code { background: var(--panel-2); padding: .1rem .35rem; border-radius: 5px; font-size: .9em; }
     .coming { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+    /* Documentation / tutorial */
+    .doc { max-width: 820px; margin: 0 auto; }
+    .doc h2 { font-size: clamp(1.4rem, 3.4vw, 1.95rem); margin: 2.6rem 0 .9rem; }
+    .doc h3 { font-size: 1.18rem; margin: 1.7rem 0 .5rem; color: var(--text); }
+    .doc p { color: var(--muted); line-height: 1.75; margin: 0 0 1rem; }
+    .doc ol, .doc ul { color: var(--muted); line-height: 1.7; margin: 0 0 1.3rem; padding-left: 1.3rem; }
+    .doc li { margin: 0 0 .5rem; }
+    .doc code { background: var(--panel-2); padding: .1rem .4rem; border-radius: 5px; font-size: .9em; }
+    .doc a { color: var(--accent); }
+    .doc .callout { border-left: 3px solid var(--accent); background: var(--panel); padding: 1rem 1.2rem; margin: 0 0 1.4rem; color: var(--muted); }
+    .feature-list { list-style: none; padding: 0; margin: 0 0 1.4rem; }
+    .feature-list li { padding: .6rem 0; border-bottom: 1px solid var(--line); color: var(--muted); line-height: 1.6; }
+    .feature-list li:last-child { border-bottom: none; }
+    .feature-list b { color: var(--text); }
+    .pipe { display: grid; gap: .5rem; margin: 0 0 1.4rem; }
+    .pipe .step { display: flex; gap: .9rem; align-items: baseline; border: 1px solid var(--line); background: var(--panel); padding: .7rem .95rem; }
+    .pipe .step .n { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--accent); flex: 0 0 auto; min-width: 1.8rem; }
+    .pipe .step b { color: var(--text); }
+    .underconstruction { text-align: center; padding: 3.5rem 1.5rem; border: 1px dashed var(--line); background: var(--panel); }
+    .underconstruction h2 { margin: 0 0 .6rem; }
+    .underconstruction p { color: var(--muted); margin: 0; }
   </style>
 </head>
 <body>
   <header class="pagehead">
     <div class="inner">
-      <p class="eyebrow">SFM ↔ Blender Addon</p>
       <h1>HoovyTools</h1>
-      <p class="ph-lead">HoovyTools bridges Source Filmmaker and Blender, both ways. Bring your SFM sessions straight into Blender with models, animation and audio, then send your Blender work back to SFM. No rebuilding by hand.</p>
+      <p class="ph-lead">HoovyTools Blender Addons are add-ons for Blender, developed between 2023 and 2026 by HoovyTube with the permission of RedEye (creator of <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener" style="color:var(--accent)">SourceIO</a>), to bridge Source Filmmaker and Blender. For the first time this brings full SFM session import into Blender: shape keys, cameras, sounds and animations. What was once gatekept inside the community is now released as an open tool that, in harmony with SourceIO, moves your SFM skills into a far more stable environment.</p>
     </div>
     <div class="rule"></div>
   </header>
@@ -46,59 +85,99 @@
     <!-- Direction toggle -->
     <div class="tabs">
       <button class="tab active" data-tab="sfm2blender">SFM → Blender</button>
-      <button class="tab" data-tab="blender2sfm">Blender → SFM</button>
+      <button class="tab" data-tab="blender2sfm" disabled>Blender → SFM <span class="soon">under construction</span></button>
     </div>
 
     <!-- SFM to Blender -->
     <section class="panel active" id="sfm2blender">
       <h2 style="text-align:center;margin:0 0 1.2rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools: SFM to Blender</h2>
       <div class="embed spot">
-        <iframe src="https://www.youtube.com/embed/SGEVbgdZYaY" title="HoovyTools SFM → Blender tutorial" loading="lazy"
+        <iframe src="https://www.youtube.com/embed/SGEVbgdZYaY" title="HoovyTools: SFM to Blender - session importer tutorial" loading="lazy"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
       </div>
 
       <div class="get-row">
-        <a class="btn btn-primary magnetic" data-magnetic="0.4" href="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/downloads/HoovyTools-1.3.1.zip" download>⬇ Download v1.3.1 (.zip)</a>
-        <a class="btn btn-ghost magnetic" data-magnetic="0.4" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Get it on Patreon</a>
+        <a class="btn btn-primary magnetic" data-magnetic="0.4" href="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/downloads/HoovyTools-1.3.1.zip" download>⬇ Download HoovyTools (.zip)</a>
+        <a class="btn btn-ghost magnetic" data-magnetic="0.4" href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">Get SourceIO</a>
       </div>
 
       <div class="divider"></div>
-      <div class="section-head"><h2>FAQ</h2><span class="muted">SFM → Blender Session Importer</span></div>
-      <div class="faq" id="faq">
-        <div class="faq-item">
-          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>How do I install it?</button>
-          <div class="faq-a"><div class="inner">Download the <code>.zip</code> above (don't unzip it). In Blender: <code>Edit → Preferences → Add-ons → Install…</code>, pick the zip, then tick the checkbox to enable <strong>HoovyTools</strong>. It'll appear in the sidebar (press <code>N</code> in the 3D viewport).</div></div>
+
+      <article class="doc">
+        <div class="callout">Documentation starts from this release. Older versions, and builds targeting other Blender versions, will be documented here over time.</div>
+
+        <h2>Installing HoovyTools</h2>
+        <p><strong>HoovyTools runs on top of <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a>.</strong> SourceIO does the heavy lifting of loading Source engine models, materials and textures into Blender; HoovyTools sits on top and rebuilds the SFM session around them. Install SourceIO first, then HoovyTools.</p>
+        <ol>
+          <li>Install <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a>: <code>Edit → Preferences → Add-ons → Install…</code>, choose its zip, and enable it.</li>
+          <li>Download the HoovyTools <code>.zip</code> above. Do not unzip it.</li>
+          <li>Back in <code>Add-ons → Install…</code>, choose the HoovyTools zip, then tick the checkbox to enable it.</li>
+          <li>Open the sidebar in the 3D viewport (press <code>N</code>). The HoovyTools panel lives there.</li>
+        </ol>
+
+        <h3>Wiring in your usermod</h3>
+        <p>SFM keeps your custom models, materials and sounds inside your <code>usermod</code> (and the game folders it mounts). HoovyTools resolves every asset a session references by those same relative paths, so it needs to know where your content lives. Point HoovyTools at your SFM <code>usermod</code> (and any mounted game folders) and it finds your models, textures and sounds exactly the way SFM did, with nothing renamed or re-pathed. If a model comes in missing, it is almost always a usermod path that has not been added yet.</p>
+
+        <h2>How it works, feature by feature</h2>
+        <p>Point HoovyTools at an SFM session (a <code>.dmx</code> file) and it rebuilds that session inside Blender in one pass. Here is everything the current release brings across:</p>
+        <ul class="feature-list">
+          <li><b>SFM session import.</b> Reads the whole session (shots, clips and the timeline) and reconstructs it in one go.</li>
+          <li><b>Animations.</b> Every bone channel is sampled and baked onto the Blender armature, keyframe for keyframe.</li>
+          <li><b>Shape keys.</b> Facial flexes and flex controllers come across as native Blender shape keys, animated over the timeline.</li>
+          <li><b>Cameras.</b> Your SFM camera is rebuilt as a Blender camera with position, rotation and FOV, keyed exactly as it moved.</li>
+          <li><b>Sounds.</b> The Session Sounds Auto-Importer places every voice line and sound from the session onto the timeline, on the frame.</li>
+          <li><b>FPS-aware timing.</b> Everything is retimed to your scene (for example 24 → 30) so animation, sound and camera stay locked together. No manual re-timing.</li>
+          <li><b>Non-destructive.</b> Assets keep their original paths and names, so a re-import lands in the same place.</li>
+        </ul>
+
+        <h2>Under the hood: how the import actually works</h2>
+        <p>None of this is magic, and it is worth explaining on a human level. An SFM session is a <code>DMX</code> file, a tree of elements that describes your shot. HoovyTools reads it, walks that tree, and translates each piece into the closest thing Blender understands.</p>
+
+        <h3>Parsing the session</h3>
+        <p>The first job is turning the raw session into data we can work with. HoovyTools reads the <code>DMX</code> directly (the same format <code>datamodel</code> / <code>dmxconvert</code> operate on), decoding the binary or keyvalues payload into an in-memory tree. From there it does not guess: it looks up the session, its clips, and the specific channels attached to each element.</p>
+
+        <h3>What we actually parse</h3>
+        <ul>
+          <li><b>SESSION data:</b> the clip and shot structure, plus the master timeline everything else hangs off.</li>
+          <li><b>ANIMATION data:</b> per-bone transform channels, sampled and baked onto the armature.</li>
+          <li><b>CAMERA data:</b> the camera transform and FOV channels.</li>
+          <li><b>Sound clips:</b> the game sounds a session references and their frame positions.</li>
+          <li><b>Flex / shape channels:</b> the flex-controller values that drive faces.</li>
+        </ul>
+
+        <h3>Fifteen small scripts, stacked</h3>
+        <p>Rather than one giant importer, HoovyTools is really about fifteen small, single-purpose scripts stacked on top of each other. Each does exactly one thing and hands clean data to the next, which is what makes a full session import feel seamless instead of fragile.</p>
+        <div class="pipe">
+          <div class="step"><span class="n">01</span><span><b>DMX reader</b> opens the session and decodes it into a tree.</span></div>
+          <div class="step"><span class="n">02</span><span><b>Session walker</b> finds the shots, clips and the timeline.</span></div>
+          <div class="step"><span class="n">03</span><span><b>Model resolver</b> hands model references to SourceIO to load.</span></div>
+          <div class="step"><span class="n">04</span><span><b>Animation baker</b> samples bone channels and keys the armature.</span></div>
+          <div class="step"><span class="n">05</span><span><b>Shape-key mapper</b> turns flex controllers into shape keys.</span></div>
+          <div class="step"><span class="n">06</span><span><b>Camera mapper</b> rebuilds the camera transform and FOV.</span></div>
+          <div class="step"><span class="n">07</span><span><b>Sound placer</b> drops each sound onto the timeline, on the frame.</span></div>
+          <div class="step"><span class="n">08</span><span><b>Timing / FPS converter</b> retimes every channel to the scene.</span></div>
+          <div class="step"><span class="n">…</span><span><b>and the rest</b>: coordinate-space fixes, unit conversion, naming, cleanup and validation.</span></div>
         </div>
-        <div class="faq-item">
-          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>How does it work?</button>
-          <div class="faq-a"><div class="inner">Point it at your SFM session and it reads the <code>.dmx</code>, then pulls your models, animation, and now <strong>audio</strong> onto the Blender timeline - auto-timed to the frame and FPS-aware (24 → 30). No manual re-timing.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>What's new in v1.3.1?</button>
-          <div class="faq-a"><div class="inner"><strong>Session Sounds Auto-Importer</strong> - pulls every voice line from your SFM session onto the Blender timeline, on the frame. Now faster (up to 100× on big sessions).</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>Where do I get it (and updates)?</button>
-          <div class="faq-a"><div class="inner">The free <code>.zip</code> is right here on this page. For updates and everything else, it's on <a href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener" style="color:var(--accent)">Patreon / HoovyTube</a>.</div></div>
-        </div>
-        <div class="faq-item">
-          <button class="faq-q"><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>Is a Blender → SFM importer coming?</button>
-          <div class="faq-a"><div class="inner">Yes - it's in the works. It'll bring Blender work back into SFM. Join the <a href="/#newsletter" style="color:var(--accent)">newsletter</a> to hear when it drops.</div></div>
-        </div>
-      </div>
+
+        <h3>Where Blender stands in for SFM</h3>
+        <p>SFM concepts do not always exist one-to-one in Blender, so HoovyTools maps each to the nearest native construct:</p>
+        <ul>
+          <li>Flex controllers → Blender <b>shape keys</b>.</li>
+          <li>SFM camera → Blender <b>camera</b> with animated <b>F-Curves</b>.</li>
+          <li>DMX sound clips → <b>sound strips</b> on the timeline, on the frame.</li>
+          <li>SFM game units and coordinate space → Blender's units and axes.</li>
+          <li>Session timeline → Blender's <b>scene frame range</b> and FPS.</li>
+        </ul>
+        <p>The result: your SFM work lands in a modern, far more stable environment, without you rebuilding a single thing by hand.</p>
+      </article>
     </section>
 
-    <!-- Blender to SFM -->
+    <!-- Blender to SFM (under construction) -->
     <section class="panel" id="blender2sfm">
-      <h2 style="text-align:center;margin:0 0 1.2rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools: Blender to SFM</h2>
-      <div class="embed spot">
-        <iframe src="https://www.youtube.com/embed/KBpNWf9fU6Y" title="Blender → SFM tutorial" loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      </div>
-      <div class="card">
-        <p style="margin:0">This tutorial shows the manual Blender → SFM workflow - but I've built an <strong style="color:var(--text)">automatic tool that does all of this by itself</strong>. It takes your Blender work and brings it back into Source Filmmaker for you, no hand-work required.</p>
+      <div class="underconstruction">
+        <h2>HoovyTools: Blender to SFM</h2>
+        <p>An automatic Blender to SFM importer is under construction. Join the <a href="/#newsletter" style="color:var(--accent)">newsletter</a> to hear when it drops.</p>
       </div>
     </section>
   </main>
