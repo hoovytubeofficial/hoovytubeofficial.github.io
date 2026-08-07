@@ -42,6 +42,15 @@
     .tier li { padding: .28rem 0; color: var(--muted); font-size: .92rem; display: flex; gap: .5rem; }
     .tier li::before { content: "✓"; color: var(--accent); font-weight: 700; }
     .tier .btn { margin-top: auto; justify-content: center; }
+    .tier-more { margin-bottom: 1.1rem; border-top: 1px solid var(--line); }
+    .tier-more summary { cursor: pointer; color: var(--accent); font-weight: 700; font-size: .82rem; padding: .7rem 0 0; list-style: none; }
+    .tier-more summary::-webkit-details-marker { display: none; }
+    .tier-more summary::after { content: " +"; }
+    .tier-more[open] summary::after { content: " \2013"; }
+    .tier-more ul { margin: .7rem 0 0; }
+    .tier-more li { display: flex; gap: .55rem; align-items: flex-start; font-size: .84rem; line-height: 1.45; padding: .32rem 0; color: var(--muted); }
+    .tier-more li::before { content: none; }
+    .tier-more .pt-ic { width: 16px; height: 16px; flex: 0 0 auto; margin-top: 2px; color: var(--accent); }
   </style>
 </head>
 <body>
@@ -49,6 +58,11 @@
     <a class="wordmark" href="/">Hoovy<span class="dot">Tube</span></a>
     <a class="cta" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon ↗</a>
   </div>
+
+  <!-- Point-icon sprite (add more <symbol>s here as future icons arrive) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+    <symbol id="ic-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></g></symbol>
+  </defs></svg>
 
   <header class="pagehead">
     <div class="inner">
@@ -91,6 +105,15 @@
           <div class="price">$20<span> /mo</span></div>
           <h3>All Particles</h3>
           <ul><li>600+ particle effects</li><li>New effects as they drop</li></ul>
+          <details class="tier-more"><summary>Read more</summary>
+            <ul>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>1GB+ of new SFM sprites — a library larger than L4D2 + TF2 + CS2 particles combined</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>300+ particles with size variations for every scene, from ants to giant mechs</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Thoughtful folder naming and expanded documentation, with PNG previews for easy navigation</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Split by purpose: ENVIRONMENT / PHYSICS / IMPACTS / MISC</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Inspired by realistic 1980s movies and toon shading — a vibrant mix that can replace volumetric lights, sometimes even lighting altogether</span></li>
+            </ul>
+          </details>
           <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
         <div class="tier spot">
@@ -99,6 +122,15 @@
           <div class="price">$25<span> /mo</span></div>
           <h3>Scenebuilds + Particles</h3>
           <ul><li>30+ scenebuilds</li><li>All 600+ particles</li></ul>
+          <details class="tier-more"><summary>Read more</summary>
+            <ul>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>1GB+ of new SFM models &amp; scenebuilds spanning urban / sci-fi / nature settings</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Built for stronger setups — a strong GPU is recommended</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Biome types and HDRI setups to build your own scenebuilds with</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Consolidated in usermod folders with no exterior model usage — all ported by me</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the All Particles tier</span></li>
+            </ul>
+          </details>
           <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
         </div>
         <div class="tier best spot">
@@ -107,6 +139,15 @@
           <div class="price">$30<span> /mo</span></div>
           <h3>The full library</h3>
           <ul><li>All scenebuilds</li><li>All particles</li><li>400+ animations</li></ul>
+          <details class="tier-more"><summary>Read more</summary>
+            <ul>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>700+ animations for HWM characters, HL2 rigs &amp; cameras</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Fully transposable with the <a href="https://youtu.be/SEUJu0mizQQ" target="_blank" rel="noopener" style="color:var(--accent)">HoovyTools SFM Transposition addon</a></span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Categories: Idle · Walking · Running · Fighting · Combat · Shooting</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>…and Dialog · Scene Setup · Crowd · Acrobatics · Parkour · Props</span></li>
+              <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the earlier tiers</span></li>
+            </ul>
+          </details>
           <a class="btn btn-primary magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Claim everything</a>
         </div>
       </div>
