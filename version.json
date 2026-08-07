@@ -1,12 +1,12 @@
 {
-  "version": "v260807.08 2:42a",
-  "release": 8,
-  "sha": "69c46ab",
-  "fullSha": "69c46abae8ed402086b0cf68177e2b595924df40",
+  "version": "v260807.09 3:03a",
+  "release": 9,
+  "sha": "d514165",
+  "fullSha": "d514165171efd8b1cedf3e1ebc92a6fa807f13fe",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T04:42:23+02:00",
-  "commits": [{"sha":"69c46ab","message":"Split site into 4 pages with shared magnetic-dock nav","author":"HoovyTube"}]
+  "pushedAt": "2026-08-07T05:02:58+02:00",
+  "commits": [{"sha":"d514165","message":"Revamp Assets & Products: community orbit showcase + Patreon tiers","author":"HoovyTube"}]
 }
