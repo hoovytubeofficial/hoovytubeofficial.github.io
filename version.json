@@ -1,12 +1,12 @@
 {
-  "version": "v260807.32 8:43p",
-  "release": 32,
-  "sha": "4ce9d13",
-  "fullSha": "4ce9d13cbb9ed670cff69940d008eacc547de182",
+  "version": "v260808.01 10:50a",
+  "release": 1,
+  "sha": "315a79b",
+  "fullSha": "315a79bb73c48bfb80cab6afe9baa3a539013d80",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmvrwv9",
-  "pushedAt": "2026-08-07T22:43:23+02:00",
-  "commits": [{"sha":"4ce9d13","message":"Products: link Steam button to real Steam Workshop","author":"HoovyTube"}]
+  "pushedAt": "2026-08-08T12:49:55+02:00",
+  "commits": [{"sha":"315a79b","message":"Home: swap feature-section videos to custom clips (#1)","author":"HoovyTube"}]
 }
