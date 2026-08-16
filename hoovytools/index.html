@@ -106,18 +106,16 @@
     .ver-dd .menu a:hover { background: var(--panel-2); }
     .ver-dd .menu small { color: var(--muted); }
 
-    /* Video carousel */
-    .carousel { position: relative; margin-bottom: .6rem; }
-    .embed { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16/9; background: #10171f; }
+    /* Video carousel - arrows sit BESIDE the video, never over it */
+    .carousel { display: flex; align-items: center; gap: .5rem; margin-bottom: .6rem; }
+    .embed { position: relative; flex: 1 1 auto; min-width: 0; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16/9; background: #10171f; }
     .embed iframe, .embed video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
-    .car-btn { position: absolute; top: 50%; transform: translateY(-50%); width: 58px; height: 58px; border: none; background: none; padding: 0; cursor: pointer; z-index: 3; }
-    .car-btn img { width: 100%; height: 100%; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); transition: transform .18s cubic-bezier(.16,1,.3,1); }
-    .car-btn.next { right: -14px; }
-    .car-btn.prev { left: -14px; }
-    .car-btn.prev img { transform: scaleX(-1); }
-    .car-btn.next:hover img { transform: scale(1.15); }
-    .car-btn.prev:hover img { transform: scaleX(-1) scale(1.15); }
-    @media (max-width: 700px) { .car-btn { width: 44px; height: 44px; } .car-btn.next { right: 4px; } .car-btn.prev { left: 4px; } }
+    .vidnav { flex: 0 0 auto; width: 54px; height: 54px; border: none; background: none; padding: 0; cursor: pointer; }
+    .vidnav img { width: 100%; height: 100%; display: block; filter: drop-shadow(0 6px 14px rgba(0,0,0,.45)); transition: transform .18s cubic-bezier(.16,1,.3,1); }
+    .vidnav.prev img { transform: scaleX(-1); }
+    .vidnav.next:hover img { transform: scale(1.15); }
+    .vidnav.prev:hover img { transform: scaleX(-1) scale(1.15); }
+    @media (max-width: 700px) { .vidnav { width: 38px; height: 38px; } }
     .car-title { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin: .55rem .2rem 1.8rem; }
     .car-title .t { font-weight: 600; color: var(--text); font-size: .95rem; }
     .car-title .n { color: var(--muted); font-size: .8rem; flex: 0 0 auto; }
@@ -277,18 +275,18 @@
       </div>
 
       <div class="carousel">
+        <button class="vidnav prev" id="pcf-prev" aria-label="Previous video"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
         <div class="embed spot">
           <video id="pcf-video" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/pcf-preview.mp4" autoplay muted loop playsinline preload="metadata" controls></video>
         </div>
-        <button class="car-btn prev" id="pcf-prev" aria-label="Previous video"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
-        <button class="car-btn next" id="pcf-next" aria-label="Next video"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
+        <button class="vidnav next" id="pcf-next" aria-label="Next video"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
       </div>
       <div class="car-title"><span class="t" id="pcf-video-title">Overview: imported SFM effects playing in Blender</span><span class="n" id="pcf-video-count">1 / 3</span></div>
 
       <article class="doc">
         <div class="band">
           <h2>The problem this solves</h2>
-          <p>Everything else in an SFM project can leave SFM. Models, maps, animation and cameras all have a road into Blender through <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a>, <a href="http://steamreview.org/BlenderSourceTools/" target="_blank" rel="noopener">Blender Source Tools</a> and the session importer above. Particles did not. An SFM effect is a <code>.pcf</code> file - a description of emitters, forces and sprites that only Source could play. Move a scene to Blender and every explosion, muzzle flash and smoke trail stays behind, to be faked by hand or composited in from stock footage.</p>
+          <p>Everything else in an SFM project can leave SFM. Models, maps, animation and cameras all have a road into Blender through <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a>, <a href="http://steamreview.org/BlenderSourceTools/" target="_blank" rel="noopener">Blender Source Tools</a> and <a href="#sessions" id="link-sessions">HoovyTools: Session Importer</a>. Particles did not. An SFM effect is a <code>.pcf</code> file - a description of emitters, forces and sprites that only Source could play. Move a scene to Blender and every explosion, muzzle flash and smoke trail stays behind, to be faked by hand or composited in from stock footage.</p>
           <p>Particle Import reads the <code>.pcf</code> and rebuilds each system inside Blender as <b>geometry nodes</b>. The result is not a baked point cloud or a video. Emitters emit, forces push, sprites face the camera and play their sheets, and every parameter the original author tuned is exposed in a panel.</p>
         </div>
 
