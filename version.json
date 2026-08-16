@@ -1,12 +1,12 @@
 {
-  "version": "v260816.01 10:57p",
-  "release": 1,
-  "sha": "a24b079",
-  "fullSha": "a24b0797fba02251a49d98137f9a3955169a499f",
+  "version": "v260816.02 11:21p",
+  "release": 2,
+  "sha": "d8d1241",
+  "fullSha": "d8d1241e94c9731a1e9eb1899b50a595bf46321f",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmzvulz",
-  "pushedAt": "2026-08-17T00:57:34+02:00",
-  "commits": [{"sha":"a24b079","message":"HoovyTools page: three-tool badge picker + Particle Import release","author":"HoovyTube"}]
+  "pushedAt": "2026-08-17T01:21:06+02:00",
+  "commits": [{"sha":"d8d1241","message":"HoovyTools page: design + copy revision round","author":"HoovyTube"}]
 }
