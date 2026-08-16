@@ -4,25 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/png" href="/favicon.png">
-  <title>HoovyTools: SFM to Blender &amp; Blender to SFM Addon | HoovyTube</title>
-  <meta name="description" content="HoovyTools: the Blender addon that imports Source Filmmaker (SFM) sessions into Blender - shape keys, cameras, sounds and animations - working alongside SourceIO. HoovyTools: SFM to Blender.">
-  <meta property="og:title" content="HoovyTools: SFM to Blender Addon">
-  <meta property="og:description" content="Import full Source Filmmaker sessions into Blender: shape keys, cameras, sounds and animations. Free, works with SourceIO.">
+  <title>HoovyTools: SFM to Blender Addons - Sessions &amp; Particles | HoovyTube</title>
+  <meta name="description" content="HoovyTools: Blender addons that bring Source Filmmaker into Blender. Import full SFM sessions (shape keys, cameras, sounds, animations) and SFM .pcf particle effects rebuilt as editable geometry nodes.">
+  <meta property="og:title" content="HoovyTools: SFM to Blender Addons">
+  <meta property="og:description" content="Import full SFM sessions and .pcf particle effects into Blender. Free tools in the spirit of SourceIO and Blender Source Tools.">
   <meta property="og:url" content="https://hoovytube.com/hoovytools/">
   <link rel="canonical" href="https://hoovytube.com/hoovytools/">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    "name": "HoovyTools: SFM to Blender",
-    "alternateName": ["HoovyTools", "HoovyTools Blender", "SFM to Blender Addon", "HoovyTools SFM to Blender"],
-    "applicationCategory": "MultimediaApplication",
-    "operatingSystem": "Blender (Windows, macOS, Linux)",
-    "description": "HoovyTools is a Blender addon that imports Source Filmmaker (SFM) sessions into Blender - shape keys, cameras, sounds and animations - working in harmony with SourceIO.",
-    "url": "https://hoovytube.com/hoovytools/",
-    "author": { "@type": "Person", "name": "HoovyTube" },
-    "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
-    "softwareRequirements": "Blender, SourceIO (https://github.com/REDxEYE/SourceIO)"
+    "@graph": [
+      {
+        "@type": "SoftwareApplication",
+        "name": "HoovyTools: SFM to Blender",
+        "alternateName": ["HoovyTools", "HoovyTools Blender", "SFM to Blender Addon"],
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Blender (Windows, macOS, Linux)",
+        "description": "HoovyTools is a Blender addon that imports Source Filmmaker (SFM) sessions into Blender - shape keys, cameras, sounds and animations - working in harmony with SourceIO.",
+        "url": "https://hoovytube.com/hoovytools/",
+        "author": { "@type": "Person", "name": "HoovyTube" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "softwareRequirements": "Blender, SourceIO (https://github.com/REDxEYE/SourceIO)"
+      },
+      {
+        "@type": "SoftwareApplication",
+        "name": "HoovyTools Particle Import",
+        "alternateName": ["SFM Particle Import", "PCF Import Blender", "SFM particles in Blender"],
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Blender (Windows, macOS, Linux)",
+        "description": "A Blender addon that imports Source Filmmaker .pcf particle effects and rebuilds them as live, editable geometry-node systems. Reads .pcf, .vtf and .vmt directly - no converters.",
+        "url": "https://hoovytube.com/hoovytools/#particles",
+        "author": { "@type": "Person", "name": "HoovyTube" },
+        "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+        "softwareRequirements": "Blender 4.2+ (geometry nodes with simulation zones)"
+      }
+    ]
   }
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -31,25 +47,29 @@
   <link rel="stylesheet" href="/styles/ht.css?v=9">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
-    .tabs { display: flex; gap: .5rem; justify-content: center; margin: 0 0 1.8rem; flex-wrap: wrap; }
-    .tab { padding: .7rem 1.4rem; border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--text); font: inherit; font-weight: 600; cursor: pointer; }
-    .tab.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-    .tab:disabled { opacity: .55; cursor: not-allowed; }
-    .tab .soon { font-size: .68rem; opacity: .85; margin-left: .4rem; text-transform: uppercase; letter-spacing: .04em; }
-    .panel { display: none; } .panel.active { display: block; }
+    /* Tool picker - same feel as the Learn page's level cards */
+    .tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.6rem; }
+    @media (max-width: 560px) { .tools { grid-template-columns: 1fr; } }
+    .tool { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 2.6rem 1.2rem 1.4rem; text-align: center; cursor: pointer; overflow: visible; transition: transform .2s, border-color .2s, box-shadow .2s; }
+    .tool:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
+    .tool img { width: 132px; height: 172px; object-fit: contain; display: block; margin: -3.9rem auto .5rem; transition: transform .3s cubic-bezier(.16,1,.3,1); filter: drop-shadow(0 10px 18px rgba(0,0,0,.4)); }
+    .tool:hover img { transform: scale(1.22) rotate(-7deg); }
+    .tool p { margin: 0; color: var(--muted); font-size: .9rem; }
+    .tool .soon { display: inline-block; font-size: .68rem; font-weight: 700; opacity: .85; text-transform: uppercase; letter-spacing: .04em; border: 1px solid var(--line); border-radius: 999px; padding: .1rem .5rem; margin-left: .3rem; }
+    .tool.active { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
+    .panel { display: none; animation: p-in .35s cubic-bezier(.16,1,.3,1); } .panel.active { display: block; }
+    @keyframes p-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .panel { animation: none; } .tool, .tool img { transition: none; } }
     .embed { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16/9; background: #10171f; margin-bottom: 1.6rem; }
-    .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .embed iframe, .embed video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; object-fit: cover; }
+    .vid-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.6rem; }
+    @media (max-width: 640px) { .vid-duo { grid-template-columns: 1fr; } }
+    .vid-duo figure { margin: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: #10171f; }
+    .vid-duo video { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
+    .vid-duo figcaption { padding: .55rem .8rem; font-size: .82rem; color: var(--muted); border-top: 1px solid var(--line); background: var(--panel); }
     .get-row { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; margin-bottom: 2.6rem; }
-    .faq { border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--panel); }
-    .faq-item + .faq-item { border-top: 1px solid var(--line); }
-    .faq-q { width: 100%; text-align: left; background: none; border: none; cursor: pointer; padding: 1.1rem 1.2rem; font: inherit; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: .7rem; }
-    .faq-q .chev { transition: transform .2s ease; color: var(--accent); flex: 0 0 auto; }
-    .faq-item.open .faq-q .chev { transform: rotate(90deg); }
-    .faq-a { max-height: 0; overflow: hidden; transition: max-height .3s ease; }
-    .faq-a .inner { padding: 0 1.2rem 1.1rem 2.9rem; color: var(--muted); line-height: 1.65; }
-    .faq-a .inner code { background: var(--panel-2); padding: .1rem .35rem; border-radius: 5px; font-size: .9em; }
     .coming { text-align: center; padding: 3rem 1rem; color: var(--muted); }
-    /* Documentation / tutorial */
+    /* Documentation */
     .doc { max-width: 820px; margin: 0 auto; }
     .doc h2 { font-size: clamp(1.4rem, 3.4vw, 1.95rem); margin: 2.6rem 0 .9rem; }
     .doc h3 { font-size: 1.18rem; margin: 1.7rem 0 .5rem; color: var(--text); }
@@ -70,26 +90,44 @@
     .underconstruction { text-align: center; padding: 3.5rem 1.5rem; border: 1px dashed var(--line); background: var(--panel); }
     .underconstruction h2 { margin: 0 0 .6rem; }
     .underconstruction p { color: var(--muted); margin: 0; }
+    .roles { display: grid; gap: .5rem; margin: 0 0 1.4rem; }
+    .roles .role { display: flex; gap: .9rem; align-items: baseline; border: 1px solid var(--line); background: var(--panel); padding: .6rem .95rem; }
+    .roles .swatch { flex: 0 0 auto; width: .85rem; height: .85rem; border-radius: 3px; transform: translateY(.1rem); }
+    .roles b { color: var(--text); }
+    .roles span { color: var(--muted); line-height: 1.55; }
   </style>
 </head>
 <body>
   <header class="pagehead">
     <div class="inner">
+      <p class="eyebrow">Blender Addons</p>
       <h1>HoovyTools</h1>
-      <p class="ph-lead">HoovyTools Blender Addons are add-ons for Blender, developed between 2023 and 2026 by HoovyTube with the permission of RedEye (creator of <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener" style="color:var(--accent)">SourceIO</a>), to bridge Source Filmmaker and Blender. For the first time this brings full SFM session import into Blender: shape keys, cameras, sounds and animations. What was once gatekept inside the community is now released as an open tool that, in harmony with SourceIO, moves your SFM skills into a far more stable environment.</p>
     </div>
     <div class="rule"></div>
   </header>
 
   <main class="wrap page" style="padding-top:1.6rem">
-    <!-- Direction toggle -->
-    <div class="tabs">
-      <button class="tab active" data-tab="sfm2blender">SFM → Blender</button>
-      <button class="tab" data-tab="blender2sfm" disabled>Blender → SFM <span class="soon">under construction</span></button>
+    <!-- TOOL PICKER -->
+    <div class="section-head"><h2>Pick a tool</h2><span class="muted">tap one</span></div>
+    <div class="tools">
+      <div class="tool spot active" data-tool="sessions" id="pick-sessions" role="button" tabindex="0" aria-label="HoovyTools: SFM to Blender session importer">
+        <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/badge-hoovytools.png" alt="HoovyTools badge">
+        <p>SFM → Blender<br>full session import</p>
+      </div>
+      <div class="tool spot" data-tool="particles" id="pick-particles" role="button" tabindex="0" aria-label="HoovyTools Particle Import: SFM .pcf particles to Blender">
+        <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/badge-particle-import.png" alt="HoovyTools Particle Import badge">
+        <p>SFM → Blender<br>.pcf particle effects</p>
+      </div>
+      <div class="tool spot" data-tool="blender2sfm" id="pick-blender2sfm" role="button" tabindex="0" aria-label="Blender to SFM importer, under construction">
+        <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/badge-blender2sfm.png" alt="Blender to SFM importer badge">
+        <p>Blender → SFM<span class="soon">under construction</span></p>
+      </div>
     </div>
 
-    <!-- SFM to Blender -->
-    <section class="panel active" id="sfm2blender">
+    <div class="divider"></div>
+
+    <!-- ============ SESSIONS (SFM > Blender, HoovyTools) ============ -->
+    <section class="panel active" id="sessions">
       <h2 style="text-align:center;margin:0 0 1.2rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools: SFM to Blender</h2>
       <div class="embed spot">
         <iframe src="https://www.youtube.com/embed/SGEVbgdZYaY" title="HoovyTools: SFM to Blender - session importer tutorial" loading="lazy"
@@ -105,6 +143,7 @@
       <div class="divider"></div>
 
       <article class="doc">
+        <p>Developed between 2023 and 2026 by HoovyTube with the permission of RedEye (creator of <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a>), HoovyTools brings full SFM session import into Blender for the first time: shape keys, cameras, sounds and animations, in harmony with SourceIO.</p>
         <div class="callout">Documentation starts from this release. Older versions, and builds targeting other Blender versions, will be documented here over time.</div>
 
         <h2>Installing HoovyTools</h2>
@@ -173,7 +212,94 @@
       </article>
     </section>
 
-    <!-- Blender to SFM (under construction) -->
+    <!-- ============ PARTICLES (SFM > Blender, PCF Import) ============ -->
+    <section class="panel" id="particles">
+      <h2 style="text-align:center;margin:0 0 1.2rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools Particle Import</h2>
+
+      <div class="embed spot">
+        <video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/pcf-preview.mp4" autoplay muted loop playsinline preload="metadata" controls></video>
+      </div>
+      <div class="vid-duo">
+        <figure>
+          <video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/pcf-import-demo.mp4" muted loop playsinline preload="metadata" controls></video>
+          <figcaption>A real .pcf import, start to finish - pick the file, press Build, scrub the timeline.</figcaption>
+        </figure>
+        <figure>
+          <video src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/pcf-render-rope.mp4" muted loop playsinline preload="metadata" controls></video>
+          <figcaption>Render Rope: Valve beams rebuilt as living geometry - width, noise and texture all editable.</figcaption>
+        </figure>
+      </div>
+
+      <div class="get-row">
+        <a class="btn btn-primary magnetic" data-magnetic="0.4" href="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/downloads/HoovyToolsParticleImport-0.21.0.zip" download>⬇ Download Particle Import (.zip)</a>
+      </div>
+
+      <div class="divider"></div>
+
+      <article class="doc">
+        <h2>The problem this solves</h2>
+        <p>Everything else in an SFM project can leave SFM. Models, maps, animation, cameras - between <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a>, <a href="http://steamreview.org/BlenderSourceTools/" target="_blank" rel="noopener">Blender Source Tools</a> and the session importer above, all of it has a road into Blender. The particles never did. An SFM effect is a <code>.pcf</code> file: a description of emitters, forces and sprites that only Source itself knew how to play. Move your scene to Blender and every explosion, every muzzle flash, every trail of smoke simply stays behind - and you are left re-animating fire by hand, or compositing it in from stock footage that never quite sits in the scene.</p>
+        <p>Particle Import reads the <code>.pcf</code> itself and rebuilds the whole system inside Blender as <b>geometry nodes</b> - not a baked point cloud, not a video, but the living machine: emitters that emit, forces that push, sprites that face the camera and play their sheets. Your effect arrives editable, with every parameter the original author tuned sitting in a panel, ready to be retuned.</p>
+
+        <h2>Standing on very tall shoulders</h2>
+        <p>This addon exists because two others existed first. <a href="http://steamreview.org/BlenderSourceTools/" target="_blank" rel="noopener">Blender Source Tools</a> taught a generation of us that Source assets and Blender could talk at all, and <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a> turned that conversation into something effortless. I am a fan of both, in the plainest sense of the word - someone who spent years inside SFM leaning on tools other people were kind enough to build and give away.</p>
+        <p>Particle Import is written in that same spirit and stands, happily, in their shadow: it takes on the one asset type neither of them covers, so the road out of SFM finally has no missing lane. No grand claims - if it helps a few SFM folks keep their effects when they move, it has done its job.</p>
+        <div class="callout">Battle-tested where it counts: I ran it against the hundreds of particle systems I have built for my supporters over the years - the weirdest, heaviest effects I could throw at it - and nearly all of them import and play correctly.</div>
+
+        <h2>Installing it</h2>
+        <p>Particle Import is <b>standalone</b>. It reads <code>.pcf</code>, <code>.vtf</code> and <code>.vmt</code> files directly - no SourceIO required, no VTFEdit, no converters of any kind.</p>
+        <ol>
+          <li>Download the <code>.zip</code> above. Do not unzip it.</li>
+          <li><code>Edit → Preferences → Add-ons → Install…</code>, choose the zip, tick the checkbox to enable it.</li>
+          <li>Open the sidebar in the 3D viewport (press <code>N</code>) and find the <b>Particle Import</b> tab.</li>
+          <li>It auto-detects your SFM install; if yours lives somewhere unusual, set the paths in the addon preferences.</li>
+          <li>Pick a <code>.pcf</code>, pick a system, press <b>Build</b>. Press play.</li>
+        </ol>
+
+        <h2>What comes across</h2>
+        <ul class="feature-list">
+          <li><b>The whole system, live.</b> Emitters, initializers, per-frame operators, forces and constraints - rebuilt as geometry nodes, not baked.</li>
+          <li><b>Sprites, ropes and trails.</b> The three big Valve renderers: camera-facing animated sprites, beam ropes, and velocity-stretched spark trails.</li>
+          <li><b>Textures decoded in-house.</b> <code>.vtf</code> sprite sheets and <code>.vmt</code> materials are read directly - <code>$additive</code>, <code>$overbrightfactor</code> and sheet sequences included.</li>
+          <li><b>Control points as empties.</b> Effects that follow points in SFM follow empties in Blender. Grab one and drag it; the effect comes along.</li>
+          <li><b>Everything editable, live.</b> Every parameter the <code>.pcf</code> authored appears in a properties panel, organised by SFM's own sections - and edits apply to particles already in the air.</li>
+          <li><b>Sharing built in.</b> Node to Code turns a system you have built into a script anyone can run - no addon needed on their end.</li>
+          <li><b>Performance tools.</b> Proxy View swaps heavy effects for cheap colour-coded stand-ins while you work, and a lag-diagnosis button tells you exactly what is slow instead of leaving you guessing.</li>
+        </ul>
+
+        <h2>Under the hood: the geometry-node machine</h2>
+        <p>Tab into any imported system and you will not find node soup. You will find a machine organised the way Source itself thinks about particles, colour-coded by job:</p>
+        <div class="roles">
+          <div class="role"><span class="swatch" style="background:#39c0c8"></span><span><b>Time</b> - the clock. SFM runs at 24 FPS internally; a time-scale group retimes it to your scene.</span></div>
+          <div class="role"><span class="swatch" style="background:#d8b93c"></span><span><b>Emitter</b> - decides when particles are born, and how many.</span></div>
+          <div class="role"><span class="swatch" style="background:#57a35a"></span><span><b>Initializers</b> - decisions made once, at birth: starting position, radius, colour, lifetime.</span></div>
+          <div class="role"><span class="swatch" style="background:#d8823c"></span><span><b>Operators</b> - decisions remade every single frame: movement, fading, spinning, forces.</span></div>
+          <div class="role"><span class="swatch" style="background:#8a63c9"></span><span><b>Sequence maths</b> - which tile of the sprite sheet each particle shows right now.</span></div>
+          <div class="role"><span class="swatch" style="background:#4a7fd0"></span><span><b>Renderer</b> - turns all of the above into camera-facing cards your GPU can draw.</span></div>
+        </div>
+        <p>That is Valve's own anatomy, kept on purpose: if you have ever used SFM's particle editor, you already know your way around the graph.</p>
+
+        <h3>The emitter is fussy about debt</h3>
+        <p>Thirty times a second, the emitter asks how many particles it owes the world. If the rate says two and a half, it spawns two and <em>carries the half forward</em> - rounding would slowly drift the effect away from what its author tuned. And when the population cap is reached, the cap <b>throttles</b> rather than kills: emission pauses until a particle dies naturally. Deleting a living particle to make room is a bug, not a feature.</p>
+
+        <h3>The emitter remembers; the operators recompute</h3>
+        <p>The simulation zone - Blender's frame-to-frame memory - stores exactly four things per particle: its ID, its birth time, its birth position, and one flag. Everything else, every frame, is recomputed as a pure function of that ID. This is the design decision the whole addon hangs off, and it buys you something you can feel: grab Radius while the effect is playing and every particle <em>already in the air</em> resizes instantly. Nothing is baked, so nothing needs re-baking.</p>
+
+        <h3>Randomness without dice</h3>
+        <p>If everything recomputes each frame, how does "random" not flicker? Because there are no dice - there is a hash: <code>fract(sin(id × 12.9898 + 78.233) × 43758.5453)</code>. Feed a particle's ID through it and you get a number that looks random but is utterly repeatable. Particle #47 rolls the same size every time you ask, forever - which is exactly why you can scrub the timeline backwards and the effect holds together.</p>
+
+        <h3>Valve's physics, on Valve's clock</h3>
+        <p>Source applies drag as a fraction of velocity kept per <b>tick</b>, thirty ticks a second - not per second. The graphs honour that, down to terminal velocity being <code>gravity ÷ (30 × drag)</code>. One Blender unit is one Hammer unit, and nothing is secretly rescaled on the way in. It is the difference between "looks kind of like TF2" and an effect a Source character could stand next to without anything reading wrong.</p>
+
+        <h3>Cards, and the art of facing the camera</h3>
+        <p>Every particle you have ever seen in Source is a flat card turning to face you - but <em>how</em> it turns is authored, and the renderer reproduces all three modes. Smoke billboards fully. Fire uses the erect mode: it follows you as you orbit but stays standing, and it refuses random roll, because a flame doing a cartwheel breaks the illusion instantly. The third mode locks to a control point's rotation. Mirror-flips are done the honest way - the card's X scale goes negative - and the whole sheet animation runs through <b>one material</b>, with each particle privately choosing its sequence through a per-point attribute the shader reads at instance level.</p>
+
+        <h3>The graph explains itself</h3>
+        <p>Finally, the part I am proudest of: every section of every generated graph carries a written note - inside the node editor, in a coloured frame - saying what that section does, how, and what the trap was. You can learn how the machine works by reading the machine. No wiki required.</p>
+      </article>
+    </section>
+
+    <!-- ============ BLENDER > SFM (under construction) ============ -->
     <section class="panel" id="blender2sfm">
       <div class="underconstruction">
         <h2>HoovyTools: Blender to SFM</h2>
@@ -187,24 +313,29 @@
   </footer>
 
   <script>
-    // Direction tabs
-    document.querySelectorAll('.tab[data-tab]').forEach(function (t) {
-      t.addEventListener('click', function () {
-        if (t.disabled) return;
-        document.querySelectorAll('.tab').forEach(function (x) { x.classList.remove('active'); });
-        t.classList.add('active');
-        document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('active'); });
-        document.getElementById(t.dataset.tab).classList.add('active');
+    // Tool picker: badge cards switch panels (same interaction as Learn's levels)
+    (function () {
+      var cards = [].slice.call(document.querySelectorAll('.tool[data-tool]'));
+      function open(key, push) {
+        cards.forEach(function (c) { c.classList.toggle('active', c.dataset.tool === key); });
+        document.querySelectorAll('.panel').forEach(function (p) {
+          p.classList.toggle('active', p.id === key);
+        });
+        if (push && history.replaceState) history.replaceState(null, '', '#' + key);
+        // pause videos in hidden panels so tabs don't play over each other
+        document.querySelectorAll('.panel:not(.active) video').forEach(function (v) { v.pause(); });
+        var hero = document.querySelector('.panel.active video[autoplay]');
+        if (hero) { hero.play().catch(function () {}); }
+      }
+      cards.forEach(function (el) {
+        el.addEventListener('click', function () { open(el.dataset.tool, true); });
+        el.addEventListener('keydown', function (e) {
+          if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el.dataset.tool, true); }
+        });
       });
-    });
-    // FAQ accordion
-    document.querySelectorAll('.faq-q').forEach(function (q) {
-      q.addEventListener('click', function () {
-        var item = q.parentElement, a = item.querySelector('.faq-a');
-        var open = item.classList.toggle('open');
-        a.style.maxHeight = open ? (a.querySelector('.inner').offsetHeight + 'px') : '0';
-      });
-    });
+      var h = (location.hash || '').replace('#', '');
+      if (h && document.getElementById(h) && document.querySelector('.tool[data-tool="' + h + '"]')) open(h, false);
+    })();
   </script>
   <script defer src="/shared/ht-nav.js?v=9"></script>
   <script defer src="/shared/ht-ui.js?v=9"></script>
