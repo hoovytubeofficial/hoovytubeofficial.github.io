@@ -1,12 +1,12 @@
 {
-  "version": "v260817.03 6:41p",
-  "release": 3,
-  "sha": "aa9d9ba",
-  "fullSha": "aa9d9ba3712dd0640f85036189e190edeb5ee4ef",
+  "version": "v260817.04 6:51p",
+  "release": 4,
+  "sha": "22af816",
+  "fullSha": "22af8166d64937ed82770899b6530ddf5a222432",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmzvulz",
-  "pushedAt": "2026-08-17T20:41:25+02:00",
-  "commits": [{"sha":"85a7211","message":"hoovytools: version-history carousel + v0.22.2 download","author":"HoovyTube"},{"sha":"aa9d9ba","message":"hoovytools: host v0.22.2 addon zip in-repo, download served by Pages","author":"HoovyTube"}]
+  "pushedAt": "2026-08-17T20:51:38+02:00",
+  "commits": [{"sha":"22af816","message":"hoovytools: download button + chip follow the version carousel","author":"HoovyTube"}]
 }
