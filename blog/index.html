@@ -115,6 +115,11 @@
       font-size: 1.5rem; line-height: 1.4; font-style: italic; color: var(--text); }
     .prose code { font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace; font-size: .86em;
       background: var(--panel-2); padding: .12em .4em; border-radius: 6px; }
+    .prose a { color: var(--accent); font-weight: 500; text-decoration: none;
+      background-image: linear-gradient(var(--accent), var(--accent)); background-repeat: no-repeat;
+      background-position: 0 100%; background-size: 100% 1.5px; padding-bottom: 1px;
+      transition: background-size .2s ease, color .15s ease; }
+    .prose a:hover { color: var(--text); background-size: 100% 100%; background-image: linear-gradient(color-mix(in srgb, var(--accent) 18%, transparent), color-mix(in srgb, var(--accent) 18%, transparent)); }
 
     .article-foot { margin: 3rem 0 0; }
     .article-share { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap;
@@ -161,7 +166,7 @@
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="/blog/posts.js?v=1"></script>
+  <script src="/blog/posts.js?v=2"></script>
   <script>
   (function () {
     var ICON = {
@@ -178,6 +183,14 @@
 
     function esc(s) { return String(s).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+    // Turn [text](url) (written in posts.js) into anchors. Runs AFTER esc().
+    // External links open in a new tab; on-site links (hoovytube.com / root-relative) stay put.
+    function linkify(s) {
+      return s.replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, function (_, text, url) {
+        var ext = /^https?:\/\//.test(url) && !/(?:^|\/\/|\.)hoovytube\.com\b/.test(url);
+        return '<a href="' + url + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + text + '</a>';
+      });
+    }
     function fmtDate(iso) {
       var p = String(iso || '').split('-'); if (p.length !== 3) return iso || '';
       return MONTHS[(+p[1]) - 1] + ' ' + (+p[2]) + ', ' + p[0];
@@ -251,9 +264,9 @@
     /* ---------- Article ---------- */
     function bodyHtml(post) {
       return (post.body || []).map(function (b) {
-        if (typeof b === 'string') return '<p>' + esc(b) + '</p>';
+        if (typeof b === 'string') return '<p>' + linkify(esc(b)) + '</p>';
         if (b.h) return '<h2>' + esc(b.h) + '</h2>';
-        if (b.quote) return '<blockquote>' + esc(b.quote) + '</blockquote>';
+        if (b.quote) return '<blockquote>' + linkify(esc(b.quote)) + '</blockquote>';
         return '';
       }).join('');
     }
