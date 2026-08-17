@@ -285,8 +285,8 @@
       <h2 style="text-align:center;margin:0 0 1rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools Particle Import</h2>
 
       <div class="get-row" id="pcf-get-row">
-        <a class="btn btn-primary magnetic" data-magnetic="0.4" href="/downloads/HoovyToolsParticleImport-0.22.2.zip" download>⬇ Download Particle Import (.zip)</a>
-        <span class="ver-chip">v0.22.2</span>
+        <a class="btn btn-primary magnetic" data-magnetic="0.4" href="/downloads/HoovyToolsParticleImport-0.23.0.zip" download>⬇ Download Particle Import (.zip)</a>
+        <span class="ver-chip">v0.23.0</span>
       </div>
 
       <div class="carousel-vh" aria-label="Version history">
@@ -446,7 +446,15 @@
       // Newest first. To log a release, add an object at the TOP and move the
       // 'Latest' badge up to it. HTML in notes is allowed (<b>, <code>).
       var VERSIONS = [
-        { ver: 'v0.22.2', dl: '/downloads/HoovyToolsParticleImport-0.22.2.zip', date: 'Aug 2026', badge: 'Latest', notes: [
+        { ver: 'v0.23.0', dl: '/downloads/HoovyToolsParticleImport-0.23.0.zip', date: 'Aug 2026', badge: 'Latest', notes: [
+          '<b>Uneven sprite sheets cut correctly.</b> Sheets whose frames are different sizes (spark strips, big fire atlases) drew the whole sheet on every card. The importer now cuts by each frame\'s exact rectangle from the VTF itself - this covers over 2,000 systems in the wild, including Valve\'s own blood, fire and impact effects. Big sheets also import faster.',
+          '<b>Trails point where they fly.</b> Spark trails used to keep their random birth direction; they now stretch along their actual flight path, like SFM.',
+          '<b>Missing materials no longer leave holes.</b> A system whose material can\'t be found on your machine now wears a bundled generic (glow, spark or beam, by renderer) instead of vanishing - and the console says so.',
+          '<b>Node to Code, four flavours.</b> Geometry or Shader nodes, with or without textures embedded - one click each.',
+          '<b>Copy Console Output.</b> One button copies a paste-ready support report (versions, what was imported, every HoovyTools console line) for easy troubleshooting.',
+          'Verified against a census of 2,243 .pcf files / 30,616 particle systems from TF2, HL2, Portal 2 and the HoovyTube packs.'
+        ] },
+        { ver: 'v0.22.2', dl: '/downloads/HoovyToolsParticleImport-0.22.2.zip', date: 'Aug 2026', badge: '', notes: [
           '<b>Missing geometry, fixed.</b> A system whose material or texture didn\'t resolve was skipped, and it took its child particles down with it - so an import came in as control points with no cards. Those systems now build as invisible drivers that still carry their children, so the geometry comes through.',
           '<b>Sheet preview, fixed.</b> Some sprite sheets (UnlitGeneric) previewed as the whole strip instead of one frame. The crop now follows the VTF\'s own sheet table, not the shader name.',
           '<b>Install, fixed.</b> Drag-and-drop onto Blender 4.2+ no longer errors with "ZIP packaged incorrectly."'
