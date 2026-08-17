@@ -446,18 +446,19 @@
       // Newest first. To log a release, add an object at the TOP and move the
       // 'Latest' badge up to it. HTML in notes is allowed (<b>, <code>).
       var VERSIONS = [
-        { ver: 'v0.22.2', date: 'Aug 2026', badge: 'Latest', notes: [
+        { ver: 'v0.22.2', dl: '/downloads/HoovyToolsParticleImport-0.22.2.zip', date: 'Aug 2026', badge: 'Latest', notes: [
           '<b>Missing geometry, fixed.</b> A system whose material or texture didn\'t resolve was skipped, and it took its child particles down with it - so an import came in as control points with no cards. Those systems now build as invisible drivers that still carry their children, so the geometry comes through.',
           '<b>Sheet preview, fixed.</b> Some sprite sheets (UnlitGeneric) previewed as the whole strip instead of one frame. The crop now follows the VTF\'s own sheet table, not the shader name.',
           '<b>Install, fixed.</b> Drag-and-drop onto Blender 4.2+ no longer errors with "ZIP packaged incorrectly."'
         ] },
-        { ver: 'v0.21.0', date: '', badge: '', notes: [
+        { ver: 'v0.21.0', dl: 'https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/downloads/HoovyToolsParticleImport-0.21.0.zip', date: '', badge: '', notes: [
           'Baseline public release: full <code>.pcf</code> import as live geometry nodes, all three renderers (sprites, ropes, trails), Node to Code, and the performance tools.'
         ] }
       ];
       var num = document.getElementById('vh-num'), badge = document.getElementById('vh-badge'),
           date = document.getElementById('vh-date'), notes = document.getElementById('vh-notes'),
-          count = document.getElementById('vh-count'), card = document.querySelector('.vh-card');
+          count = document.getElementById('vh-count'), card = document.querySelector('.vh-card'),
+          dlBtn = document.querySelector('#pcf-get-row a'), chip = document.querySelector('#pcf-get-row .ver-chip');
       if (!num) return;
       var i = 0;
       function show(n) {
@@ -468,6 +469,8 @@
         date.textContent = v.date || '';
         notes.innerHTML = v.notes.map(function (t) { return '<li>' + t + '</li>'; }).join('');
         count.textContent = (i + 1) + ' / ' + VERSIONS.length;
+        if (dlBtn && v.dl) dlBtn.href = v.dl;   // download follows the shown version
+        if (chip) chip.textContent = v.ver;
         card.style.animation = 'none'; void card.offsetHeight; card.style.animation = 'vhIn .25s ease';
       }
       document.getElementById('vh-next').addEventListener('click', function () { show(i + 1); });
