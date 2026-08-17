@@ -1,12 +1,12 @@
 {
-  "version": "v260817.01 2:34p",
-  "release": 1,
-  "sha": "618c144",
-  "fullSha": "618c1443dc0681f18e8ba57e75b35c9f40788405",
+  "version": "v260817.02 2:44p",
+  "release": 2,
+  "sha": "9c5310b",
+  "fullSha": "9c5310b6e8b358053f2c32750bb7e335c3b7218f",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmzvulz",
-  "pushedAt": "2026-08-17T16:34:22+02:00",
-  "commits": [{"sha":"618c144","message":"blog: add Journal section + first post; include WIP footer social bar","author":"HoovyTube"}]
+  "pushedAt": "2026-08-17T16:44:43+02:00",
+  "commits": [{"sha":"9c5310b","message":"blog: link the giants' chain + sessions/particles in first post","author":"HoovyTube"}]
 }
