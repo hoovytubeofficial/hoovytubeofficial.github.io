@@ -1,12 +1,12 @@
 {
-  "version": "v260817.02 2:44p",
-  "release": 2,
-  "sha": "9c5310b",
-  "fullSha": "9c5310b6e8b358053f2c32750bb7e335c3b7218f",
+  "version": "v260817.03 6:41p",
+  "release": 3,
+  "sha": "aa9d9ba",
+  "fullSha": "aa9d9ba3712dd0640f85036189e190edeb5ee4ef",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmzvulz",
-  "pushedAt": "2026-08-17T16:44:43+02:00",
-  "commits": [{"sha":"9c5310b","message":"blog: link the giants' chain + sessions/particles in first post","author":"HoovyTube"}]
+  "pushedAt": "2026-08-17T20:41:25+02:00",
+  "commits": [{"sha":"85a7211","message":"hoovytools: version-history carousel + v0.22.2 download","author":"HoovyTube"},{"sha":"aa9d9ba","message":"hoovytools: host v0.22.2 addon zip in-repo, download served by Pages","author":"HoovyTube"}]
 }
