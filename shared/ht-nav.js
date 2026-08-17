@@ -11,15 +11,20 @@
     search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
     theme: '<path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>'
   };
+  // Placeholder icon for the Journal tab — reuses the site's existing arrow art.
+  // TODO: swap for a dedicated /assets/icons/journal.png when one's drawn.
+  var JOURNAL_IC = 'https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png';
   var ITEMS = [
     { label: 'Home', href: '/', ic: 'home', match: ['/', '/index.html'] },
     { label: 'HoovyTools SFM', href: '/products/', ic: 'product', match: ['/products/', '/products/index.html'] },
     { label: 'HoovyTools Blender', href: '/hoovytools/', ic: 'tools', match: ['/hoovytools/', '/hoovytools/index.html'] },
     { label: 'Learn SFM & Blender', href: '/learn/', ic: 'learn', match: ['/learn/', '/learn/index.html'] },
+    { label: 'Journal', href: '/blog/', ic: JOURNAL_IC, match: ['/blog/', '/blog/index.html'] },
     { label: 'Contact', href: '/contact/', ic: 'contact', match: ['/contact/', '/contact/index.html'] }
   ];
   var svg = function (p) { return '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; };
-  var ic = function (n) { return '<img class="dock-ic" src="/assets/icons/' + n + '.png" alt="" draggable="false">'; };
+  // Accepts a bare icon name (→ /assets/icons/NAME.png) or a full URL / absolute path.
+  var ic = function (n) { var src = /[:\/]/.test(n) ? n : '/assets/icons/' + n + '.png'; return '<img class="dock-ic" src="' + src + '" alt="" draggable="false">'; };
   var path = location.pathname.replace(/\/index\.html$/, '/');
 
   var html = '<nav class="dock" aria-label="Primary">';
@@ -87,6 +92,7 @@
       { t: 'HoovyTools SFM', d: 'SFM particles, scenebuilds & animations', href: '/products/', k: 'assets products particles scenebuilds animations patreon steam workshop library packs tiers membership sfm hoovytools' },
       { t: 'HoovyTools Blender', d: 'Blender addon: import SFM sessions into Blender', href: '/hoovytools/', k: 'hoovytools blender addon sfm to blender importer session dmx download audio tool transposition' },
       { t: 'Learn SFM & Blender', d: 'Tutorials, sorted by difficulty', href: '/learn/', k: 'learn tutorials sfm blender easy medium hard playlist guide howto beginner advanced' },
+      { t: 'Journal', d: 'Essays & notes from behind the tools', href: '/blog/', k: 'journal blog writing essays posts notes manifesto shoulders of giants read articles' },
       { t: 'Contact', d: 'Get in touch', href: '/contact/', k: 'contact email message support hello' },
       { t: 'Newsletter', d: 'Subscribe for updates', href: '/#newsletter', k: 'newsletter subscribe email updates signup' },
       { t: 'Download HoovyTools', d: 'Grab the latest .zip', href: '/hoovytools/', k: 'download zip install hoovytools blender addon' },
@@ -156,6 +162,105 @@
         cur[i] += (target - cur[i]) * 0.2;
         if (Math.abs(cur[i] - target) < 0.1) cur[i] = target;
         items[i].style.width = items[i].style.height = cur[i] + 'px';
+      }
+      requestAnimationFrame(tick);
+    })();
+  }
+})();
+
+/* ---- Footer social bar (PNG icons + magnetic grow) + Send-message popup ---- */
+(function () {
+  var SUPA = 'https://iglbfojatowaxbhjubvz.supabase.co';
+  var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnbGJmb2phdG93YXhiaGp1YnZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzgyODUsImV4cCI6MjEwMTYxNDI4NX0.H7EeaGn3qQGn6pwFnDI_QRFW3uILnwDaWB54pUbWv6g';
+
+  // --- Send-message popup (also used as the email icon's action) ---
+  var modal = document.createElement('div');
+  modal.className = 'msg-modal';
+  modal.innerHTML =
+    '<div class="mm-box" role="dialog" aria-modal="true" aria-label="Send a message">' +
+      '<button class="mm-x" type="button" aria-label="Close">×</button>' +
+      '<h3>Send a message</h3>' +
+      '<p class="mm-sub">Questions, collabs, or just say hi — I read every message.</p>' +
+      '<form class="mm-form" novalidate>' +
+        '<div class="mm-row">' +
+          '<div><label>Name</label><input name="name" type="text" autocomplete="name" required></div>' +
+          '<div><label>Email</label><input name="email" type="email" autocomplete="email" required></div>' +
+        '</div>' +
+        '<label>Message</label>' +
+        '<textarea name="message" required></textarea>' +
+        '<div class="mm-actions">' +
+          '<button type="button" class="mm-cancel">Cancel</button>' +
+          '<button type="submit" class="mm-send">Send</button>' +
+        '</div>' +
+        '<div class="mm-msg" role="status" aria-live="polite"></div>' +
+      '</form>' +
+    '</div>';
+  document.body.appendChild(modal);
+
+  var mmForm = modal.querySelector('.mm-form');
+  var mmMsg = modal.querySelector('.mm-msg');
+  var mmSend = modal.querySelector('.mm-send');
+  var lastFocus = null;
+  function openModal(e) { if (e) e.preventDefault(); lastFocus = document.activeElement; modal.classList.add('open'); setTimeout(function () { var f = mmForm.querySelector('input[name=name]'); if (f) f.focus(); }, 30); }
+  function closeModal() { modal.classList.remove('open'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
+  modal.querySelector('.mm-x').addEventListener('click', closeModal);
+  modal.querySelector('.mm-cancel').addEventListener('click', closeModal);
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+  mmForm.addEventListener('submit', function (e) {
+    e.preventDefault();
+    mmMsg.textContent = ''; mmMsg.className = 'mm-msg';
+    var name = mmForm.name.value.trim(), email = mmForm.email.value.trim(), message = mmForm.message.value.trim();
+    if (!name || !email || !message) { mmMsg.textContent = 'Please fill in your name, email, and message.'; mmMsg.className = 'mm-msg err'; return; }
+    mmSend.disabled = true; mmSend.textContent = 'Sending…';
+    fetch(SUPA + '/functions/v1/contact-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'apikey': ANON, 'Authorization': 'Bearer ' + ANON },
+      body: JSON.stringify({ name: name, email: email, subject: 'Message from site popup', message: message })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; });
+    }).then(function (res) {
+      if (res.ok) { mmMsg.textContent = 'Thanks — your message was sent!'; mmMsg.className = 'mm-msg ok'; mmForm.reset(); setTimeout(closeModal, 1400); }
+      else { mmMsg.textContent = (res.d && res.d.error) || 'Something went wrong. Please try again.'; mmMsg.className = 'mm-msg err'; }
+    }).catch(function () {
+      mmMsg.textContent = 'Network error. Please try again.'; mmMsg.className = 'mm-msg err';
+    }).then(function () { mmSend.disabled = false; mmSend.textContent = 'Send'; });
+  });
+
+  // --- Footer social bar: upgrade to PNG icons ---
+  var social = document.querySelector('footer.site .social');
+  if (!social) return;
+
+  var LINKS = [
+    { n: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@HoovyTube' },
+    { n: 'patreon', label: 'Patreon', href: 'https://www.patreon.com/HoovyTube308' },
+    { n: 'steam', label: 'Steam Workshop', href: 'https://steamcommunity.com/id/HoovyTube/myworkshopfiles/' },
+    { n: 'discord', label: 'Discord', href: 'https://discord.gg/VhUCwuuE84' },
+    { n: 'email', label: 'Send a message', href: '/contact/', msg: true }
+  ];
+  social.innerHTML = LINKS.map(function (l) {
+    var img = '<img class="soc-ic" src="/assets/icons/social/' + l.n + '.png" alt="" draggable="false">';
+    return l.msg
+      ? '<a class="soc soc-msg" href="' + l.href + '" aria-label="' + l.label + '">' + img + '</a>'
+      : '<a class="soc" href="' + l.href + '" target="_blank" rel="noopener" aria-label="' + l.label + '">' + img + '</a>';
+  }).join('');
+
+  var msgLink = social.querySelector('.soc-msg');
+  if (msgLink) msgLink.addEventListener('click', openModal);
+
+  // Magnetic magnify (pointer:fine only) - same feel as the dock
+  if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
+    var items = [].slice.call(social.querySelectorAll('.soc'));
+    var RANGE = 120, MAXS = 1.55, mouseX = Infinity, cur = items.map(function () { return 1; });
+    social.addEventListener('pointermove', function (e) { mouseX = e.clientX; });
+    social.addEventListener('pointerleave', function () { mouseX = Infinity; });
+    (function tick() {
+      for (var i = 0; i < items.length; i++) {
+        var r = items[i].getBoundingClientRect(), c = r.left + r.width / 2, d = Math.abs(mouseX - c), t = 1;
+        if (d < RANGE) { var k = 1 - d / RANGE; t = 1 + (MAXS - 1) * k * k; }
+        cur[i] += (t - cur[i]) * 0.2; if (Math.abs(cur[i] - t) < 0.001) cur[i] = t;
+        items[i].style.transform = 'scale(' + cur[i] + ')';
       }
       requestAnimationFrame(tick);
     })();
