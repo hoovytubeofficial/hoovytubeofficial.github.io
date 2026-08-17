@@ -1,12 +1,12 @@
 {
-  "version": "v260816.04 11:57p",
-  "release": 4,
-  "sha": "24df41d",
-  "fullSha": "24df41d58bf065409422658ebba86ffe9c2a8ccc",
+  "version": "v260817.01 2:34p",
+  "release": 1,
+  "sha": "618c144",
+  "fullSha": "618c1443dc0681f18e8ba57e75b35c9f40788405",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmzvulz",
-  "pushedAt": "2026-08-17T01:57:16+02:00",
-  "commits": [{"sha":"24df41d","message":"security: remove un-pruned template leftovers (spaces/, infra/)","author":"HoovyTube"}]
+  "pushedAt": "2026-08-17T16:34:22+02:00",
+  "commits": [{"sha":"618c144","message":"blog: add Journal section + first post; include WIP footer social bar","author":"HoovyTube"}]
 }
