@@ -97,6 +97,21 @@
     /* Download row, top of each tool */
     .get-row { display: flex; gap: .8rem; flex-wrap: wrap; justify-content: center; align-items: center; margin: 0 0 1.6rem; }
     .ver-chip { font-size: .78rem; font-weight: 600; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .25rem .7rem; background: var(--panel); }
+    /* Version history carousel (click through with the same arrows as the video) */
+    .carousel-vh { display: flex; align-items: center; gap: .5rem; justify-content: center; margin: -.4rem auto .3rem; max-width: 760px; }
+    .vh-card { flex: 1 1 auto; min-width: 0; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); padding: 1rem 1.25rem; min-height: 150px; }
+    .vh-head { display: flex; align-items: center; gap: .55rem; margin: 0 0 .55rem; }
+    .vh-num { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--text); font-size: 1.12rem; }
+    .vh-badge { font-size: .6rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent); padding: .14rem .5rem; border-radius: 999px; }
+    .vh-badge:empty { display: none; }
+    .vh-date { margin-left: auto; font-size: .74rem; color: var(--muted); }
+    .vh-date:empty { display: none; }
+    .vh-notes { margin: 0; padding-left: 1.15rem; color: var(--muted); font-size: .87rem; line-height: 1.6; }
+    .vh-notes li { margin: 0 0 .45rem; } .vh-notes li:last-child { margin-bottom: 0; }
+    .vh-notes b { color: var(--text); }
+    .vh-notes code { background: var(--panel-2); padding: .05rem .35rem; border-radius: 5px; font-size: .9em; }
+    @keyframes vhIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) { .vh-card { animation: none !important; } }
     .ver-dd { position: relative; }
     .ver-dd summary { list-style: none; cursor: pointer; font-size: .78rem; font-weight: 600; color: var(--muted); border: 1px solid var(--line); border-radius: 999px; padding: .25rem .7rem; background: var(--panel); }
     .ver-dd summary::-webkit-details-marker { display: none; }
@@ -270,9 +285,19 @@
       <h2 style="text-align:center;margin:0 0 1rem;font-size:clamp(1.4rem,3.5vw,1.9rem)">HoovyTools Particle Import</h2>
 
       <div class="get-row" id="pcf-get-row">
-        <a class="btn btn-primary magnetic" data-magnetic="0.4" href="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/downloads/HoovyToolsParticleImport-0.21.0.zip" download>⬇ Download Particle Import (.zip)</a>
-        <span class="ver-chip">v0.21.0</span>
+        <a class="btn btn-primary magnetic" data-magnetic="0.4" href="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/downloads/HoovyToolsParticleImport-0.22.2.zip" download>⬇ Download Particle Import (.zip)</a>
+        <span class="ver-chip">v0.22.2</span>
       </div>
+
+      <div class="carousel-vh" aria-label="Version history">
+        <button class="vidnav prev" id="vh-prev" aria-label="Newer version"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
+        <div class="vh-card spot">
+          <div class="vh-head"><span class="vh-num" id="vh-num"></span><span class="vh-badge" id="vh-badge"></span><span class="vh-date" id="vh-date"></span></div>
+          <ul class="vh-notes" id="vh-notes"></ul>
+        </div>
+        <button class="vidnav next" id="vh-next" aria-label="Older version"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
+      </div>
+      <div class="car-title"><span class="t">Version history</span><span class="n" id="vh-count">1 / 1</span></div>
 
       <div class="carousel">
         <button class="vidnav prev" id="pcf-prev" aria-label="Previous video"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
@@ -414,6 +439,40 @@
       }
       document.getElementById('pcf-next').addEventListener('click', function () { show(i + 1); });
       document.getElementById('pcf-prev').addEventListener('click', function () { show(i - 1); });
+    })();
+
+    /* ---- Version history carousel ---- */
+    (function () {
+      // Newest first. To log a release, add an object at the TOP and move the
+      // 'Latest' badge up to it. HTML in notes is allowed (<b>, <code>).
+      var VERSIONS = [
+        { ver: 'v0.22.2', date: 'Aug 2026', badge: 'Latest', notes: [
+          '<b>Missing geometry, fixed.</b> A system whose material or texture didn\'t resolve was skipped, and it took its child particles down with it - so an import came in as control points with no cards. Those systems now build as invisible drivers that still carry their children, so the geometry comes through.',
+          '<b>Sheet preview, fixed.</b> Some sprite sheets (UnlitGeneric) previewed as the whole strip instead of one frame. The crop now follows the VTF\'s own sheet table, not the shader name.',
+          '<b>Install, fixed.</b> Drag-and-drop onto Blender 4.2+ no longer errors with "ZIP packaged incorrectly."'
+        ] },
+        { ver: 'v0.21.0', date: '', badge: '', notes: [
+          'Baseline public release: full <code>.pcf</code> import as live geometry nodes, all three renderers (sprites, ropes, trails), Node to Code, and the performance tools.'
+        ] }
+      ];
+      var num = document.getElementById('vh-num'), badge = document.getElementById('vh-badge'),
+          date = document.getElementById('vh-date'), notes = document.getElementById('vh-notes'),
+          count = document.getElementById('vh-count'), card = document.querySelector('.vh-card');
+      if (!num) return;
+      var i = 0;
+      function show(n) {
+        i = (n + VERSIONS.length) % VERSIONS.length;
+        var v = VERSIONS[i];
+        num.textContent = v.ver;
+        badge.textContent = v.badge || '';
+        date.textContent = v.date || '';
+        notes.innerHTML = v.notes.map(function (t) { return '<li>' + t + '</li>'; }).join('');
+        count.textContent = (i + 1) + ' / ' + VERSIONS.length;
+        card.style.animation = 'none'; void card.offsetHeight; card.style.animation = 'vhIn .25s ease';
+      }
+      document.getElementById('vh-next').addEventListener('click', function () { show(i + 1); });
+      document.getElementById('vh-prev').addEventListener('click', function () { show(i - 1); });
+      show(0);
     })();
   </script>
   <script defer src="/shared/ht-nav.js?v=10"></script>
