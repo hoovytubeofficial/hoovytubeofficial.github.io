@@ -1,12 +1,12 @@
 {
-  "version": "v260817.04 6:51p",
-  "release": 4,
-  "sha": "22af816",
-  "fullSha": "22af8166d64937ed82770899b6530ddf5a222432",
+  "version": "v260817.05 9:03p",
+  "release": 5,
+  "sha": "e9576dd",
+  "fullSha": "e9576dd36779b4609a1a19f58e4176e4310f5b6f",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmzvulz",
-  "pushedAt": "2026-08-17T20:51:38+02:00",
-  "commits": [{"sha":"22af816","message":"hoovytools: download button + chip follow the version carousel","author":"HoovyTube"}]
+  "pushedAt": "2026-08-17T23:03:37+02:00",
+  "commits": [{"sha":"e9576dd","message":"hoovytools: ship Particle Import v0.23.0","author":"HoovyTube"}]
 }
