@@ -1,12 +1,12 @@
 {
-  "version": "v260903.01 8:43a",
-  "release": 1,
-  "sha": "1af8fa3",
-  "fullSha": "1af8fa306ad3c379c90168b4cdeeddc8a6cf9880",
+  "version": "v260903.02 9:11a",
+  "release": 2,
+  "sha": "dd8da9f",
+  "fullSha": "dd8da9f9fc10ec1bcb3ca433960b2b9afb48f2ca",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmejwal",
-  "pushedAt": "2026-09-03T10:43:02+02:00",
-  "commits": [{"sha":"1af8fa3","message":"hoovytools: serve the SFM→Blender importer zip from Pages","author":"HoovyTube"}]
+  "machine": "runnervmgx7h7",
+  "pushedAt": "2026-09-03T11:09:30+02:00",
+  "commits": [{"sha":"dd8da9f","message":"media: serve the whole storage bucket from Pages","author":"HoovyTube"}]
 }
