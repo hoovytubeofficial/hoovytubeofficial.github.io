@@ -1,12 +1,12 @@
 {
-  "version": "v260903.02 9:11a",
-  "release": 2,
-  "sha": "dd8da9f",
-  "fullSha": "dd8da9f9fc10ec1bcb3ca433960b2b9afb48f2ca",
+  "version": "v260903.03 9:22a",
+  "release": 3,
+  "sha": "20935f4",
+  "fullSha": "20935f492377bc79596ae37920cea93062101d53",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmgx7h7",
-  "pushedAt": "2026-09-03T11:09:30+02:00",
-  "commits": [{"sha":"dd8da9f","message":"media: serve the whole storage bucket from Pages","author":"HoovyTube"}]
+  "pushedAt": "2026-09-03T11:22:07+02:00",
+  "commits": [{"sha":"20935f4","message":"site: HoovyTube channel avatar as the favicon","author":"HoovyTube"}]
 }
