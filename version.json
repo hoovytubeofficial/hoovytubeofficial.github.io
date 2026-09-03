@@ -1,12 +1,12 @@
 {
-  "version": "v260817.05 9:03p",
-  "release": 5,
-  "sha": "e9576dd",
-  "fullSha": "e9576dd36779b4609a1a19f58e4176e4310f5b6f",
+  "version": "v260903.01 8:43a",
+  "release": 1,
+  "sha": "1af8fa3",
+  "fullSha": "1af8fa306ad3c379c90168b4cdeeddc8a6cf9880",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmzvulz",
-  "pushedAt": "2026-08-17T23:03:37+02:00",
-  "commits": [{"sha":"e9576dd","message":"hoovytools: ship Particle Import v0.23.0","author":"HoovyTube"}]
+  "machine": "runnervmejwal",
+  "pushedAt": "2026-09-03T10:43:02+02:00",
+  "commits": [{"sha":"1af8fa3","message":"hoovytools: serve the SFM→Blender importer zip from Pages","author":"HoovyTube"}]
 }
