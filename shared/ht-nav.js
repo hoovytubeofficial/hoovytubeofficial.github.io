@@ -13,7 +13,7 @@
   };
   // Placeholder icon for the Journal tab — reuses the site's existing arrow art.
   // TODO: swap for a dedicated /assets/icons/journal.png when one's drawn.
-  var JOURNAL_IC = 'https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png';
+  var JOURNAL_IC = '/media/hoovytools/arrow.png';
   var ITEMS = [
     { label: 'Home', href: '/', ic: 'home', match: ['/', '/index.html'] },
     { label: 'HoovyTools SFM', href: '/products/', ic: 'product', match: ['/products/', '/products/index.html'] },

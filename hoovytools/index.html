@@ -180,15 +180,15 @@
     <div class="section-head"><h2>Pick a tool</h2><span class="muted">tap one</span></div>
     <div class="tools">
       <div class="tool spot active" data-tool="sessions" id="pick-sessions" role="button" tabindex="0" aria-label="HoovyTools: SFM to Blender session importer">
-        <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/badge-hoovytools.png" alt="HoovyTools badge">
+        <img src="/media/hoovytools/badge-hoovytools.png" alt="HoovyTools badge">
         <p>SFM → Blender<br>full session import</p>
       </div>
       <div class="tool spot" data-tool="particles" id="pick-particles" role="button" tabindex="0" aria-label="HoovyTools Particle Import: SFM .pcf particles to Blender">
-        <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/badge-particle-import.png" alt="HoovyTools Particle Import badge">
+        <img src="/media/hoovytools/badge-particle-import.png" alt="HoovyTools Particle Import badge">
         <p>SFM → Blender<br>.pcf particle effects</p>
       </div>
       <div class="tool spot" data-tool="blender2sfm" id="pick-blender2sfm" role="button" tabindex="0" aria-label="Blender to SFM importer, under construction">
-        <img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/badge-blender2sfm.png" alt="Blender to SFM importer badge">
+        <img src="/media/hoovytools/badge-blender2sfm.png" alt="Blender to SFM importer badge">
         <p>Blender → SFM<span class="soon">under construction</span></p>
       </div>
     </div>
@@ -290,21 +290,21 @@
       </div>
 
       <div class="carousel-vh" aria-label="Version history">
-        <button class="vidnav prev" id="vh-prev" aria-label="Newer version"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
+        <button class="vidnav prev" id="vh-prev" aria-label="Newer version"><img src="/media/hoovytools/arrow.png" alt=""></button>
         <div class="vh-card spot">
           <div class="vh-head"><span class="vh-num" id="vh-num"></span><span class="vh-badge" id="vh-badge"></span><span class="vh-date" id="vh-date"></span></div>
           <ul class="vh-notes" id="vh-notes"></ul>
         </div>
-        <button class="vidnav next" id="vh-next" aria-label="Older version"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
+        <button class="vidnav next" id="vh-next" aria-label="Older version"><img src="/media/hoovytools/arrow.png" alt=""></button>
       </div>
       <div class="car-title"><span class="t">Version history</span><span class="n" id="vh-count">1 / 1</span></div>
 
       <div class="carousel">
-        <button class="vidnav prev" id="pcf-prev" aria-label="Previous video"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
+        <button class="vidnav prev" id="pcf-prev" aria-label="Previous video"><img src="/media/hoovytools/arrow.png" alt=""></button>
         <div class="embed spot">
-          <video id="pcf-video" src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/pcf-preview.mp4" autoplay muted loop playsinline preload="metadata" controls></video>
+          <video id="pcf-video" src="/media/hoovytools/pcf-preview.mp4" autoplay muted loop playsinline preload="metadata" controls></video>
         </div>
-        <button class="vidnav next" id="pcf-next" aria-label="Next video"><img src="https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/arrow.png" alt=""></button>
+        <button class="vidnav next" id="pcf-next" aria-label="Next video"><img src="/media/hoovytools/arrow.png" alt=""></button>
       </div>
       <div class="car-title"><span class="t" id="pcf-video-title">Overview: imported SFM effects playing in Blender</span><span class="n" id="pcf-video-count">1 / 3</span></div>
 
@@ -419,7 +419,7 @@
 
     // Particle Import video carousel: arrows scrub, titles follow
     (function () {
-      var MEDIA = 'https://iglbfojatowaxbhjubvz.supabase.co/storage/v1/object/public/media/hoovytools/';
+      var MEDIA = '/media/hoovytools/';
       var VIDS = [
         { src: 'pcf-preview.mp4',     title: 'Overview: imported SFM effects playing in Blender' },
         { src: 'pcf-import-demo.mp4', title: 'A full .pcf import, start to finish' },
