@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: model. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="seams" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <polyline points="26,66 128,122 230,66" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="13"/>
+      <line x1="128" y1="122" x2="128" y2="250" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="13"/>
+    </mask>
+  </defs>
+  <polygon points="128.0,12.0 230.0,66.0 230.0,186.0 128.0,244.0 26.0,186.0 26.0,66.0" fill="#000" stroke="#000" stroke-width="12" stroke-linejoin="round" mask="url(#seams)"/>
+</svg>

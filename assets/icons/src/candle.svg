@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: candle. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <path fill="#000" d="M76 118 C76 108 84 102 94 104 C104 106 110 110 120 108 C132 106 138 100 150 102 C164 104 180 106 180 118 V232 C180 242 172 250 162 250 H94 C84 250 76 242 76 232 Z"/>
+  <rect x="120" y="82" width="16" height="26" rx="6" fill="#000"/>
+  <path fill="#000" d="M128 4 C146 30 166 48 166 70 C166 88 150 100 128 100 C106 100 90 88 90 70 C90 48 110 30 128 4 Z"/>
+</svg>

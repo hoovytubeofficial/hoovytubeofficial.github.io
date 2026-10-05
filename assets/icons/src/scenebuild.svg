@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: scenebuild. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <g fill="#000" fill-rule="evenodd">
+    <path d="M14 128 L54 88 L94 128 V248 H14 Z M34 146 h16 v20 h-16 Z M60 146 h16 v20 h-16 Z M42 200 h28 v48 h-28 Z"/>
+    <path d="M102 248 V44 L134 14 L166 44 V248 Z M116 64 h14 v20 h-14 Z M138 64 h14 v20 h-14 Z M116 106 h14 v20 h-14 Z M138 106 h14 v20 h-14 Z M116 148 h14 v20 h-14 Z M138 148 h14 v20 h-14 Z M122 206 h24 v42 h-24 Z"/>
+    <path d="M174 248 V98 H244 V248 Z M188 116 h16 v20 h-16 Z M214 116 h16 v20 h-16 Z M188 160 h16 v20 h-16 Z M214 160 h16 v20 h-16 Z M188 204 h16 v20 h-16 Z M214 204 h16 v20 h-16 Z"/>
+  </g>
+</svg>

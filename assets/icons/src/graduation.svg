@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: graduation. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <path fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" d="M128 26 L246 80 L128 134 L10 80 Z"/>
+  <path fill="#000" d="M58 116 L128 148 L198 116 V170 C198 194 166 210 128 210 C90 210 58 194 58 170 Z"/>
+  <polyline points="128,80 214,104 214,168" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="10"/>
+  <path fill="#000" d="M214 158 C226 158 232 168 232 182 L238 226 C238 232 232 236 226 236 H202 C196 236 190 232 190 226 L196 182 C196 168 202 158 214 158 Z"/>
+</svg>

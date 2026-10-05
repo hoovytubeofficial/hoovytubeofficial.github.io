@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: fire. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <path d="M128 118 C142 146 168 162 166 198 C164 224 148 236 128 236 C106 236 90 222 92 198 C94 178 108 168 112 148 C118 160 122 166 130 170 C124 152 122 136 128 118 Z" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="14"/>
+    </mask>
+  </defs>
+  <path fill="#000" d="M128 6 C150 50 206 82 210 152 C214 210 176 248 128 248 C80 248 42 212 46 158 C48 120 70 98 86 68 C92 94 100 108 112 116 C106 80 112 40 128 6 Z" mask="url(#cut)"/>
+</svg>

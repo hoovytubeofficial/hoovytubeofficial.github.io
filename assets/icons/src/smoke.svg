@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: smoke. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="puffs" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#000"/>
+      <circle cx="147.3" cy="85.5" r="45.1" fill="#000"/>
+      <circle cx="181.2" cy="59.9" r="55.4" fill="#000"/>
+      <circle cx="213.2" cy="84.2" r="43.8" fill="#000"/>
+      <circle cx="178.0" cy="90.0" r="47.7" fill="#000"/>
+      <circle cx="147.3" cy="85.5" r="37.1" fill="#fff"/>
+      <circle cx="181.2" cy="59.9" r="47.4" fill="#fff"/>
+      <circle cx="213.2" cy="84.2" r="35.8" fill="#fff"/>
+      <circle cx="178.0" cy="90.0" r="39.7" fill="#fff"/>
+      <circle cx="105.0" cy="149.4" r="38.2" fill="#000"/>
+      <circle cx="132.6" cy="128.6" r="46.5" fill="#000"/>
+      <circle cx="158.6" cy="148.3" r="37.1" fill="#000"/>
+      <circle cx="130.0" cy="153.0" r="40.2" fill="#000"/>
+      <circle cx="105.0" cy="149.4" r="30.2" fill="#fff"/>
+      <circle cx="132.6" cy="128.6" r="38.5" fill="#fff"/>
+      <circle cx="158.6" cy="148.3" r="29.1" fill="#fff"/>
+      <circle cx="130.0" cy="153.0" r="32.2" fill="#fff"/>
+      <circle cx="70.8" cy="199.2" r="31.2" fill="#000"/>
+      <circle cx="92.0" cy="183.2" r="37.6" fill="#000"/>
+      <circle cx="112.0" cy="198.4" r="30.4" fill="#000"/>
+      <circle cx="90.0" cy="202.0" r="32.8" fill="#000"/>
+      <circle cx="70.8" cy="199.2" r="23.2" fill="#fff"/>
+      <circle cx="92.0" cy="183.2" r="29.6" fill="#fff"/>
+      <circle cx="112.0" cy="198.4" r="22.4" fill="#fff"/>
+      <circle cx="90.0" cy="202.0" r="24.8" fill="#fff"/>
+      <circle cx="41.4" cy="232.0" r="20.8" fill="#000"/>
+      <circle cx="53.1" cy="223.2" r="24.3" fill="#000"/>
+      <circle cx="64.1" cy="231.5" r="20.3" fill="#000"/>
+      <circle cx="52.0" cy="233.5" r="21.6" fill="#000"/>
+      <circle cx="41.4" cy="232.0" r="12.8" fill="#fff"/>
+      <circle cx="53.1" cy="223.2" r="16.3" fill="#fff"/>
+      <circle cx="64.1" cy="231.5" r="12.3" fill="#fff"/>
+      <circle cx="52.0" cy="233.5" r="13.6" fill="#fff"/>
+    </mask>
+  </defs>
+  <rect width="256" height="256" fill="#000" mask="url(#puffs)"/>
+</svg>

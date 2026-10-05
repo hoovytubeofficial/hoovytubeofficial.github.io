@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: sparks. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <path fill="#000" stroke="#000" stroke-width="6" stroke-linejoin="round" d="M100 48 Q117.28 126.72 196 144 Q117.28 161.28 100 240 Q82.72 161.28 4 144 Q82.72 126.72 100 48 Z M200 10 Q208.28 47.72 246 56 Q208.28 64.28 200 102 Q191.72 64.28 154 56 Q191.72 47.72 200 10 Z M206 166 Q211.4 190.6 236 196 Q211.4 201.4 206 226 Q200.6 201.4 176 196 Q200.6 190.6 206 166 Z"/>
+  <circle cx="44" cy="40" r="14" fill="#000"/>
+</svg>

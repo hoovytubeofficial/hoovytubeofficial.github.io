@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: script. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <g fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="30">
+    <polyline points="84,62 34,128 84,194"/>
+    <polyline points="172,62 222,128 172,194"/>
+    <line x1="148" y1="36" x2="108" y2="220"/>
+  </g>
+</svg>

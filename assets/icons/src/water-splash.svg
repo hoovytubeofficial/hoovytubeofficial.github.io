@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: water-splash. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round">
+    <path d="M64 216 C58 176 44 146 20 112 C56 128 84 160 100 214 Z"/>
+    <path d="M192 216 C198 176 212 146 236 112 C200 128 172 160 156 214 Z"/>
+    <path d="M106 216 C110 186 116 160 128 132 C140 160 146 186 150 216 Z"/>
+  </g>
+  <ellipse cx="128" cy="222" rx="122" ry="28" fill="#000"/>
+  <path fill="#000" d="M128 20 C142 44 152 60 152 76 C152 92 142 104 128 104 C114 104 104 92 104 76 C104 60 114 44 128 20 Z"/>
+  <circle cx="34" cy="74" r="12" fill="#000"/>
+  <circle cx="222" cy="74" r="12" fill="#000"/>
+  <circle cx="74" cy="104" r="9" fill="#000"/>
+  <circle cx="182" cy="104" r="9" fill="#000"/>
+</svg>

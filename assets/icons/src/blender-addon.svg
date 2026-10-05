@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: blender-addon. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <g fill="#000">
+    <polygon points="102.8,117.0 150.8,84.6 26.0,40.0" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
+    <polygon points="94.0,152.3 105.3,186.9 22.0,140.0" stroke="#000" stroke-width="18" stroke-linejoin="round"/>
+    <path fill-rule="evenodd" d="M160 72 A78 78 0 1 1 159.9 72 Z M160 112 A38 38 0 1 0 160.1 112 Z"/>
+    <circle cx="160" cy="150" r="24"/>
+  </g>
+</svg>

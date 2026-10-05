@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: workshop. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="hub" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <circle cx="128" cy="128" r="36" fill="#000"/>
+    </mask>
+  </defs>
+  <polygon points="101.3,40.0 104.6,10.3 151.4,10.3 154.7,40.0 171.4,46.9 194.7,28.2 227.8,61.3 209.1,84.6 216.0,101.3 245.7,104.6 245.7,151.4 216.0,154.7 209.1,171.4 227.8,194.7 194.7,227.8 171.4,209.1 154.7,216.0 151.4,245.7 104.6,245.7 101.3,216.0 84.6,209.1 61.3,227.8 28.2,194.7 46.9,171.4 40.0,154.7 10.3,151.4 10.3,104.6 40.0,101.3 46.9,84.6 28.2,61.3 61.3,28.2 84.6,46.9" fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" mask="url(#hub)"/>
+  <circle cx="128" cy="128" r="92" fill="#000" mask="url(#hub)"/>
+</svg>

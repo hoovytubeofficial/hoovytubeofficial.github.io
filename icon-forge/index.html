@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <title>Icon Forge - HoovyTube</title>
+  <meta name="description" content="Internal tool: turn any icon into a HoovyTube-style cream, slate-outlined sticker icon or olive item badge.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Lilita+One&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles/ht.css?v=10">
+  <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <style>
+    .forge-head h1 { color: var(--cream); -webkit-text-stroke: 2px var(--outline); paint-order: stroke fill;
+      text-shadow: 0 3px 0 var(--outline), 0 6px 0 var(--outline-deep); letter-spacing: .01em; }
+    .forge [hidden] { display: none !important; }
+    .forge { max-width: 1240px; margin: 0 auto; padding: 0 1.25rem 3rem; display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+    @media (max-width: 980px) { .forge { grid-template-columns: minmax(0, 1fr); } }
+
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
+    .controls { position: sticky; top: 92px; max-height: calc(100vh - 108px); overflow: auto; padding: .4rem 0; overscroll-behavior: contain; }
+    @media (max-width: 980px) { .controls { position: static; max-height: none; } }
+    .controls details { border-top: 1px solid var(--line); }
+    .controls details:first-of-type { border-top: 0; }
+    .controls summary { cursor: pointer; list-style: none; padding: .75rem 1.1rem; font: 600 .78rem/1.2 'Space Grotesk', system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+    .controls summary::-webkit-details-marker { display: none; }
+    .controls summary::after { content: '+'; font-size: 1.1rem; color: var(--muted); }
+    .controls details[open] > summary::after { content: '\2212'; }
+    .controls .body { padding: 0 1.1rem .95rem; display: grid; gap: .7rem; }
+    .ctl { display: grid; gap: .25rem; }
+    .ctl > label, .ctl .lbl { font-size: .8rem; color: var(--text); display: flex; justify-content: space-between; gap: .5rem; }
+    .ctl output { color: var(--muted); font-variant-numeric: tabular-nums; }
+    .ctl .hint { font-size: .72rem; color: var(--muted); margin: 0; }
+    .ctl select, .ctl input[type="text"], .paste textarea { width: 100%; font: inherit; font-size: .88rem; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: .5rem .6rem; }
+    .ctl select:focus-visible, .ctl input:focus-visible, .paste textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+    input[type="range"] { width: 100%; accent-color: var(--accent); }
+    .colors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+    .colors .ctl { justify-items: start; }
+    .colors label { font-size: .74rem; color: var(--muted); }
+    input[type="color"] { width: 100%; height: 34px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg); padding: 2px; cursor: pointer; }
+    .check { display: flex; align-items: center; gap: .55rem; font-size: .85rem; cursor: pointer; }
+    .check input { width: 18px; height: 18px; accent-color: var(--accent); }
+    .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
+    .seg button { font: 600 .85rem/1 Inter, system-ui, sans-serif; border: 0; border-radius: 999px; padding: .55rem .4rem; cursor: pointer; background: transparent; color: var(--muted); }
+    .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+    .row-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+    .btn-s { font: 600 .85rem/1 Inter, system-ui, sans-serif; border-radius: 999px; padding: .6rem .95rem; cursor: pointer; border: 1px solid var(--line); background: var(--panel); color: var(--text); display: inline-flex; align-items: center; gap: .4rem; transition: border-color .2s, background .2s, transform .15s; }
+    .btn-s:hover { border-color: var(--accent); }
+    .btn-s.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+    .btn-s.primary:hover { transform: translateY(-1px); }
+    .btn-s:disabled { opacity: .5; cursor: default; transform: none; }
+    .btn-s svg { width: 16px; height: 16px; }
+
+    .drop { padding: 1.4rem 1.2rem; text-align: center; border: 2px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); background: color-mix(in srgb, var(--panel) 85%, transparent); transition: border-color .2s, background .2s; }
+    .drop.over { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--panel)); }
+    .drop .big { font: 700 1.15rem/1.3 'Space Grotesk', system-ui, sans-serif; margin: 0 0 .25rem; }
+    .drop p { margin: 0 0 .9rem; color: var(--muted); font-size: .9rem; }
+    .drop .row-btns { justify-content: center; }
+    .paste { margin-top: .9rem; text-align: left; display: grid; gap: .5rem; }
+    .paste[hidden] { display: none; }
+    .paste textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; resize: vertical; }
+
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .7rem; margin: 1rem 0 .8rem; }
+    .toolbar .left { display: flex; align-items: center; gap: .6rem; color: var(--muted); font-size: .88rem; }
+    .toolbar .right { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+    .toolbar select { font: inherit; font-size: .85rem; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: .5rem .7rem; }
+    .status { min-height: 1.3em; }
+
+    .cards { display: grid; gap: 1rem; }
+    .icard { padding: .9rem; }
+    .icard header { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; }
+    .icard header input { flex: 1; min-width: 0; font: 600 .95rem/1.2 'Space Grotesk', system-ui, sans-serif; color: var(--text); background: transparent; border: 1px solid transparent; border-radius: 8px; padding: .3rem .4rem; }
+    .icard header input:hover, .icard header input:focus { border-color: var(--line); background: var(--bg); outline: none; }
+    .icard .x { border: 0; background: transparent; color: var(--muted); cursor: pointer; width: 34px; height: 34px; border-radius: 50%; font-size: 1.2rem; line-height: 1; }
+    .icard .x:hover { background: var(--panel-2); color: var(--text); }
+    .cmp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
+    .cmp figure { margin: 0; min-width: 0; }
+    .cmp figcaption { font-size: .72rem; color: var(--muted); text-align: center; margin-top: .3rem; letter-spacing: .04em; text-transform: uppercase; }
+    .stage { aspect-ratio: 1 / 1; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--line); position: relative; }
+    .stage img { width: 100%; height: 100%; object-fit: contain; display: block; }
+    .chk-light { background: repeating-conic-gradient(#e8e8e8 0% 25%, #ffffff 0% 50%) 0 0 / 16px 16px; }
+    .chk-dark { background: repeating-conic-gradient(#1b2937 0% 25%, #243849 0% 50%) 0 0 / 16px 16px; }
+    .stage.busy::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--panel) 35%, transparent); animation: pulse 1s ease-in-out infinite alternate; }
+    @keyframes pulse { from { opacity: .2; } to { opacity: .8; } }
+    .sizes { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .7rem; }
+    .strip { display: flex; align-items: flex-end; gap: 12px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); }
+    .strip img { display: block; }
+    .icard .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: .75rem; }
+    .icard .actions input { flex: 1 1 160px; min-width: 0; font: inherit; font-size: .88rem; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: .5rem .8rem; }
+    .icard .warn { font-size: .78rem; color: #b5653a; margin: .5rem 0 0; }
+    .icard .err { font-size: .85rem; color: #c0504d; margin: .3rem 0 0; }
+    .empty { text-align: center; color: var(--muted); padding: 2.2rem 1rem; font-size: .92rem; }
+    .empty img { width: 96px; height: 96px; display: block; margin: 0 auto .6rem; opacity: .9; }
+    .tips { margin-top: 1.2rem; padding: 1rem 1.2rem; font-size: .88rem; color: var(--muted); }
+    .tips h2 { font-size: 1rem; margin: 0 0 .4rem; color: var(--text); }
+    .tips ul { margin: 0; padding-left: 1.1rem; }
+    .tips li { margin: .25rem 0; }
+    .tips code { font-size: .82em; background: var(--panel-2); padding: .05rem .3rem; border-radius: 4px; }
+    @media (max-width: 560px) {
+      .cmp { gap: .4rem; }
+      .cmp figcaption { font-size: .64rem; }
+      .strip { gap: 8px; padding: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .forge *, .forge *::before, .forge *::after { transition: none !important; animation: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="pagehead forge-head">
+    <div class="inner">
+      <span class="eyebrow">Internal tool</span>
+      <h1>Icon Forge</h1>
+      <p class="ph-lead">Drop in any icon and get it back in the HoovyTube style: cream fill, chunky slate outline, 3D edge. Or stamp it onto an olive item badge.</p>
+    </div>
+  </header>
+
+  <main class="forge">
+    <aside class="panel controls" aria-label="Forge settings">
+      <details open>
+        <summary>Output</summary>
+        <div class="body">
+          <div class="seg" role="group" aria-label="Output type">
+            <button type="button" id="modeIcon" aria-pressed="true">Icon</button>
+            <button type="button" id="modeBadge" aria-pressed="false">Badge</button>
+          </div>
+          <div class="ctl">
+            <label for="preset">Preset</label>
+            <select id="preset">
+              <option value="cream">Cream - dock icons</option>
+              <option value="teal">Teal - big site icons</option>
+              <option value="olive">Olive - HoovyTools arrow</option>
+              <option value="slate">Slate - dark variant</option>
+              <option value="badge">Badge icon - dark olive</option>
+              <option value="custom">Custom</option>
+            </select>
+          </div>
+          <div class="ctl" id="labelCtl" hidden>
+            <label for="badgeLabel">Default badge label</label>
+            <input type="text" id="badgeLabel" placeholder="Uses the icon name" maxlength="40">
+            <p class="hint">Each card can override it. Long labels wrap to two lines.</p>
+          </div>
+        </div>
+      </details>
+      <details open>
+        <summary>Colours</summary>
+        <div class="body">
+          <div class="colors" id="colors"></div>
+        </div>
+      </details>
+      <details open>
+        <summary>Shape</summary>
+        <div class="body" id="shapeCtls"></div>
+      </details>
+      <details>
+        <summary>Mask &amp; holes</summary>
+        <div class="body" id="maskCtls">
+          <div class="ctl">
+            <label for="mask">Read the shape from</label>
+            <select id="mask">
+              <option value="auto">Auto-detect</option>
+              <option value="alpha">Transparency (alpha)</option>
+              <option value="dark-on-light">Dark shape on light background</option>
+              <option value="light-on-dark">Light shape on dark background</option>
+            </select>
+          </div>
+          <div class="ctl">
+            <label for="fillHoles">Holes</label>
+            <select id="fillHoles">
+              <option value="false">See-through with outline ring</option>
+              <option value="outline">Plug with outline colour</option>
+              <option value="depth">Punched-through dark</option>
+            </select>
+          </div>
+          <label class="check"><input type="checkbox" id="detail"> Keep dark inner details as slate lines</label>
+          <label class="check"><input type="checkbox" id="shadow"> Soft drop shadow</label>
+        </div>
+      </details>
+      <div class="body" style="padding-top:.4rem">
+        <div class="row-btns">
+          <button type="button" class="btn-s" id="resetBtn">Reset to preset</button>
+        </div>
+      </div>
+    </aside>
+
+    <section aria-label="Icons">
+      <div class="panel drop" id="drop">
+        <p class="big">Drop icons here</p>
+        <p>PNG, JPG, WebP, GIF or SVG. Several at once is fine. You can also paste an image or SVG code with Ctrl+V.</p>
+        <div class="row-btns">
+          <label class="btn-s primary" for="fileIn" tabindex="0" id="fileLbl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+            Choose files</label>
+          <input type="file" id="fileIn" accept="image/*,.svg" multiple class="sr-only">
+          <button type="button" class="btn-s" id="pasteToggle" aria-expanded="false" aria-controls="pastePanel">Paste SVG code</button>
+          <button type="button" class="btn-s" id="samplesBtn">Load samples</button>
+        </div>
+        <div class="paste" id="pastePanel" hidden>
+          <label for="svgText" class="sr-only">SVG markup</label>
+          <textarea id="svgText" placeholder="&lt;svg viewBox=&quot;0 0 24 24&quot;&gt;...&lt;/svg&gt;" spellcheck="false"></textarea>
+          <div class="row-btns"><button type="button" class="btn-s primary" id="svgAdd">Add SVG</button></div>
+        </div>
+      </div>
+
+      <div class="toolbar">
+        <div class="left"><span id="count">No icons yet</span><span class="status" id="status" role="status" aria-live="polite"></span></div>
+        <div class="right">
+          <label for="exportSize" class="sr-only">Export size</label>
+          <select id="exportSize">
+            <option value="64">64 px</option>
+            <option value="128">128 px</option>
+            <option value="256" selected>256 px</option>
+            <option value="512">512 px</option>
+            <option value="1024">1024 px</option>
+          </select>
+          <button type="button" class="btn-s primary" id="dlAll" disabled>Download all (.zip)</button>
+          <button type="button" class="btn-s" id="clearAll" disabled>Clear</button>
+        </div>
+      </div>
+
+      <div class="cards" id="cards">
+        <div class="panel empty" id="empty">
+          <img src="/assets/icons/tools.png" alt="">
+          Nothing forged yet. Drop an icon above, or load the samples to see how it works.
+        </div>
+      </div>
+
+      <div class="panel tips">
+        <h2>Tips</h2>
+        <ul>
+          <li>Plain black icons (SVG or PNG) work best. Thin line icons look chunkier with a little <b>Grow</b>.</li>
+          <li>Opaque images are traced automatically: a dark logo on white, or a light one on black. Adjust <b>Threshold</b> if bits go missing.</li>
+          <li>Holes stay see-through like the house door. Pick <b>Plug with outline colour</b> for a solid slate centre, or <b>Punched-through dark</b> for the Discord-eye look.</li>
+          <li>Colour logos with dark line work: tick <b>Keep dark inner details</b>.</li>
+          <li>Same engine in code: <code>import { forgeIcon } from '/shared/icon-forge.js'</code>. Batch: <code>node scripts/forge-icons.mjs</code>.</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site"><small>© 2026 HoovyTube. All rights reserved.</small></footer>
+
+  <script type="module">
+    import { PRESETS, resolveOptions, loadSource, forgeIcon, forgeBadge, canvasToBlob } from '/shared/icon-forge.js?v=1';
+
+    const $ = (id) => document.getElementById(id);
+    const STORE = 'ht-icon-forge-v1';
+    const COLOR_KEYS = [['fillTop', 'Fill top'], ['fillBottom', 'Fill bottom'], ['outline', 'Outline'], ['depth', 'Depth'], ['highlight', 'Highlight'], ['shade', 'Shade']];
+    const SHAPE = [
+      { k: 'outlineWidth', label: 'Outline', min: 0, max: 0.12, step: 0.001, pct: true },
+      { k: 'depth', label: 'Depth', min: 0, max: 0.12, step: 0.001, pct: true },
+      { k: 'depthAngle', label: 'Depth direction', min: 0, max: 180, step: 1, unit: '°', hint: '90 = straight down' },
+      { k: 'bevel', label: 'Bevel strength', min: 0, max: 2, step: 0.05 },
+      { k: 'bevelWidth', label: 'Bevel width', min: 0, max: 0.06, step: 0.001, pct: true },
+      { k: 'bevelSide', label: 'Bevel wraps sides', min: 0, max: 1, step: 0.05 },
+      { k: 'ink', label: 'Ink line', min: 0, max: 0.03, step: 0.001, pct: true },
+      { k: 'plateBevel', label: 'Outline bevel', min: 0, max: 2, step: 0.05 },
+      { k: 'padding', label: 'Padding', min: 0, max: 0.2, step: 0.005, pct: true },
+      { k: 'grow', label: 'Grow / shrink shape', min: -0.04, max: 0.06, step: 0.001, pct: true },
+      { k: 'smooth', label: 'Merge close parts', min: 0, max: 0.08, step: 0.002, pct: true },
+      { k: 'threshold', label: 'Threshold', min: 0.05, max: 0.95, step: 0.01, group: 'mask' },
+      { k: 'detailThreshold', label: 'Detail darkness', min: 0.05, max: 0.9, step: 0.01, group: 'mask' },
+    ];
+    const SAMPLES = ['fire', 'steam', 'discord', 'workshop', 'film-reel', 'star'];
+
+    let state = { mode: 'icon', preset: 'cream', base: 'cream', label: '', exportSize: 256, opts: {} };
+    let items = [];
+    let uid = 0;
+    let gen = 0;
+
+    // ---------- settings ----------
+    function presetValues(name) {
+      const r = resolveOptions({ preset: name });
+      const o = { colors: {} };
+      COLOR_KEYS.forEach(([k]) => { o.colors[k] = r.colors[k]; });
+      SHAPE.forEach((s) => { o[s.k] = r[s.k]; });
+      o.mask = 'auto'; o.fillHoles = false; o.detail = false; o.shadow = !!r.shadow;
+      return o;
+    }
+    function saveState() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* private mode */ } }
+    function loadState() {
+      try { const s = JSON.parse(localStorage.getItem(STORE) || 'null'); if (s && s.opts && s.opts.colors) state = { ...state, ...s }; else state.opts = presetValues('cream'); }
+      catch (e) { state.opts = presetValues('cream'); }
+    }
+    function forgeOptions(size) {
+      const o = state.opts;
+      return {
+        preset: state.base, colors: { ...o.colors }, size,
+        outlineWidth: o.outlineWidth, depth: o.depth, depthAngle: o.depthAngle, bevel: o.bevel, bevelWidth: o.bevelWidth, bevelSide: o.bevelSide,
+        ink: o.ink, plateBevel: o.plateBevel, padding: o.padding, grow: o.grow, smooth: o.smooth,
+        threshold: o.threshold, detailThreshold: o.detailThreshold, mask: o.mask,
+        fillHoles: o.fillHoles === 'false' ? false : o.fillHoles, detail: o.detail, shadow: o.shadow,
+      };
+    }
+
+    // ---------- build controls ----------
+    const fmt = (s, v) => s.pct ? (v * 100).toFixed(1) + '%' : s.unit ? Math.round(v) + s.unit : (+v).toFixed(2);
+    function buildControls() {
+      $('colors').innerHTML = COLOR_KEYS.map(([k, l]) => `<div class="ctl"><label for="c-${k}">${l}</label><input type="color" id="c-${k}" data-color="${k}"></div>`).join('');
+      const html = (s) => `<div class="ctl"><label for="r-${s.k}"><span>${s.label}</span><output id="o-${s.k}" for="r-${s.k}"></output></label>` +
+        `<input type="range" id="r-${s.k}" data-key="${s.k}" min="${s.min}" max="${s.max}" step="${s.step}">${s.hint ? `<p class="hint">${s.hint}</p>` : ''}</div>`;
+      $('shapeCtls').innerHTML = SHAPE.filter((s) => !s.group).map(html).join('');
+      $('maskCtls').insertAdjacentHTML('beforeend', SHAPE.filter((s) => s.group === 'mask').map(html).join(''));
+    }
+    function syncControls() {
+      const o = state.opts;
+      $('preset').value = state.preset;
+      COLOR_KEYS.forEach(([k]) => { const el = $('c-' + k); el.value = toHex6(o.colors[k]); });
+      SHAPE.forEach((s) => { $('r-' + s.k).value = o[s.k]; $('o-' + s.k).textContent = fmt(s, o[s.k]); });
+      $('mask').value = o.mask; $('fillHoles').value = String(o.fillHoles); $('detail').checked = !!o.detail; $('shadow').checked = !!o.shadow;
+      $('modeIcon').setAttribute('aria-pressed', state.mode === 'icon'); $('modeBadge').setAttribute('aria-pressed', state.mode === 'badge');
+      $('labelCtl').hidden = state.mode !== 'badge';
+      $('badgeLabel').value = state.label || '';
+      $('exportSize').value = String(state.exportSize);
+      document.querySelectorAll('.icard .lab').forEach((el) => { el.hidden = state.mode !== 'badge'; });
+    }
+    function toHex6(c) {
+      if (/^#[0-9a-f]{6}$/i.test(c)) return c;
+      const x = document.createElement('canvas').getContext('2d'); x.fillStyle = c; return x.fillStyle;
+    }
+    function wireControls() {
+      $('preset').addEventListener('change', (e) => {
+        const v = e.target.value;
+        if (v !== 'custom') { state.preset = v; state.base = v; state.opts = presetValues(v); }
+        else state.preset = 'custom';
+        syncControls(); changed();
+      });
+      $('colors').addEventListener('input', (e) => {
+        const k = e.target.dataset.color; if (!k) return;
+        state.opts.colors[k] = e.target.value; state.preset = 'custom'; $('preset').value = 'custom'; changed();
+      });
+      document.querySelectorAll('input[type="range"][data-key]').forEach((el) => el.addEventListener('input', () => {
+        const s = SHAPE.find((x) => x.k === el.dataset.key);
+        state.opts[s.k] = parseFloat(el.value); $('o-' + s.k).textContent = fmt(s, state.opts[s.k]); changed();
+      }));
+      $('mask').addEventListener('change', (e) => { state.opts.mask = e.target.value; changed(); });
+      $('fillHoles').addEventListener('change', (e) => { state.opts.fillHoles = e.target.value; changed(); });
+      $('detail').addEventListener('change', (e) => { state.opts.detail = e.target.checked; changed(); });
+      $('shadow').addEventListener('change', (e) => { state.opts.shadow = e.target.checked; changed(); });
+      const setMode = (m) => {
+        if (m === state.mode) return;
+        state.mode = m;
+        // The badge plate wants the dark-olive icon style; switch the default presets over with it.
+        const swap = m === 'badge' ? { cream: 'badge' } : { badge: 'cream' };
+        if (swap[state.preset]) { state.preset = state.base = swap[state.preset]; state.opts = presetValues(state.base); }
+        syncControls(); changed();
+      };
+      $('modeIcon').addEventListener('click', () => setMode('icon'));
+      $('modeBadge').addEventListener('click', () => setMode('badge'));
+      $('badgeLabel').addEventListener('input', (e) => { state.label = e.target.value; changed(); });
+      $('exportSize').addEventListener('change', (e) => { state.exportSize = +e.target.value; saveState(); });
+      $('resetBtn').addEventListener('click', () => { const p = state.base; state.preset = p; state.opts = presetValues(p); syncControls(); changed(); });
+    }
+    let timer = 0;
+    function changed() { saveState(); clearTimeout(timer); timer = setTimeout(renderAll, 140); }
+
+    // ---------- inputs ----------
+    const baseName = (n) => String(n || 'icon').split(/[\\/]/).pop().replace(/\.[a-z0-9]+(\?.*)?$/i, '').replace(/[^a-z0-9_-]+/gi, '-').replace(/^-+|-+$/g, '').toLowerCase() || 'icon';
+    async function addInput(input, name) {
+      const item = { id: ++uid, name: baseName(name || input.name || 'icon'), label: '', src: null, error: '' };
+      items.push(item); addCard(item); updateCounts();
+      try { item.src = await loadSource(input); }
+      catch (e) { item.error = e.message || String(e); }
+      await renderItem(item, gen);
+    }
+    function addFiles(list) { [...list].filter((f) => /^image\//.test(f.type) || /\.svg$/i.test(f.name)).forEach((f) => addInput(f, f.name)); }
+    $('fileIn').addEventListener('change', (e) => { addFiles(e.target.files); e.target.value = ''; });
+    $('fileLbl').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); $('fileIn').click(); } });
+    const drop = $('drop');
+    ['dragenter', 'dragover'].forEach((t) => document.addEventListener(t, (e) => { if ([...(e.dataTransfer?.types || [])].some((x) => x === 'Files' || x === 'text/uri-list')) { e.preventDefault(); drop.classList.add('over'); } }));
+    ['dragleave', 'dragend'].forEach((t) => document.addEventListener(t, (e) => { if (!e.relatedTarget) drop.classList.remove('over'); }));
+    document.addEventListener('drop', (e) => {
+      drop.classList.remove('over');
+      const dt = e.dataTransfer; if (!dt) return;
+      if (dt.files && dt.files.length) { e.preventDefault(); addFiles(dt.files); return; }
+      const url = (dt.getData('text/uri-list') || '').split('\n')[0].trim();
+      if (url && /^(https?:|data:image)/.test(url)) { e.preventDefault(); addInput(url, url); }
+    });
+    document.addEventListener('paste', (e) => {
+      if (e.target && (e.target.id === 'svgText' || e.target.tagName === 'INPUT')) return;
+      const cd = e.clipboardData; if (!cd) return;
+      const files = [...cd.items].filter((i) => i.kind === 'file' && /^image\//.test(i.type)).map((i) => i.getAsFile()).filter(Boolean);
+      if (files.length) { e.preventDefault(); files.forEach((f, i) => addInput(f, f.name && f.name !== 'image.png' ? f.name : 'pasted-' + (uid + i + 1))); return; }
+      const txt = cd.getData('text/plain') || '';
+      if (/<svg[\s>]/i.test(txt)) { e.preventDefault(); addInput(txt.trim(), 'pasted-svg-' + (uid + 1)); }
+    });
+    $('pasteToggle').addEventListener('click', () => {
+      const p = $('pastePanel'); p.hidden = !p.hidden; $('pasteToggle').setAttribute('aria-expanded', String(!p.hidden)); if (!p.hidden) $('svgText').focus();
+    });
+    $('svgAdd').addEventListener('click', () => {
+      const t = $('svgText').value.trim();
+      if (!/<svg[\s>]/i.test(t)) { setStatus('That does not look like SVG code.'); return; }
+      const m = /id="([^"]+)"/.exec(t);
+      addInput(t, m ? m[1] : 'pasted-svg-' + (uid + 1)); $('svgText').value = '';
+    });
+    $('samplesBtn').addEventListener('click', () => SAMPLES.forEach((n) => addInput('/assets/icons/src/' + n + '.svg', n)));
+    $('clearAll').addEventListener('click', () => { items = []; document.querySelectorAll('.icard').forEach((c) => c.remove()); updateCounts(); });
+
+    // ---------- cards ----------
+    function addCard(item) {
+      $('empty').hidden = true;
+      const el = document.createElement('article');
+      el.className = 'panel icard'; el.id = 'card-' + item.id;
+      el.innerHTML = `
+        <header><input type="text" class="nm" value="${item.name}" aria-label="File name" spellcheck="false">
+          <button type="button" class="x" aria-label="Remove ${item.name}">&times;</button></header>
+        <div class="cmp">
+          <figure><div class="stage chk-light orig"><img alt="Original"></div><figcaption>Original</figcaption></figure>
+          <figure><div class="stage chk-light fl busy"><img alt="Forged on light"></div><figcaption>Forged - light</figcaption></figure>
+          <figure><div class="stage chk-dark fd busy"><img alt="Forged on dark"></div><figcaption>Forged - dark</figcaption></figure>
+        </div>
+        <div class="sizes" aria-label="Preview sizes">
+          <div class="strip chk-light"><img class="s32" width="32" alt="32 px"><img class="s64" width="64" alt="64 px"><img class="s128" width="128" alt="128 px"></div>
+          <div class="strip chk-dark"><img class="s32" width="32" alt="32 px on dark"><img class="s64" width="64" alt="64 px on dark"><img class="s128" width="128" alt="128 px on dark"></div>
+        </div>
+        <p class="warn" hidden></p><p class="err" hidden></p>
+        <div class="actions">
+          <input type="text" class="lab" placeholder="Badge label" aria-label="Badge label" maxlength="40" ${state.mode === 'badge' ? '' : 'hidden'}>
+          <button type="button" class="btn-s primary dl">Download PNG</button>
+        </div>`;
+      $('cards').appendChild(el);
+      el.querySelector('.x').addEventListener('click', () => { items = items.filter((i) => i !== item); el.remove(); updateCounts(); });
+      el.querySelector('.nm').addEventListener('change', (e) => { item.name = baseName(e.target.value); e.target.value = item.name; });
+      el.querySelector('.lab').addEventListener('input', (e) => { item.label = e.target.value; clearTimeout(item.t); item.t = setTimeout(() => renderItem(item, gen), 200); });
+      el.querySelector('.dl').addEventListener('click', () => downloadOne(item));
+    }
+    function updateCounts() {
+      const n = items.length;
+      $('count').textContent = n ? `${n} icon${n === 1 ? '' : 's'}` : 'No icons yet';
+      $('dlAll').disabled = !n; $('clearAll').disabled = !n; $('empty').hidden = n > 0;
+    }
+    function setStatus(t) { $('status').textContent = t ? ' · ' + t : ''; }
+
+    function halve(c) {
+      const n = document.createElement('canvas'); n.width = Math.max(1, Math.round(c.width / 2)); n.height = Math.max(1, Math.round(c.height / 2));
+      const x = n.getContext('2d'); x.imageSmoothingQuality = 'high'; x.drawImage(c, 0, 0, n.width, n.height); return n;
+    }
+    function originalPreview(src) {
+      const S = 256, c = document.createElement('canvas'); c.width = c.height = S;
+      const k = Math.min((S - 24) / src.width, (S - 24) / src.height);
+      const w = src.width * k, h = src.height * k, x = c.getContext('2d');
+      x.imageSmoothingQuality = 'high'; x.drawImage(src.image, (S - w) / 2, (S - h) / 2, w, h);
+      return c.toDataURL();
+    }
+    async function forgeItem(item, size) {
+      if (state.mode === 'badge') {
+        const label = (item.label || state.label || item.name.replace(/[-_]+/g, ' ')).trim();
+        const { size: _s, preset: _p, ...icon } = forgeOptions(size);
+        return forgeBadge(item.src, { label, width: Math.max(64, Math.round((size * 487) / 640)), iconPreset: state.base, icon });
+      }
+      return forgeIcon(item.src, forgeOptions(size));
+    }
+    async function renderItem(item, g) {
+      const el = $('card-' + item.id); if (!el) return;
+      const err = el.querySelector('.err'), warn = el.querySelector('.warn');
+      el.querySelectorAll('.fl, .fd').forEach((s) => s.classList.add('busy'));
+      if (item.error || !item.src) {
+        err.hidden = false; err.textContent = item.error || 'Could not load this image.';
+        el.querySelectorAll('.busy').forEach((s) => s.classList.remove('busy')); return;
+      }
+      if (!item.orig) { item.orig = originalPreview(item.src); el.querySelector('.orig img').src = item.orig; }
+      try {
+        const c = await forgeItem(item, 256);
+        if (g !== gen && g !== -1) return;
+        const url = c.toDataURL();
+        el.querySelector('.fl img').src = url; el.querySelector('.fd img').src = url;
+        const c128 = halve(c), c64 = halve(c128), c32 = halve(c64);
+        const u = { s128: c128.toDataURL(), s64: c64.toDataURL(), s32: c32.toDataURL() };
+        Object.keys(u).forEach((k) => el.querySelectorAll('.' + k).forEach((im) => { im.src = u[k]; im.width = Math.round((c.width * +k.slice(1)) / 256); }));
+        const ws = (c.forgeInfo && c.forgeInfo.warnings) || [];
+        warn.hidden = !ws.length; warn.textContent = ws.join(' ');
+        err.hidden = true;
+      } catch (e) {
+        err.hidden = false; err.textContent = e.message || String(e);
+      } finally {
+        el.querySelectorAll('.busy').forEach((s) => s.classList.remove('busy'));
+      }
+    }
+    async function renderAll() {
+      const g = ++gen;
+      if (!items.length) return;
+      setStatus('forging...');
+      for (const it of items) {
+        if (g !== gen) return;
+        await renderItem(it, g);
+        await new Promise((r) => setTimeout(r, 0));
+      }
+      if (g === gen) setStatus('');
+    }
+
+    // ---------- export ----------
+    function saveBlob(blob, name) {
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name;
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+    }
+    const fileName = (item) => `${item.name}${state.mode === 'badge' ? '-badge' : ''}-${state.exportSize}.png`;
+    async function downloadOne(item) {
+      if (!item.src) return;
+      setStatus('exporting ' + item.name + '...');
+      try { saveBlob(await canvasToBlob(await forgeItem(item, state.exportSize)), fileName(item)); setStatus(''); }
+      catch (e) { setStatus(e.message || String(e)); }
+    }
+    const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+    const crc32 = (b) => { let c = 0xffffffff; for (let i = 0; i < b.length; i++) c = CRC[(c ^ b[i]) & 255] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
+    function zip(files) {
+      const enc = new TextEncoder(), parts = [], central = [];
+      const d = new Date(), time = (d.getHours() << 11) | (d.getMinutes() << 5) | (d.getSeconds() >> 1), date = ((d.getFullYear() - 1980) << 9) | ((d.getMonth() + 1) << 5) | d.getDate();
+      let off = 0;
+      for (const f of files) {
+        const nm = enc.encode(f.name), crc = crc32(f.data), sz = f.data.length;
+        const h = new DataView(new ArrayBuffer(30));
+        h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(10, time, true); h.setUint16(12, date, true);
+        h.setUint32(14, crc, true); h.setUint32(18, sz, true); h.setUint32(22, sz, true); h.setUint16(26, nm.length, true);
+        parts.push(h, nm, f.data);
+        const c = new DataView(new ArrayBuffer(46));
+        c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(12, time, true); c.setUint16(14, date, true);
+        c.setUint32(16, crc, true); c.setUint32(20, sz, true); c.setUint32(24, sz, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
+        central.push(c, nm);
+        off += 30 + nm.length + sz;
+      }
+      const cs = central.reduce((a, p) => a + p.byteLength, 0);
+      const e = new DataView(new ArrayBuffer(22));
+      e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cs, true); e.setUint32(16, off, true);
+      return new Blob([...parts, ...central, e], { type: 'application/zip' });
+    }
+    $('dlAll').addEventListener('click', async () => {
+      const btn = $('dlAll'); btn.disabled = true;
+      const files = [], used = new Set();
+      try {
+        for (const it of items) {
+          if (!it.src) continue;
+          setStatus(`exporting ${files.length + 1}/${items.length}...`);
+          let name = fileName(it), i = 2;
+          while (used.has(name)) name = fileName(it).replace(/\.png$/, `-${i++}.png`);
+          used.add(name);
+          const blob = await canvasToBlob(await forgeItem(it, state.exportSize));
+          files.push({ name, data: new Uint8Array(await blob.arrayBuffer()) });
+        }
+        if (files.length) saveBlob(zip(files), `hoovytube-icons-${state.exportSize}.zip`);
+        setStatus(files.length ? '' : 'nothing to export');
+      } catch (e) { setStatus(e.message || String(e)); }
+      finally { btn.disabled = !items.length; }
+    });
+
+    // ---------- boot ----------
+    loadState();
+    // Phones: keep the long colour/shape panels folded so the drop zone stays near the top.
+    if (matchMedia('(max-width: 980px)').matches) document.querySelectorAll('.controls details').forEach((d, i) => { if (i > 0) d.open = false; });
+    buildControls();
+    syncControls();
+    wireControls();
+    updateCounts();
+  </script>
+  <script defer src="/shared/ht-nav.js?v=11"></script>
+</body>
+</html>
