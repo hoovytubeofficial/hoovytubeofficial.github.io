@@ -2,9 +2,7 @@
   "defaults": { "size": 256, "preset": "cream" },
   "icons": {
     "youtube": { "fillHoles": true },
-    "play": { "fillHoles": true },
-    "film-reel": { "fillHoles": "depth" },
-    "discord": { "fillHoles": "depth" }
+    "play": { "fillHoles": true }
   },
   "badges": [
     { "out": "badge-workshop.png", "icon": "workshop", "label": "Steam Workshop" },

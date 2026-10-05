@@ -10,7 +10,7 @@
   <meta name="description" content="Internal tool: turn any icon into a HoovyTube-style cream, slate-outlined sticker icon or olive item badge.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Lilita+One&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/styles/ht.css?v=10">
   <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
   <style>
@@ -92,6 +92,7 @@
     .icard .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: .75rem; }
     .icard .actions input { flex: 1 1 160px; min-width: 0; font: inherit; font-size: .88rem; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: .5rem .8rem; }
     .icard .warn { font-size: .78rem; color: #b5653a; margin: .5rem 0 0; }
+    .icard .tip { font-size: .78rem; color: var(--muted); margin: .5rem 0 0; }
     .icard .err { font-size: .85rem; color: #c0504d; margin: .3rem 0 0; }
     .empty { text-align: center; color: var(--muted); padding: 2.2rem 1rem; font-size: .92rem; }
     .empty img { width: 96px; height: 96px; display: block; margin: 0 auto .6rem; opacity: .9; }
@@ -164,8 +165,9 @@
             <select id="mask">
               <option value="auto">Auto-detect</option>
               <option value="alpha">Transparency (alpha)</option>
-              <option value="dark-on-light">Dark shape on light background</option>
-              <option value="light-on-dark">Light shape on dark background</option>
+              <option value="background">Anything unlike the background colour</option>
+              <option value="dark-on-light">Only parts darker than the background</option>
+              <option value="light-on-dark">Only parts lighter than the background</option>
             </select>
           </div>
           <div class="ctl">
@@ -173,10 +175,10 @@
             <select id="fillHoles">
               <option value="false">See-through with outline ring</option>
               <option value="outline">Plug with outline colour</option>
-              <option value="depth">Punched-through dark</option>
+              <option value="depth">Plug with dark depth colour</option>
             </select>
           </div>
-          <label class="check"><input type="checkbox" id="detail"> Keep dark inner details as slate lines</label>
+          <label class="check"><input type="checkbox" id="detail"> Keep inner details (lines, knock-outs) as slate cuts</label>
           <label class="check"><input type="checkbox" id="shadow"> Soft drop shadow</label>
         </div>
       </details>
@@ -233,9 +235,9 @@
         <h2>Tips</h2>
         <ul>
           <li>Plain black icons (SVG or PNG) work best. Thin line icons look chunkier with a little <b>Grow</b>.</li>
-          <li>Opaque images are traced automatically: a dark logo on white, or a light one on black. Adjust <b>Threshold</b> if bits go missing.</li>
-          <li>Holes stay see-through like the house door. Pick <b>Plug with outline colour</b> for a solid slate centre, or <b>Punched-through dark</b> for the Discord-eye look.</li>
-          <li>Colour logos with dark line work: tick <b>Keep dark inner details</b>.</li>
+          <li>Opaque images (JPG, screenshots) are traced against their own background colour, so a white logo on orange or a dark one on blue works too. Lower <b>Threshold</b> if faint parts go missing, raise it if background bits sneak in.</li>
+          <li>Holes stay see-through like the house door and the Discord eyes (the dark crescent at the top is the 3D edge). <b>Plug with outline colour</b> gives a solid slate centre; <b>Only plug holes smaller than</b> fills small detail holes but keeps big ones open.</li>
+          <li>Colour logos with inner parts in another colour (line work, or a white play triangle on a red logo): tick <b>Keep inner details</b> to cut them out as slate. The card says when an image has such details.</li>
           <li>Same engine in code: <code>import { forgeIcon } from '/shared/icon-forge.js'</code>. Batch: <code>node scripts/forge-icons.mjs</code>.</li>
         </ul>
       </div>
@@ -245,7 +247,7 @@
   <footer class="site"><small>© 2026 HoovyTube. All rights reserved.</small></footer>
 
   <script type="module">
-    import { PRESETS, resolveOptions, loadSource, forgeIcon, forgeBadge, canvasToBlob } from '/shared/icon-forge.js?v=1';
+    import { PRESETS, resolveOptions, loadSource, forgeIcon, forgeBadge, canvasToBlob } from '/shared/icon-forge.js?v=2';
 
     const $ = (id) => document.getElementById(id);
     const STORE = 'ht-icon-forge-v1';
@@ -262,8 +264,9 @@
       { k: 'padding', label: 'Padding', min: 0, max: 0.2, step: 0.005, pct: true },
       { k: 'grow', label: 'Grow / shrink shape', min: -0.04, max: 0.06, step: 0.001, pct: true },
       { k: 'smooth', label: 'Merge close parts', min: 0, max: 0.08, step: 0.002, pct: true },
-      { k: 'threshold', label: 'Threshold', min: 0.05, max: 0.95, step: 0.01, group: 'mask' },
-      { k: 'detailThreshold', label: 'Detail darkness', min: 0.05, max: 0.9, step: 0.01, group: 'mask' },
+      { k: 'holeMaxArea', label: 'Only plug holes smaller than', min: 0, max: 0.05, step: 0.001, pct: true, zero: 'all', group: 'holes', hint: 'Fills small detail holes and keeps big ones (a door) see-through.' },
+      { k: 'threshold', label: 'Threshold', min: 0.05, max: 0.95, step: 0.01, group: 'mask', hint: 'How unlike the background a pixel must be. 0.5 = halfway, higher = stricter.' },
+      { k: 'detailThreshold', label: 'Detail contrast', min: 0.05, max: 0.9, step: 0.01, group: 'mask', hint: 'Lower = more of the inside counts as detail.' },
     ];
     const SAMPLES = ['fire', 'steam', 'discord', 'workshop', 'film-reel', 'star'];
 
@@ -278,12 +281,16 @@
       const o = { colors: {} };
       COLOR_KEYS.forEach(([k]) => { o.colors[k] = r.colors[k]; });
       SHAPE.forEach((s) => { o[s.k] = r[s.k]; });
-      o.mask = 'auto'; o.fillHoles = false; o.detail = false; o.shadow = !!r.shadow;
+      o.mask = 'auto'; o.plate = 'shape'; o.fillHoles = false; o.holeMaxArea = 0; o.detail = false; o.shadow = !!r.shadow;
       return o;
     }
     function saveState() { try { localStorage.setItem(STORE, JSON.stringify(state)); } catch (e) { /* private mode */ } }
     function loadState() {
-      try { const s = JSON.parse(localStorage.getItem(STORE) || 'null'); if (s && s.opts && s.opts.colors) state = { ...state, ...s }; else state.opts = presetValues('cream'); }
+      try {
+        const s = JSON.parse(localStorage.getItem(STORE) || 'null');
+        if (s && s.opts && s.opts.colors) { state = { ...state, ...s }; state.opts = { ...presetValues(state.base || 'cream'), ...s.opts }; }
+        else state.opts = presetValues('cream');
+      }
       catch (e) { state.opts = presetValues('cream'); }
     }
     function forgeOptions(size) {
@@ -293,29 +300,35 @@
         outlineWidth: o.outlineWidth, depth: o.depth, depthAngle: o.depthAngle, bevel: o.bevel, bevelWidth: o.bevelWidth, bevelSide: o.bevelSide,
         ink: o.ink, plateBevel: o.plateBevel, padding: o.padding, grow: o.grow, smooth: o.smooth,
         threshold: o.threshold, detailThreshold: o.detailThreshold, mask: o.mask,
-        fillHoles: o.fillHoles === 'false' ? false : o.fillHoles, detail: o.detail, shadow: o.shadow,
+        plate: o.plate, fillHoles: o.fillHoles === 'false' ? false : o.fillHoles, holeMaxArea: o.holeMaxArea, detail: o.detail, shadow: o.shadow,
       };
     }
 
     // ---------- build controls ----------
-    const fmt = (s, v) => s.pct ? (v * 100).toFixed(1) + '%' : s.unit ? Math.round(v) + s.unit : (+v).toFixed(2);
+    const fmt = (s, v) => s.zero && !+v ? s.zero : s.pct ? (v * 100).toFixed(1) + '%' : s.unit ? Math.round(v) + s.unit : (+v).toFixed(2);
     function buildControls() {
       $('colors').innerHTML = COLOR_KEYS.map(([k, l]) => `<div class="ctl"><label for="c-${k}">${l}</label><input type="color" id="c-${k}" data-color="${k}"></div>`).join('');
-      const html = (s) => `<div class="ctl"><label for="r-${s.k}"><span>${s.label}</span><output id="o-${s.k}" for="r-${s.k}"></output></label>` +
+      const html = (s) => `<div class="ctl" id="${s.k}Ctl"><label for="r-${s.k}"><span>${s.label}</span><output id="o-${s.k}" for="r-${s.k}"></output></label>` +
         `<input type="range" id="r-${s.k}" data-key="${s.k}" min="${s.min}" max="${s.max}" step="${s.step}">${s.hint ? `<p class="hint">${s.hint}</p>` : ''}</div>`;
-      $('shapeCtls').innerHTML = SHAPE.filter((s) => !s.group).map(html).join('');
+      $('shapeCtls').innerHTML = `<div class="ctl"><label for="plate">Outline plate</label><select id="plate">
+          <option value="shape">Follows the shape</option><option value="hull">One flat plate (convex, chamfered)</option></select></div>` +
+        SHAPE.filter((s) => !s.group).map(html).join('');
       $('maskCtls').insertAdjacentHTML('beforeend', SHAPE.filter((s) => s.group === 'mask').map(html).join(''));
+      $('fillHoles').closest('.ctl').insertAdjacentHTML('afterend', SHAPE.filter((s) => s.group === 'holes').map(html).join(''));
     }
     function syncControls() {
       const o = state.opts;
       $('preset').value = state.preset;
       COLOR_KEYS.forEach(([k]) => { const el = $('c-' + k); el.value = toHex6(o.colors[k]); });
       SHAPE.forEach((s) => { $('r-' + s.k).value = o[s.k]; $('o-' + s.k).textContent = fmt(s, o[s.k]); });
-      $('mask').value = o.mask; $('fillHoles').value = String(o.fillHoles); $('detail').checked = !!o.detail; $('shadow').checked = !!o.shadow;
+      $('mask').value = o.mask; $('plate').value = o.plate || 'shape'; $('fillHoles').value = String(o.fillHoles); $('detail').checked = !!o.detail; $('shadow').checked = !!o.shadow;
       $('modeIcon').setAttribute('aria-pressed', state.mode === 'icon'); $('modeBadge').setAttribute('aria-pressed', state.mode === 'badge');
       $('labelCtl').hidden = state.mode !== 'badge';
       $('badgeLabel').value = state.label || '';
       $('exportSize').value = String(state.exportSize);
+      // Badges are taller than wide (487:640): the picker sets the badge height.
+      [...$('exportSize').options].forEach((op) => { op.textContent = op.value + (state.mode === 'badge' ? ' px tall' : ' px'); });
+      $('holeMaxAreaCtl').hidden = !o.fillHoles || o.fillHoles === 'false';
       document.querySelectorAll('.icard .lab').forEach((el) => { el.hidden = state.mode !== 'badge'; });
     }
     function toHex6(c) {
@@ -338,7 +351,8 @@
         state.opts[s.k] = parseFloat(el.value); $('o-' + s.k).textContent = fmt(s, state.opts[s.k]); changed();
       }));
       $('mask').addEventListener('change', (e) => { state.opts.mask = e.target.value; changed(); });
-      $('fillHoles').addEventListener('change', (e) => { state.opts.fillHoles = e.target.value; changed(); });
+      $('plate').addEventListener('change', (e) => { state.opts.plate = e.target.value; changed(); });
+      $('fillHoles').addEventListener('change', (e) => { state.opts.fillHoles = e.target.value; $('holeMaxAreaCtl').hidden = e.target.value === 'false'; changed(); });
       $('detail').addEventListener('change', (e) => { state.opts.detail = e.target.checked; changed(); });
       $('shadow').addEventListener('change', (e) => { state.opts.shadow = e.target.checked; changed(); });
       const setMode = (m) => {
@@ -398,7 +412,7 @@
       addInput(t, m ? m[1] : 'pasted-svg-' + (uid + 1)); $('svgText').value = '';
     });
     $('samplesBtn').addEventListener('click', () => SAMPLES.forEach((n) => addInput('/assets/icons/src/' + n + '.svg', n)));
-    $('clearAll').addEventListener('click', () => { items = []; document.querySelectorAll('.icard').forEach((c) => c.remove()); updateCounts(); });
+    $('clearAll').addEventListener('click', () => { items.forEach(dropWorkerSource); items = []; document.querySelectorAll('.icard').forEach((c) => c.remove()); updateCounts(); });
 
     // ---------- cards ----------
     function addCard(item) {
@@ -417,13 +431,13 @@
           <div class="strip chk-light"><img class="s32" width="32" alt="32 px"><img class="s64" width="64" alt="64 px"><img class="s128" width="128" alt="128 px"></div>
           <div class="strip chk-dark"><img class="s32" width="32" alt="32 px on dark"><img class="s64" width="64" alt="64 px on dark"><img class="s128" width="128" alt="128 px on dark"></div>
         </div>
-        <p class="warn" hidden></p><p class="err" hidden></p>
+        <p class="warn" hidden></p><p class="tip" hidden></p><p class="err" hidden></p>
         <div class="actions">
           <input type="text" class="lab" placeholder="Badge label" aria-label="Badge label" maxlength="40" ${state.mode === 'badge' ? '' : 'hidden'}>
           <button type="button" class="btn-s primary dl">Download PNG</button>
         </div>`;
       $('cards').appendChild(el);
-      el.querySelector('.x').addEventListener('click', () => { items = items.filter((i) => i !== item); el.remove(); updateCounts(); });
+      el.querySelector('.x').addEventListener('click', () => { items = items.filter((i) => i !== item); dropWorkerSource(item); el.remove(); updateCounts(); });
       el.querySelector('.nm').addEventListener('change', (e) => { item.name = baseName(e.target.value); e.target.value = item.name; });
       el.querySelector('.lab').addEventListener('input', (e) => { item.label = e.target.value; clearTimeout(item.t); item.t = setTimeout(() => renderItem(item, gen), 200); });
       el.querySelector('.dl').addEventListener('click', () => downloadOne(item));
@@ -446,17 +460,66 @@
       x.imageSmoothingQuality = 'high'; x.drawImage(src.image, (S - w) / 2, (S - h) / 2, w, h);
       return c.toDataURL();
     }
-    async function forgeItem(item, size) {
+    // ---------- forging (in a worker, so big exports never freeze the page) ----------
+    // The source is rasterised once on this thread (SVG needs DOMParser), handed to the worker as an
+    // ImageBitmap, and every forge runs there. Any worker trouble falls back to forging on this thread.
+    const canWork = typeof Worker !== 'undefined' && typeof OffscreenCanvas !== 'undefined' && typeof createImageBitmap !== 'undefined' && !/[?&]noworker\b/.test(location.search);
+    let worker = null, wseq = 0;
+    const pending = new Map();
+    const down = (msg) => Object.assign(new Error(msg), { workerDown: true });
+    function getWorker() {
+      if (!canWork || worker === false) return null;
+      if (worker) return worker;
+      try {
+        worker = new Worker(new URL('/shared/icon-forge-worker.js?v=2', location.href), { type: 'module' });
+        worker.onmessage = (e) => { const p = pending.get(e.data.id); if (!p) return; pending.delete(e.data.id); if (e.data.ok) p.resolve(e.data); else p.reject(new Error(e.data.error)); };
+        worker.onerror = (e) => { e.preventDefault(); worker.terminate(); worker = false; pending.forEach((p) => p.reject(down('worker failed'))); pending.clear(); };
+      } catch (e) { worker = false; }
+      return worker || null;
+    }
+    function call(msg, transfer = []) {
+      const w = getWorker();
+      if (!w) return Promise.reject(down('no worker'));
+      const id = ++wseq;
+      return new Promise((resolve, reject) => { pending.set(id, { resolve, reject }); w.postMessage({ ...msg, id }, transfer); });
+    }
+    function ensureWorkerSource(item) {
+      if (!item.sent) {
+        item.sent = (async () => {
+          let bmp;
+          try { bmp = await createImageBitmap(item.src.image); } catch (e) { throw down('createImageBitmap failed'); }
+          await call({ type: 'source', key: item.id, bitmap: bmp, width: item.src.width, height: item.src.height, kind: item.src.kind, name: item.name }, [bmp]);
+        })();
+        item.sent.catch(() => { item.sent = null; });
+      }
+      return item.sent;
+    }
+    function dropWorkerSource(item) { if (item.sent && worker) worker.postMessage({ type: 'drop', key: item.id }); item.sent = null; }
+    function forgeArgs(item, size) {
       if (state.mode === 'badge') {
         const label = (item.label || state.label || item.name.replace(/[-_]+/g, ' ')).trim();
         const { size: _s, preset: _p, ...icon } = forgeOptions(size);
-        return forgeBadge(item.src, { label, width: Math.max(64, Math.round((size * 487) / 640)), iconPreset: state.base, icon });
+        return { type: 'badge', opts: { label, height: size, iconPreset: state.base, icon } };
       }
-      return forgeIcon(item.src, forgeOptions(size));
+      return { type: 'icon', opts: forgeOptions(size) };
+    }
+    async function forgeItem(item, size) {
+      const { type, opts } = forgeArgs(item, size);
+      if (getWorker()) {
+        try {
+          await ensureWorkerSource(item);
+          const r = await call({ type, key: item.id, opts });
+          const c = document.createElement('canvas'); c.width = r.bitmap.width; c.height = r.bitmap.height;
+          c.getContext('2d').drawImage(r.bitmap, 0, 0); r.bitmap.close();
+          c.forgeInfo = r.info;
+          return c;
+        } catch (e) { if (!e.workerDown) throw e; }
+      }
+      return type === 'badge' ? forgeBadge(item.src, opts) : forgeIcon(item.src, opts);
     }
     async function renderItem(item, g) {
       const el = $('card-' + item.id); if (!el) return;
-      const err = el.querySelector('.err'), warn = el.querySelector('.warn');
+      const err = el.querySelector('.err'), warn = el.querySelector('.warn'), tip = el.querySelector('.tip');
       el.querySelectorAll('.fl, .fd').forEach((s) => s.classList.add('busy'));
       if (item.error || !item.src) {
         err.hidden = false; err.textContent = item.error || 'Could not load this image.';
@@ -471,8 +534,9 @@
         const c128 = halve(c), c64 = halve(c128), c32 = halve(c64);
         const u = { s128: c128.toDataURL(), s64: c64.toDataURL(), s32: c32.toDataURL() };
         Object.keys(u).forEach((k) => el.querySelectorAll('.' + k).forEach((im) => { im.src = u[k]; im.width = Math.round((c.width * +k.slice(1)) / 256); }));
-        const ws = (c.forgeInfo && c.forgeInfo.warnings) || [];
+        const ws = (c.forgeInfo && c.forgeInfo.warnings) || [], hs = (c.forgeInfo && c.forgeInfo.hints) || [];
         warn.hidden = !ws.length; warn.textContent = ws.join(' ');
+        tip.hidden = !hs.length; tip.textContent = hs.join(' ');
         err.hidden = true;
       } catch (e) {
         err.hidden = false; err.textContent = e.message || String(e);
@@ -529,19 +593,24 @@
     }
     $('dlAll').addEventListener('click', async () => {
       const btn = $('dlAll'); btn.disabled = true;
-      const files = [], used = new Set();
+      const files = [], used = new Set(), skipped = [];
       try {
-        for (const it of items) {
-          if (!it.src) continue;
-          setStatus(`exporting ${files.length + 1}/${items.length}...`);
-          let name = fileName(it), i = 2;
-          while (used.has(name)) name = fileName(it).replace(/\.png$/, `-${i++}.png`);
-          used.add(name);
-          const blob = await canvasToBlob(await forgeItem(it, state.exportSize));
-          files.push({ name, data: new Uint8Array(await blob.arrayBuffer()) });
+        // One bad icon (blank image, failed load...) must not sink the whole export: skip it and say so.
+        for (let k = 0; k < items.length; k++) {
+          const it = items[k];
+          setStatus(`exporting ${k + 1}/${items.length}...`);
+          if (!it.src) { skipped.push(it.name); continue; }
+          try {
+            const blob = await canvasToBlob(await forgeItem(it, state.exportSize));
+            let name = fileName(it), i = 2;
+            while (used.has(name)) name = fileName(it).replace(/\.png$/, `-${i++}.png`);
+            used.add(name);
+            files.push({ name, data: new Uint8Array(await blob.arrayBuffer()) });
+          } catch (e) { skipped.push(it.name); }
         }
         if (files.length) saveBlob(zip(files), `hoovytube-icons-${state.exportSize}.zip`);
-        setStatus(files.length ? '' : 'nothing to export');
+        const sk = skipped.length ? `skipped (could not forge): ${skipped.join(', ')}` : '';
+        setStatus(files.length ? sk : (sk ? 'nothing exported; ' + sk : 'nothing to export'));
       } catch (e) { setStatus(e.message || String(e)); }
       finally { btn.disabled = !items.length; }
     });

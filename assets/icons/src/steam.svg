@@ -1,15 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <!-- HoovyTube Icon Forge source: steam. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <!-- HoovyTube Icon Forge source: steam. Disc with the piston: big joint upper right, small joint lower left breaking the rim. Thin gaps = slate lines. -->
   <defs>
     <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
       <rect width="256" height="256" fill="#fff"/>
-      <circle cx="164" cy="94" r="50" fill="#000"/>
-      <path d="M134 120 L72 166" fill="none" stroke="#000" stroke-linecap="round" stroke-linejoin="round" stroke-width="42"/>
-      <circle cx="68" cy="170" r="34" fill="#000"/>
-      <circle cx="164" cy="94" r="34" fill="#fff"/>
-      <path d="M128 124 L72 166" fill="none" stroke="#fff" stroke-linecap="round" stroke-width="16"/>
-      <circle cx="68" cy="170" r="20" fill="#fff"/>
+      <circle cx="164" cy="94" r="56" fill="#000"/>
+      <path d="M148 112 L66 182" stroke="#000" stroke-width="40" stroke-linecap="round"/>
+      <circle cx="66" cy="182" r="38" fill="#000"/>
+      <circle cx="164" cy="94" r="46" fill="#fff"/>
+      <path d="M150 110 L66 182" stroke="#fff" stroke-width="28" stroke-linecap="round"/>
+      <circle cx="66" cy="182" r="28" fill="#fff"/>
+      <circle cx="164" cy="94" r="31" fill="#000"/>
+      <circle cx="164" cy="94" r="22" fill="#fff"/>
     </mask>
   </defs>
   <circle cx="128" cy="128" r="118" fill="#000" mask="url(#cut)"/>
+  <circle cx="66" cy="182" r="28" fill="#000"/>
 </svg>

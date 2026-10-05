@@ -16,6 +16,12 @@
  * sub-pixel seeding from anti-aliased coverage) -> outline / extrusion / bevel / ink / shadow layers
  * composited at 2x -> high-quality downscale.
  *
+ * Cost (one core, headless Chromium): cream 256 px ~0.1-0.15 s, 1024 px ~1.2 s; olive (merged plate) ~0.7 s at
+ * 512 px and ~2.5 s at 1024 px; a 1024 px tall badge ~2.5 s; up to ~250 MB of scratch memory at 1024 px.
+ * Everything here works in a Web Worker too (OffscreenCanvas): the Icon Forge page forges in
+ * shared/icon-forge-worker.js so it never freezes. Do the same for big batches. Only SVG markup needs the main
+ * thread (DOMParser): rasterise it with `loadSource` there and post `{ image: ImageBitmap, width, height, kind }`.
+ *
  * @example
  *   import { loadSource, forgeIcon, forgeToBlob, forgeBadge } from '/shared/icon-forge.js';
  *   const src = await loadSource(fileInput.files[0]);            // File, Blob, URL, SVG markup, <img>, <canvas>
@@ -23,11 +29,13 @@
  *   const olive = await forgeIcon(src, { preset: 'olive' });     // like media/hoovytools/arrow.png
  *   const blob = await forgeToBlob(src, { size: 512 });          // PNG blob
  *   const badge = await forgeBadge(src, { label: 'Steam Workshop' }); // olive item-badge plate
+ *   const logo = await forgeIcon(jpgOfALogo, { detail: true });  // any background colour; keep inner details as slate
+ *   canvas.forgeInfo.warnings / .hints                           // show these to the user
  *
  * @module icon-forge
  */
 
-export const VERSION = '1.0.0';
+export const VERSION = '1.1.0';
 
 const INF = 1e20;
 const MAX_WORK = 2048;          // largest supersampled working canvas side (px)
@@ -133,6 +141,7 @@ export const DEFAULTS = Object.freeze({
   supersample: 2,
   mask: 'auto',
   threshold: 0.5,
+  plate: 'shape',
   fillHoles: false,
   holeMaxArea: 0,
   detail: false,
@@ -190,6 +199,8 @@ export const DEFAULTS = Object.freeze({
  * @property {number} [detailGrow=0]      Thicken (+) or thin (-) detail lines, fraction of size.
  * @property {number} [grow=0]            Thicken (+) or thin (-) the whole silhouette first, fraction of size.
  * @property {number} [smooth=0]          Closing radius for the outline plate (one plate behind nearby parts, like the arrow), fraction of size.
+ * @property {'shape'|'hull'} [plate='shape'] Outline plate shape: 'shape' follows the silhouette (rounded); 'hull' is one
+ *                                        flat convex plate with chamfered corners behind the whole icon (`smooth` is ignored).
  * @property {'auto'|number} [soften='auto'] Smooth stair-steps of upscaled low-res rasters before tracing (blur radius in
  *                                        source px, then re-threshold). 'auto' = 0.4 px when a raster is enlarged, 0 = off.
  * @property {boolean} [trim=true]        Auto-trim to the content bounds before fitting.
@@ -582,23 +593,25 @@ function dominantColor(data, n, pick) {
 
 /** Zero every connected blob (8-connected, cov > 0) that never reaches 50 % coverage: JPEG noise, stray specks. */
 function dropFaint(cov, w, h) {
-  const n = w * h, seen = new Uint8Array(n), stack = new Int32Array(n), blob = [];
+  const n = w * h, label = new Int32Array(n), stack = new Int32Array(n), peaks = [0];
+  let faint = 0;
   for (let s = 0; s < n; s++) {
-    if (seen[s] || cov[s] <= 0) continue;
-    let sp = 0, peak = 0; blob.length = 0;
-    seen[s] = 1; stack[sp++] = s;
+    if (label[s] || cov[s] <= 0) continue;
+    const id = peaks.length;
+    let sp = 0, peak = 0;
+    label[s] = id; stack[sp++] = s;
     while (sp > 0) {
       const i = stack[--sp], x = i % w, y = (i - x) / w;
-      blob.push(i); if (cov[i] > peak) peak = cov[i];
-      for (let yy = Math.max(0, y - 1); yy <= Math.min(h - 1, y + 1); yy++) {
-        for (let xx = Math.max(0, x - 1); xx <= Math.min(w - 1, x + 1); xx++) {
-          const j = yy * w + xx;
-          if (!seen[j] && cov[j] > 0) { seen[j] = 1; stack[sp++] = j; }
-        }
+      if (cov[i] > peak) peak = cov[i];
+      const x0 = x > 0 ? x - 1 : x, x1 = x < w - 1 ? x + 1 : x, y0 = y > 0 ? y - 1 : y, y1 = y < h - 1 ? y + 1 : y;
+      for (let yy = y0; yy <= y1; yy++) {
+        for (let xx = x0, j = yy * w + x0; xx <= x1; xx++, j++) if (!label[j] && cov[j] > 0) { label[j] = id; stack[sp++] = j; }
       }
     }
-    if (peak < 0.5) for (const i of blob) cov[i] = 0;
+    peaks.push(peak);
+    if (peak < 0.5) faint++;
   }
+  if (faint) for (let i = 0; i < n; i++) if (label[i] && peaks[label[i]] < 0.5) cov[i] = 0;
   return cov;
 }
 
@@ -822,6 +835,54 @@ function keepSmallHoles(holes, w, h, maxArea) {
   return kept ? holes : null;
 }
 
+/**
+ * Convex plate: the silhouette's convex hull (simplified so real corners stay sharp), grown by `ow` with bevel
+ * joins, so every corner gets a flat chamfer like the HoovyTools arrow plate. Returns coverage, or null.
+ */
+function hullPlate(sil, w, h, ow) {
+  const pts = [];
+  for (let y = 0; y < h; y++) {
+    let a = -1, b = -1;
+    for (let x = 0; x < w; x++) if (sil[y * w + x] > 0.5) { if (a < 0) a = x; b = x; }
+    if (a >= 0) { pts.push([a, y], [a, y + 1], [b + 1, y], [b + 1, y + 1]); }
+  }
+  if (pts.length < 3) return null;
+  // Andrew's monotone chain.
+  pts.sort((p, q) => p[0] - q[0] || p[1] - q[1]);
+  const cross = (o, a, b) => (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0]);
+  const lower = [], upper = [];
+  for (const p of pts) { while (lower.length >= 2 && cross(lower[lower.length - 2], lower[lower.length - 1], p) <= 0) lower.pop(); lower.push(p); }
+  for (let i = pts.length - 1; i >= 0; i--) { const p = pts[i]; while (upper.length >= 2 && cross(upper[upper.length - 2], upper[upper.length - 1], p) <= 0) upper.pop(); upper.push(p); }
+  let poly = lower.slice(0, -1).concat(upper.slice(0, -1));
+  // Drop vertices that barely bend the outline (pixel-staircase noise), so bevels only appear at real corners.
+  const tol = Math.max(1, 0.006 * Math.max(w, h));
+  for (let changed = true; changed && poly.length > 3;) {
+    changed = false;
+    for (let i = 0; i < poly.length && poly.length > 3; i++) {
+      const a = poly[(i + poly.length - 1) % poly.length], b = poly[i], c = poly[(i + 1) % poly.length];
+      const len = Math.hypot(c[0] - a[0], c[1] - a[1]) || 1;
+      if (Math.abs(cross(a, b, c)) / len < tol) { poly.splice(i, 1); changed = true; i--; }
+    }
+  }
+  if (poly.length < 3) return null;
+  let cx = 0, cy = 0;
+  for (const p of poly) { cx += p[0]; cy += p[1]; }
+  cx /= poly.length; cy /= poly.length;
+  const normal = (a, b) => {
+    const dx = b[0] - a[0], dy = b[1] - a[1], l = Math.hypot(dx, dy) || 1;
+    let nx = dy / l, ny = -dx / l;
+    if (nx * ((a[0] + b[0]) / 2 - cx) + ny * ((a[1] + b[1]) / 2 - cy) < 0) { nx = -nx; ny = -ny; }
+    return [nx, ny];
+  };
+  const out = [];
+  for (let i = 0; i < poly.length; i++) {
+    const a = poly[(i + poly.length - 1) % poly.length], b = poly[i], c = poly[(i + 1) % poly.length];
+    const n1 = normal(a, b), n2 = normal(b, c);
+    out.push([b[0] + n1[0] * ow, b[1] + n1[1] * ow], [b[0] + n2[0] * ow, b[1] + n2[1] * ow]);
+  }
+  return polygonCoverage(out, w, h);
+}
+
 /** Unit outward normals from a (smoothed) signed distance field. */
 function normalsFrom(D, w, h, smoothR) {
   const S = smoothR >= 1 ? boxBlur(D, w, h, smoothR, 2) : D;
@@ -926,7 +987,9 @@ function renderLayers(cov, det, w, h, P) {
   // Outline plate = silhouette grown by the outline width, then optionally closed (dilate + erode by `smooth`)
   // so nearby parts share one plate, like the HoovyTools arrow. Dplate = signed distance to the plate edge.
   let Dplate;
-  if (P.smooth > 0.05) {
+  const hull = P.plate === 'hull' ? hullPlate(sil, w, h, P.ow) : null;
+  if (hull) Dplate = sdf(hull);
+  else if (P.smooth > 0.05) {
     // Done in a padded buffer so the dilate/erode pair is not clipped by the canvas edge.
     const M = Math.ceil(P.ow + P.smooth + 2), W2 = w + 2 * M, H2 = h + 2 * M, sdf2 = makeSdf(W2, H2);
     const pad = new Float32Array(W2 * H2);
@@ -1123,7 +1186,8 @@ export async function forgeIcon(source, options = {}) {
   const shadowBlur = Math.max(0, px(o.shadowBlur)), shadowY = px(o.shadowOffset);
   const padIn = num(o.padding, DEFAULTS.padding);
   if (padIn > 0.4) warnings.push(`Padding ${padIn} leaves no room for the icon; used 0.4.`);
-  const pad = clamp(padIn, 0, 0.4) * W;
+  // Keep at least one output pixel clear so small sizes (16-32 px) do not touch the canvas edge.
+  const pad = Math.max(clamp(padIn, 0, 0.4) * W, padIn > 0 ? W / size : 0);
 
   const { st, box } = probe(src, o);
 
@@ -1164,7 +1228,7 @@ export async function forgeIcon(source, options = {}) {
     ow, dx, dy, grow, smooth: Math.max(0, px(o.smooth)),
     bw: px(o.bevelWidth), bevel: num(o.bevel, 0), bevelSide: num(o.bevelSide, 0), lightAngle: num(o.lightAngle, 270),
     ink: px(o.ink), plateBevel: num(o.plateBevel, 0), pbw: px(o.plateBevelWidth),
-    fillHoles: fh, holeMaxArea: Math.max(0, num(o.holeMaxArea, 0)), detailGrow: px(o.detailGrow), detailMode: detailOn ? 'cut' : 'measure',
+    plate: o.plate === 'hull' ? 'hull' : 'shape', fillHoles: fh, holeMaxArea: Math.max(0, num(o.holeMaxArea, 0)), detailGrow: px(o.detailGrow), detailMode: detailOn ? 'cut' : 'measure',
     shadow: !!o.shadow, shadowOpacity: num(o.shadowOpacity, 0), shadowBlur, shadowX: 0, shadowY,
     colors: o.colors, fillStops: o.fillStops,
   };

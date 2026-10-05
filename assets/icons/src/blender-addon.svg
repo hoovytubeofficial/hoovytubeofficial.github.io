@@ -1,9 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <!-- HoovyTube Icon Forge source: blender-addon. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
-  <g fill="#000">
-    <polygon points="102.8,117.0 150.8,84.6 26.0,40.0" stroke="#000" stroke-width="24" stroke-linejoin="round"/>
-    <polygon points="94.0,152.3 105.3,186.9 22.0,140.0" stroke="#000" stroke-width="18" stroke-linejoin="round"/>
-    <path fill-rule="evenodd" d="M160 72 A78 78 0 1 1 159.9 72 Z M160 112 A38 38 0 1 0 160.1 112 Z"/>
-    <circle cx="160" cy="150" r="24"/>
+  <!-- HoovyTube Icon Forge source: blender-addon. The Blender mark: ring with a centre dot and three prongs (top, middle, lower). -->
+  <defs>
+    <clipPath id="ring-clip"><polygon points="0,70 158.75,70 158.75,42.3 256,114.9 256,256 0,256"/></clipPath>
+    <mask id="hole" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <ellipse cx="162.5" cy="138.5" rx="52" ry="47.5" fill="#000"/>
+    </mask>
+  </defs>
+  <g mask="url(#hole)" fill="#000" stroke="#000" stroke-linecap="round">
+    <circle cx="162" cy="138" r="82" stroke="none" clip-path="url(#ring-clip)"/>
+    <line x1="131.5" y1="35.5" x2="205" y2="92" stroke-width="21"/>
+    <line x1="52.5" y1="80.5" x2="165" y2="80.5" stroke-width="21"/>
+    <line x1="23.5" y1="171" x2="110" y2="101.8" stroke-width="25.8"/>
   </g>
+  <circle cx="162.5" cy="138" r="27.5" fill="#000"/>
 </svg>

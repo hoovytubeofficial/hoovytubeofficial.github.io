@@ -2,14 +2,14 @@
 // Icon Forge batch script (dev-only). Regenerates assets/icons/forged/ from assets/icons/src/ with the same
 // module the browser tool uses (shared/icon-forge.js), running it in headless Chromium via Playwright.
 //
-// Usage:  node scripts/forge-icons.mjs [--src assets/icons/src] [--out assets/icons/forged] [--size 256] [--only steam,fire] [--font path/to/LilitaOne.woff2]
+// Usage:  node scripts/forge-icons.mjs [--src assets/icons/src] [--out assets/icons/forged] [--size 256] [--only steam,fire] [--font path/to/Label.woff2]
 //
 // Needs Playwright + a Chromium build: `npm i -D playwright && npx playwright install chromium`
 // (or set PLAYWRIGHT_MODULE=/path/to/node_modules/playwright and CHROMIUM_PATH=/path/to/chrome).
 // Per-icon options and the badge list live in <src>/forge.config.json:
 //   { "defaults": {...forgeIcon options}, "icons": { "name": {...overrides} }, "badges": [{ "out", "icon", "label", ... }] }
-// The badge label font: --font, else @fontsource/lilita-one if installed, else Google Fonts (needs network),
-// else the module falls back to a system font.
+// The badge label font is Lilita One from assets/fonts/ (bundled, OFL), loaded by the module itself, so no network
+// is needed. --font swaps in another font file for the labels. If the label font cannot be loaded the script says so.
 import http from 'node:http';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -37,17 +37,11 @@ async function loadPlaywright() {
   throw new Error('Playwright not found. Run `npm i -D playwright && npx playwright install chromium`, or set PLAYWRIGHT_MODULE.');
 }
 
-function findFont() {
-  if (FONT) return path.resolve(process.cwd(), FONT);
-  const rel = 'node_modules/@fontsource/lilita-one/files/lilita-one-latin-400-normal.woff2';
-  for (const base of [ROOT, process.cwd()]) { const p = path.join(base, rel); if (fs.existsSync(p)) return p; }
-  return null;
-}
+const BUNDLED_FONT = path.join(ROOT, 'assets/fonts/lilita-one-latin-400-normal.woff2');
 
 const MIME = { '.html': 'text/html', '.js': 'text/javascript', '.mjs': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml',
   '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.json': 'application/json', '.woff2': 'font/woff2' };
 const HARNESS = `<!doctype html><meta charset="utf-8"><title>forge</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lilita+One&display=swap">
 <script type="module">import * as F from '/shared/icon-forge.js'; window.F = F; window.forgeReady = true;</script>`;
 
 function serve() {
@@ -86,11 +80,16 @@ const main = async () => {
   page.on('console', (m) => { if (m.type() === 'error' && !/Failed to load resource|fonts\.googleapis|net::/.test(m.text())) errors.push(m.text()); });
   await page.goto(`http://127.0.0.1:${port}/__forge__.html`, { waitUntil: 'domcontentloaded' });
   await page.waitForFunction(() => window.forgeReady === true, null, { timeout: 15000 });
-  const fontFile = findFont();
-  if (fontFile) {
-    const b64 = fs.readFileSync(fontFile).toString('base64');
-    await page.evaluate(async (d) => { await window.F.loadFont('Lilita One', d); }, `data:font/woff2;base64,${b64}`);
+  let labelFont = null;
+  if (FONT) {
+    const file = path.resolve(process.cwd(), FONT);
+    const b64 = fs.readFileSync(file).toString('base64');
+    await page.evaluate(async (d) => { await window.F.loadFont('ForgeLabel', d); }, `data:font/${path.extname(file).slice(1) || 'woff2'};base64,${b64}`);
+    labelFont = "'ForgeLabel', 'Lilita One', 'Arial Black', Impact, sans-serif";
+  } else if (!fs.existsSync(BUNDLED_FONT)) {
+    console.warn(`WARNING: ${path.relative(ROOT, BUNDLED_FONT)} is missing; badge labels will use a fallback font.`);
   }
+  let fontWarned = false;
 
   const written = [];
   const byName = {};
@@ -115,17 +114,19 @@ const main = async () => {
     const src = b.icon ? readSource(byName[b.icon] || path.join(SRC, b.icon)) : null;
     const res = await page.evaluate(async ({ src, opts }) => {
       const c = await window.F.forgeBadge(src, opts);
-      return c.toDataURL('image/png');
-    }, { src, opts: { ...b, out: undefined, icon: b.iconOptions || {} } });
+      return { url: c.toDataURL('image/png'), warnings: c.forgeInfo.warnings };
+    }, { src, opts: { ...b, out: undefined, icon: b.iconOptions || {}, ...(labelFont && !b.font ? { font: labelFont } : {}) } });
     const outFile = path.join(OUT, name + '.png');
-    fs.writeFileSync(outFile, Buffer.from(res.split(',')[1], 'base64'));
+    fs.writeFileSync(outFile, Buffer.from(res.url.split(',')[1], 'base64'));
     written.push(path.relative(ROOT, outFile));
-    console.log(`badge  ${name.padEnd(16)} "${b.label || ''}"`);
+    console.log(`badge  ${name.padEnd(16)} "${b.label || ''}"${res.warnings.length ? '  ! ' + res.warnings.join(' ') : ''}`);
+    if (res.warnings.some((w) => /font/i.test(w))) fontWarned = true;
   }
   await browser.close();
   server.close();
   if (errors.length) { console.error('Page errors:\n  ' + errors.join('\n  ')); process.exitCode = 1; }
-  console.log(`\n${written.length} file(s) written to ${path.relative(ROOT, OUT) || '.'}${fontFile ? '' : '  (label font: Google Fonts / fallback)'}`);
+  console.log(`\n${written.length} file(s) written to ${path.relative(ROOT, OUT) || '.'}`);
+  if (fontWarned) console.warn('WARNING: the badge label font could not be loaded, so labels used a fallback font and will look thin. Check assets/fonts/ or pass --font.');
 };
 
 main().catch((e) => { console.error(e); process.exit(1); });

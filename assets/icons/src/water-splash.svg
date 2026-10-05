@@ -1,14 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
-  <!-- HoovyTube Icon Forge source: water-splash. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
-  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round">
-    <path d="M64 216 C58 176 44 146 20 112 C56 128 84 160 100 214 Z"/>
-    <path d="M192 216 C198 176 212 146 236 112 C200 128 172 160 156 214 Z"/>
-    <path d="M106 216 C110 186 116 160 128 132 C140 160 146 186 150 216 Z"/>
+  <!-- HoovyTube Icon Forge source: water-splash. A big drop landing in a puddle, splash waves curling out to the sides, flying droplets. -->
+  <g fill="#000">
+    <path d="M128 8 C150 46 182 84 182 128 C182 160 158 182 128 182 C98 182 74 160 74 128 C74 84 106 46 128 8 Z"/>
+    <ellipse cx="128" cy="214" rx="104" ry="26"/>
+    <path d="M96 210 C70 206 44 190 30 166 C24 156 16 150 6 150 C22 134 44 136 56 152 C68 168 84 178 106 182 Z"/>
+    <path d="M160 210 C186 206 212 190 226 166 C232 156 240 150 250 150 C234 134 212 136 200 152 C188 168 172 178 150 182 Z"/>
+    <circle cx="34" cy="108" r="11"/>
+    <circle cx="222" cy="108" r="11"/>
+    <circle cx="58" cy="70" r="8"/>
+    <circle cx="198" cy="70" r="8"/>
   </g>
-  <ellipse cx="128" cy="222" rx="122" ry="28" fill="#000"/>
-  <path fill="#000" d="M128 20 C142 44 152 60 152 76 C152 92 142 104 128 104 C114 104 104 92 104 76 C104 60 114 44 128 20 Z"/>
-  <circle cx="34" cy="74" r="12" fill="#000"/>
-  <circle cx="222" cy="74" r="12" fill="#000"/>
-  <circle cx="74" cy="104" r="9" fill="#000"/>
-  <circle cx="182" cy="104" r="9" fill="#000"/>
 </svg>
