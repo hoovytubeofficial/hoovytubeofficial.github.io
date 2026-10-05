@@ -1,0 +1,37 @@
+/* /workshop/ (Steam Workshop page): layout glue only.
+   Every surface, colour, shadow and type style comes from /styles/ht.css (design system v2).
+   Nothing here redefines tokens or component looks. */
+
+/* Lists rendered as tag rows: drop the default list box */
+ul.tags { margin: 0; }   /* list reset lives in ht.css */
+
+/* ---- 1. Hero: the text column gets the room (both buttons on one line); the 390px Workshop badge stays
+   modest, and smaller still on phones, where the text and the Patreon CTA come first ---- */
+@media (min-width: 900px) { .ws-hero .page-hero { grid-template-columns: minmax(0, 1.45fr) minmax(0, .55fr); } }
+.ws-hero .page-hero-art { width: min(100%, 300px); }
+@media (max-width: 899px) { .ws-hero .page-hero-art { width: min(52%, 190px); } }
+/* Stat tiles: 2 x 2 on phones and tablets, one row of 4 on desktop */
+.ws-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 1000px) { .ws-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* ---- 2 + 3. Item cards: the Steam button sits on the card's bottom edge so buttons line up across a row ---- */
+.ws-trials .item-card,
+.ws-catalogue .item-card { grid-template-rows: 1fr auto; align-content: stretch; }
+.ws-more { margin-top: var(--s-2); }
+.ws-more b { color: var(--text); }
+
+/* "More on the Workshop" panel */
+.ws-panel-lead { margin: 0 0 var(--s-5); color: var(--text-muted); }
+.ws-more-foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-5); margin-top: var(--s-5); padding-top: var(--s-5); border-top: 2px solid var(--line); }
+.ws-more-foot p { margin: 0; font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); }
+
+/* ---- 4. Collection + Session Importer panels ---- */
+.ws-feature { display: flex; flex-direction: column; align-items: flex-start; }
+.ws-feature > * { margin-top: 0; margin-bottom: 0; }
+.ws-feature > * + * { margin-top: var(--s-4); }
+.ws-feature > .eyebrow + h3 { margin-top: var(--s-1); }
+.ws-feature > .btn-row { margin-top: auto; padding-top: var(--s-5); }
+.ws-feature-icon { display: block; width: 72px; height: 72px; object-fit: contain; }
+.ws-feature .notice { align-self: stretch; }
+.ws-members .tag { white-space: normal; text-align: left; line-height: 1.3; border-radius: 1.1em; }
+.ws-feature > ul.tags { margin-top: var(--s-3); }

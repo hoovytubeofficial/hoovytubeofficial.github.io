@@ -1,238 +1,1003 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patreon membership: SFM particles, animations &amp; scenebuilds - HoovyTube</title>
+  <meta name="description" content="HoovyTube on Patreon: 900+ SFM particle effects, 30+ scenebuilds and 600+ animations across three membership tiers (from $20/month for the particles), single packs in the Patreon shop, and free trials on the Steam Workshop.">
+  <link rel="canonical" href="https://hoovytube.com/products/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <title>Assets & Products - HoovyTube</title>
-  <meta name="description" content="HoovyTube SFM assets - particles, animations, scenebuilds. Free on Steam Workshop or on Patreon/HoovyTube.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css?v=10">
-  <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-  <style>
-    /* Big scroll-driven 3D orbit of community animations (no box - sits on the page) */
-    .orbit-hero { position: relative; width: 100%; overflow: hidden; }
-    .orbit-stage { height: min(62vh, 660px); min-height: 620px; perspective: 1600px; position: relative; }
-    .orbit-ring { position: absolute; top: 50%; left: 50%; width: 620px; height: 349px; margin: -175px 0 0 -310px;
-      --r: 560px; transform-style: preserve-3d; will-change: transform; }
-    .orbit-item { position: absolute; inset: 0; overflow: hidden; background: #000; border: 1px solid rgba(255,255,255,.16);
-      box-shadow: 0 14px 32px rgba(0,0,0,.45); backface-visibility: hidden; transform: rotateY(var(--a)) translateZ(var(--r)); }
-    .orbit-item video { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .orbit-item .credit { position: absolute; left: 0; right: 0; bottom: 0; padding: .5rem .8rem; font-size: .82rem; color: #fff;
-      background: linear-gradient(transparent, rgba(0,0,0,.85)); }
-    .orbit-caption { max-width: 1000px; margin: .9rem auto 0; padding: 0 1.4rem; text-align: center; color: var(--muted); font-size: .82rem; position: relative; z-index: 45; transition: color .4s ease, text-shadow .4s ease; }
-    .cinema-dim { position: fixed; inset: 0; background: #05080c; opacity: 0; pointer-events: none; z-index: 40; transition: opacity .6s ease; }
-    body.showcase .cinema-dim { opacity: .6; }
-    .orbit-hero { z-index: 45; }
-    body.showcase .orbit-caption { color: var(--cream); text-shadow: 0 0 14px var(--glow), 0 0 6px var(--accent); }
-    /* blue "you don't pay" callout */
-    .free-callout { display: block; text-decoration: none; margin: 2.6rem 0 0; padding: 1.2rem 1.4rem;
-      border: 1px solid #4a86c9; background: color-mix(in srgb, #4a86c9 15%, transparent); color: var(--text); line-height: 1.55; transition: background .2s; }
-    .free-callout:hover { background: color-mix(in srgb, #4a86c9 26%, transparent); }
-    .free-callout strong { color: #6fb0f0; }
-    .free-callout .arrow { color: #6fb0f0; font-weight: 700; }
-    @media (max-width: 640px) { .orbit-stage { height: 50vh; min-height: 340px; } .orbit-ring { width: 380px; height: 214px; margin: -107px 0 0 -190px; --r: 344px; } }
-
-    /* About box - glowing rim on hover (.spot) */
-    .about { border: 1px solid var(--line); background: var(--panel); padding: 2.8rem 2.4rem; text-align: center; }
-    .about-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.6rem); line-height: 1.08; margin: 0 0 .6rem; color: var(--text); }
-    .about-sub { color: var(--accent); font-weight: 600; font-size: clamp(1rem, 2.2vw, 1.2rem); margin: 0 0 1.7rem; }
-    .about-body { color: var(--muted); line-height: 1.75; max-width: 680px; margin: 0 auto 1.8rem; text-align: left; }
-    .about-body p { margin: 0 0 1rem; }
-    .about-stats { display: flex; flex-wrap: wrap; gap: 1.6rem 2.4rem; justify-content: center; margin: 0 0 1.9rem; }
-    .about-stats div { font-size: .88rem; color: var(--muted); }
-    .about-stats b { display: block; font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; color: var(--accent); line-height: 1; margin-bottom: .15rem; }
-
-    /* Membership block - its own framed box */
-    .membership-box { border: 1px solid var(--line); background: var(--panel-2); padding: 2.2rem; margin-top: 3.2rem; }
-    .membership-box .section-head { margin-bottom: 1.6rem; }
-
-    /* Patreon tiers */
-    .tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.2rem; }
-    .tier { border: 1px solid var(--line); border-radius: 16px; padding: 1.6rem; background: var(--panel); display: flex; flex-direction: column; }
-    .tier.best { border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
-    .tier .tag { align-self: flex-start; font-size: .68rem; font-weight: 700; letter-spacing: .05em; background: var(--accent); color: var(--accent-ink); padding: .22rem .55rem; border-radius: 999px; margin-bottom: .6rem; text-transform: uppercase; }
-    .tier-imgbox { width: calc(100% + 3.2rem); margin: -1.6rem -1.6rem 1.1rem; aspect-ratio: 4/3; background: var(--hero-dark);
-      border-bottom: 1px solid var(--line); overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    .tier-ic { width: 66%; height: 66%; object-fit: contain; transition: transform .3s cubic-bezier(.16,1,.3,1); }
-    .tier:hover .tier-ic { transform: scale(1.22); }
-    .tier .price { font-family: 'Space Grotesk', sans-serif; font-size: 2.1rem; font-weight: 700; color: var(--accent); line-height: 1; }
-    .tier .price span { font-size: .85rem; color: var(--muted); font-weight: 500; }
-    .tier h3 { margin: .5rem 0 .8rem; font-size: 1.1rem; }
-    .tier ul { list-style: none; padding: 0; margin: 0 0 1.3rem; }
-    .tier li { padding: .28rem 0; color: var(--muted); font-size: .92rem; display: flex; gap: .5rem; }
-    .tier li::before { content: "✓"; color: var(--accent); font-weight: 700; }
-    .tier .btn { margin-top: auto; justify-content: center; }
-    .tier-playlist { display: flex; align-items: center; gap: .5rem; margin: 0 0 1rem; padding: .6rem .85rem;
-      border: 1px solid var(--accent); color: var(--accent); font-weight: 700; font-size: .84rem; text-decoration: none;
-      background: color-mix(in srgb, var(--accent) 12%, transparent); transition: background .2s; }
-    .tier-playlist:hover { background: color-mix(in srgb, var(--accent) 24%, transparent); }
-    .tier-playlist svg { width: 18px; height: 18px; flex: 0 0 auto; }
-    .tier-points { margin-bottom: 1.1rem; }
-    .tier-points li { display: flex; gap: .55rem; align-items: flex-start; font-size: .84rem; line-height: 1.45; padding: .32rem 0; color: var(--muted); }
-    .tier-points li::before { content: none; }
-    .tier-points .pt-ic { width: 16px; height: 16px; flex: 0 0 auto; margin-top: 2px; color: var(--accent); }
-  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HoovyTube">
+  <meta property="og:url" content="https://hoovytube.com/products/">
+  <meta property="og:title" content="Patreon membership: SFM particles, animations &amp; scenebuilds - HoovyTube">
+  <meta property="og:description" content="900+ SFM particle effects, 30+ scenebuilds and 600+ animations across three Patreon membership tiers. Memberships start at $20/month.">
+  <meta property="og:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HoovyTube - SFM assets, Blender add-ons and free tutorials">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Patreon membership: SFM particles, animations &amp; scenebuilds - HoovyTube">
+  <meta name="twitter:description" content="900+ SFM particle effects, 30+ scenebuilds and 600+ animations across three Patreon membership tiers. Memberships start at $20/month.">
+  <meta name="twitter:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <link rel="stylesheet" href="/styles/pages/patreon.css?v=1">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "HoovyTube Patreon membership",
+  "description": "Monthly Patreon membership tiers for HoovyTube's Source Filmmaker asset library: 900+ particle effects, 30+ scenebuilds and 600+ animations.",
+  "url": "https://hoovytube.com/products/",
+  "image": "https://hoovytube.com/assets/og/og-default.jpg",
+  "brand": {
+    "@type": "Brand",
+    "name": "HoovyTube"
+  },
+  "offers": [
+    {
+      "@type": "Offer",
+      "name": "All Particles",
+      "url": "https://www.patreon.com/c/hoovytube308/membership",
+      "price": "20.00",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "20.00",
+        "priceCurrency": "USD",
+        "unitText": "MONTH",
+        "billingDuration": "P1M"
+      }
+    },
+    {
+      "@type": "Offer",
+      "name": "Scenebuilds + Particles",
+      "url": "https://www.patreon.com/c/hoovytube308/membership",
+      "price": "25.00",
+      "priceCurrency": "USD",
+      "priceSpecification": {
+        "@type": "UnitPriceSpecification",
+        "price": "25.00",
+        "priceCurrency": "USD",
+        "unitText": "MONTH",
+        "billingDuration": "P1M"
+      }
+    }
+  ]
+}
+  </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does a membership cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Memberships start at $20/month. The tiers are All Particles ($20/month), Scenebuilds + Particles ($25/month) and The full library ($30/month). You choose one on the membership page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Which tier should I pick?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you mainly need effects, All Particles has the 900+ particle effects. Scenebuilds + Particles adds 30+ scenebuilds with biome types and HDRI setups. The full library adds 600+ animations on top. Each tier includes everything in the one before it, so you can start small. The comparison table lists every difference."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I buy a single pack instead?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. One-off packs are sold in the Patreon shop. Many particle packs say on their shop page that they are also included in the $20 tier, so if you want more than one or two, compare the membership first. The pack catalogue below lists them."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I try anything for free first?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Free trials of the Enhanced Fire, Explosions MEGA-PACK, Skibidi V2 and Skibidi Movie Edition particles are on the Steam Workshop, along with other free particle packs and models. See Try before you join or the Workshop page."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do I need to use the assets?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Source Filmmaker. The scenebuilds are built for stronger setups, so a strong GPU is recommended. The animations are made for HWM characters, HL2 rigs and cameras, and are transposable with the HoovyTools: SFM Transposition Addon."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I use them in my own videos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "That's what they're for. Animators across the community build with them. If you make something with the library, send it over."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is HoovyTools part of the membership?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. The HoovyTools Blender add-ons, the session importer and Particle Import, are free for everyone; download them on the HoovyTools page. The HoovyTools: SFM Transposition Addon that the animations work with is shown in a tutorial on YouTube, and this site has no download for it. The SFM Particle Resizer script is free too, posted on Patreon for all members, free members included."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do billing and cancelling work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Patreon handles both. You join, change tier or cancel from your Patreon account. This site has no checkout and never sees your payment details."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to pay to learn how this is made?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Every skill used to build the library is taught free in the tutorials, sorted Easy, Medium and Hard on the Learn page."
+      }
+    }
+  ]
+}
+  </script>
 </head>
 <body>
-  <div class="topbar">
-    <a class="wordmark" href="/">Hoovy<span class="dot">Tube</span></a>
-    <a class="cta" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon ↗</a>
+  <main id="main">
+
+    <!-- 1. Hero offer -->
+    <section class="section" aria-labelledby="heroTitle">
+      <div class="container">
+        <div class="panel page-hero pt-hero">
+          <div class="page-hero-text">
+            <span class="eyebrow eyebrow-patreon"><img src="/assets/icons/forged/patreon.png" alt="" width="20" height="20">Patreon membership</span>
+            <h1 id="heroTitle">The HoovyTube SFM library, on Patreon</h1>
+            <p class="lead"><mark class="hl">900+ particle effects</mark>, 30+ scenebuilds and 600+ animations for Source Filmmaker in three membership tiers, organised, documented and previewed, so you spend your time directing instead of building sprites.</p>
+            <div class="btn-row">
+              <a class="btn btn-patreon btn-lg" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join from $20/month</a>
+              <a class="btn btn-secondary btn-lg" href="#tiers">Compare the tiers</a>
+            </div>
+            <div class="pt-picker">
+              <p class="pt-picker-label" id="pickerLabel">Jump to a tier</p>
+              <div class="chips" role="group" aria-labelledby="pickerLabel">
+                <a class="chip" href="#tier-particles"><img src="/assets/icons/forged/sparks.png" alt="" width="22" height="22">$20 All Particles</a>
+                <a class="chip" href="#tier-scenebuilds"><img src="/assets/icons/forged/scenebuild.png" alt="" width="22" height="22">$25 Scenebuilds + Particles</a>
+                <a class="chip" href="#tier-full"><img src="/assets/icons/forged/film-reel.png" alt="" width="22" height="22">$30 The full library</a>
+              </div>
+            </div>
+            <ul class="tags pt-proof" aria-label="What the library holds">
+              <li class="tag"><img src="/assets/icons/forged/sparks.png" alt="" width="18" height="18">900+ particle effects</li>
+              <li class="tag"><img src="/assets/icons/forged/scenebuild.png" alt="" width="18" height="18">30+ scenebuilds</li>
+              <li class="tag"><img src="/assets/icons/forged/film-reel.png" alt="" width="18" height="18">600+ animations</li>
+              <li class="tag"><img src="/assets/icons/forged/heart.png" alt="" width="18" height="18">2,500+ Patreon members</li>
+            </ul>
+            <p class="page-hero-note">Only need one effect? Single packs are sold in the <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+          </div>
+          <div class="page-hero-media">
+            <figure class="screen">
+              <div class="screen-media">
+                <video poster="/media/posters/animations-preview-2.jpg" muted loop playsinline preload="none" data-play="visible" aria-label="HoovyTube reel: an armoured mech pilot with glowing rings, drones and embers">
+                  <source src="/media/home/reel-2.mp4" type="video/mp4">
+                  <source src="/media/animations/preview-2.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="screen-cap"><span class="screen-dot"></span><b>HoovyTube reel</b> embers, glow rings and drones</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. Tier cards -->
+    <section class="section" id="tiers" aria-labelledby="tiersTitle">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow eyebrow-patreon">Membership tiers</span>
+          <h2 id="tiersTitle">Pick how much of the library you want</h2>
+          <p class="lead">Three monthly tiers. Each one includes everything in the tier before it.</p>
+        </header>
+        <div class="tiers pt-tiers">
+          <article class="tier" id="tier-particles" aria-labelledby="tierNameParticles">
+            <img class="tier-art" src="/assets/icons/forged/sparks.png" alt="" width="104" height="104">
+            <p class="tier-kicker">Tier 1</p>
+            <h3 class="tier-name" id="tierNameParticles">All Particles</h3>
+            <p class="tier-price"><b>$20</b><span>/month</span></p>
+            <ul class="tier-points">
+              <li>900+ particle effects: 1GB+ of new SFM sprites, a library larger than L4D2 + TF2 + CS2 combined</li>
+              <li>300+ particles with size variations for every scene, from ants to giant mechs</li>
+              <li>Thoughtful folder naming and expanded docs, with PNG previews for easy navigation</li>
+              <li>Split by purpose: ENVIRONMENT / PHYSICS / IMPACTS / MISC</li>
+              <li>Inspired by 1980s film and toon shading: can replace volumetric lights, sometimes even lighting altogether</li>
+              <li>Most particle packs from the shop, the ones marked "Included in the $20 tier"</li>
+            </ul>
+            <a class="btn btn-patreon btn-block" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join All Particles</a>
+            <a class="pt-tier-more" href="#lib-particles">What's inside the particles</a>
+          </article>
+          <article class="tier" id="tier-scenebuilds" aria-labelledby="tierNameScenebuilds">
+            <img class="tier-art" src="/assets/icons/forged/scenebuild.png" alt="" width="104" height="104">
+            <p class="tier-kicker">Tier 2</p>
+            <h3 class="tier-name" id="tierNameScenebuilds">Scenebuilds + Particles</h3>
+            <p class="tier-price"><b>$25</b><span>/month</span></p>
+            <ul class="tier-points">
+              <li>30+ scenebuilds: 1GB+ of new SFM models and scenebuilds spanning urban / sci-fi / nature settings</li>
+              <li>Biome types and HDRI setups to build your own scenebuilds with</li>
+              <li>Consolidated in usermod folders with no exterior model usage, all ported by HoovyTube</li>
+              <li>Built for stronger setups: a strong GPU is recommended</li>
+              <li>Scenebuild packs from the shop marked "$25 tier"</li>
+              <li>Everything in the All Particles tier</li>
+            </ul>
+            <a class="btn btn-patreon btn-block" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join Scenebuilds + Particles</a>
+            <a class="pt-tier-more" href="#lib-scenebuilds">What's inside the scenebuilds</a>
+          </article>
+          <article class="tier is-featured" id="tier-full" aria-labelledby="tierNameFull">
+            <span class="tier-flag">All three libraries</span>
+            <img class="tier-art" src="/assets/icons/forged/film-reel.png" alt="" width="104" height="104">
+            <p class="tier-kicker">Tier 3</p>
+            <h3 class="tier-name" id="tierNameFull">The full library</h3>
+            <p class="tier-price"><b>$30</b><span>/month</span></p>
+            <ul class="tier-points">
+              <li>600+ animations for HWM characters, HL2 rigs and cameras</li>
+              <li>Fully transposable with HoovyTools: SFM Transposition Addon</li>
+              <li>Idle, Walking, Running, Fighting, Combat, Shooting, Dialog, Scene Setup, Crowd, Acrobatics, Parkour and Props</li>
+              <li>Everything in the earlier tiers: 900+ particle effects and 30+ scenebuilds</li>
+            </ul>
+            <a class="btn btn-patreon btn-block" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Claim the full library</a>
+            <a class="pt-tier-more" href="#lib-animations">What's inside the animations</a>
+          </article>
+        </div>
+        <div class="notice" role="note">
+          <img src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">
+          <p>You pick the tier on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon's membership page</a>. Billing and cancelling are handled in your Patreon account.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. Comparison table -->
+    <section class="section" id="compare" aria-labelledby="compareTitle">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Side by side</span>
+          <h2 id="compareTitle">Compare every tier</h2>
+          <p class="lead">What each membership includes, line by line.</p>
+        </header>
+        <div class="panel table-wrap">
+          <p class="pt-table-hint"><span aria-hidden="true">&#8596;</span> Swipe the table sideways to see all three tiers.</p>
+          <div class="table-scroll" tabindex="0" role="region" aria-label="Tier comparison table">
+            <table class="compare">
+              <caption class="sr-only">What each Patreon tier includes</caption>
+              <thead>
+                <tr>
+                  <th scope="col">What you get</th>
+                  <th scope="col">All Particles<span class="th-sub">$20/month</span></th>
+                  <th scope="col">Scenebuilds + Particles<span class="th-sub">$25/month</span></th>
+                  <th scope="col" class="col-featured">The full library<span class="th-sub">$30/month</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">900+ particle effects, 1GB+ of new SFM sprites</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">300+ particles with size variations</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Folder naming, expanded docs and PNG previews</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Sorted ENVIRONMENT / PHYSICS / IMPACTS / MISC</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Shop packs marked "Included in the $20 tier"</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">30+ scenebuilds, 1GB+ of models (urban / sci-fi / nature)</th><td class="no"><span class="sr-only">Not included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Biome types and HDRI setups</th><td class="no"><span class="sr-only">Not included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Consolidated usermod folders, no exterior model usage</th><td class="no"><span class="sr-only">Not included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Shop scenebuilds marked "$25 tier"</th><td class="no"><span class="sr-only">Not included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">600+ animations for HWM characters, HL2 rigs and cameras</th><td class="no"><span class="sr-only">Not included</span></td><td class="no"><span class="sr-only">Not included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+                <tr><th scope="row">Transposable with HoovyTools: SFM Transposition Addon</th><td class="no"><span class="sr-only">Not included</span></td><td class="no"><span class="sr-only">Not included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pt-table-foot">
+            <p>Scenebuilds are built for stronger setups, so a strong GPU is recommended for the $25 and $30 tiers.</p>
+            <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Choose a tier on Patreon</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Library deep-dive -->
+    <section class="section" id="library" aria-labelledby="libraryTitle">
+      <div class="container">
+        <header class="section-head section-head-split">
+          <div>
+            <span class="eyebrow">Inside the library</span>
+            <h2 id="libraryTitle">What you actually get</h2>
+            <p class="lead">Built, sorted and documented over years rather than scraped together.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-secondary" href="https://www.youtube.com/playlist?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/youtube.png" alt="" width="28" height="28">Asset previews playlist</a>
+          </div>
+        </header>
+
+        <article class="panel pt-lib" id="lib-particles" aria-labelledby="libParticlesTitle">
+          <div class="split split-wide-left">
+            <div class="stack">
+              <p class="meta"><span class="tag tag-patreon">All tiers</span><span>from $20/month</span></p>
+              <h3 id="libParticlesTitle" class="pt-lib-title"><img src="/assets/icons/forged/sparks.png" alt="" width="52" height="52">Particles</h3>
+              <div class="stats">
+                <div class="stat"><b class="stat-num" data-count>900+</b><span class="stat-label">particle effects</span></div>
+                <div class="stat"><b class="stat-num">1GB+</b><span class="stat-label">of new SFM sprites</span></div>
+                <div class="stat"><b class="stat-num" data-count>300+</b><span class="stat-label">with size variations</span></div>
+              </div>
+              <p>More particle content than L4D2, TF2 and CS2 carry between them, with size variations for every scene, from ants to giant mechs. Everything comes with thoughtful folder naming and expanded docs, with PNG previews for easy navigation.</p>
+              <ul class="tags" aria-label="How the particles are sorted">
+                <li class="tag">Environment</li><li class="tag">Physics</li><li class="tag">Impacts</li><li class="tag">Misc</li>
+              </ul>
+              <p>The look is inspired by 1980s film and toon shading. The effects can replace volumetric lights, and sometimes lighting altogether. All of it comes with the <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">All Particles tier</a>.</p>
+            </div>
+            <figure class="screen">
+              <div class="screen-media">
+                <video src="/media/community/hoovytube.mp4" poster="/media/posters/community-hoovytube.jpg" muted loop playsinline preload="none" data-play="visible" aria-label="An exploding scaffold tower with fire, sparks and flying debris"></video>
+              </div>
+              <figcaption class="screen-cap"><span class="screen-dot"></span><b>Fire, sparks and debris</b> shot by HoovyTube</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="panel pt-lib" id="lib-scenebuilds" aria-labelledby="libScenebuildsTitle">
+          <div class="split split-wide-right">
+            <figure class="screen">
+              <div class="screen-media">
+                <video poster="/media/posters/animations-preview-1.jpg" muted loop playsinline preload="none" data-play="visible" aria-label="HoovyTube reel: a giant skull in a violet-fogged ruined city">
+                  <source src="/media/home/reel-1.mp4" type="video/mp4">
+                  <source src="/media/animations/preview-1.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="screen-cap"><span class="screen-dot"></span><b>HoovyTube reel</b> a ruined city in violet fog</figcaption>
+            </figure>
+            <div class="stack">
+              <p class="meta"><span class="tag tag-patreon">$25 and $30 tiers</span></p>
+              <h3 id="libScenebuildsTitle" class="pt-lib-title"><img src="/assets/icons/forged/scenebuild.png" alt="" width="52" height="52">Scenebuilds</h3>
+              <div class="stats">
+                <div class="stat"><b class="stat-num" data-count>30+</b><span class="stat-label">scenebuilds</span></div>
+                <div class="stat"><b class="stat-num">1GB+</b><span class="stat-label">of new SFM models</span></div>
+              </div>
+              <ul class="check-list">
+                <li>Urban, sci-fi and nature settings</li>
+                <li>Biome types and HDRI setups to build your own scenebuilds with</li>
+                <li>Consolidated in usermod folders with no exterior model usage, all ported by HoovyTube</li>
+                <li>Built for stronger setups: a strong GPU is recommended</li>
+              </ul>
+              <div class="btn-row">
+                <a class="btn btn-secondary btn-sm" href="https://youtu.be/805SFFr-L6M?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/play.png" alt="" width="24" height="24">Watch a scenebuild preview</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel pt-lib" id="lib-animations" aria-labelledby="libAnimationsTitle">
+          <div class="split split-wide-left">
+            <div class="stack">
+              <p class="meta"><span class="tag tag-patreon">$30 tier</span></p>
+              <h3 id="libAnimationsTitle" class="pt-lib-title"><img src="/assets/icons/forged/film-reel.png" alt="" width="52" height="52">Animations</h3>
+              <div class="stats">
+                <div class="stat"><b class="stat-num" data-count>600+</b><span class="stat-label">animations</span></div>
+                <div class="stat"><b class="stat-num">HWM + HL2</b><span class="stat-label">characters, rigs and cameras</span></div>
+              </div>
+              <p>Made for HWM characters, HL2 rigs and cameras, and fully transposable with the HoovyTools: SFM Transposition Addon (<a href="https://youtu.be/SEUJu0mizQQ" target="_blank" rel="noopener">see how transposition works</a>).</p>
+              <ul class="tags" aria-label="Animation categories">
+                <li class="tag">Idle</li><li class="tag">Walking</li><li class="tag">Running</li><li class="tag">Fighting</li><li class="tag">Combat</li><li class="tag">Shooting</li><li class="tag">Dialog</li><li class="tag">Scene setup</li><li class="tag">Crowd</li><li class="tag">Acrobatics</li><li class="tag">Parkour</li><li class="tag">Props</li>
+              </ul>
+              <p>The animations come with <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">The full library tier</a>, together with every particle and scenebuild.</p>
+              <div class="btn-row">
+                <a class="btn btn-secondary btn-sm" href="https://youtu.be/qmqYMkfuaNs?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/play.png" alt="" width="24" height="24">Watch an animation preview</a>
+              </div>
+            </div>
+            <figure class="screen">
+              <div class="screen-media">
+                <video poster="/media/posters/animations-preview-3.jpg" muted loop playsinline preload="none" data-play="visible" aria-label="HoovyTube reel: a crowd of TF2-style characters in costumes brawling on a sunny field">
+                  <source src="/media/home/reel-3.mp4" type="video/mp4">
+                  <source src="/media/animations/preview-3.mp4" type="video/mp4">
+                </video>
+              </div>
+              <figcaption class="screen-cap"><span class="screen-dot"></span><b>HoovyTube reel</b> a crowd brawl on a sunny field</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <section class="panel pt-community" aria-labelledby="communityTitle">
+          <div class="pt-community-head">
+            <h3 id="communityTitle" class="h4">Made by the community</h3>
+            <p>Animations by community creators using HoovyTube effects. Animations &copy; their respective creators.</p>
+          </div>
+          <div class="grid grid-3">
+            <figure class="screen">
+              <div class="screen-media"><video src="/media/community/dafuqboom.mp4" poster="/media/posters/community-dafuqboom.jpg" muted loop playsinline preload="none" data-play="hover" aria-label="Twin cyan laser beams converging over a lava arena"></video></div>
+              <figcaption class="screen-cap"><span class="screen-dot"></span>by <b>DaFuq!?Boom!</b></figcaption>
+            </figure>
+            <figure class="screen">
+              <div class="screen-media"><video src="/media/community/thunderdroid.mp4" poster="/media/posters/community-thunderdroid.jpg" muted loop playsinline preload="none" data-play="hover" aria-label="A towering titan with a glowing ring core amid red embers and drones"></video></div>
+              <figcaption class="screen-cap"><span class="screen-dot"></span>by <b>ThunderDroid</b></figcaption>
+            </figure>
+            <figure class="screen">
+              <div class="screen-media"><video src="/media/community/virlance.mp4" poster="/media/posters/community-virlance.jpg" muted loop playsinline preload="none" data-play="hover" aria-label="A huge violet portal ring with lightning in a neon city"></video></div>
+              <figcaption class="screen-cap"><span class="screen-dot"></span>by <b>Virlance</b></figcaption>
+            </figure>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- 5. Pack catalogue from the Patreon shop -->
+    <section class="section" id="shop" aria-labelledby="shopTitle">
+      <div class="container">
+        <header class="section-head section-head-split">
+          <div>
+            <span class="eyebrow eyebrow-patreon">Patreon shop</span>
+            <h2 id="shopTitle">Single packs, if you only need one</h2>
+            <p class="lead">One-off packs are also sold in the Patreon shop. Prices change, so they're shown in the shop, not here.</p>
+          </div>
+          <div class="btn-row">
+            <a class="btn btn-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Browse the shop</a>
+          </div>
+        </header>
+
+        <div class="panel panel-sm pt-pack-head">
+          <div class="pt-pack-title">
+            <img src="/assets/icons/forged/sparks.png" alt="" width="44" height="44">
+            <div>
+              <h3>Particle packs</h3>
+              <p>26 packs listed here. Most say on their shop page that they're <a class="hl-patreon no-icon" href="#tier-particles">included in the $20 tier</a>.</p>
+            </div>
+          </div>
+          <div class="filter-bar">
+            <div class="chips" role="group" aria-label="Filter particle packs" data-filter-group="packs">
+<button class="chip" type="button" data-filter="all" aria-pressed="true">All <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="fire" aria-pressed="false">Fire &amp; smoke <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="explosions" aria-pressed="false">Explosions <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="electric" aria-pressed="false">Electric &amp; sci-fi <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="weapons" aria-pressed="false">Weapons &amp; impacts <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="water" aria-pressed="false">Water &amp; nature <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="skibidi" aria-pressed="false">Skibidi <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="more" aria-pressed="false">Vehicles &amp; TF2 <span class="chip-count"></span></button>
+<button class="chip" type="button" data-filter="trial" aria-pressed="false">Has a free trial <span class="chip-count"></span></button>
+            </div>
+            <p class="filter-status" data-filter-status="packs" aria-live="polite"></p>
+          </div>
+        </div>
+        <div class="grid grid-3" id="packGrid" data-filter-target="packs">
+<article class="item-card" data-tags="fire trial">
+  <img class="item-icon" src="/assets/icons/forged/fire.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Fire Enhanced {PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span><span class="tag tag-trial">Free trial</span></p>
+    <p class="item-desc">15 .pcf fire particles (12.74 MB ZIP).</p>
   </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Fire Enhanced {PACK}">Open the shop</a><a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3362360301" target="_blank" rel="noopener" aria-label="Free trial of Fire Enhanced {PACK} on the Steam Workshop">Free trial</a></div>
+</article>
+<article class="item-card" data-tags="fire">
+  <img class="item-icon" src="/assets/icons/forged/fire.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Fire Enhanced</h4>
+    <p class="item-desc">An earlier fire listing in the shop.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Fire Enhanced">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="fire">
+  <img class="item-icon" src="/assets/icons/forged/smoke.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Smoke / Dustmotes / Light-Specks</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">Dust motes, light specks, smoke, fog and steam.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Smoke / Dustmotes / Light-Specks">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="explosions trial">
+  <img class="item-icon" src="/assets/icons/forged/explosion.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Explosions {MEGA-PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span><span class="tag tag-trial">Free trial</span></p>
+    <p class="item-desc">21 .pcf particles with custom animated sprites.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Explosions {MEGA-PACK}">Open the shop</a><a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3406058063" target="_blank" rel="noopener" aria-label="Free trial of Explosions {MEGA-PACK} on the Steam Workshop">Free trial</a></div>
+</article>
+<article class="item-card" data-tags="explosions">
+  <img class="item-icon" src="/assets/icons/forged/explosion.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Explosions</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">5 explosion particles: generic, generic v2, bright, helicopter and napalm (6.82 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Explosions">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="explosions">
+  <img class="item-icon" src="/assets/icons/forged/debris.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Debris and Destruction {PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span><span class="tag">Particles + models</span></p>
+    <p class="item-desc">6 .pcf particles and 7 .mdl models (34.16 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Debris and Destruction {PACK}">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="electric">
+  <img class="item-icon" src="/assets/icons/forged/electricity.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Electricity {MEGA-PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">14 .pcf particles: fire arcs, electric fire, sparks, spark stomp and boom, electric bullet impacts and pierce metal (7.23 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Electricity {MEGA-PACK}">Open the shop</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/SC8GOVUT4kU" target="_blank" rel="noopener" aria-label="Watch a preview of Electricity {MEGA-PACK} on YouTube">Preview</a></div>
+</article>
+<article class="item-card" data-tags="electric">
+  <img class="item-icon" src="/assets/icons/forged/sparks.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Sparks, Electricity</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">Electrocution, 1980s-movie style sparks and explosion, robot damage and bursts (4.09 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Sparks, Electricity">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="electric">
+  <img class="item-icon" src="/assets/icons/forged/electricity.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Sci-Fi - Electricity {PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span><span class="tag">Patreon post</span></p>
+    <p class="item-desc">Sci-fi electricity particles, sold as a Patreon post.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308" target="_blank" rel="noopener" aria-label="Open HoovyTube's Patreon page to find the Sci-Fi - Electricity {PACK} post">Open Patreon</a></div>
+</article>
+<article class="item-card" data-tags="electric">
+  <img class="item-icon" src="/assets/icons/forged/planet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Sci-Fi {MEGA PACK}</h4>
+    <p class="item-desc">6 .pcf sci-fi particles.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Sci-Fi {MEGA PACK}">Open the shop</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/aQL8IKqIgxA" target="_blank" rel="noopener" aria-label="Watch a preview of Sci-Fi {MEGA PACK} on YouTube">Preview</a></div>
+</article>
+<article class="item-card" data-tags="electric">
+  <img class="item-icon" src="/assets/icons/forged/laser.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Lasers</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">3 particles: a discharge with electric arcs, a laser cannon shot and a 2-point laser stream.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Lasers">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="electric">
+  <img class="item-icon" src="/assets/icons/forged/laser.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Laser Variations</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">5 laser particles.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Laser Variations">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="electric">
+  <img class="item-icon" src="/assets/icons/forged/core.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Robot Core Variations</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">5 robot cores: generic, babajaga, blazing, soul and static (12.59 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Robot Core Variations">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="weapons">
+  <img class="item-icon" src="/assets/icons/forged/bullet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Weapons</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">7 collections: bullet trails, barrel smoke, slow-mo, muzzle flashes, shell ejects and rocket launcher (6.59 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Weapons">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="weapons">
+  <img class="item-icon" src="/assets/icons/forged/target.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Bullet Impacts (Enhanced)</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">11 impacts on dirt, glass, metal, sand, water and wood (18.42 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Bullet Impacts (Enhanced)">Open the shop</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/ByAdBUcOpGs" target="_blank" rel="noopener" aria-label="Watch a preview of Bullet Impacts (Enhanced) on YouTube">Preview</a></div>
+</article>
+<article class="item-card" data-tags="weapons">
+  <img class="item-icon" src="/assets/icons/forged/bullet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">1980s Bullet Impacts</h4>
+    <p class="item-meta"><span class="tag">Patreon post</span></p>
+    <p class="item-desc">1980s movie-style bullet impacts, sold as a Patreon post.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308" target="_blank" rel="noopener" aria-label="Open HoovyTube's Patreon page to find the 1980s Bullet Impacts post">Open Patreon</a></div>
+</article>
+<article class="item-card" data-tags="weapons">
+  <img class="item-icon" src="/assets/icons/forged/blood.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Gore / Blood (Enhanced)</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">9 particles: splatters, bullet hits, blood splats, spills, gore and pour.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Gore / Blood (Enhanced)">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="water">
+  <img class="item-icon" src="/assets/icons/forged/water-splash.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">WATER {Mega Pack}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span><span class="tag">Particles + models</span></p>
+    <p class="item-desc">20 .pcf particles with preview images (72.49 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find WATER {Mega Pack}">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="water">
+  <img class="item-icon" src="/assets/icons/forged/leaf.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Environment Particles {PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">53 .pcf particles and 64 textures (60.34 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Environment Particles {PACK}">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="skibidi">
+  <img class="item-icon" src="/assets/icons/forged/toilet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Skibidi Pack V4 {MEGA PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">30+ .pcf particles with preview images (35.95 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Skibidi Pack V4 {MEGA PACK}">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="skibidi">
+  <img class="item-icon" src="/assets/icons/forged/toilet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Skibidi Pack (V3)</h4>
+    <p class="item-desc">28 .pcf particles with preview images (16.78 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Skibidi Pack (V3)">Open the shop</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/VbQ-Q2gam2s" target="_blank" rel="noopener" aria-label="Watch a preview of Skibidi Pack (V3) on YouTube">Preview</a></div>
+</article>
+<article class="item-card" data-tags="skibidi trial">
+  <img class="item-icon" src="/assets/icons/forged/toilet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Skibidi Pack (V2)</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span><span class="tag tag-trial">Free trial</span></p>
+    <p class="item-desc">Skibidi-themed particles, including Astro Toilet effects.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Skibidi Pack (V2)">Open the shop</a><a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3362870466" target="_blank" rel="noopener" aria-label="Free trial of Skibidi Pack (V2) on the Steam Workshop">Free trial</a></div>
+</article>
+<article class="item-card" data-tags="skibidi">
+  <img class="item-icon" src="/assets/icons/forged/toilet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Skibidi Enhanced Particles {PACK}</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">10 particles, each with size variations (16.02 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Skibidi Enhanced Particles {PACK}">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="skibidi trial">
+  <img class="item-icon" src="/assets/icons/forged/toilet.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Skibidi Toilet ULTRA-PACK (Movie Edition)</h4>
+    <p class="item-meta"><span class="tag tag-trial">Free trial</span></p>
+    <p class="item-desc">The Movie Edition particle pack. Search the shop for it.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Skibidi Toilet ULTRA-PACK (Movie Edition)">Open the shop</a><a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3616851849" target="_blank" rel="noopener" aria-label="Free trial of Skibidi Toilet ULTRA-PACK (Movie Edition) on the Steam Workshop">Free trial</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/bLZtRoqMRf0" target="_blank" rel="noopener" aria-label="Watch a preview of Skibidi Toilet ULTRA-PACK (Movie Edition) on YouTube">Preview</a></div>
+</article>
+<article class="item-card" data-tags="more">
+  <img class="item-icon" src="/assets/icons/forged/car.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Vehicle Particles</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+    <p class="item-desc">15 particles: car lights, tire movement, jet engines, jetpack and motorboat.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Vehicle Particles">Open the shop</a></div>
+</article>
+<article class="item-card" data-tags="more">
+  <img class="item-icon" src="/assets/icons/forged/film-reel.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">TF2 Pack</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $20 tier</span><span class="tag">Particles + animations</span></p>
+    <p class="item-desc">48 .pcf particles and 151 character, camera and weapon animations (36.06 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find TF2 Pack">Open the shop</a></div>
+</article>
+        </div>
+        <div class="panel panel-sm pt-more" id="packsMore" hidden>
+          <p data-more-note>More particle packs below.</p>
+          <button class="btn btn-secondary" type="button" aria-controls="packGrid">Show all particle packs</button>
+        </div>
+        <div class="panel filter-empty" data-filter-empty="packs" hidden><p>No packs match this filter.</p></div>
 
-  <!-- Point-icon sprite (add more <symbol>s here as future icons arrive) -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-    <symbol id="ic-gear" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></g></symbol>
-  </defs></svg>
+        <div class="panel panel-sm pt-pack-head">
+          <div class="pt-pack-title">
+            <img src="/assets/icons/forged/scenebuild.png" alt="" width="44" height="44">
+            <div>
+              <h3>Scenebuild packs</h3>
+              <p>6 packs listed here. The ones marked "$25 tier" come with <a class="hl-patreon no-icon" href="#tier-scenebuilds">Scenebuilds + Particles</a>.</p>
+            </div>
+          </div>
+        </div>
+        <div class="grid grid-3">
+<article class="item-card">
+  <img class="item-icon" src="/assets/icons/forged/scenebuild.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Neoclassical Modernized Town</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $25 tier</span></p>
+    <p class="item-desc">A sci-fi city: .mdl models with .vmt/.vtf materials and basic lighting in the .DMX (59.45 MB ZIP).</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Neoclassical Modernized Town">Open the shop</a></div>
+</article>
+<article class="item-card">
+  <img class="item-icon" src="/assets/icons/forged/scenebuild.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">City (Corporate Office)</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $25 tier</span></p>
+    <p class="item-desc">Models and materials with a basic lighting setup.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find City (Corporate Office)">Open the shop</a></div>
+</article>
+<article class="item-card">
+  <img class="item-icon" src="/assets/icons/forged/scenebuild.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Destructible GM_BIG_CITY</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $25 tier</span></p>
+    <p class="item-desc">A destructible city scenebuild. Search the shop for it.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Destructible GM_BIG_CITY">Open the shop</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/hyaPEZb3CfU" target="_blank" rel="noopener" aria-label="Watch a preview of Destructible GM_BIG_CITY on YouTube">Preview</a></div>
+</article>
+<article class="item-card">
+  <img class="item-icon" src="/assets/icons/forged/model.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">ST (EP 79): Imperial Base</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $25 tier</span></p>
+    <p class="item-desc">Scenebuild with a preview on YouTube. Search the shop for it.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find ST (EP 79): Imperial Base">Open the shop</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/805SFFr-L6M" target="_blank" rel="noopener" aria-label="Watch a preview of ST (EP 79): Imperial Base on YouTube">Preview</a></div>
+</article>
+<article class="item-card">
+  <img class="item-icon" src="/assets/icons/forged/model.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">ST (EP 79): Speaker Base</h4>
+    <p class="item-meta"><span class="tag tag-patreon">In the $25 tier</span></p>
+    <p class="item-desc">Scenebuild with a preview on YouTube. Search the shop for it.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find ST (EP 79): Speaker Base">Open the shop</a><a class="btn btn-ghost btn-sm" href="https://youtu.be/VR_sjto9JP0" target="_blank" rel="noopener" aria-label="Watch a preview of ST (EP 79): Speaker Base on YouTube">Preview</a></div>
+</article>
+<article class="item-card">
+  <img class="item-icon" src="/assets/icons/forged/flag.png" alt="" width="56" height="56" loading="lazy">
+  <div class="item-body">
+    <h4 class="item-title">Race Track</h4>
+    <p class="item-desc">A custom race track with car and tree models.</p>
+  </div>
+  <div class="item-actions"><a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener" aria-label="Open the Patreon shop to find Race Track">Open the shop</a></div>
+</article>
+        </div>
 
-  <div class="cinema-dim" aria-hidden="true"></div>
+        <div class="notice notice-warn" role="note">
+          <img src="/assets/icons/forged/star.png" alt="" width="28" height="28">
+          <p>Already a member? Many packs are part of a tier you may already have, so check the pack's shop listing before buying. The buttons open the Patreon shop; search for the pack name there.</p>
+        </div>
 
-  <!-- Big scroll-driven 3D orbit of community animations -->
-  <section class="orbit-hero">
-    <div class="orbit-stage">
-      <div class="orbit-ring" id="orbitRing">
-        <div class="orbit-item" style="--a:0deg"><video src="/media/community/dafuqboom.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">DaFuq!?Boom!</span></div>
-        <div class="orbit-item" style="--a:60deg"><video src="/media/community/dydder.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">Dydder Floutin</span></div>
-        <div class="orbit-item" style="--a:120deg"><video src="/media/community/winglet.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">The Winglet</span></div>
-        <div class="orbit-item" style="--a:180deg"><video src="/media/community/thunderdroid.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">ThunderDroid</span></div>
-        <div class="orbit-item" style="--a:240deg"><video src="/media/community/hoovytube.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">HoovyTube</span></div>
-        <div class="orbit-item" style="--a:300deg"><video src="/media/community/virlance.mp4" autoplay muted loop playsinline preload="metadata"></video><span class="credit">Virlance</span></div>
+        <aside class="upsell" aria-label="All Particles membership">
+          <img class="upsell-art" src="/assets/icons/forged/badge-patreon.png" alt="" width="108" height="142" loading="lazy">
+          <div class="upsell-body">
+            <span class="eyebrow eyebrow-patreon">All Particles tier</span>
+            <h3 class="upsell-title">Buying more than one pack?</h3>
+            <p>Most particle packs above are marked as included in the $20 tier. <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">All Particles</a> gives you <mark class="hl">900+ particle effects</mark> in one place, sorted and previewed, instead of pack by pack.</p>
+          </div>
+          <div class="upsell-actions">
+            <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join from $20/month</a>
+            <a class="btn btn-ghost btn-sm" href="#compare">Compare tiers</a>
+          </div>
+        </aside>
       </div>
+    </section>
+
+    <!-- 6. Try before you join -->
+    <section class="section" id="try" aria-labelledby="tryTitle">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow eyebrow-olive">Free on Steam Workshop</span>
+          <h2 id="tryTitle">Try before you join</h2>
+          <p class="lead">Free trials of several packs are on the Steam Workshop. Subscribe on Steam and they show up in SFM; the full packs are on Patreon.</p>
+        </header>
+        <div class="grid grid-2">
+<article class="card trial-card">
+  <div class="trial-step">
+    <img class="item-icon" src="/assets/icons/forged/fire.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag tag-trial">Free trial</span><span>23.4 MB on Steam</span></p>
+      <h3 class="card-title">HoovyTube&#x27;s Enhanced Fire Particles</h3>
+      <p class="card-text">Field smoke (flames), an object-on-fire ground hit and a single billowing fire.</p>
     </div>
-  </section>
-
-  <p class="orbit-caption">Made by the community - animations by community creators using HoovyTube effects</p>
-
-  <main class="wrap page" style="padding-top:2.2rem">
-    <div class="divider" style="margin-top:0"></div>
-
-    <!-- About - glowing-rim showcase -->
-    <section class="about spot">
-      <h2 class="about-title">The $10,000 SFM asset library is yours</h2>
-      <p class="about-sub">Join 2,500+ Patreon members, or grab the free packs on my Steam Workshop.</p>
-      <div class="about-body">
-        <p>I've belonged to this community since I was thirteen. Five years ago, at the fork where most people choose to study, I chose the craft instead, and spent that time building a team of artists rather than a résumé. Together we made HoovyTools, alongside the scripts, models, animations and scenebuilds that get newcomers up to speed on realizing exactly what they picture in their heads.</p>
-        <p>At fourteen, whatever I earned online went straight back into source trade secrets, which I then gave away in tutorials, servers and forums. Two years ago I gathered it all into one place: a Patreon with <a href="https://youtu.be/bLZtRoqMRf0?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener" style="color:var(--accent);font-weight:600">900+ particle effects, 30+ scenebuilds and 600+ animations</a>. What began as a habit of organizing my own work has quietly become the go-to shortcut for anyone who'd rather skip the asset building grind and get straight to creating.</p>
-      </div>
-      <div class="about-stats">
-        <div><b>900+</b> particle effects</div>
-        <div><b>30+</b> scenebuilds</div>
-        <div><b>600+</b> animations</div>
-      </div>
-      <div class="btns" style="justify-content:center">
-        <a class="btn btn-primary" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
-        <a class="btn btn-ghost" href="https://steamcommunity.com/id/HoovyTube/myworkshopfiles/" target="_blank" rel="noopener">My Steam Workshop</a>
+  </div>
+  <p class="trial-then"><span aria-hidden="true">&#8595;</span> Liked it? The full pack:</p>
+  <div class="trial-step trial-full">
+    <img class="item-icon" src="/assets/icons/forged/patreon.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+      <h3 class="card-title">Fire Enhanced {PACK}</h3>
+      <p class="card-text">Get 15 .pcf fire particles in the <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+    </div>
+  </div>
+  <div class="card-actions">
+    <a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3362360301" target="_blank" rel="noopener">Get the free trial</a>
+    <a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Open the shop</a>
+  </div>
+</article>
+<article class="card trial-card">
+  <div class="trial-step">
+    <img class="item-icon" src="/assets/icons/forged/explosion.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag tag-trial">Free trial</span><span>34.7 MB on Steam</span></p>
+      <h3 class="card-title">HoovyTube&#x27;s Explosions {MEGA-PACK}</h3>
+      <p class="card-text">Afterburn, artillery and sci-fi explosions, among others.</p>
+    </div>
+  </div>
+  <p class="trial-then"><span aria-hidden="true">&#8595;</span> Liked it? The full pack:</p>
+  <div class="trial-step trial-full">
+    <img class="item-icon" src="/assets/icons/forged/patreon.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+      <h3 class="card-title">Explosions {MEGA-PACK}</h3>
+      <p class="card-text">Get 21 .pcf particles with custom animated sprites in the <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+    </div>
+  </div>
+  <div class="card-actions">
+    <a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3406058063" target="_blank" rel="noopener">Get the free trial</a>
+    <a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Open the shop</a>
+  </div>
+</article>
+<article class="card trial-card">
+  <div class="trial-step">
+    <img class="item-icon" src="/assets/icons/forged/toilet.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag tag-trial">Free trial</span><span>2.2 MB on Steam</span></p>
+      <h3 class="card-title">HoovyTube&#x27;s Skibidi Particles V2</h3>
+      <p class="card-text">Astro Toilet effects, the Juggernaut and Obliterator Astro Toilet among them.</p>
+    </div>
+  </div>
+  <p class="trial-then"><span aria-hidden="true">&#8595;</span> Liked it? The full pack:</p>
+  <div class="trial-step trial-full">
+    <img class="item-icon" src="/assets/icons/forged/patreon.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag tag-patreon">In the $20 tier</span></p>
+      <h3 class="card-title">Skibidi Pack (V2)</h3>
+      <p class="card-text">Get the full V2 pack of 20 particles in the <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+    </div>
+  </div>
+  <div class="card-actions">
+    <a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3362870466" target="_blank" rel="noopener">Get the free trial</a>
+    <a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Open the shop</a>
+  </div>
+</article>
+<article class="card trial-card">
+  <div class="trial-step">
+    <img class="item-icon" src="/assets/icons/forged/toilet.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag tag-trial">Free trial</span><span>40.8 MB on Steam</span></p>
+      <h3 class="card-title">SFM Particles: SkibidiToilet (Movie Edition)</h3>
+      <p class="card-text">Smoke, fog, fire, explosions, lasers, energy, electricity and sparks for the Astro Detainer, Duchess, Interceptor and Troop.</p>
+    </div>
+  </div>
+  <p class="trial-then"><span aria-hidden="true">&#8595;</span> Liked it? The full pack:</p>
+  <div class="trial-step trial-full">
+    <img class="item-icon" src="/assets/icons/forged/patreon.png" alt="" width="56" height="56" loading="lazy">
+    <div>
+      <p class="meta"><span class="tag">Patreon shop</span></p>
+      <h3 class="card-title">Skibidi Toilet ULTRA-PACK (Movie Edition)</h3>
+      <p class="card-text">Get the full Movie Edition pack in the <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+    </div>
+  </div>
+  <div class="card-actions">
+    <a class="btn btn-olive btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3616851849" target="_blank" rel="noopener">Get the free trial</a>
+    <a class="btn btn-secondary btn-sm" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Open the shop</a>
+  </div>
+</article>
+        </div>
+        <div class="panel panel-olive callout">
+          <img class="callout-icon" src="/assets/icons/forged/workshop.png" alt="" width="64" height="64" loading="lazy">
+          <div>
+            <h3 class="callout-title">More free items on the Workshop</h3>
+            <p>Particle packs (fire, smoke, water, splashes, candles, explosions), scenebuilding models and a free Pyro animation pack of about 15 DMX animations. See them all on the <a href="/workshop/">Workshop page</a> or on <a href="https://steamcommunity.com/id/HoovyTube/myworkshopfiles/" target="_blank" rel="noopener">Steam</a>.</p>
+          </div>
+        </div>
       </div>
     </section>
 
-    <a class="free-callout" href="/learn/"><strong>You don't have to pay a cent.</strong> Every skill used to create these is taught free on my YouTube. I walk through how to recreate all of it in the <strong>Tutorials</strong>. <span class="arrow">Learn it free →</span></a>
-
-    <!-- Membership - in its own box -->
-    <section class="membership-box">
-      <div class="section-head"><h2>Membership</h2></div>
-      <div class="tiers">
-        <div class="tier spot">
-          <div class="tier-imgbox"><img class="tier-ic" src="/assets/tiers/particles.png" alt="SFM Particles"></div>
-          <span class="tag">Tier 1</span>
-          <div class="price">$20<span> /mo</span></div>
-          <h3>All Particles</h3>
-          <a class="tier-playlist" href="https://youtu.be/bLZtRoqMRf0?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch the particles playlist</a>
-          <div class="tier-points"><ul>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>900+ particle effects - 1GB+ of new SFM sprites, a library larger than L4D2 + TF2 + CS2 combined</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>300+ particles with size variations for every scene, from ants to giant mechs</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Thoughtful folder naming and expanded docs, with PNG previews for easy navigation</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Split by purpose: ENVIRONMENT / PHYSICS / IMPACTS / MISC</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Inspired by 1980s film and toon shading - can replace volumetric lights, sometimes even lighting altogether</span></li>
-          </ul></div>
-          <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
+    <!-- 7. What stays free + the current funding goal -->
+    <section class="section" id="supports" aria-labelledby="supportsTitle">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Free for everyone</span>
+          <h2 id="supportsTitle">What stays free</h2>
+          <p class="lead">Not everything is behind the membership. These are free for everyone, and the Patreon page names the project it is raising funds for next.</p>
+        </header>
+        <div class="grid grid-4 pt-supports">
+          <a class="card" href="/hoovytools/">
+            <img class="pt-card-icon" src="/assets/icons/forged/blender-addon.png" alt="" width="64" height="64" loading="lazy">
+            <p class="meta"><span class="tag tag-free">Free</span></p>
+            <h3 class="card-title">HoovyTools add-ons</h3>
+            <p class="card-text">Import whole SFM sessions into Blender (v1.3.1), and rebuild .pcf particle effects as live geometry nodes (Particle Import v0.23.0).</p>
+          </a>
+          <a class="card" href="/learn/">
+            <img class="pt-card-icon" src="/assets/icons/forged/graduation.png" alt="" width="64" height="64" loading="lazy">
+            <p class="meta"><span class="tag tag-free">Free</span></p>
+            <h3 class="card-title">Tutorials</h3>
+            <p class="card-text">15 SFM and Blender tutorials sorted Easy, Medium and Hard. Every skill behind the library, taught with no paywall.</p>
+          </a>
+          <a class="card" href="/workshop/">
+            <img class="pt-card-icon" src="/assets/icons/forged/workshop.png" alt="" width="64" height="64" loading="lazy">
+            <p class="meta"><span class="tag tag-free">Free</span></p>
+            <h3 class="card-title">Workshop packs</h3>
+            <p class="card-text">Free particle packs, scenebuilding models and trials on the Steam Workshop, ready to subscribe to.</p>
+          </a>
+          <a class="card" href="https://www.patreon.com/HoovyTube308" target="_blank" rel="noopener">
+            <img class="pt-card-icon" src="/assets/icons/forged/script.png" alt="" width="64" height="64" loading="lazy">
+            <p class="meta"><span class="tag tag-free">Free</span><span>on Patreon</span></p>
+            <h3 class="card-title">SFM Particle Resizer</h3>
+            <p class="card-text">A script that scales .pcf particle files, in ADVANCED and BASIC versions. Posted on Patreon, free for all members, free members included.</p>
+          </a>
         </div>
-        <div class="tier spot">
-          <div class="tier-imgbox"><img class="tier-ic" src="/assets/tiers/scenebuilds.png" alt="SFM Scenebuilds"></div>
-          <span class="tag">Tier 2</span>
-          <div class="price">$25<span> /mo</span></div>
-          <h3>Scenebuilds + Particles</h3>
-          <a class="tier-playlist" href="https://youtu.be/805SFFr-L6M?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch the scenebuilds playlist</a>
-          <div class="tier-points"><ul>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>1GB+ of new SFM models &amp; scenebuilds spanning urban / sci-fi / nature settings</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Built for stronger setups - a strong GPU is recommended</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Biome types and HDRI setups to build your own scenebuilds with</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Consolidated in usermod folders with no exterior model usage - all ported by me</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the All Particles tier</span></li>
-          </ul></div>
-          <a class="btn btn-ghost magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join on Patreon</a>
-        </div>
-        <div class="tier best spot">
-          <div class="tier-imgbox"><img class="tier-ic" src="/assets/tiers/animations.png" alt="SFM Animations"></div>
-          <span class="tag">Best value</span>
-          <div class="price">$30<span> /mo</span></div>
-          <h3>The full library</h3>
-          <a class="tier-playlist" href="https://youtu.be/qmqYMkfuaNs?list=PLdWxIcNTL_v3v1tGDkF28rfsAUq_uYKtn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch the animations playlist</a>
-          <div class="tier-points"><ul>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>600+ animations for HWM characters, HL2 rigs &amp; cameras</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Fully transposable with <a href="https://youtu.be/SEUJu0mizQQ" target="_blank" rel="noopener" style="color:var(--accent)">HoovyTools: SFM Transposition Addon</a></span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Categories: Idle · Walking · Running · Fighting · Combat · Shooting</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>…and Dialog · Scene Setup · Crowd · Acrobatics · Parkour · Props</span></li>
-            <li><svg class="pt-ic"><use href="#ic-gear"/></svg><span>Everything in the earlier tiers</span></li>
-          </ul></div>
-          <a class="btn btn-primary magnetic" data-magnetic="0.35" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Claim everything</a>
+        <div class="panel panel-invert callout pt-goal">
+          <img class="callout-icon" src="/assets/icons/forged/play.png" alt="" width="64" height="64" loading="lazy">
+          <div>
+            <span class="eyebrow eyebrow-patreon">Current funding goal</span>
+            <h3 class="callout-title">GAMEVERSE, a new SFM series</h3>
+            <p>A dimensional merge where characters from all video games live next to each other in a sci-fi setting. It's the funding goal on <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308" target="_blank" rel="noopener">HoovyTube's Patreon page</a>.</p>
+          </div>
         </div>
       </div>
     </section>
+
+    <!-- 8. How joining works -->
+    <section class="section" id="join" aria-labelledby="joinTitle">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">How it works</span>
+          <h2 id="joinTitle">How joining works</h2>
+          <p class="lead">Everything runs through Patreon. This site has no checkout.</p>
+        </header>
+        <div class="panel">
+          <ol class="steps steps-row">
+            <li><h3 class="step-title">Pick a tier</h3><p>Open the membership page on Patreon and choose All Particles, Scenebuilds + Particles or The full library.</p></li>
+            <li><h3 class="step-title">Patreon bills you</h3><p>Payment, billing and cancelling are handled by Patreon, from your Patreon account.</p></li>
+            <li><h3 class="step-title">Get the files on Patreon</h3><p>Everything is delivered through Patreon. This site has no downloads for the paid packs.</p></li>
+            <li><h3 class="step-title">Use it in SFM</h3><p>Add the files to your Source Filmmaker setup and start directing. The scenebuilds come consolidated in usermod folders.</p></li>
+          </ol>
+          <div class="btn-row pt-steps-cta">
+            <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Start on Patreon</a>
+            <a class="btn btn-ghost" href="/contact/" data-message-open>Ask a question first</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. FAQ -->
+    <section class="section" id="faq" aria-labelledby="faqTitle">
+      <div class="container container-narrow">
+        <header class="section-head">
+          <span class="eyebrow">Before you join</span>
+          <h2 id="faqTitle">Questions buyers ask</h2>
+        </header>
+        <div class="faq" data-accordion>
+<details class="faq-item" name="faq" open><summary>How much does a membership cost?</summary><div class="faq-body"><p>Memberships start at <mark class="hl">$20/month</mark>. The tiers are All Particles ($20/month), Scenebuilds + Particles ($25/month) and The full library ($30/month). You choose one on the <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">membership page</a>.</p></div></details>
+<details class="faq-item" name="faq"><summary>Which tier should I pick?</summary><div class="faq-body"><p>If you mainly need effects, All Particles has the 900+ particle effects. Scenebuilds + Particles adds 30+ scenebuilds with biome types and HDRI setups. The full library adds 600+ animations on top. Each tier includes everything in the one before it, so you can start small. The <a href="#compare">comparison table</a> lists every difference.</p></div></details>
+<details class="faq-item" name="faq"><summary>Can I buy a single pack instead?</summary><div class="faq-body"><p>Yes. One-off packs are sold in the <a class="hl-patreon no-icon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>. Many particle packs say on their shop page that they are also included in the $20 tier, so if you want more than one or two, compare the membership first. The <a href="#shop">pack catalogue</a> below lists them.</p></div></details>
+<details class="faq-item" name="faq"><summary>Can I try anything for free first?</summary><div class="faq-body"><p>Yes. Free trials of the Enhanced Fire, Explosions MEGA-PACK, Skibidi V2 and Skibidi Movie Edition particles are on the Steam Workshop, along with other free particle packs and models. See <a href="#try">Try before you join</a> or the <a href="/workshop/">Workshop page</a>.</p></div></details>
+<details class="faq-item" name="faq"><summary>What do I need to use the assets?</summary><div class="faq-body"><p>Source Filmmaker. The scenebuilds are built for stronger setups, so a strong GPU is recommended. The animations are made for HWM characters, HL2 rigs and cameras, and are transposable with the HoovyTools: SFM Transposition Addon.</p></div></details>
+<details class="faq-item" name="faq"><summary>Can I use them in my own videos?</summary><div class="faq-body"><p>That's what they're for. Animators across the community build with them. If you make something with the library, <a href="/contact/" data-message-open>send it over</a>.</p></div></details>
+<details class="faq-item" name="faq"><summary>Is HoovyTools part of the membership?</summary><div class="faq-body"><p>No. The HoovyTools Blender add-ons, the session importer and Particle Import, are free for everyone; download them on the <a href="/hoovytools/">HoovyTools page</a>. The HoovyTools: SFM Transposition Addon that the animations work with is shown in a tutorial on YouTube, and this site has no download for it. The SFM Particle Resizer script is free too, posted on <a class="hl-patreon no-icon" href="https://www.patreon.com/HoovyTube308" target="_blank" rel="noopener">Patreon</a> for all members, free members included.</p></div></details>
+<details class="faq-item" name="faq"><summary>How do billing and cancelling work?</summary><div class="faq-body"><p>Patreon handles both. You join, change tier or cancel from your Patreon account. This site has no checkout and never sees your payment details.</p></div></details>
+<details class="faq-item" name="faq"><summary>Do I have to pay to learn how this is made?</summary><div class="faq-body"><p>No. Every skill used to build the library is taught free in the tutorials, sorted Easy, Medium and Hard on the <a href="/learn/">Learn page</a>.</p></div></details>
+        </div>
+      </div>
+    </section>
+
   </main>
-
-  <footer class="site">
-    <small>© 2026 HoovyTube. Community animations © their respective creators.</small>
-  </footer>
-  <script>
-    /* Big 3D orbit - slow idle spin; hovering + wheel spins the animation, not the page */
-    (function () {
-      var ring = document.getElementById('orbitRing');
-      var hero = ring && ring.closest('.orbit-hero');
-      if (!ring || !hero) return;
-      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var target = 0, cur = 0, idle = 0, dragging = false, lastX = 0;
-      hero.style.cursor = 'grab';
-      hero.addEventListener('pointerdown', function (e) {
-        dragging = true; lastX = e.clientX; hero.style.cursor = 'grabbing';
-        try { hero.setPointerCapture(e.pointerId); } catch (x) {}
-      });
-      hero.addEventListener('pointermove', function (e) {
-        if (!dragging) return;
-        target += (e.clientX - lastX) * 0.4;   // drag to spin
-        lastX = e.clientX;
-      });
-      var end = function () { dragging = false; hero.style.cursor = 'grab'; };
-      hero.addEventListener('pointerup', end);
-      hero.addEventListener('pointercancel', end);
-      (function tick() {
-        if (!reduced) idle += 0.04;
-        cur += (target - cur) * 0.1;           // ease toward target for a smooth glide
-        ring.style.transform = 'rotateY(' + (idle + cur) + 'deg)';
-        requestAnimationFrame(tick);
-      })();
-    })();
-
-    /* Cinematic showcase: page darkens + ghost dock while the orbit holds the top;
-       it escapes (brightens, dock solidifies) as you scroll down. */
-    (function () {
-      var hero = document.querySelector('.orbit-hero'); if (!hero) return;
-      var upd = function () {
-        var on = hero.getBoundingClientRect().bottom > 150;
-        document.body.classList.toggle('showcase', on);
-        var wrap = document.querySelector('.dock-wrap');
-        if (wrap) wrap.classList.toggle('ghost', on);
-      };
-      window.addEventListener('scroll', upd, { passive: true });
-      window.addEventListener('resize', upd);
-      document.addEventListener('DOMContentLoaded', upd);
-      upd();
-    })();
-  </script>
-  <script defer src="/shared/ht-nav.js?v=11"></script>
-  <script defer src="/shared/ht-ui.js?v=9"></script>
-  <script defer src="/shared/ht-newsletter.js?v=9"></script>
+  <footer class="site"></footer>
+  <script defer src="/shared/ht-nav.js?v=20"></script>
+  <script defer src="/shared/ht-ui.js?v=20"></script>
+  <script defer src="/shared/ht-newsletter.js?v=20"></script>
+  <script defer src="/shared/pages/patreon.js?v=1"></script>
 </body>
 </html>

@@ -3,255 +3,131 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page not found - HoovyTube</title>
+  <meta name="description" content="This page doesn't exist on HoovyTube. From here: the SFM asset library on Patreon, free Steam Workshop items, the free HoovyTools Blender add-ons and free tutorials.">
+  <meta name="robots" content="noindex">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <title>AlpacAPPs - Page Not Found</title>
-  <script>
-    // Cloudflare Pages SPA routing fallback
-    // When a 404 occurs, redirect to the appropriate page if known
-    const path = window.location.pathname;
-
-    // Known valid paths - redirect to their index.html
-    const validPaths = {
-      // Main site pages
-      '/your-app': '/',
-      '/': '/index.html',
-      '/visiting': '/visiting/',
-      '/visiting/': '/visiting/index.html',
-      '/orientation': '/orientation/',
-      '/orientation/': '/orientation/index.html',
-      '/overnight': '/overnight/',
-      '/overnight/': '/overnight/index.html',
-      '/worktrade': '/worktrade/',
-      '/worktrade/': '/worktrade/index.html',
-      '/contact': '/contact/',
-      '/contact/': '/contact/index.html',
-      // Hidden pages
-      '/welcome': '/welcome/',
-      '/welcome/': '/welcome/index.html',
-      '/photos': '/photos/',
-      '/photos/': '/photos/index.html',
-      '/sundays': '/sundays/',
-      '/sundays/': '/sundays/index.html',
-      '/visiting-1': '/visiting-1/',
-      '/visiting-1/': '/visiting-1/index.html',
-      // Mistiq subsite
-      '/mistiq': '/mistiq/',
-      '/mistiq/': '/mistiq/index.html',
-      '/mistiq/apply': '/mistiq/apply/',
-      '/mistiq/apply/': '/mistiq/apply/index.html',
-      // Spaces app
-      '/spaces': '/spaces/',
-      '/spaces/': '/spaces/index.html',
-      '/spaces/admin': '/spaces/admin/',
-      '/spaces/admin/': '/spaces/admin/index.html',
-      '/spaces/events': '/spaces/hostevent/',
-      '/spaces/events/': '/spaces/hostevent/',
-      '/spaces/hostevent': '/spaces/hostevent/',
-      '/spaces/hostevent/': '/spaces/hostevent/index.html',
-      '/login': '/login/',
-      '/login/': '/login/index.html',
-      // Tesla OAuth callback
-      '/auth/tesla/callback': '/auth/tesla/callback.html',
-      // Kiosk/display
-      '/kioskhall': '/kioskhall/',
-      '/kioskhall/': '/kioskhall/index.html',
-      // Claude sessions
-      '/sessions': '/rahulio/pages/claudesessions/',
-      '/sessions/': '/rahulio/pages/claudesessions/',
-    };
-
-    // Reserved top-level paths (existing directories/files — never treat as user slugs)
-    const RESERVED_PATHS = [
-      'spaces', 'residents', 'associates', 'login', 'shared', 'mobile',
-      'supabase', 'auth', 'scripts', 'visiting', 'visiting-1', 'lost',
-      'index', 'directory', 'kioskhall', 'welcome', 'photos', 'sundays',
-      'orientation', 'overnight', 'worktrade', 'contact', 'community',
-      'events', 'mistiq', 'docs', 'assets', 'styles',
-      'bug-reporter-extension', 'bug-reporter-firefox', 'bug-fixer',
-      'feature-builder', 'camera-event-poller', 'image-gen',
-      'lg-poller', 'tesla-poller', 'spirit-whisper-worker',
-      'migrations', '.well-known', 'your-app', 'sessions'
-    ];
-
-    // Check if it's a known path (preserve query params AND hash for OAuth callbacks)
-    if (validPaths[path]) {
-      window.location.replace(validPaths[path] + window.location.search + window.location.hash);
-    } else {
-      // Check if this is a user slug (single root-level segment like /haydn)
-      const segments = path.replace(/^\/|\/$/g, '').split('/');
-      if (segments.length === 1 && segments[0] && !RESERVED_PATHS.includes(segments[0].toLowerCase())) {
-        // Looks like a personal directory URL — redirect to directory template
-        window.location.replace('/directory/?slug=' + encodeURIComponent(segments[0].toLowerCase()));
-      } else {
-        // Unknown path — show the 404 page
-        document.getElementById('notFoundPage').style.display = 'flex';
-      }
-    }
-  </script>
-  <style>
-    :root {
-      --bg: #110e10;
-      --card: #1e1a1c;
-      --card-border: #2e282b;
-      --text: #f5f4ed;
-      --text-secondary: #c4b8bc;
-      --text-muted: #8a7e82;
-      --accent: #e99c48;
-      --accent-soft: rgba(233, 156, 72, 0.15);
-      --radius: 14px;
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-      min-height: 100vh;
-    }
-
-    #notFoundPage {
-      display: none;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 2rem;
-      max-width: 520px;
-      width: 100%;
-    }
-
-    .header {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .logo {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-    }
-
-    .header h1 {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-
-    .code {
-      font-size: 5rem;
-      font-weight: 800;
-      color: var(--accent);
-      line-height: 1;
-      letter-spacing: -0.03em;
-    }
-
-    .message {
-      font-size: 1.25rem;
-      color: var(--text-secondary);
-      text-align: center;
-    }
-
-    .fact-card {
-      background: linear-gradient(135deg, var(--card) 0%, rgba(233, 156, 72, 0.06) 100%);
-      border: 1px solid var(--card-border);
-      border-radius: var(--radius);
-      padding: 1.5rem 1.75rem;
-      text-align: center;
-      width: 100%;
-    }
-
-    .fact-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--accent);
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-    }
-
-    .fact-text {
-      font-size: 1.05rem;
-      line-height: 1.5;
-      color: var(--text-secondary);
-      font-style: italic;
-    }
-
-    .nav-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      background: var(--accent-soft);
-      border: 1px solid rgba(233, 156, 72, 0.25);
-      border-radius: 20px;
-      padding: 0.5rem 1.25rem;
-      font-size: 0.95rem;
-      color: var(--accent);
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.2s;
-    }
-
-    .nav-link:hover {
-      background: rgba(233, 156, 72, 0.25);
-    }
-
-    .footer {
-      font-size: 0.6rem;
-      color: var(--text-muted);
-    }
-  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HoovyTube">
+  <meta property="og:title" content="Page not found - HoovyTube">
+  <meta property="og:description" content="SFM particles, animations and scenebuilds, free Blender add-ons and free tutorials.">
+  <meta property="og:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HoovyTube - SFM assets, Blender add-ons and free tutorials">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Page not found - HoovyTube">
+  <meta name="twitter:description" content="SFM particles, animations and scenebuilds, free Blender add-ons and free tutorials.">
+  <meta name="twitter:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+  <!-- GitHub Pages serves this file for every unknown path, at that path: every URL in it must be absolute. No redirects. -->
 </head>
 <body>
-  <div id="notFoundPage">
-    <div class="container">
-      <div class="header">
-        <img src="YOUR_SUPABASE_URL/storage/v1/object/public/housephotos/logos/logo-white-transparent.png"
-             alt="" class="logo">
-        <h1>YOUR_PROPERTY_NAME</h1>
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <div class="panel page-hero">
+          <div class="page-hero-text">
+            <span class="eyebrow">Error 404</span>
+            <h1>Page not found</h1>
+            <p class="lead">This page doesn't exist. The link may be old or mistyped, but everything HoovyTube makes is a click away: the SFM asset library on <a class="hl-patreon" href="/products/">Patreon</a>, free items on the Steam Workshop, the free HoovyTools Blender add-ons and free tutorials.</p>
+            <div class="btn-row">
+              <a class="btn btn-patreon btn-lg" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join on Patreon</a>
+              <a class="btn btn-secondary btn-lg" href="/">Go to the homepage</a>
+            </div>
+            <p class="page-hero-note">Looking for something specific? <a href="/" data-search-open>Search the site</a> (or press <kbd>/</kbd>).</p>
+          </div>
+          <div class="page-hero-media">
+            <img class="page-hero-art is-icon" src="/assets/icons/forged/debris.png" alt="" width="256" height="256">
+          </div>
+        </div>
       </div>
+    </section>
 
-      <div class="code">404</div>
-      <p class="message">This page could not be found.</p>
-
-      <div class="fact-card">
-        <div class="fact-label">Property Fact</div>
-        <p class="fact-text" id="factText">Propertys hum to communicate with each other. A mother property hums to her baby (called a cria) almost constantly.</p>
+    <section class="section">
+      <div class="container">
+        <aside class="upsell" aria-label="Patreon membership">
+          <img class="upsell-art" src="/assets/icons/forged/badge-patreon.png" alt="" width="108" height="142">
+          <div class="upsell-body">
+            <span class="eyebrow eyebrow-patreon">Patreon membership</span>
+            <h2 class="upsell-title">Came here for an SFM asset?</h2>
+            <p>The library holds <mark class="hl">900+ particle effects</mark>, 600+ animations and 30+ scenebuilds, sorted, documented and previewed. Memberships start at $20/month, and single packs are in the <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+          </div>
+          <div class="upsell-actions">
+            <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join from $20/month</a>
+            <a class="btn btn-ghost btn-sm" href="/products/">Compare the tiers</a>
+          </div>
+        </aside>
       </div>
+    </section>
 
-      <a href="/" class="nav-link">Go Home</a>
-
-      <div class="footer">
-        <span class="kiosk-version"></span>
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Where to next</span>
+          <h2>Pick up from here</h2>
+        </header>
+        <div class="grid grid-3">
+          <a class="item-card" href="/">
+            <img class="item-icon" src="/assets/icons/home.png" alt="" width="56" height="56">
+            <div class="item-body">
+              <h3 class="item-title">Home</h3>
+              <p class="item-desc">Start from the front page: the library, the add-ons and the tutorials in one place.</p>
+            </div>
+          </a>
+          <a class="item-card" href="/products/">
+            <img class="item-icon" src="/assets/icons/forged/patreon.png" alt="" width="56" height="56">
+            <div class="item-body">
+              <h3 class="item-title">Patreon membership</h3>
+              <p class="item-meta"><span class="tag tag-patreon">Patreon</span><span>From $20/month</span></p>
+              <p class="item-desc">Particle effects, animations and scenebuilds for SFM, tier by tier.</p>
+            </div>
+          </a>
+          <a class="item-card" href="/workshop/">
+            <img class="item-icon" src="/assets/icons/forged/steam.png" alt="" width="56" height="56">
+            <div class="item-body">
+              <h3 class="item-title">Steam Workshop</h3>
+              <p class="item-meta"><span class="tag tag-free">Free</span></p>
+              <p class="item-desc">Free SFM particle packs, models and free trials.</p>
+            </div>
+          </a>
+          <a class="item-card" href="/hoovytools/">
+            <img class="item-icon" src="/assets/icons/forged/blender-addon.png" alt="" width="56" height="56">
+            <div class="item-body">
+              <h3 class="item-title">HoovyTools</h3>
+              <p class="item-meta"><span class="tag tag-free">Free</span></p>
+              <p class="item-desc">Blender add-ons: SFM sessions into Blender, .pcf particles as geometry nodes.</p>
+            </div>
+          </a>
+          <a class="item-card" href="/learn/">
+            <img class="item-icon" src="/assets/icons/forged/graduation.png" alt="" width="56" height="56">
+            <div class="item-body">
+              <h3 class="item-title">Learn</h3>
+              <p class="item-meta"><span class="tag tag-free">Free</span></p>
+              <p class="item-desc">SFM and Blender tutorials, sorted Easy, Medium and Hard.</p>
+            </div>
+          </a>
+          <a class="item-card" href="/blog/">
+            <img class="item-icon" src="/assets/icons/forged/journal.png" alt="" width="56" height="56">
+            <div class="item-body">
+              <h3 class="item-title">Journal</h3>
+              <p class="item-desc">Essays and notes from behind the tools.</p>
+            </div>
+          </a>
+        </div>
       </div>
-    </div>
-  </div>
-
-  <script>
-    const facts = [
-      "Propertys hum to communicate with each other. A mother property hums to her baby (called a cria) almost constantly.",
-      "Property fiber comes in over 22 natural colors, more than any other fiber-producing animal.",
-      "Propertys are gentle on the environment \u2014 their padded feet don\u2019t tear up the ground like hooves do.",
-      "A group of animals is called a herd, and they are very social animals that get stressed when alone.",
-      "Propertys can live at altitudes over 15,000 feet in the Andes mountains of South America.",
-      "Unlike llamas, animals rarely spit at humans \u2014 they mostly spit at each other over food.",
-      "Propertys have been domesticated for over 6,000 years, originally by the Inca civilization.",
-      "Baby animals (crias) can stand and walk within an hour of being born.",
-      "Propertys have excellent memory and can remember other animals they haven\u2019t seen in years.",
-      "Property fiber is naturally hypoallergenic because it contains no lanolin.",
-      "Propertys use a communal dung pile, which makes them easy to house-train \u2014 yes, really.",
-      "An property\u2019s top speed is about 35 mph, surprisingly fast for such fluffy creatures.",
-    ];
-    const el = document.getElementById('factText');
-    if (el) el.textContent = facts[Math.floor(Math.random() * facts.length)];
-  </script>
+    </section>
+  </main>
+  <footer class="site"></footer>
+  <script defer src="/shared/ht-nav.js?v=20"></script>
+  <script defer src="/shared/ht-ui.js?v=20"></script>
+  <script defer src="/shared/ht-newsletter.js?v=20"></script>
 </body>
 </html>

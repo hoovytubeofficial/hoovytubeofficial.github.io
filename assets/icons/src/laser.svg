@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: laser. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="core" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <line x1="112" y1="128" x2="226" y2="128" stroke="#000" stroke-width="10" stroke-linecap="round"/>
+    </mask>
+  </defs>
+  <g transform="rotate(-32 128 128)">
+    <rect mask="url(#core)" x="70" y="102" width="182" height="52" rx="26" fill="#000"/>
+  </g>
+  <path fill="#000" stroke="#000" stroke-width="6" stroke-linejoin="round" d="M64 112 Q75 165 128 176 Q75 187 64 240 Q53 187 0 176 Q53 165 64 112 Z"/>
+  <circle cx="80" cy="70" r="13" fill="#000"/>
+  <circle cx="206" cy="176" r="15" fill="#000"/>
+  <circle cx="160" cy="214" r="9" fill="#000"/>
+</svg>

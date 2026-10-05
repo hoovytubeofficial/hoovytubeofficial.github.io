@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: bomb (airstrike explosion). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g transform="rotate(-30 128 132)">
+        <line x1="84" y1="170" x2="172" y2="170" stroke="#000" stroke-width="10"/>
+        <line x1="84" y1="96" x2="172" y2="96" stroke="#000" stroke-width="10"/>
+        <line x1="128" y1="14" x2="128" y2="60" stroke="#000" stroke-width="9"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" mask="url(#cut)" transform="rotate(-30 128 132)">
+    <path d="M128 252 C86 226 78 184 78 142 C78 100 98 70 128 70 C158 70 178 100 178 142 C178 184 170 226 128 252 Z"/>
+    <path d="M110 76 L88 12 L168 12 L146 76 Z"/>
+  </g>
+</svg>

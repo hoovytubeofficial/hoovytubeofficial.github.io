@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: toilet. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="seams" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <line x1="20" y1="124" x2="240" y2="124" stroke="#000" stroke-width="9"/>
+      <line x1="20" y1="152" x2="240" y2="152" stroke="#000" stroke-width="9"/>
+    </mask>
+  </defs>
+  <g mask="url(#seams)" fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round">
+    <rect x="34" y="14" width="76" height="114" rx="12"/>
+    <rect x="34" y="122" width="196" height="32" rx="14"/>
+    <path d="M44 150 L222 150 Q218 204 158 212 L164 244 L94 244 L100 212 Q50 204 44 150 Z"/>
+  </g>
+  <rect x="104" y="34" width="34" height="14" rx="7" fill="#000"/>
+</svg>

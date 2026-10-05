@@ -1,0 +1,87 @@
+/* /hoovytools/: layout glue only.
+   Every surface, colour, shadow and type style comes from /styles/ht.css (design system v2).
+   Nothing here redefines tokens or component looks. */
+
+/* ---- Hero: the "HoovyTools is free" line sits in a sunken well under the buttons (CTA stays in the first screen) ---- */
+.ht-fund {
+  display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-3); align-items: center;
+  margin: var(--s-3) 0 0;
+}
+.ht-fund img { width: 44px; height: 44px; object-fit: contain; }
+.ht-fund p { margin: 0; font-weight: 600; color: var(--text); }
+
+/* ---- Pick a tool: badge art on cards (487x640 badges shown small, never upscaled) ---- */
+.ht-pick { --min: 200px; }   /* three across from tablet width, so no orphan card */
+.ht-pick .card { align-items: center; text-align: center; }
+.ht-badge { display: block; width: clamp(104px, 9vw + 40px, 140px); height: auto; margin: var(--s-2) auto var(--s-3); }
+.ht-pick .meta { justify-content: center; margin: 0; }
+.ht-pick .card-text { max-width: 36ch; }
+
+/* ---- Tables: text headers in the first column, small sub-label ---- */
+.ht-glance .table caption, .ht-map caption { font-family: var(--font-display); font-weight: 400; font-size: var(--fs-h4); color: var(--heading); padding-bottom: var(--s-3); }
+.ht-glance tbody th { width: 24%; min-width: 8.5rem; vertical-align: top; }
+.ht-glance td { vertical-align: top; }
+.ht-th-sub { display: block; font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted); margin-top: .15em; }
+.ht-glance td a { overflow-wrap: anywhere; }
+
+/* ---- Section heads: the version/size meta row under the h2 ---- */
+.ht-head-meta { margin: var(--s-3) 0 0; }
+/* ht.css sets .section-head-split > .btn-row to flex: 0 0 auto, so two buttons cannot wrap on phones
+   and widen the page. Let the row shrink and wrap (reported to the design system). */
+.section-head-split > .btn-row { flex: 0 1 auto; min-width: 0; }
+
+/* ---- Splits: top-aligned columns of plates ---- */
+.ht-split-top { align-items: start; }
+
+/* The "where to find it" code block closes the install steps panel */
+.ht-where { margin-top: var(--s-5); }
+
+/* Small heading inside an inset well */
+.ht-mini-title { font-size: var(--fs-h4); margin: 0 0 var(--s-2); }
+.panel-inset .check-list { margin-bottom: 0; }
+.panel > .panel-inset { margin-top: var(--s-4); }
+.ht-note { font-size: var(--fs-sm); color: var(--text-muted); }
+
+/* Import steps that are just names: tighter rhythm */
+.ht-steps-tight { gap: var(--s-3); }
+.ht-steps-tight .step-title { margin: .55em 0 0; }
+
+/* ---- Accordion summaries that carry tags (release notes) ---- */
+.ht-sum { display: inline-flex; flex-wrap: wrap; align-items: center; gap: .45rem .5rem; }
+.ht-date { font-size: var(--fs-sm); font-weight: 600; color: var(--text-muted); }
+.faq-body ul { margin: 0; }
+
+/* ---- Node-graph colour roles (the swatch colours are the add-on's own frame colours) ---- */
+.ht-roles { list-style: none; padding: 0; margin: var(--s-4) 0 0; display: grid; gap: var(--s-2); }
+.ht-roles > li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-3); align-items: start; margin: 0; padding: var(--s-2) var(--s-3); background: var(--inset); border: var(--bw-sm) solid var(--line); border-radius: var(--r-sm); }
+.ht-swatch { width: 1rem; height: 1rem; margin-top: .3em; border-radius: 4px; background: var(--sw); border: 2px solid var(--outline); box-shadow: 0 2px 0 var(--depth-color); }
+
+/* ---- Previous versions: list reset for item cards ---- */
+.ht-versions { list-style: none; padding: 0; margin: var(--s-4) 0 0; display: grid; gap: var(--s-3); }
+.ht-versions > li { margin: 0; }
+
+/* ---- More tools: badge/icon + title row ---- */
+.ht-more { display: flex; flex-direction: column; }
+.ht-more-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-4); align-items: center; margin-bottom: var(--s-4); }
+.ht-more-head h3 { margin: 0; }
+.ht-more-head .meta { margin: 0 0 .4em; }
+.ht-more-art { flex: 1 0 auto; display: grid; place-items: center; padding: var(--s-3) 0; }
+.ht-more-art img { width: clamp(120px, 10vw + 60px, 170px); height: auto; }
+.ht-more-icon { width: 76px; height: 76px; object-fit: contain; }
+.ht-more .screen { margin-top: var(--s-4); }
+.ht-more > .btn-row { margin-top: auto; padding-top: var(--s-3); }
+
+/* ---- At a glance on phones: one stacked card per row instead of a squeezed 3-column table ---- */
+@media (max-width: 640px) {
+  .ht-glance table, .ht-glance tbody, .ht-glance tr, .ht-glance th, .ht-glance td { display: block; width: auto; }
+  .ht-glance thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .ht-glance caption { display: block; }
+  .ht-glance tbody tr { padding: var(--s-3) var(--s-4); border-bottom: 2px solid var(--line); }
+  .ht-glance tbody tr:last-child { border-bottom: 0; }
+  .ht-glance tbody th { padding: 0 0 var(--s-2); border: 0; min-width: 0; width: auto; background: none; }
+  .ht-glance tbody td { padding: var(--s-1) 0; border: 0; }
+  .ht-glance tbody td::before {
+    content: attr(data-label); display: block;
+    font-size: var(--fs-xs); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+  }
+}

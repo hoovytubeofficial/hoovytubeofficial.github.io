@@ -1,120 +1,71 @@
-/* HoovyTube newsletter popover - dismissible bottom-right card.
-   Opens shortly after page load, re-opens every 10-15 "button pushes",
-   closable (with a reopen tab), opens on #newsletter, and stops for good
-   once the visitor subscribes. Include on every page:
-     <script defer src="/shared/ht-newsletter.js"></script>                 */
+/* HoovyTube newsletter panel (design system v2) - load on every page:
+     <script defer src="/shared/ht-newsletter.js?v=20"></script>
+   Predictable and non-blocking:
+     - Never shows on the first screen. It appears once per browser session, only after the visitor has
+       scrolled past ~1.5 screens (or 45% of the page), as a compact panel bottom-right (bottom sheet on phones).
+       It hides again if they scroll back up to the first screen.
+     - Closing it counts as "no thanks": localStorage 'ht-newsletter-dismissed' stops auto-showing for 30 days.
+     - Subscribing (localStorage 'htnews:sub' = '1') stops it for good.
+     - Opens on request at any time: links to #newsletter, or any element with [data-newsletter-open].
+       window.HTNewsletter.open() also works.                                                            */
 (function () {
+  'use strict';
   var SUPABASE_URL = 'https://iglbfojatowaxbhjubvz.supabase.co';
   var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnbGJmb2phdG93YXhiaGp1YnZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzgyODUsImV4cCI6MjEwMTYxNDI4NX0.H7EeaGn3qQGn6pwFnDI_QRFW3uILnwDaWB54pUbWv6g';
+  var DISMISS_KEY = 'ht-newsletter-dismissed', SUB_KEY = 'htnews:sub', SHOWN_KEY = 'htnews:shown';
+  var DISMISS_DAYS = 30;
 
-  var LS = window.localStorage, SS = window.sessionStorage;
-  function get(store, k) { try { return store.getItem(k); } catch (e) { return null; } }
-  function set(store, k, v) { try { store.setItem(k, v); } catch (e) {} }
+  function get(store, k) { try { return window[store].getItem(k); } catch (e) { return null; } }
+  function set(store, k, v) { try { window[store].setItem(k, v); } catch (e) {} }
 
-  if (get(LS, 'htnews:sub') === '1') return; // already subscribed → never nag
+  function subscribed() { return get('localStorage', SUB_KEY) === '1'; }
+  function dismissed() {
+    var v = get('localStorage', DISMISS_KEY);
+    if (!v) return false;
+    var t = parseInt(v, 10);
+    if (!t || t < 1e11) return true;                       // legacy / test flag like '1' = dismissed
+    return (Date.now() - t) < DISMISS_DAYS * 864e5;
+  }
 
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
-
-  function randThreshold() { return 10 + Math.floor(Math.random() * 6); } // 10..15
+  var pop = null, isOpen = false, explicit = false;
 
   function build() {
-    var pop = document.createElement('div');
+    pop = document.createElement('div');
     pop.className = 'htnews';
+    pop.id = 'htNewsletter';
     pop.setAttribute('role', 'dialog');
-    pop.setAttribute('aria-label', 'Newsletter signup');
+    pop.setAttribute('aria-labelledby', 'hnTitle');
     pop.innerHTML =
-      '<button class="hn-close" type="button" aria-label="Close">✕</button>' +
-      '<p class="hn-eyebrow">Newsletter</p>' +
-      '<h3>Stay in the loop</h3>' +
-      '<p>New videos, animations, asset drops &amp; HoovyTools updates - straight to your inbox. No spam.</p>' +
+      '<button class="hn-close" type="button" aria-label="Close newsletter signup">&#215;</button>' +
+      '<div class="hn-head"><img src="/assets/icons/contact.png" alt="" width="40" height="40"><h3 id="hnTitle">Stay in the loop</h3></div>' +
+      '<p>New videos, asset drops and HoovyTools updates, straight to your inbox. No spam.</p>' +
       '<form class="hn-form" novalidate>' +
-        '<input type="email" placeholder="you@example.com" autocomplete="email" aria-label="Email" required>' +
-        '<button class="btn btn-primary hn-submit" type="submit">Subscribe</button>' +
+        '<label class="sr-only" for="hnEmail">Email address</label>' +
+        '<input id="hnEmail" type="email" placeholder="you@example.com" autocomplete="email" required>' +
+        '<input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;width:1px;height:1px;opacity:0">' +
+        '<button class="btn btn-primary btn-sm hn-submit" type="submit">Subscribe</button>' +
         '<div class="hn-msg" role="status" aria-live="polite"></div>' +
       '</form>';
-
-    var tab = document.createElement('button');
-    tab.className = 'htnews-tab';
-    tab.type = 'button';
-    tab.setAttribute('aria-label', 'Open newsletter signup');
-    tab.innerHTML = '<img src="/assets/icons/newsletter.png" alt="" draggable="false" style="width:20px;height:20px;object-fit:contain">' +
-      '<span>Newsletter</span>';
-
     document.body.appendChild(pop);
-    document.body.appendChild(tab);
-    return { pop: pop, tab: tab };
-  }
 
-  function magnetize(el) {
-    if (!fine || reduced) return;
-    var cx = 0, cy = 0, tx = 0, ty = 0, inside = false;
-    el.style.willChange = 'transform';
-    el.addEventListener('pointerenter', function () { inside = true; });
-    el.addEventListener('pointermove', function (e) {
-      var r = el.getBoundingClientRect();
-      tx = (e.clientX - (r.left + r.width / 2)) * 0.35;
-      ty = (e.clientY - (r.top + r.height / 2)) * 0.35;
-    });
-    el.addEventListener('pointerleave', function () { inside = false; tx = 0; ty = 0; });
-    (function tick() {
-      cx += ((inside ? tx : 0) - cx) * 0.2;
-      cy += ((inside ? ty : 0) - cy) * 0.2;
-      el.style.transform = 'translate(' + cx.toFixed(2) + 'px,' + cy.toFixed(2) + 'px)';
-      requestAnimationFrame(tick);
-    })();
-  }
-
-  function start() {
-    var ui = build();
-    var pop = ui.pop, tab = ui.tab;
     var form = pop.querySelector('.hn-form');
-    var input = pop.querySelector('input');
+    var input = pop.querySelector('#hnEmail');
+    var honey = pop.querySelector('input[name=company]');
     var submit = pop.querySelector('.hn-submit');
     var msg = pop.querySelector('.hn-msg');
-    var isOpen = false, subscribed = false;
-    var count = parseInt(get(SS, 'htnews:count') || '0', 10) || 0;
-    var threshold = parseInt(get(SS, 'htnews:threshold') || '0', 10) || randThreshold();
-    set(SS, 'htnews:threshold', String(threshold));
 
-    magnetize(submit);
+    pop.querySelector('.hn-close').addEventListener('click', function () {
+      if (!subscribed()) set('localStorage', DISMISS_KEY, String(Date.now()));
+      close();
+    });
 
-    function open() {
-      if (isOpen || subscribed) return;
-      isOpen = true;
-      tab.classList.remove('show');
-      pop.classList.add('open');
-    }
-    function close() {
-      isOpen = false;
-      pop.classList.remove('open');
-      set(LS, 'htnews:closedAt', String(Date.now()));
-      if (!subscribed) tab.classList.add('show');
-      count = 0; set(SS, 'htnews:count', '0');
-      threshold = randThreshold(); set(SS, 'htnews:threshold', String(threshold));
-    }
-
-    pop.querySelector('.hn-close').addEventListener('click', close);
-    tab.addEventListener('click', open);
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) close(); });
-
-    // Count "button pushes" anywhere on the page (outside the popover itself)
-    document.addEventListener('click', function (e) {
-      if (subscribed || isOpen) return;
-      var t = e.target.closest('a, button, .btn, .dock-item, [role="button"]');
-      if (!t) return;
-      if (t.closest('.htnews') || t.closest('.htnews-tab')) return;
-      count++; set(SS, 'htnews:count', String(count));
-      if (count >= threshold) open();
-    }, true);
-
-    // Submit
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       msg.textContent = ''; msg.className = 'hn-msg';
       var email = (input.value || '').trim();
-      if (!email) { msg.textContent = 'Please enter your email.'; msg.className = 'hn-msg err'; return; }
-      submit.disabled = true; submit.textContent = 'Subscribing…';
+      if (!email || email.indexOf('@') < 1) { msg.textContent = 'Please enter your email.'; msg.className = 'hn-msg err'; input.focus(); return; }
+      if (honey.value) return;
+      submit.disabled = true; submit.textContent = 'Subscribing...';
       fetch(SUPABASE_URL + '/functions/v1/newsletter-signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', apikey: ANON, Authorization: 'Bearer ' + ANON },
@@ -123,35 +74,66 @@
         return res.json().catch(function () { return {}; }).then(function (data) { return { ok: res.ok, data: data }; });
       }).then(function (r) {
         if (r.ok) {
-          subscribed = true; set(LS, 'htnews:sub', '1');
-          msg.textContent = "You're in - thanks! 🎉"; msg.className = 'hn-msg ok';
+          set('localStorage', SUB_KEY, '1');
+          msg.textContent = "You're in - thanks!"; msg.className = 'hn-msg ok';
           form.reset();
-          setTimeout(function () { pop.classList.remove('open'); tab.remove(); }, 2600);
+          setTimeout(close, 2400);
         } else {
           msg.textContent = (r.data && r.data.error) || 'Could not subscribe. Please try again.'; msg.className = 'hn-msg err';
         }
       }).catch(function () {
         msg.textContent = 'Network error. Please try again.'; msg.className = 'hn-msg err';
-      }).finally(function () {
-        submit.disabled = false; submit.textContent = 'Subscribe';
-      });
+      }).then(function () { submit.disabled = false; submit.textContent = 'Subscribe'; });
     });
-
-    // Auto-open once per browser session (i.e. when they first arrive at the
-    // site), plus immediately on #newsletter. Internal page-to-page navigation
-    // in the same session will NOT re-pop it.
-    tab.classList.add('show');
-    if (location.hash === '#newsletter') {
-      setTimeout(open, 250);
-    } else if (!get(SS, 'htnews:autoOpened')) {
-      set(SS, 'htnews:autoOpened', '1');
-      setTimeout(open, 3200);
-    }
-
-    // let other scripts open it via location.hash change
-    window.addEventListener('hashchange', function () { if (location.hash === '#newsletter') open(); });
   }
 
+  function open(byUser) {
+    if (!pop) build();
+    explicit = !!byUser;
+    if (isOpen) { if (byUser) pop.querySelector('#hnEmail').focus(); return; }
+    isOpen = true;
+    pop.classList.add('open');
+    if (byUser) setTimeout(function () { var i = pop.querySelector('#hnEmail'); if (i) i.focus(); }, 60);
+  }
+  function close() {
+    if (!pop) return;
+    isOpen = false; explicit = false;
+    pop.classList.remove('open');
+  }
+
+  /* explicit requests: #newsletter links, [data-newsletter-open], hash on load */
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-newsletter-open], a[href="#newsletter"], a[href="/#newsletter"]');
+    if (!t) return;
+    if (t.matches('a[href="/#newsletter"]') && location.pathname !== '/') return; // let it navigate home, hash opens there
+    e.preventDefault();
+    open(true);
+  });
+  window.addEventListener('hashchange', function () { if (location.hash === '#newsletter') open(true); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && isOpen) close(); });
+
+  function start() {
+    if (location.hash === '#newsletter') { open(true); return; }
+    if (subscribed() || dismissed() || get('sessionStorage', SHOWN_KEY) === '1') return;
+
+    var ticking = false, armed = true;
+    function check() {
+      ticking = false;
+      var y = window.scrollY || 0, vh = window.innerHeight || 800;
+      var max = Math.max(1, document.documentElement.scrollHeight - vh);
+      var deep = y > vh * 1.5 || (y / max) > 0.45;
+      if (armed && deep && y > vh) {
+        armed = false;
+        set('sessionStorage', SHOWN_KEY, '1');
+        open(false);
+      } else if (isOpen && !explicit && y < vh * 0.9) {
+        close();
+      }
+    }
+    window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(check); } }, { passive: true });
+  }
+
+  window.HTNewsletter = { open: function () { open(true); }, close: close };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
   else start();
 })();

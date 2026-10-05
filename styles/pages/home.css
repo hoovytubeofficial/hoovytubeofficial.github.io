@@ -1,0 +1,70 @@
+/* Homepage (/) - layout glue only.
+   Every surface, colour, shadow and type style comes from /styles/ht.css (design system v2, "glossy die-cut").
+   Nothing here defines a new look; it only arranges existing components. */
+
+/* 1. Hero ------------------------------------------------------------------------------------------ */
+/* The four proof stats sit under the showreel: 2 x 2, or 4 across while the hero is one column on tablets. */
+.home-hero .hero-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 700px) and (max-width: 899px) { .home-hero .hero-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.home-hero .page-hero-note { max-width: 46ch; }
+
+/* Showreel caption: the clip picker + Pause/Play (added by home.js) sit on the bezel, right of the label. */
+.hero-reel .screen-cap { row-gap: .4em; }
+.hero-reel .reel-controls { display: flex; flex-wrap: wrap; gap: var(--s-2); margin-left: auto; }
+.hero-reel .reel-controls .chip { min-width: 40px; justify-content: center; }
+
+/* 2. Social proof strip: label and creator chips on one wrapping row ---------------------------------- */
+.proof-strip { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3) var(--s-4); }
+.proof-strip .proof-title { margin: 0; display: inline-flex; align-items: center; gap: .5em; font-weight: 700; color: var(--heading); }
+.proof-strip .proof-title img { width: 36px; height: 36px; flex: 0 0 auto; }
+
+/* 3. Library product panels ---------------------------------------------------------------------------- */
+/* Icon + title row on top; the Patreon line is pinned to the bottom so the three panels line up. */
+.product { display: flex; flex-direction: column; }
+.product-side { flex: 1 1 auto; display: flex; flex-direction: column; }
+.product-head { display: flex; align-items: center; gap: var(--s-4); margin: 0 0 var(--s-3); }
+.product-head img { width: 72px; height: 72px; flex: 0 0 auto; object-fit: contain; }
+.product-head h3 { margin: 0 0 .15em; }
+.product-count { margin: 0; }
+.product .tags { margin: 0 0 var(--s-4); }
+.product .check-list { margin-bottom: var(--s-4); }
+.product-sub { margin: 0 0 var(--s-2); font-size: var(--fs-xs); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+.product-free { margin: 0 0 var(--s-4); font-size: .95em; color: var(--text-muted); }
+.product-cta { margin: auto 0 0; padding-top: var(--s-3); border-top: 2px solid var(--line); }
+
+/* Text + one button on a slim plate (library, tiers and tutorials footers). */
+.split-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3) var(--s-5); }
+.split-row > p { margin: 0; flex: 1 1 320px; }
+.split-row > .btn { flex: 0 0 auto; }
+
+/* 4 + 6. Item cards in a row keep their buttons level: the body grows, the actions sit at the bottom. ---- */
+#free-trials .item-card, .addon-card { grid-template-rows: 1fr auto; align-content: stretch; }
+#free-trials .item-card .item-actions, .addon-card .item-actions { align-self: end; }
+.item-card .item-upsell { margin-top: var(--s-2); }
+
+/* 6. HoovyTools add-on cards use the portrait olive badges instead of a square icon. */
+.addon-card .item-icon { width: 72px; height: 95px; }
+
+/* 7. Tutorial level cards: the level badge art on top (beside the text on phones). -------------------- */
+.level-card .level-art { display: block; width: min(100%, 168px); height: auto; margin: 0 auto var(--s-2); }
+.level-card .meta { margin: 0; }
+@media (max-width: 599px) {
+  a.card.level-card { display: grid; grid-template-columns: 92px minmax(0, 1fr); column-gap: var(--s-4); row-gap: var(--s-1); align-content: center; align-items: center; }
+  a.card.level-card .level-art { grid-row: 1 / span 3; width: 92px; margin: 0; }
+}
+
+/* Tablets (600-999px): the shared 3-up grids fall back to 2 columns there, which would leave an orphan
+   card under every three-item row. Lay those rows out on purpose instead. ------------------------------ */
+@media (min-width: 600px) and (max-width: 999px) {
+  /* Library: one panel per row, its details in two columns. */
+  .product-grid, .addon-grid { grid-template-columns: minmax(0, 1fr); }
+  .product { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--s-6); align-items: stretch; }
+  /* Level cards are small enough for three across. */
+  .level-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  /* Tiers: one per row - name, price and button on the left, what's included on the right. */
+  .home-tiers { grid-template-columns: minmax(0, 1fr); }
+  .home-tiers .tier { display: grid; grid-template-columns: minmax(0, 19rem) minmax(0, 1fr); grid-template-rows: auto auto auto auto 1fr; column-gap: var(--s-6); }
+  .home-tiers .tier > :not(.tier-points):not(.tier-flag) { grid-column: 1; }
+  .home-tiers .tier .tier-points { grid-column: 2; grid-row: 1 / span 5; margin: 0; }
+  .home-tiers .tier > .btn { align-self: end; }
+}

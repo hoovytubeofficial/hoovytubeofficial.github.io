@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: bullet. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="seams" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <line x1="184" y1="80" x2="184" y2="176" stroke="#000" stroke-width="10"/>
+      <line x1="104" y1="80" x2="104" y2="176" stroke="#000" stroke-width="10"/>
+    </mask>
+  </defs>
+  <g mask="url(#seams)" fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round">
+    <path d="M184 90 C220 90 242 112 248 128 C242 144 220 166 184 166 Z"/>
+    <rect x="100" y="90" width="88" height="76"/>
+    <rect x="80" y="82" width="26" height="92" rx="5"/>
+  </g>
+  <g fill="#000">
+    <rect x="6" y="94" width="60" height="16" rx="8"/>
+    <rect x="22" y="120" width="46" height="16" rx="8"/>
+    <rect x="6" y="146" width="60" height="16" rx="8"/>
+  </g>
+</svg>

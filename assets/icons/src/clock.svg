@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: clock (timing). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="clk" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g stroke="#000" stroke-linecap="round" stroke-width="18" fill="none">
+        <polyline points="128,62 128,132 174,166"/>
+      </g>
+      <g stroke="#000" stroke-linecap="round" stroke-width="12">
+        <line x1="128" y1="30" x2="128" y2="40"/>
+        <line x1="226" y1="128" x2="216" y2="128"/>
+        <line x1="128" y1="226" x2="128" y2="216"/>
+        <line x1="30" y1="128" x2="40" y2="128"/>
+      </g>
+    </mask>
+  </defs>
+  <circle cx="128" cy="128" r="114" fill="#000" mask="url(#clk)"/>
+</svg>

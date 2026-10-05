@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Patreon membership - HoovyTube</title>
+  <!-- /patreon/ is an alias: it forwards to /products/ (the on-site Patreon page), keeping any #hash. -->
+  <meta http-equiv="refresh" content="0; url=/products/">
+  <link rel="canonical" href="https://hoovytube.com/products/">
+  <meta name="robots" content="noindex, follow">
+  <script>location.replace('/products/' + location.search + location.hash);</script>
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+</head>
+<body style="padding-top: var(--s-6)">
+  <main id="main">
+    <section class="section">
+      <div class="container container-narrow">
+        <div class="panel page-hero is-text-only">
+          <div>
+            <span class="eyebrow eyebrow-patreon">Patreon</span>
+            <h1>Taking you to the Patreon page</h1>
+            <p class="lead">The membership tiers and the shop live at <a class="hl-patreon" href="/products/">hoovytube.com/products/</a>.</p>
+            <div class="btn-row">
+              <a class="btn btn-patreon btn-lg" href="/products/"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Open the Patreon page</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

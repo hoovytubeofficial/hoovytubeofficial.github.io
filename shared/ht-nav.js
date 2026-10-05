@@ -1,129 +1,215 @@
-/* HoovyTube shared nav - injects the magnetic dock on every page + theme toggle.
-   Include on any page with:  <script defer src="/shared/ht-nav.js"></script>
-   (Set data-theme early in <head> to avoid a flash.) */
+/* HoovyTube shared chrome (design system v2) - load on every page:
+     <script defer src="/shared/ht-nav.js?v=20"></script>
+   Injects, with no page markup needed:
+     - skip link + the fixed dock (Home, Patreon, Workshop, HoovyTools, Learn, Journal, Contact | Search, Theme)
+     - theme handling (stored choice in localStorage 'ht-theme', else follows the OS)
+     - thin scroll-progress bar, search palette (Ctrl/Cmd+K, "/", or any [data-search-open]), send-a-message modal
+     - the sitewide Patreon CTA band right before <footer class="site"> (opt out: <body data-no-cta>)
+     - the footer contents inside <footer class="site"></footer>
+   Docs: /docs/DESIGN-SYSTEM.md */
 (function () {
-  var ICON = {
-    home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
-    box: '<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><polyline points="3.3 7 12 12 20.7 7"/><line x1="12" y1="22" x2="12" y2="12"/>',
-    wrench: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
-    cap: '<path d="M22 10 12 5 2 10l10 5 10-5Z"/><path d="M6 12v5c3 2.5 9 2.5 12 0v-5"/>',
-    mail: '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
-    search: '<circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>',
-    theme: '<path d="M12 8a2.83 2.83 0 0 0 4 4 4 4 0 1 1-4-4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.9 4.9 1.4 1.4"/><path d="m17.7 17.7 1.4 1.4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.3 17.7-1.4 1.4"/><path d="m19.1 4.9-1.4 1.4"/>'
-  };
-  // Placeholder icon for the Journal tab — reuses the site's existing arrow art.
-  // TODO: swap for a dedicated /assets/icons/journal.png when one's drawn.
-  var JOURNAL_IC = '/media/hoovytools/arrow.png';
+  'use strict';
+
+  var URL_JOIN = 'https://www.patreon.com/c/hoovytube308/membership';
+  var URL_SHOP = 'https://www.patreon.com/HoovyTube308/shop';
+  var URL_PATREON = 'https://www.patreon.com/HoovyTube308';
+  var URL_WORKSHOP = 'https://steamcommunity.com/id/HoovyTube/myworkshopfiles/';
+  var URL_YOUTUBE = 'https://www.youtube.com/@HoovyTube';
+  var URL_DISCORD = 'https://discord.gg/VhUCwuuE84';
+  var EXT = ' target="_blank" rel="noopener"';
+
+  var doc = document, root = doc.documentElement, body = doc.body;
+  var path = location.pathname.replace(/index\.html$/, '');
+  if (path.charAt(path.length - 1) !== '/' && !/\.[a-z0-9]+$/i.test(path)) path += '/';
+
+  /* ------------------------------------------------------------ theme */
+  var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+  function storedTheme() {
+    try { var t = localStorage.getItem('ht-theme'); return (t === 'light' || t === 'dark') ? t : null; } catch (e) { return null; }
+  }
+  function osTheme() { return mq && mq.matches ? 'dark' : 'light'; }
+  function currentTheme() { return root.getAttribute('data-theme') === 'dark' ? 'dark' : 'light'; }
+  root.setAttribute('data-theme', storedTheme() || osTheme());
+  if (mq) {
+    var onOs = function () { if (!storedTheme()) { root.setAttribute('data-theme', osTheme()); syncThemeBtn(); } };
+    if (mq.addEventListener) mq.addEventListener('change', onOs); else if (mq.addListener) mq.addListener(onOs);
+  }
+
+  /* ------------------------------------------------------------- dock */
   var ITEMS = [
-    { label: 'Home', href: '/', ic: 'home', match: ['/', '/index.html'] },
-    { label: 'HoovyTools SFM', href: '/products/', ic: 'product', match: ['/products/', '/products/index.html'] },
-    { label: 'HoovyTools Blender', href: '/hoovytools/', ic: 'tools', match: ['/hoovytools/', '/hoovytools/index.html'] },
-    { label: 'Learn SFM & Blender', href: '/learn/', ic: 'learn', match: ['/learn/', '/learn/index.html'] },
-    { label: 'Journal', href: '/blog/', ic: JOURNAL_IC, match: ['/blog/', '/blog/index.html'] },
-    { label: 'Contact', href: '/contact/', ic: 'contact', match: ['/contact/', '/contact/index.html'] }
+    { label: 'Home', href: '/', icon: '/assets/icons/home.png', match: function (p) { return p === '/'; } },
+    { label: 'Patreon', href: '/products/', icon: '/assets/icons/forged/patreon.png', cls: 'dock-patreon', text: true,
+      match: function (p) { return p.indexOf('/products/') === 0 || p.indexOf('/patreon/') === 0; } },
+    { label: 'Workshop', href: '/workshop/', icon: '/assets/icons/forged/steam.png', match: function (p) { return p.indexOf('/workshop/') === 0; } },
+    { label: 'HoovyTools', href: '/hoovytools/', icon: '/assets/icons/tools.png', match: function (p) { return p.indexOf('/hoovytools/') === 0; } },
+    { label: 'Learn', href: '/learn/', icon: '/assets/icons/learn.png', match: function (p) { return p.indexOf('/learn/') === 0; } },
+    { label: 'Journal', href: '/blog/', icon: '/assets/icons/newsletter.png', more: true, match: function (p) { return p.indexOf('/blog/') === 0; } },
+    { label: 'Contact', href: '/contact/', icon: '/assets/icons/contact.png', more: true, match: function (p) { return p.indexOf('/contact/') === 0; } }
   ];
-  var svg = function (p) { return '<svg viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + p + '</svg>'; };
-  // Accepts a bare icon name (→ /assets/icons/NAME.png) or a full URL / absolute path.
-  var ic = function (n) { var src = /[:\/]/.test(n) ? n : '/assets/icons/' + n + '.png'; return '<img class="dock-ic" src="' + src + '" alt="" draggable="false">'; };
-  var path = location.pathname.replace(/\/index\.html$/, '/');
+  function img(src, cls) { return '<img class="' + (cls || 'dock-ic') + '" src="' + src + '" alt="" width="38" height="38" draggable="false">'; }
 
-  var html = '<nav class="dock" aria-label="Primary">';
+  var main = doc.querySelector('main');
+  if (main && !main.id) main.id = 'main';
+  var skip = doc.querySelector('.skip-link');
+  if (!skip && main) {
+    skip = doc.createElement('a');
+    skip.className = 'skip-link';
+    skip.href = '#' + main.id;
+    skip.textContent = 'Skip to content';
+    body.insertBefore(skip, body.firstChild);
+  }
+
+  /* Phones (<= 520px): Journal, Contact, Search and Theme move into the "More" menu (CSS hides the
+     .dock-sm-hide controls and shows .dock-more), so every dock control keeps a 44px tap target. */
+  var html = '<nav class="dock" aria-label="Primary">', menuHtml = '', moreCurrent = false;
   ITEMS.forEach(function (it) {
-    var active = it.match.indexOf(path) !== -1 ? ' active' : '';
-    html += '<a class="dock-item' + active + '" href="' + it.href + '"><span class="dock-label">' + it.label + '</span>' + ic(it.ic) + '</a>';
+    var on = it.match(path);
+    html += '<a class="dock-item' + (it.cls ? ' ' + it.cls : '') + (it.more ? ' dock-sm-hide' : '') + (on ? ' active' : '') + '" href="' + it.href + '"' +
+      (on ? ' aria-current="page"' : '') + ' aria-label="' + it.label + '">' + img(it.icon) +
+      (it.text ? '<span class="dock-text" aria-hidden="true">' + it.label + '</span>' : '') +
+      '<span class="dock-label" aria-hidden="true">' + it.label + '</span></a>';
+    if (it.more) {
+      if (on) moreCurrent = true;
+      menuHtml += '<a class="dock-menu-item" href="' + it.href + '"' + (on ? ' aria-current="page"' : '') + '>' + img(it.icon, 'dock-menu-ic') + it.label + '</a>';
+    }
   });
-  html += '<button class="dock-item" id="htSearch" type="button" aria-label="Search"><span class="dock-label">Search</span>' + ic('search') + '</button>';
-  html += '<button class="dock-item" id="htThemeToggle" type="button" aria-label="Toggle theme"><span class="dock-label">Theme</span>' + ic('theme') + '</button>';
+  html += '<span class="dock-sep dock-sm-hide" aria-hidden="true"></span>';
+  html += '<button class="dock-item dock-sm-hide" id="htSearch" type="button" aria-label="Search" aria-haspopup="dialog">' + img('/assets/icons/search.png') + '<span class="dock-label" aria-hidden="true">Search</span></button>';
+  html += '<button class="dock-item dock-sm-hide" id="htThemeToggle" type="button" aria-label="Switch theme">' + img('/assets/icons/theme.png') + '<span class="dock-label" aria-hidden="true">Theme</span></button>';
+  html += '<button class="dock-item dock-more' + (moreCurrent ? ' has-current' : '') + '" id="htMore" type="button" aria-label="More: Journal, Contact, Search, Theme" aria-expanded="false" aria-controls="htMoreMenu">' + img('/assets/icons/forged/menu.png') + '</button>';
   html += '</nav>';
+  menuHtml += '<button class="dock-menu-item" type="button" data-more-search>' + img('/assets/icons/search.png', 'dock-menu-ic') + 'Search</button>';
+  menuHtml += '<button class="dock-menu-item" type="button" data-more-theme>' + img('/assets/icons/theme.png', 'dock-menu-ic') + '<span>Theme</span></button>';
+  html += '<div class="dock-menu" id="htMoreMenu" hidden>' + menuHtml + '</div>';
 
-  var wrap = document.createElement('div');
+  var wrap = doc.createElement('header');
   wrap.className = 'dock-wrap';
   wrap.innerHTML = html;
-  document.body.appendChild(wrap);
+  body.insertBefore(wrap, skip ? skip.nextSibling : body.firstChild);
 
-  // Scroll progress bar (top)
-  var sp = document.createElement('div');
-  sp.className = 'scroll-progress';
-  sp.innerHTML = '<div class="scroll-progress-fill"></div>';
-  document.body.appendChild(sp);
-  var fill = sp.firstChild;
-  var onScroll = function () {
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    fill.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
-  };
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  onScroll();
-
-  // Ghost dock: transparent while over a full-bleed hero, solid once scrolled past it
-  var heroEl = document.querySelector('.hero-carousel');
-  if (heroEl) {
-    var ghostUpdate = function () {
-      var limit = heroEl.offsetHeight - 90;
-      wrap.classList.toggle('ghost', window.scrollY < limit);
-    };
-    window.addEventListener('scroll', ghostUpdate, { passive: true });
-    window.addEventListener('resize', ghostUpdate);
-    ghostUpdate();
+  var themeBtn = doc.getElementById('htThemeToggle');
+  var menuThemeBtn = wrap.querySelector('[data-more-theme]');
+  function syncThemeBtn() {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
+    var word = next === 'dark' ? 'Dark theme' : 'Light theme';
+    if (themeBtn) {
+      themeBtn.setAttribute('aria-label', 'Switch to ' + next + ' theme');
+      var lab = themeBtn.querySelector('.dock-label'); if (lab) lab.textContent = word;
+    }
+    if (menuThemeBtn) menuThemeBtn.lastChild.textContent = 'Switch to ' + next + ' theme';
   }
-
-  // Scroll-in reveal for page sections
-  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (!reduced && typeof IntersectionObserver !== 'undefined') {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
-    }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
-    document.querySelectorAll('main > section').forEach(function (el) { el.classList.add('reveal'); io.observe(el); });
-  }
-
-  // Theme toggle (persisted)
-  var root = document.documentElement;
-  document.getElementById('htThemeToggle').addEventListener('click', function () {
-    var next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  function toggleTheme() {
+    var next = currentTheme() === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', next);
     try { localStorage.setItem('ht-theme', next); } catch (e) {}
-  });
+    syncThemeBtn();
+  }
+  syncThemeBtn();
+  themeBtn.addEventListener('click', toggleTheme);
 
-  // ---- Search (⌘K / "/" / dock button) ----
+  /* "More" menu (phones) */
+  var moreBtn = doc.getElementById('htMore'), moreMenu = doc.getElementById('htMoreMenu');
+  function moreOpen() { return moreBtn.getAttribute('aria-expanded') === 'true'; }
+  function setMore(open, refocus) {
+    moreBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    moreMenu.hidden = !open;
+    if (open) { var first = moreMenu.querySelector('.dock-menu-item'); if (first) first.focus(); }
+    else if (refocus) moreBtn.focus();
+  }
+  moreBtn.addEventListener('click', function () { setMore(!moreOpen()); });
+  menuThemeBtn.addEventListener('click', toggleTheme);
+  moreMenu.querySelector('[data-more-search]').addEventListener('click', function () { setMore(false); openSearch(); });
+  doc.addEventListener('click', function (e) { if (moreOpen() && !wrap.contains(e.target)) setMore(false); });
+  wrap.addEventListener('keydown', function (e) { if (e.key === 'Escape' && moreOpen()) { e.stopPropagation(); setMore(false, true); } });
+  wrap.addEventListener('focusout', function (e) { if (moreOpen() && e.relatedTarget && !wrap.contains(e.relatedTarget)) setMore(false); });
+  window.addEventListener('resize', function () { if (moreOpen() && moreBtn.offsetParent === null) setMore(false); });
+
+  /* --------------------------------------------------- scroll progress */
+  var sp = doc.createElement('div');
+  sp.className = 'scroll-progress';
+  sp.setAttribute('aria-hidden', 'true');
+  sp.innerHTML = '<div class="scroll-progress-fill"></div>';
+  body.appendChild(sp);
+  var fill = sp.firstChild, ticking = false;
+  function progress() {
+    ticking = false;
+    var max = root.scrollHeight - root.clientHeight;
+    fill.style.width = (max > 0 ? Math.min(100, (window.scrollY / max) * 100) : 0) + '%';
+  }
+  window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(progress); } }, { passive: true });
+  window.addEventListener('resize', progress);
+  progress();
+
+  /* Keep Tab / Shift+Tab inside an open dialog (aria-modal promises it) */
+  function trapTab(box, e) {
+    if (e.key !== 'Tab') return;
+    var f = [].filter.call(box.querySelectorAll('a[href], button:not([disabled]), input:not([type="hidden"]), textarea, select, [tabindex]:not([tabindex="-1"])'),
+      function (el) { return el.offsetWidth || el.offsetHeight || el.getClientRects().length; });
+    if (!f.length) { e.preventDefault(); return; }
+    var first = f[0], last = f[f.length - 1], a = doc.activeElement;
+    if (e.shiftKey && (a === first || !box.contains(a))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && (a === last || !box.contains(a))) { e.preventDefault(); first.focus(); }
+  }
+  function escHtml(t) { return String(t).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+
+  /* ------------------------------------------------------------ search */
+  var openSearch = function () {};
   (function () {
+    /* What buyers type: pack and asset words from the library and the shop */
+    var ASSET_WORDS = 'fire smoke explosion explosions airstrike skibidi toilet water splash electricity electric sparks spark lasers laser sci-fi scifi weapons weapon muzzle flash bullet bullets impacts impact blood gore debris destruction vehicles vehicle car jet robot core environment dust fog tf2 1980s hdri biome biomes city urban nature models hwm rigs idle walking running fighting combat shooting dialog crowd parkour props';
     var SEARCH = [
-      { t: 'Home', d: 'HoovyTube - animations, assets, tutorials', href: '/', k: 'home hoovytube start main' },
-      { t: 'HoovyTools SFM', d: 'SFM particles, scenebuilds & animations', href: '/products/', k: 'assets products particles scenebuilds animations patreon steam workshop library packs tiers membership sfm hoovytools' },
-      { t: 'HoovyTools Blender', d: 'Blender addon: import SFM sessions into Blender', href: '/hoovytools/', k: 'hoovytools blender addon sfm to blender importer session dmx download audio tool transposition' },
-      { t: 'Learn SFM & Blender', d: 'Tutorials, sorted by difficulty', href: '/learn/', k: 'learn tutorials sfm blender easy medium hard playlist guide howto beginner advanced' },
-      { t: 'Journal', d: 'Essays & notes from behind the tools', href: '/blog/', k: 'journal blog writing essays posts notes manifesto shoulders of giants read articles' },
-      { t: 'Contact', d: 'Get in touch', href: '/contact/', k: 'contact email message support hello' },
-      { t: 'Newsletter', d: 'Subscribe for updates', href: '/#newsletter', k: 'newsletter subscribe email updates signup' },
-      { t: 'Download HoovyTools', d: 'Grab the latest .zip', href: '/hoovytools/', k: 'download zip install hoovytools blender addon' },
-      { t: 'Patreon', d: 'Full asset library membership', href: 'https://www.patreon.com/c/hoovytube308/membership', k: 'patreon membership subscribe support full library packs', ext: true },
-      { t: 'YouTube', d: 'Watch on YouTube', href: 'https://youtube.com/@HoovyTube', k: 'youtube videos watch channel subscribe', ext: true }
+      { t: 'Home', d: 'SFM assets, Blender add-ons and free tutorials', href: '/', ic: '/assets/icons/home.png', k: 'home hoovytube start main' },
+      { t: 'Patreon membership', d: 'The library: tiers, packs and what each tier includes', href: '/products/', ic: '/assets/icons/forged/patreon.png', p: true, k: 'patreon membership tiers library particles particle effects pcf scenebuilds scenebuild animations animation packs price join support assets products shop ' + ASSET_WORDS },
+      { t: 'Join on Patreon', d: 'patreon.com - memberships from $20/month', href: URL_JOIN, ic: '/assets/icons/forged/patreon.png', ext: true, p: true, k: 'patreon join subscribe membership tiers support' },
+      { t: 'Patreon shop', d: 'Single packs, bought once', href: URL_SHOP, ic: '/assets/icons/forged/patreon.png', ext: true, p: true, k: 'patreon shop pack packs buy single one-off particles particle scenebuild scenebuilds ' + ASSET_WORDS },
+      { t: 'Steam Workshop', d: 'Free SFM items and free trials on the Workshop', href: '/workshop/', ic: '/assets/icons/forged/steam.png', k: 'steam workshop free items trial trials particles particle models sfm download subscribe fire smoke explosion explosions airstrike water splash candle electric arc skibidi tf2 scout soldier pyro medieval quarry terrain' },
+      { t: 'HoovyTools', d: 'Free Blender add-ons: SFM sessions and .pcf particles', href: '/hoovytools/', ic: '/assets/icons/tools.png', k: 'hoovytools blender addon add-on sfm to blender importer session dmx particle import pcf geometry nodes download free' },
+      { t: 'HoovyTools Particle Import', d: '.pcf particle effects as geometry nodes', href: '/hoovytools/#particles', ic: '/assets/icons/forged/sparks.png', k: 'particle import pcf geometry nodes blender sprites rope trail' },
+      { t: 'HoovyTools session importer', d: 'SFM session .dmx into Blender', href: '/hoovytools/#sessions', ic: '/assets/icons/forged/blender-addon.png', k: 'session import dmx sfm blender sourceio cameras sounds shape keys' },
+      { t: 'Learn', d: 'Free SFM & Blender tutorials, Easy to Hard', href: '/learn/', ic: '/assets/icons/learn.png', k: 'learn tutorials sfm blender easy medium hard playlist guide beginner advanced' },
+      { t: 'Journal', d: 'Essays and notes from behind the tools', href: '/blog/', ic: '/assets/icons/newsletter.png', k: 'journal blog essays posts notes manifesto shoulders of giants' },
+      { t: 'Contact', d: 'Questions, collabs, or just say hi', href: '/contact/', ic: '/assets/icons/contact.png', k: 'contact email message support hello' },
+      { t: 'Newsletter', d: 'New videos, drops and HoovyTools updates', href: '#newsletter', ic: '/assets/icons/contact.png', k: 'newsletter subscribe email updates signup' },
+      { t: 'YouTube', d: 'Watch on YouTube', href: URL_YOUTUBE, ic: '/assets/icons/forged/youtube.png', ext: true, k: 'youtube videos watch channel subscribe' },
+      { t: 'Discord', d: 'The HoovyTube Discord server', href: URL_DISCORD, ic: '/assets/icons/forged/discord.png', ext: true, k: 'discord chat community server' }
     ];
-    var ov = document.createElement('div');
+    /* When nothing matches, offer the two places the assets live */
+    var FALLBACK = [
+      { t: 'Browse the Patreon library', d: 'Particles, scenebuilds and animations: tiers and single packs', href: '/products/', ic: '/assets/icons/forged/patreon.png', p: true },
+      { t: 'Free Workshop items', d: 'Free SFM packs and free trials on Steam', href: '/workshop/', ic: '/assets/icons/forged/steam.png' }
+    ];
+    var ov = doc.createElement('div');
     ov.className = 'search-overlay';
-    ov.innerHTML = '<div class="search-box" role="dialog" aria-label="Search HoovyTube">' +
-      '<div class="search-inputwrap">' + svg(ICON.search) +
-      '<input class="search-input" type="text" placeholder="Search HoovyTube…" aria-label="Search" autocomplete="off"></div>' +
-      '<div class="search-results"></div></div>';
-    document.body.appendChild(ov);
+    ov.innerHTML = '<div class="search-box" role="dialog" aria-modal="true" aria-label="Search HoovyTube">' +
+      '<div class="search-inputwrap"><img src="/assets/icons/search.png" alt="" width="28" height="28">' +
+      '<input class="search-input" type="search" placeholder="Search HoovyTube" aria-label="Search" autocomplete="off" spellcheck="false"></div>' +
+      '<div class="search-results" role="listbox"></div></div>';
+    body.appendChild(ov);
     var input = ov.querySelector('.search-input');
     var results = ov.querySelector('.search-results');
-    var sel = 0;
+    var sel = 0, lastFocus = null;
 
+    function row(e, i) {
+      return '<a class="search-result' + (i === 0 ? ' sel' : '') + (e.p ? ' is-patreon' : '') + '" role="option" href="' + e.href + '"' + (e.ext ? EXT : '') + '>' +
+        '<img src="' + e.ic + '" alt="" width="30" height="30"><span><span class="st">' + e.t + (e.ext ? ' <span aria-hidden="true">&#8599;</span>' : '') +
+        '</span><span class="sd">' + e.d + '</span></span></a>';
+    }
     function render(q) {
       q = (q || '').trim().toLowerCase();
+      var terms = q.split(/\s+/).filter(Boolean);
       var list = SEARCH.filter(function (e) {
-        return !q || (e.t + ' ' + e.d + ' ' + e.k).toLowerCase().indexOf(q) !== -1;
-      }).slice(0, 8);
+        var hay = (e.t + ' ' + e.d + ' ' + (e.k || '')).toLowerCase();
+        return terms.every(function (w) { return hay.indexOf(w) !== -1; });
+      }).slice(0, 9);
       sel = 0;
-      if (!list.length) { results.innerHTML = '<div class="search-empty">No results</div>'; return; }
-      results.innerHTML = list.map(function (e, i) {
-        return '<a class="search-result' + (i === 0 ? ' sel' : '') + '" href="' + e.href + '"' +
-          (e.ext ? ' target="_blank" rel="noopener"' : '') + '><span class="st">' + e.t + '</span><span class="sd">' + e.d + '</span></a>';
-      }).join('');
+      if (!list.length) {
+        results.innerHTML = '<p class="search-empty">Nothing matched &ldquo;' + escHtml(q) + '&rdquo;. The assets live in two places:</p>' + FALLBACK.map(row).join('');
+        return;
+      }
+      results.innerHTML = list.map(row).join('');
     }
-    function open() { ov.classList.add('open'); input.value = ''; render(''); setTimeout(function () { input.focus(); }, 30); }
-    function close() { ov.classList.remove('open'); }
+    function open() { lastFocus = doc.activeElement; ov.classList.add('open'); input.value = ''; render(''); setTimeout(function () { input.focus(); }, 20); }
+    function close() { ov.classList.remove('open'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
     function move(d) {
       var els = results.querySelectorAll('.search-result'); if (!els.length) return;
       if (els[sel]) els[sel].classList.remove('sel');
@@ -134,170 +220,178 @@
     input.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowDown') { e.preventDefault(); move(1); }
       else if (e.key === 'ArrowUp') { e.preventDefault(); move(-1); }
-      else if (e.key === 'Enter') { var els = results.querySelectorAll('.search-result'); if (els[sel]) els[sel].click(); }
+      else if (e.key === 'Enter') { var els = results.querySelectorAll('.search-result'); if (els[sel]) { e.preventDefault(); els[sel].click(); } }
       else if (e.key === 'Escape') { close(); }
     });
+    results.addEventListener('click', function (e) { if (e.target.closest('.search-result')) setTimeout(close, 0); });
     ov.addEventListener('click', function (e) { if (e.target === ov) close(); });
-    var sbtn = document.getElementById('htSearch');
-    if (sbtn) sbtn.addEventListener('click', open);
-    document.addEventListener('keydown', function (e) {
-      var tag = (document.activeElement && document.activeElement.tagName) || '';
-      if (((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) ||
-          (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA')) { e.preventDefault(); open(); }
+    doc.addEventListener('keydown', function (e) { if (ov.classList.contains('open')) trapTab(ov.querySelector('.search-box'), e); });
+    doc.getElementById('htSearch').addEventListener('click', open);
+    openSearch = open;
+    doc.addEventListener('click', function (e) {
+      var t = e.target.closest && e.target.closest('[data-search-open]');
+      if (t) { e.preventDefault(); open(); }
+    });
+    doc.addEventListener('keydown', function (e) {
+      var a = doc.activeElement, tag = (a && a.tagName) || '', typing = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || (a && a.isContentEditable);
+      if (((e.ctrlKey || e.metaKey) && (e.key === 'k' || e.key === 'K')) || (e.key === '/' && !typing)) { e.preventDefault(); open(); }
+      else if (e.key === 'Escape' && ov.classList.contains('open')) close();
     });
   })();
 
-  // Magnetic magnify (pointer:fine only)
-  if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
-    var dock = wrap.querySelector('.dock');
-    var items = [].slice.call(dock.querySelectorAll('.dock-item'));
-    var BASE = 48, MAX = 82, RANGE = 150, mouseX = Infinity;
-    var cur = items.map(function () { return BASE; });
-    dock.addEventListener('pointermove', function (e) { mouseX = e.clientX; });
-    dock.addEventListener('pointerleave', function () { mouseX = Infinity; });
-    (function tick() {
-      for (var i = 0; i < items.length; i++) {
-        var r = items[i].getBoundingClientRect(), c = r.left + r.width / 2, d = Math.abs(mouseX - c), target = BASE;
-        if (d < RANGE) { var t = 1 - d / RANGE; target = BASE + (MAX - BASE) * t * t; }
-        cur[i] += (target - cur[i]) * 0.2;
-        if (Math.abs(cur[i] - target) < 0.1) cur[i] = target;
-        items[i].style.width = items[i].style.height = cur[i] + 'px';
-      }
-      requestAnimationFrame(tick);
-    })();
-  }
-})();
-
-/* ---- Footer social bar (PNG icons + magnetic grow) + Send-message popup ---- */
-(function () {
+  /* ------------------------------------------------ send-a-message modal */
   var SUPA = 'https://iglbfojatowaxbhjubvz.supabase.co';
   var ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlnbGJmb2phdG93YXhiaGp1YnZ6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODYwMzgyODUsImV4cCI6MjEwMTYxNDI4NX0.H7EeaGn3qQGn6pwFnDI_QRFW3uILnwDaWB54pUbWv6g';
-
-  // --- Send-message popup (also used as the email icon's action) ---
-  var modal = document.createElement('div');
+  var modal = doc.createElement('div');
   modal.className = 'msg-modal';
   modal.innerHTML =
-    '<div class="mm-box" role="dialog" aria-modal="true" aria-label="Send a message">' +
-      '<button class="mm-x" type="button" aria-label="Close">×</button>' +
-      '<h3>Send a message</h3>' +
-      '<p class="mm-sub">Questions, collabs, or just say hi — I read every message.</p>' +
+    '<div class="mm-box" role="dialog" aria-modal="true" aria-labelledby="mmTitle">' +
+      '<button class="mm-x" type="button" aria-label="Close">&#215;</button>' +
+      '<h3 id="mmTitle">Send a message</h3>' +
+      '<p class="mm-sub">Questions, collabs, or just say hi - I read every message.</p>' +
       '<form class="mm-form" novalidate>' +
         '<div class="mm-row">' +
-          '<div><label>Name</label><input name="name" type="text" autocomplete="name" required></div>' +
-          '<div><label>Email</label><input name="email" type="email" autocomplete="email" required></div>' +
+          '<div><label for="mmName">Name</label><input class="input" id="mmName" name="name" type="text" autocomplete="name" required></div>' +
+          '<div><label for="mmEmail">Email</label><input class="input" id="mmEmail" name="email" type="email" autocomplete="email" required></div>' +
         '</div>' +
-        '<label>Message</label>' +
-        '<textarea name="message" required></textarea>' +
+        '<label for="mmMessage">Message</label>' +
+        '<textarea class="textarea" id="mmMessage" name="message" maxlength="5000" required></textarea>' +
         '<div class="mm-actions">' +
-          '<button type="button" class="mm-cancel">Cancel</button>' +
-          '<button type="submit" class="mm-send">Send</button>' +
+          '<button type="button" class="btn btn-ghost mm-cancel">Cancel</button>' +
+          '<button type="submit" class="btn btn-primary mm-send">Send</button>' +
         '</div>' +
         '<div class="mm-msg" role="status" aria-live="polite"></div>' +
       '</form>' +
     '</div>';
-  document.body.appendChild(modal);
-
-  var mmForm = modal.querySelector('.mm-form');
-  var mmMsg = modal.querySelector('.mm-msg');
-  var mmSend = modal.querySelector('.mm-send');
-  var lastFocus = null;
-  function openModal(e) { if (e) e.preventDefault(); lastFocus = document.activeElement; modal.classList.add('open'); setTimeout(function () { var f = mmForm.querySelector('input[name=name]'); if (f) f.focus(); }, 30); }
-  function closeModal() { modal.classList.remove('open'); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  body.appendChild(modal);
+  var mmForm = modal.querySelector('.mm-form'), mmMsg = modal.querySelector('.mm-msg'), mmSend = modal.querySelector('.mm-send');
+  var mmLast = null;
+  function openModal(e) {
+    if (e && e.preventDefault) e.preventDefault();
+    mmLast = doc.activeElement; modal.classList.add('open');
+    setTimeout(function () { var f = mmForm.querySelector('input[name=name]'); if (f) f.focus(); }, 30);
+  }
+  function closeModal() { modal.classList.remove('open'); if (mmLast && mmLast.focus) mmLast.focus(); }
   modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
   modal.querySelector('.mm-x').addEventListener('click', closeModal);
   modal.querySelector('.mm-cancel').addEventListener('click', closeModal);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-
+  doc.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+  doc.addEventListener('keydown', function (e) { if (modal.classList.contains('open')) trapTab(modal.querySelector('.mm-box'), e); });
+  doc.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-message-open]');
+    if (t) openModal(e);
+  });
   mmForm.addEventListener('submit', function (e) {
     e.preventDefault();
     mmMsg.textContent = ''; mmMsg.className = 'mm-msg';
     var name = mmForm.name.value.trim(), email = mmForm.email.value.trim(), message = mmForm.message.value.trim();
     if (!name || !email || !message) { mmMsg.textContent = 'Please fill in your name, email, and message.'; mmMsg.className = 'mm-msg err'; return; }
-    mmSend.disabled = true; mmSend.textContent = 'Sending…';
+    mmSend.disabled = true; mmSend.textContent = 'Sending...';
     fetch(SUPA + '/functions/v1/contact-form', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'apikey': ANON, 'Authorization': 'Bearer ' + ANON },
+      headers: { 'Content-Type': 'application/json', apikey: ANON, Authorization: 'Bearer ' + ANON },
       body: JSON.stringify({ name: name, email: email, subject: 'Message from site popup', message: message })
     }).then(function (r) {
       return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, d: d }; });
     }).then(function (res) {
-      if (res.ok) { mmMsg.textContent = 'Thanks — your message was sent!'; mmMsg.className = 'mm-msg ok'; mmForm.reset(); setTimeout(closeModal, 1400); }
+      if (res.ok) { mmMsg.textContent = 'Thanks - your message was sent!'; mmMsg.className = 'mm-msg ok'; mmForm.reset(); setTimeout(closeModal, 1400); }
       else { mmMsg.textContent = (res.d && res.d.error) || 'Something went wrong. Please try again.'; mmMsg.className = 'mm-msg err'; }
     }).catch(function () {
       mmMsg.textContent = 'Network error. Please try again.'; mmMsg.className = 'mm-msg err';
     }).then(function () { mmSend.disabled = false; mmSend.textContent = 'Send'; });
   });
 
-  // --- Footer: social bar + sitemap, built on every page that has <footer class="site"> ---
-  // Icons are inline SVG (they used to point at /assets/icons/social/*.png, which don't
-  // exist in the repo - that's why the footer rendered five broken images).
+  window.HTNav = { openMessage: openModal, openSearch: function () { openSearch(); }, theme: currentTheme };
+
+  /* ----------------------------------------------- Patreon CTA band */
+  var foot = doc.querySelector('footer.site');
+  var onPatreonPage = path.indexOf('/products/') === 0 || path.indexOf('/patreon/') === 0;
+  if (foot && !body.hasAttribute('data-no-cta') && !doc.querySelector('.cta-band')) {
+    var second = onPatreonPage
+      ? '<a class="btn btn-ghost btn-lg" href="' + URL_SHOP + '"' + EXT + '>Browse the Patreon shop</a>'
+      : '<a class="btn btn-ghost btn-lg" href="/products/">Compare the tiers</a>';
+    var band = doc.createElement('section');
+    band.className = 'cta-band';
+    band.setAttribute('aria-labelledby', 'ctaBandTitle');
+    band.innerHTML =
+      '<div class="container"><div class="panel panel-patreon cta-band-panel">' +
+        '<img class="cta-band-art" src="/assets/icons/forged/badge-patreon.png" alt="" width="132" height="174" loading="lazy">' +
+        '<div class="cta-band-body">' +
+          '<span class="eyebrow">Patreon membership</span>' +
+          '<h2 id="ctaBandTitle">Skip the asset grind. Get the whole library.</h2>' +
+          '<ul class="cta-band-stats" aria-label="What the library holds">' +
+            '<li><b>900+</b> particle effects</li><li><b>600+</b> animations</li><li><b>30+</b> scenebuilds</li>' +
+          '</ul>' +
+          '<p>Sorted, documented and previewed, so your time goes into directing instead of building sprites. ' +
+            'Memberships start at <mark class="hl">$20/month</mark>, or pick up single packs in the ' +
+            '<a class="hl-patreon" href="' + URL_SHOP + '"' + EXT + '>Patreon shop</a>.</p>' +
+          '<div class="btn-row">' +
+            '<a class="btn btn-patreon btn-lg" href="' + URL_JOIN + '"' + EXT + '><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join on Patreon</a>' +
+            second +
+          '</div>' +
+        '</div>' +
+      '</div></div>';
+    foot.parentNode.insertBefore(band, foot);
+  }
+
+  /* ------------------------------------------------------------ footer */
+  if (!foot) return;
   var SOC_SVG = {
     youtube: '<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>',
     patreon: '<circle cx="15.2" cy="9.6" r="7.8"/><rect x="1" y="1.8" width="5.2" height="20.4"/>',
     steam: '<path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.522 2.031 4.522 4.527s-2.028 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>',
     discord: '<path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>'
   };
-  var MAIL_SVG = '<rect x="2" y="4" width="20" height="16"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>';
-
-  var foot = document.querySelector('footer.site');
-  if (!foot) return;
-
-  // Pages other than the homepage ship a bare footer - give them the bar too.
-  var social = foot.querySelector('.social');
-  if (!social) {
-    social = document.createElement('div');
-    social.className = 'social';
-    foot.insertBefore(social, foot.firstChild);
-  }
-
-  var LINKS = [
-    { n: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@HoovyTube' },
-    { n: 'patreon', label: 'Patreon', href: 'https://www.patreon.com/c/hoovytube308/membership' },
-    { n: 'steam', label: 'Steam Workshop', href: 'https://steamcommunity.com/id/HoovyTube/myworkshopfiles/' },
-    { n: 'discord', label: 'Discord', href: 'https://discord.gg/VhUCwuuE84' },
+  var MAIL_SVG = '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>';
+  var SOCIAL = [
+    { n: 'youtube', label: 'YouTube', href: URL_YOUTUBE },
+    { n: 'patreon', label: 'Patreon', href: URL_JOIN },
+    { n: 'steam', label: 'Steam Workshop', href: URL_WORKSHOP },
+    { n: 'discord', label: 'Discord', href: URL_DISCORD },
     { n: 'email', label: 'Send a message', href: '/contact/', msg: true }
   ];
-  social.innerHTML = LINKS.map(function (l) {
+  var socialHtml = SOCIAL.map(function (l) {
     var g = l.msg
-      ? '<svg class="soc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + MAIL_SVG + '</svg>'
+      ? '<svg class="soc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + MAIL_SVG + '</svg>'
       : '<svg class="soc-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + SOC_SVG[l.n] + '</svg>';
     var inner = '<span class="soc-chip">' + g + '</span><span class="soc-label">' + l.label + '</span>';
     return l.msg
-      ? '<a class="soc soc-msg" href="' + l.href + '" aria-label="' + l.label + '">' + inner + '</a>'
-      : '<a class="soc" href="' + l.href + '" target="_blank" rel="noopener" aria-label="' + l.label + '">' + inner + '</a>';
+      ? '<a class="soc soc-msg" href="' + l.href + '" data-message-open title="' + l.label + '">' + inner + '</a>'
+      : '<a class="soc soc-' + l.n + '" href="' + l.href + '"' + EXT + ' title="' + l.label + '">' + inner + '</a>';
   }).join('');
 
-  // Sitemap row above the copyright line (once per page)
-  if (!foot.querySelector('.foot-nav')) {
-    var NAVL = [
-      { t: 'Home', h: '/' }, { t: 'SFM Assets', h: '/products/' }, { t: 'HoovyTools', h: '/hoovytools/' },
-      { t: 'Tutorials', h: '/learn/' }, { t: 'Journal', h: '/blog/' }, { t: 'Contact', h: '/contact/' }
-    ];
-    var fn = document.createElement('nav');
-    fn.className = 'foot-nav';
-    fn.setAttribute('aria-label', 'Footer');
-    fn.innerHTML = NAVL.map(function (l) { return '<a href="' + l.h + '">' + l.t + '</a>'; }).join('');
-    var small = foot.querySelector('small');
-    if (small) foot.insertBefore(fn, small); else foot.appendChild(fn);
-  }
-
-  var msgLink = social.querySelector('.soc-msg');
-  if (msgLink) msgLink.addEventListener('click', openModal);
-
-  // Magnetic magnify (pointer:fine only) - same feel as the dock
-  if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
-    var items = [].slice.call(social.querySelectorAll('.soc-chip'));
-    var RANGE = 120, MAXS = 1.55, mouseX = Infinity, cur = items.map(function () { return 1; });
-    social.addEventListener('pointermove', function (e) { mouseX = e.clientX; });
-    social.addEventListener('pointerleave', function () { mouseX = Infinity; });
-    (function tick() {
-      for (var i = 0; i < items.length; i++) {
-        var r = items[i].getBoundingClientRect(), c = r.left + r.width / 2, d = Math.abs(mouseX - c), t = 1;
-        if (d < RANGE) { var k = 1 - d / RANGE; t = 1 + (MAXS - 1) * k * k; }
-        cur[i] += (t - cur[i]) * 0.2; if (Math.abs(cur[i] - t) < 0.001) cur[i] = t;
-        items[i].style.transform = 'scale(' + cur[i] + ')';
-      }
-      requestAnimationFrame(tick);
-    })();
-  }
+  var notes = [].slice.call(foot.querySelectorAll('.footer-note')).map(function (n) { return n.outerHTML; }).join('');
+  var year = Math.max(2026, new Date().getFullYear());
+  foot.innerHTML =
+    '<div class="container"><div class="panel footer-panel">' +
+      '<div class="footer-top">' +
+        '<div class="footer-brand">' +
+          '<a class="wordmark" href="/">HoovyTube</a>' +
+          '<p>SFM particles, animations and scenebuilds, the free HoovyTools Blender add-ons, and free tutorials that teach all of it.</p>' +
+          '<div class="social" aria-label="HoovyTube elsewhere">' + socialHtml + '</div>' +
+        '</div>' +
+        '<nav class="footer-col" aria-label="Explore"><h3>Explore</h3><ul>' +
+          '<li><a href="/">Home</a></li>' +
+          '<li><a href="/workshop/">Workshop</a></li>' +
+          '<li><a href="/hoovytools/">HoovyTools</a></li>' +
+          '<li><a href="/learn/">Learn</a></li>' +
+          '<li><a href="/blog/">Journal</a></li>' +
+        '</ul></nav>' +
+        '<nav class="footer-col" aria-label="Patreon"><h3>Patreon</h3><ul>' +
+          '<li><a class="hl-patreon" href="/products/">Membership &amp; tiers</a></li>' +
+          '<li><a href="' + URL_JOIN + '"' + EXT + '>Join on Patreon&nbsp;<span aria-hidden="true">&#8599;</span></a></li>' +
+          '<li><a href="' + URL_SHOP + '"' + EXT + '>Patreon shop&nbsp;<span aria-hidden="true">&#8599;</span></a></li>' +
+          '<li><a href="' + URL_PATREON + '"' + EXT + '>Patreon page&nbsp;<span aria-hidden="true">&#8599;</span></a></li>' +
+        '</ul></nav>' +
+        '<nav class="footer-col" aria-label="Stay in touch"><h3>Stay in touch</h3><ul>' +
+          '<li><a href="/contact/">Contact</a></li>' +
+          '<li><a href="#newsletter" data-newsletter-open>Newsletter</a></li>' +
+          '<li><a href="' + URL_YOUTUBE + '"' + EXT + '>YouTube&nbsp;<span aria-hidden="true">&#8599;</span></a></li>' +
+          '<li><a href="' + URL_WORKSHOP + '"' + EXT + '>Steam Workshop&nbsp;<span aria-hidden="true">&#8599;</span></a></li>' +
+          '<li><a href="' + URL_DISCORD + '"' + EXT + '>Discord&nbsp;<span aria-hidden="true">&#8599;</span></a></li>' +
+        '</ul></nav>' +
+      '</div>' +
+      notes +
+      '<div class="footer-bottom"><p>&copy; ' + year + ' HoovyTube. All rights reserved. Community animations &copy; their respective creators.</p></div>' +
+    '</div></div>';
 })();

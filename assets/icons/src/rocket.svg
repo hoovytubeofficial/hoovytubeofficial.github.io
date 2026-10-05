@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: rocket (Soldier rocket launcher particles). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g transform="rotate(45 128 128)">
+        <circle cx="128" cy="92" r="15" fill="#000"/>
+        <line x1="96" y1="134" x2="160" y2="134" stroke="#000" stroke-width="10"/>
+        <line x1="96" y1="166" x2="160" y2="166" stroke="#000" stroke-width="10"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" mask="url(#cut)" transform="rotate(45 128 128)">
+    <path d="M128 4 C150 22 162 48 162 76 L162 186 L94 186 L94 76 C94 48 106 22 128 4 Z"/>
+    <path d="M94 136 L60 176 L60 206 L94 192 Z"/>
+    <path d="M162 136 L196 176 L196 206 L162 192 Z"/>
+    <path d="M108 194 L148 194 L144 206 L112 206 Z"/>
+  </g>
+  <path fill="#000" transform="rotate(45 128 128)" d="M110 214 C116 226 120 238 128 252 C136 238 140 226 146 214 Z"/>
+</svg>

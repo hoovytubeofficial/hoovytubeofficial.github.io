@@ -1,0 +1,52 @@
+/* /learn/: layout glue only.
+   Every surface, colour, shadow and type style comes from /styles/ht.css (design system v2).
+   Nothing here redefines tokens or component looks. */
+
+/* Lists rendered as tag rows: drop the default list box */
+ul.tags { margin: 0; }   /* list reset lives in ht.css */
+ul.tags.lv-proof { margin: 0 0 var(--s-5); }
+.lv-proof .tag { white-space: normal; }
+
+/* ---- Pick your level: the 512px level badges shown small (never upscaled) ---- */
+.lv-pick { --min: 200px; }   /* three across from tablet width, so no orphan card */
+.lv-pick .card { align-items: center; text-align: center; }
+.lv-art { display: block; width: clamp(120px, 8vw + 64px, 168px); height: auto; margin: 0 auto var(--s-2); }
+.lv-pick .meta { justify-content: center; margin: 0; }
+
+/* ---- Level section heads: badge + text on the same plate ---- */
+.lv-head { flex-wrap: nowrap; justify-content: flex-start; }
+.lv-head-art { flex: 0 0 auto; width: clamp(72px, 5vw + 48px, 112px); height: auto; }
+.lv-head-text { min-width: 0; }
+.lv-head-text h2 { margin: 0; }
+@media (max-width: 520px) {
+  .lv-head { flex-wrap: wrap; }
+}
+
+/* Video grids: 4 across from 1000px (grid-4), 2 across on tablets (no 3+1 orphan rows), 1 on phones */
+.lv-videos { --min: 300px; }
+
+/* ---- Video cards: thumbnail with the forged play token (no text over the image) ---- */
+.lv-video .card-media { position: relative; }
+.lv-video .card-media::after {
+  content: ""; position: absolute; left: 50%; top: 50%;
+  width: clamp(44px, 22%, 64px); aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  background: url(/assets/icons/forged/play.png) center / contain no-repeat;
+  filter: drop-shadow(0 3px 0 rgba(3, 8, 14, .45));
+  transition: transform var(--dur) var(--ease);
+}
+.lv-video:hover .card-media::after, .lv-video:focus-visible .card-media::after { transform: translate(-50%, -50%) scale(1.08); }
+.lv-video .meta { margin: 0; }
+.lv-video .card-text { margin-top: auto; padding-top: var(--s-2); font-size: var(--fs-sm); font-weight: 700; color: var(--link); }
+.lv-video .card-text::after { content: " \2197"; }
+
+/* "Done with Easy?" plate that fills the last grid cell */
+a.panel.lv-next { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: var(--s-2); }
+.lv-next img { width: 64px; height: 64px; object-fit: contain; }
+.lv-next h3 { margin: 0; }
+
+/* YouTube callout: buttons under the text */
+.lv-yt .btn-row { margin-top: var(--s-4); }
+
+/* Path steps: three across from tablet width (no 2+1 orphan) */
+.lv-path-steps.steps-row { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); }

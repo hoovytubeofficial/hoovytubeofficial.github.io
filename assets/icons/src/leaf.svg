@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: leaf. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="veins" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="10" stroke-linecap="round">
+        <path d="M58 206 Q120 150 214 44"/>
+        <path d="M110 150 L84 108"/>
+        <path d="M110 150 L156 162"/>
+        <path d="M152 102 L138 66"/>
+        <path d="M152 102 L196 106"/>
+      </g>
+    </mask>
+  </defs>
+  <path mask="url(#veins)" fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round" d="M50 214 Q30 100 120 52 Q180 22 240 16 Q246 80 214 140 Q170 216 50 214 Z"/>
+  <path d="M60 204 L20 246" stroke="#000" stroke-width="18" stroke-linecap="round" fill="none"/>
+</svg>

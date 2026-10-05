@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: car. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="body" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <polygon points="104,110 120,80 140,80 140,110" fill="#000" stroke="#000" stroke-width="6" stroke-linejoin="round"/>
+      <polygon points="154,110 154,80 172,80 194,110" fill="#000" stroke="#000" stroke-width="6" stroke-linejoin="round"/>
+      <circle cx="72" cy="182" r="46" fill="#000"/>
+      <circle cx="190" cy="182" r="46" fill="#000"/>
+    </mask>
+    <mask id="hub" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <circle cx="72" cy="182" r="13" fill="#000"/>
+      <circle cx="190" cy="182" r="13" fill="#000"/>
+    </mask>
+  </defs>
+  <path mask="url(#body)" fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round" d="M12 176 L12 136 Q12 122 28 120 L64 114 L92 66 Q98 56 112 56 L172 56 Q184 56 192 66 L222 112 L232 114 Q246 118 246 134 L246 176 Q246 186 236 186 L22 186 Q12 186 12 176 Z"/>
+  <g mask="url(#hub)" fill="#000">
+    <circle cx="72" cy="182" r="38"/>
+    <circle cx="190" cy="182" r="38"/>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: temple (Greco-Roman architecture models). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <rect x="66" y="112" width="18" height="96" fill="#000"/>
+      <rect x="119" y="112" width="18" height="96" fill="#000"/>
+      <rect x="172" y="112" width="18" height="96" fill="#000"/>
+      <line x1="20" y1="102" x2="236" y2="102" stroke="#000" stroke-width="8"/>
+      <line x1="16" y1="218" x2="240" y2="218" stroke="#000" stroke-width="8"/>
+      <path d="M128 34 L196 74 L60 74 Z" fill="none" stroke="#000" stroke-width="8" stroke-linejoin="round"/>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" mask="url(#cut)">
+    <path d="M128 10 L240 78 L240 108 L16 108 L16 78 Z"/>
+    <rect x="28" y="100" width="200" height="112"/>
+    <rect x="10" y="208" width="236" height="36" rx="6"/>
+  </g>
+</svg>

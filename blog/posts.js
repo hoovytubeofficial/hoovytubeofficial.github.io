@@ -11,27 +11,36 @@
      date:    '2026-08-17',               // YYYY-MM-DD
      author:  'HoovyTube',
      tags:    ['tag one', 'tag two'],
-     cover:   '/assets/blog/covers/name.jpg',  // optional; falls back gracefully
+     cover:   '/media/posters/name.jpg',  // optional; must be a file that exists (no cover = no image)
      coverAlt:'Describe the image for screen readers',
+     coverCaption: 'Short caption shown under the cover', // optional
+     is_archived: false,                  // optional; true hides the post
      body: [
        'A paragraph.',
        'Another paragraph.',
        { h: 'A subheading' },             // optional section heading
        { quote: 'A pull quote.' },        // optional pull quote
+       { note: 'An editor\'s note.' },     // optional boxed note (facts that changed since writing)
      ],
    }
+
+   Links inside text: [text](url). On-site links stay root-relative: [HoovyTools](/hoovytools/).
+   Every post automatically gets the share buttons, the sidebar Patreon panel and the upsell
+   (rendered by /shared/pages/journal.js). Nothing is added inside the post text itself.
    ============================================================ */
 window.HT_POSTS = [
   {
     slug: 'shoulders-of-giants',
     title: 'Shoulders of Giants and the end of HoovyTools',
-    dek: 'HoovyTools ships next weekend. Before it goes, a note on free tools, the chain I came up through, and building the kind of thing the next person can walk away from.',
+    dek: 'A note on free tools, the chain I came up through, and building the kind of thing the next person can walk away from.',
     date: '2026-08-17',
     author: 'HoovyTube',
-    tags: ['manifesto', 'HoovyTools', 'open source'],
-    cover: '/assets/blog/covers/shoulders-of-giants.jpg',
-    coverAlt: 'SFM to Blender Particles Import — HoovyTools promotional art.',
+    tags: ['manifesto', 'HoovyTools'],
+    cover: '/media/posters/hoovytools-pcf-import-demo.jpg',
+    coverAlt: 'Blender with the HoovyTools Particle Import panel open and an imported SFM fire effect in the viewport.',
+    coverCaption: 'HoovyTools Particle Import rebuilding an SFM fire effect inside Blender',
     body: [
+      { note: "This post was written ahead of the HoovyTools release it talks about. Both add-ons are out now and free: [get them on the HoovyTools page](/hoovytools/)." },
       "HoovyTools ships next weekend, more or less. It moves models, animation, shape keys, cameras, sounds and particles between an old Valve program and Blender, which is a sentence that means everything to about 20,000 people and nothing at all to everybody else. Before it goes out I want to tie off this chapter with the thing I have been chewing on the whole time I was building it.",
       "I am not interested in building a gig out of this, so HoovyTools is free, and anything I put out without a paywall is yours to do whatever You like with. Credit appreciated, never required. There are paid packs too, and none of them are load-bearing for the free tools.",
       "Addons rotate, scenes rotate, people burn out and hand the keys to whoever is still standing, and that is roughly what I intend to do myself. What survives all that churn is the architecture, and architecture is just a set of decisions somebody made on purpose about how much of Your work should belong to them.",
@@ -40,7 +49,8 @@ window.HT_POSTS = [
       "The distinction landed for me through a guy in the Gothic 2 community: the sort who ships unleaveable prefabs, obscures how they were made, laughs at the original community for “using abandonware”, and designs a workflow that quietly requires him to stay in the picture. He is also the sort who puts his own photograph on the promotional material for a prefab library. Not a logo. His actual face, lit and composed with the chin at a flattering angle, radiating quiet authorship beside a folder of rocks and crates. As though the barrels would not load unless he were standing there in the marketing, gesturing warmly at his own contribution to civilization. A human Netflix subscription, cancellable only by starting over from nothing. Nobody builds a chain like that by accident, and You can see it plainest on the day somebody else solves the problem he was sitting on, because that is the day he panics.",
       "To be clear, making prefab packages is great fun. Twenty hours assembling a package for Unreal out of Gothic 2 files - stuff that would be dead weight in an Unreal user's hands otherwise - is real work and deserves to be treated as such. Nobody owes anybody the files they compiled it with. All of it fine, right up until the intentional chain of asset dependencies leads back to a website that needs the traffic. What I am circling is closer to Edison versus everybody who moved to Hollywood to get away from him, which is possibly my superego using a manifesto about a stupid little addon as an escape hatch into real life. Fine. It is my manifesto.",
       "So I built the former thing. It asks for exactly one converter, dmxconvert.exe, which the original developers put inside Your install fifteen years before I turned up with opinions, and which stays where it sits because its license says so. Nothing mirrored, nothing archived, no build step of mine to keep warm. Burn my account and salt the ground, and HoovyTools runs tomorrow exactly as it runs today. Build Your prefab packages with it, by all means.",
-      "Because it leans on nothing but what SFM already has, it does not care what You point it at. Every SFM game asset works - TF2, Portal, Half-Life, Left 4 Dead, whatever else You have mounted, whatever You dragged in yourself. Writing a .pcf reader is harder than rebuilding a particle by hand, and it is the better thing to have, because it teaches the next person to work without me and to carry the method somewhere I will never see. When TF2 ships new [particles](https://hoovytube.com/hoovytools/#particles), or Your [sessions folder](https://hoovytube.com/hoovytools/#sessions) quietly triples in size, You will not need my pre-approval to use any of it.",
+      "Because it leans on nothing but what SFM already has, it does not care what You point it at. Every SFM game asset works - TF2, Portal, Half-Life, Left 4 Dead, whatever else You have mounted, whatever You dragged in yourself. Writing a .pcf reader is harder than rebuilding a particle by hand, and it is the better thing to have, because it teaches the next person to work without me and to carry the method somewhere I will never see. When TF2 ships new [particles](/hoovytools/#particles), or Your [sessions folder](/hoovytools/#sessions) quietly triples in size, You will not need my pre-approval to use any of it.",
+      { note: "Setup note: the session importer runs on top of the free [SourceIO](https://github.com/REDxEYE/SourceIO) add-on, so install that first. Particle Import is standalone and needs only Blender 4.2 or newer. Full steps are on the [HoovyTools page](/hoovytools/)." },
       "That is the whole thought, and by next weekend I would like to be free of it. Take the code when it lands and do better things with it. Whether any of this was worth doing gets decided by how easily the next person walks away from it, which is the only test I know of that a builder cannot rig in his own favour.",
       "And go support the other people making these things: Spooky Cat, BedrockSFM, Hypno, Ibra, doormaker, who helped port my particle resizer into SFM, and especially RedEye.",
     ],

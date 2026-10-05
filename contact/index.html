@@ -1,94 +1,208 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - HoovyTube</title>
+  <meta name="description" content="Send HoovyTube a message: questions, collaborations, business enquiries and support for Patreon members. Or subscribe to the newsletter.">
+  <link rel="canonical" href="https://hoovytube.com/contact/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <title>Contact - HoovyTube</title>
-  <meta name="description" content="Get in touch with HoovyTube and subscribe to the newsletter.">
-  <link rel="stylesheet" href="/styles/ht.css?v=10">
-  <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-  <style>
-    /* Map to shared themeable tokens (ht.css) so the theme toggle repaints this page */
-    :root { --ht-accent: var(--accent); --ht-accent-ink: var(--accent-ink); --ht-bg: var(--bg); --ht-card: var(--panel); --ht-text: var(--text); --ht-muted: var(--muted); --ht-line: var(--line); --ht-input: var(--panel-2); }
-    * { box-sizing: border-box; }
-    body { margin: 0; padding-bottom: 120px; font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; background: var(--ht-bg); color: var(--ht-text); line-height: 1.55; }
-    .wrap { max-width: 640px; margin: 0 auto; padding: 2.5rem 1.25rem 4rem; }
-    header.site { display: flex; align-items: center; justify-content: space-between; padding: 1rem 1.25rem; border-bottom: 1px solid var(--ht-line); }
-    header.site a.brand { font-weight: 700; font-size: 1.15rem; color: var(--ht-text); text-decoration: none; letter-spacing: .3px; }
-    header.site a.home { color: var(--ht-muted); text-decoration: none; font-size: .95rem; }
-    header.site a.home:hover { color: var(--ht-text); }
-    h1 { font-size: 1.9rem; margin: 0 0 .35rem; }
-    p.lead { color: var(--ht-muted); margin: 0 0 2rem; }
-    .card { background: var(--ht-card); border: 1px solid var(--ht-line); border-radius: 14px; padding: 1.5rem; margin-bottom: 1.75rem; }
-    .card h2 { margin: 0 0 1rem; font-size: 1.2rem; }
-    label { display: block; font-size: .85rem; color: var(--ht-muted); margin: 0 0 .3rem; }
-    input, textarea { width: 100%; padding: .7rem .8rem; margin-bottom: 1rem; background: var(--ht-input); border: 1px solid var(--ht-line); border-radius: 8px; color: var(--ht-text); font: inherit; }
-    input:focus, textarea:focus { outline: none; border-color: var(--ht-accent); }
-    textarea { min-height: 130px; resize: vertical; }
-    .row { display: flex; gap: 1rem; }
-    .row > div { flex: 1; }
-    button { background: var(--ht-accent); color: var(--ht-accent-ink); border: none; border-radius: 8px; padding: .8rem 1.4rem; font-weight: 600; font-size: 1rem; cursor: pointer; }
-    button:disabled { opacity: .6; cursor: default; }
-    .msg { font-size: .9rem; margin-top: .5rem; min-height: 1.2em; }
-    .msg.ok { color: #6fcf7f; }
-    .msg.err { color: #e06b6b; }
-    .news { display: flex; gap: .6rem; align-items: start; }
-    .news input { margin-bottom: 0; }
-    .news button { white-space: nowrap; }
-    @media (max-width: 520px) { .row, .news { flex-direction: column; gap: 0; } }
-  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HoovyTube">
+  <meta property="og:url" content="https://hoovytube.com/contact/">
+  <meta property="og:title" content="Contact - HoovyTube">
+  <meta property="og:description" content="Questions, collaborations, business enquiries and support for Patreon members.">
+  <meta property="og:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HoovyTube - SFM assets, Blender add-ons and free tutorials">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Contact - HoovyTube">
+  <meta name="twitter:description" content="Questions, collaborations, business enquiries and support for Patreon members.">
+  <meta name="twitter:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <link rel="stylesheet" href="/styles/pages/contact.css?v=1">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
 </head>
 <body>
-  <header class="site">
-    <a class="brand" href="/">HoovyTube</a>
-    <a class="home" href="/">← Home</a>
-  </header>
-
-  <main class="wrap">
-    <h1>Get in touch</h1>
-    <p class="lead">Questions, collaborations, or just want to say hi? Send a message - or subscribe to hear about what's next.</p>
-
-    <section class="card">
-      <h2>Contact</h2>
-      <form id="contactForm" novalidate>
-        <div class="row">
-          <div>
-            <label for="cName">Name</label>
-            <input id="cName" name="name" type="text" autocomplete="name" required>
+  <main id="main">
+    <!-- 1. Hero -->
+    <section class="section c-hero">
+      <div class="container">
+        <div class="panel page-hero">
+          <div class="page-hero-text">
+            <span class="eyebrow">Contact</span>
+            <h1>Get in touch</h1>
+            <p class="lead">Questions, collaborations, or just want to say hi? Send a message, or subscribe to hear about what's next.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary btn-lg" href="#write">Write a message</a>
+              <a class="btn btn-patreon btn-lg" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join on Patreon</a>
+            </div>
+            <p class="page-hero-note">Already a member? Your membership itself lives on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a>. For help with a pack, see <a href="#member-support">support for Patreon members</a> below.</p>
           </div>
-          <div>
-            <label for="cEmail">Email</label>
-            <input id="cEmail" name="email" type="email" autocomplete="email" required>
+          <div class="page-hero-media">
+            <img class="page-hero-art is-icon" src="/assets/icons/forged/mail.png" alt="" width="256" height="256">
           </div>
         </div>
-        <label for="cSubject">Subject <span style="opacity:.6">(optional)</span></label>
-        <input id="cSubject" name="subject" type="text">
-        <label for="cMessage">Message</label>
-        <textarea id="cMessage" name="message" required></textarea>
-        <button type="submit" id="cSubmit">Send message</button>
-        <div class="msg" id="cMsg" role="status" aria-live="polite"></div>
-      </form>
+      </div>
     </section>
 
-    <section class="card">
-      <h2>Newsletter</h2>
-      <p style="color:var(--ht-muted); margin:0 0 1rem; font-size:.95rem">Get occasional updates. No spam, unsubscribe anytime.</p>
-      <form id="newsForm" class="news" novalidate>
-        <div style="flex:1">
-          <label for="nEmail" style="position:absolute;left:-9999px">Email</label>
-          <input id="nEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+    <!-- 2. The form + what to write about -->
+    <section class="section">
+      <div class="container">
+        <div class="split split-wide-left c-split">
+          <div class="flow">
+            <div class="panel c-form-panel" id="write">
+              <h2 class="h3">Send a message</h2>
+              <p class="c-intro">Questions, collabs, or just say hi. I read every message.</p>
+              <form id="contactForm" novalidate>
+                <div class="c-row">
+                  <div class="field">
+                    <label for="cName">Name</label>
+                    <input class="input" id="cName" name="name" type="text" autocomplete="name" required>
+                  </div>
+                  <div class="field">
+                    <label for="cEmail">Email</label>
+                    <input class="input" id="cEmail" name="email" type="email" autocomplete="email" required>
+                  </div>
+                </div>
+                <div class="field">
+                  <label for="cSubject">Subject <span class="c-opt">(optional)</span></label>
+                  <input class="input" id="cSubject" name="subject" type="text">
+                </div>
+                <div class="field">
+                  <label for="cMessage">Message</label>
+                  <textarea class="textarea" id="cMessage" name="message" rows="8" required></textarea>
+                </div>
+                <button type="submit" id="cSubmit" class="btn btn-primary">Send message</button>
+                <div class="msg" id="cMsg" role="status" aria-live="polite"></div>
+              </form>
+            </div>
+            <div class="panel c-news">
+              <span class="eyebrow">Newsletter</span>
+              <h2 class="h3">Hear what's next</h2>
+              <p class="muted">Get occasional updates. No spam, unsubscribe anytime.</p>
+              <form id="newsForm" class="inline-form" novalidate>
+                <label for="nEmail" class="sr-only">Email</label>
+                <input class="input" id="nEmail" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+                <button type="submit" id="nSubmit" class="btn btn-primary">Subscribe</button>
+              </form>
+              <div class="msg" id="nMsg" role="status" aria-live="polite"></div>
+            </div>
+          </div>
+
+          <div class="flow">
+            <div class="panel c-topic" id="business">
+              <span class="eyebrow">Collaborations</span>
+              <div class="c-topic-head">
+                <img src="/assets/icons/forged/film-reel.png" alt="" width="52" height="52" loading="lazy">
+                <h2 class="h3">Business and collaborations</h2>
+              </div>
+              <p>Planning a collab, or have a business question? Use the form and include:</p>
+              <ul class="check-list">
+                <li>who you are, with a link to your channel or project</li>
+                <li>what you have in mind</li>
+                <li>any dates that matter</li>
+              </ul>
+              <p>Made something with the library? I'd genuinely like to see it: send it over.</p>
+              <div class="btn-row"><a class="btn btn-secondary" href="#write" data-subject="Business / collaboration">Write about a collab</a></div>
+            </div>
+
+            <div class="panel c-topic" id="member-support">
+              <span class="eyebrow eyebrow-patreon">Patreon members</span>
+              <div class="c-topic-head">
+                <img src="/assets/icons/forged/patreon.png" alt="" width="52" height="52" loading="lazy">
+                <h2 class="h3">Support for Patreon members</h2>
+              </div>
+              <p>Can't find a pack, a download misbehaves, or a file won't load in SFM? Send a message with the form and include:</p>
+              <ul class="check-list">
+                <li>the name or email on your Patreon account</li>
+                <li>your tier</li>
+                <li>the pack or file, and what went wrong</li>
+              </ul>
+              <p>Joining, changing your tier and payments are handled on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a> itself.</p>
+              <div class="btn-row"><a class="btn btn-secondary" href="#write" data-subject="Patreon member support">Write a support message</a></div>
+            </div>
+          </div>
         </div>
-        <button type="submit" id="nSubmit">Subscribe</button>
-      </form>
-      <div class="msg" id="nMsg" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- 3. Quick answers -->
+    <section class="section" id="faq">
+      <div class="container container-narrow">
+        <header class="section-head">
+          <span class="eyebrow">Before you write</span>
+          <h2>Quick answers</h2>
+          <p class="lead">The questions that come up most.</p>
+        </header>
+        <div class="faq" data-accordion>
+          <details class="faq-item" name="cfaq">
+            <summary>Can I use the effects in my own videos?</summary>
+            <div class="faq-body"><p>That's what they're for. Animators across the community build with them. If you make something with the library, I'd genuinely like to see it: <a href="#write">send it over</a>.</p></div>
+          </details>
+          <details class="faq-item" name="cfaq">
+            <summary>Where do I get the full asset library?</summary>
+            <div class="faq-body"><p>The library, <mark class="hl">900+ particle effects</mark>, 600+ animations and 30+ scenebuilds, is on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a> in three tiers; memberships start at $20/month. A good chunk is free on the <a href="/workshop/">Steam Workshop</a>, and single packs are in the <a class="hl-patreon no-icon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p></div>
+          </details>
+          <details class="faq-item" name="cfaq">
+            <summary>Do I need anything else to run the add-ons?</summary>
+            <div class="faq-body"><p>Session import runs on top of <a href="https://github.com/REDxEYE/SourceIO" target="_blank" rel="noopener">SourceIO</a>, so install that first. Particle Import is standalone and needs nothing but Blender 4.2 or newer. Full steps are on the <a href="/hoovytools/">HoovyTools page</a>.</p></div>
+          </details>
+          <details class="faq-item" name="cfaq">
+            <summary>Do you teach SFM and Blender?</summary>
+            <div class="faq-body"><p>Yep, and it's all free. The tutorials live on the <a href="/learn/">Learn page</a>, sorted Easy, Medium and Hard so you can jump in at your level.</p></div>
+          </details>
+          <details class="faq-item" name="cfaq">
+            <summary>How do I support you and stay in touch?</summary>
+            <div class="faq-body"><p>Join the <a class="hl-patreon" href="/products/">Patreon</a> for the full asset library, subscribe on <a href="https://www.youtube.com/@HoovyTube" target="_blank" rel="noopener">YouTube</a>, or join the <a href="#newsletter" data-newsletter-open>newsletter</a> for new videos, drops and updates.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Page-relevant upsell (kept away from the CTA band) -->
+    <section class="section">
+      <div class="container">
+        <aside class="upsell" aria-label="Patreon membership">
+          <img class="upsell-art" src="/assets/icons/forged/badge-patreon.png" alt="" width="108" height="142" loading="lazy">
+          <div class="upsell-body">
+            <span class="eyebrow eyebrow-patreon">Before you ask</span>
+            <h2 class="upsell-title">Looking for an effect? It may already be in the library</h2>
+            <p>The library holds <mark class="hl">900+ particle effects</mark>, 600+ animations and 30+ scenebuilds, sorted environment / physics / impacts / misc, with PNG previews and expanded docs. It's on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a> in three tiers, and memberships start at $20/month.</p>
+          </div>
+          <div class="upsell-actions">
+            <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join from $20/month</a>
+            <a class="btn btn-ghost btn-sm" href="/products/">Compare the tiers</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 5. Follow along (keeps the upsell away from the CTA band) -->
+    <section class="section" id="elsewhere">
+      <div class="container container-narrow">
+        <div class="panel c-follow">
+          <span class="eyebrow eyebrow-olive">Follow along</span>
+          <h2 class="h3">Find HoovyTube elsewhere</h2>
+          <p class="muted">New videos and tutorials on YouTube, free items on the Steam Workshop, and the community on Discord.</p>
+          <div class="btn-row">
+            <a class="btn btn-secondary btn-sm" href="https://www.youtube.com/@HoovyTube" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/youtube.png" alt="" width="28" height="28">YouTube</a>
+            <a class="btn btn-secondary btn-sm" href="https://steamcommunity.com/id/HoovyTube/myworkshopfiles/" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/steam.png" alt="" width="28" height="28">Steam Workshop</a>
+            <a class="btn btn-secondary btn-sm" href="https://discord.gg/VhUCwuuE84" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/discord.png" alt="" width="28" height="28">Discord</a>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
-  <footer class="site">
-    <small>© 2026 HoovyTube. All rights reserved.</small>
-  </footer>
+  <footer class="site"></footer>
 
   <script>
     const SUPABASE_URL = 'https://iglbfojatowaxbhjubvz.supabase.co';
@@ -148,6 +262,28 @@
       finally { nSubmit.disabled = false; nSubmit.textContent = 'Subscribe'; }
     });
   </script>
-  <script defer src="/shared/ht-nav.js?v=11"></script>
+  <script>
+    // Topic buttons: pre-fill the subject, then jump to the form (no-JS: plain #write anchor).
+    (function () {
+      var subj = document.getElementById('cSubject');
+      var target = document.getElementById('write');
+      if (!subj || !target) return;
+      var nameEl = document.getElementById('cName');
+      var msgEl = document.getElementById('cMessage');
+      var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      [].forEach.call(document.querySelectorAll('a[data-subject]'), function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault();
+          subj.value = a.getAttribute('data-subject') || '';
+          target.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+          var f = nameEl && !nameEl.value.trim() ? nameEl : msgEl;
+          if (f) f.focus({ preventScroll: true });
+        });
+      });
+    })();
+  </script>
+  <script defer src="/shared/ht-nav.js?v=20"></script>
+  <script defer src="/shared/ht-ui.js?v=20"></script>
+  <script defer src="/shared/ht-newsletter.js?v=20"></script>
 </body>
 </html>

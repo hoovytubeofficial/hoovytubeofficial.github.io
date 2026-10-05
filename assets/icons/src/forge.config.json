@@ -6,7 +6,12 @@
   },
   "badges": [
     { "out": "badge-workshop.png", "icon": "workshop", "label": "Steam Workshop" },
-    { "out": "badge-patreon.png", "icon": "patreon", "label": "Patreon" },
+    { "out": "badge-patreon.png", "icon": "patreon", "label": "Patreon",
+      "colors": { "rim": "#4a170b", "frameTop": "#ffd9c0", "frameSide": "#e0937a", "frameBottom": "#7d2814", "frameLine": "#ffc2a3",
+                  "panelTop": "#c65233", "panelBottom": "#a83c22", "depth": "#3a1007",
+                  "labelTop": "#fff6e8", "labelBottom": "#f4dcc6", "labelOutline": "#4a170b", "labelDepth": "#2b0c05",
+                  "labelHighlight": "#fffaf3", "labelShade": "#d8b29a" },
+      "iconOptions": { "colors": { "outline": "#4a170b", "depth": "#2b0c05", "ink": "#2b0c05" } } },
     { "out": "badge-tutorials.png", "icon": "graduation", "label": "Tutorials" }
   ]
 }

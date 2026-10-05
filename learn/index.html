@@ -1,137 +1,343 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learn SFM &amp; Blender: free tutorials - HoovyTube</title>
+  <meta name="description" content="15 free Source Filmmaker and Blender tutorials from HoovyTube on YouTube, sorted Easy, Medium and Hard, from first-timer basics to advanced deep-dives.">
+  <link rel="canonical" href="https://hoovytube.com/learn/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <title>Learn SFM & Blender - HoovyTube</title>
-  <meta name="description" content="HoovyTube's Source Filmmaker and Blender tutorials, by difficulty.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css?v=10">
-  <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
-  <style>
-    .embed { position: relative; border-radius: 16px; overflow: hidden; border: 1px solid var(--line); aspect-ratio: 16/9; background: #10171f; }
-    .embed iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    .levels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-    @media (max-width: 560px) { .levels { grid-template-columns: 1fr; } }
-    .level { border: 1px solid var(--line); border-radius: 16px; background: var(--panel); padding: 3rem 1.2rem 1.6rem; text-align: center; cursor: pointer; overflow: visible; transition: transform .2s, border-color .2s, box-shadow .2s; }
-    .level:hover { transform: translateY(-4px); border-color: var(--accent); box-shadow: 0 14px 34px var(--glow); }
-    .level img { width: 168px; height: 168px; object-fit: contain; display: block; margin: -4.4rem auto .4rem; transition: transform .3s cubic-bezier(.16,1,.3,1); filter: drop-shadow(0 10px 18px rgba(0,0,0,.4)); }
-    .level:hover img { transform: scale(1.22) rotate(-7deg); }
-    .level h3 { margin: .6rem 0 .3rem; font-size: 1.3rem; }
-    .level p { margin: 0; color: var(--muted); font-size: .9rem; }
-    .level .count { display: inline-block; margin-top: .7rem; font-size: .72rem; font-weight: 700; color: var(--accent-ink); background: var(--accent); padding: .2rem .65rem; border-radius: 999px; }
-    /* Inline expanding panel (replaces the modal) */
-    .level-panel { margin-top: 1.4rem; border: 1px solid var(--line); background: var(--panel); padding: 1.6rem;
-      animation: lp-in .35s cubic-bezier(.16,1,.3,1); }
-    .level-panel[hidden] { display: none; }
-    @keyframes lp-in { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
-    .level-panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
-    .level-panel-head h3 { margin: 0; font-size: 1.3rem; }
-    .lp-close { border: none; background: var(--panel-2); color: var(--text); width: 34px; height: 34px; cursor: pointer; font-size: 1rem; line-height: 1; }
-    .level.active { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
-    .vid-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1rem; }
-    .vid { display: block; overflow: hidden; border: 1px solid var(--line); text-decoration: none; position: relative; }
-    .vid img { width: 100%; aspect-ratio: 16/9; object-fit: cover; display: block; }
-    .vid .play { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; background: rgba(0,0,0,.18); opacity: 0; transition: opacity .2s; }
-    .vid .play svg { width: 44px; height: 44px; }
-    .vid:hover .play { opacity: 1; }
-    @media (prefers-reduced-motion: reduce) { .level-panel { animation: none; } }
-  </style>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HoovyTube">
+  <meta property="og:url" content="https://hoovytube.com/learn/">
+  <meta property="og:title" content="Learn SFM &amp; Blender: free tutorials - HoovyTube">
+  <meta property="og:description" content="15 free SFM and Blender tutorials sorted Easy, Medium and Hard. Every technique behind the HoovyTube library, taught with no paywall.">
+  <meta property="og:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HoovyTube - SFM assets, Blender add-ons and free tutorials">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Learn SFM &amp; Blender: free tutorials - HoovyTube">
+  <meta name="twitter:description" content="15 free SFM and Blender tutorials sorted Easy, Medium and Hard. Every technique behind the HoovyTube library, taught with no paywall.">
+  <meta name="twitter:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <link rel="stylesheet" href="/styles/pages/learn.css?v=1">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Learn SFM & Blender",
+    "description": "Free Source Filmmaker and Blender tutorials from HoovyTube, sorted Easy, Medium and Hard.",
+    "url": "https://hoovytube.com/learn/",
+    "isAccessibleForFree": true,
+    "mainEntity": {
+      "@type": "ItemList",
+      "numberOfItems": 15,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "url": "https://youtu.be/YmSwhRcUjhE" },
+        { "@type": "ListItem", "position": 2, "url": "https://youtu.be/x1QJcaWRu80" },
+        { "@type": "ListItem", "position": 3, "url": "https://youtu.be/_szeNOlH1iM" },
+        { "@type": "ListItem", "position": 4, "url": "https://youtu.be/JJ0fv2nM-WY" },
+        { "@type": "ListItem", "position": 5, "url": "https://youtu.be/KaL8Ox3yCyU" },
+        { "@type": "ListItem", "position": 6, "url": "https://youtu.be/GqgOMOyz6_Q" },
+        { "@type": "ListItem", "position": 7, "url": "https://youtu.be/C4-EtGZaT9g" },
+        { "@type": "ListItem", "position": 8, "url": "https://youtu.be/SEUJu0mizQQ" },
+        { "@type": "ListItem", "position": 9, "url": "https://youtu.be/2DxrbY0qxrE" },
+        { "@type": "ListItem", "position": 10, "url": "https://youtu.be/KBpNWf9fU6Y" },
+        { "@type": "ListItem", "position": 11, "url": "https://youtu.be/B2SGgXCNj20" },
+        { "@type": "ListItem", "position": 12, "url": "https://youtu.be/wFKL-Ncl6Vc" },
+        { "@type": "ListItem", "position": 13, "url": "https://youtu.be/THCqLcG8MqM" },
+        { "@type": "ListItem", "position": 14, "url": "https://youtu.be/bzLlSpB_sMQ" },
+        { "@type": "ListItem", "position": 15, "url": "https://youtu.be/0nK5XmZHeec" }
+      ]
+    }
+  }
+  </script>
 </head>
 <body>
-  <header class="pagehead">
-    <div class="inner">
-      <p class="eyebrow">Tutorials</p>
-      <h1>Learn SFM &amp; Blender</h1>
-      <p class="ph-lead">Pick your level and I'll hand you the right tutorials - from first-timer basics to advanced deep-dives.</p>
-    </div>
-    <div class="rule"></div>
-  </header>
+  <main id="main">
 
-  <main class="wrap page" style="padding-top:1.6rem">
-    <!-- DIFFICULTY PICKER -->
-    <section style="margin-bottom:2.6rem">
-      <div class="section-head"><h2>Pick your level</h2><span class="muted">tap one</span></div>
-      <div class="levels">
-        <div class="level spot" data-level="easy">
-          <img src="/media/assets/level-easy.png" alt="Easy"><p>Absolute basics - start here.</p><span class="count">7 tutorials</span>
+    <!-- 1. Hero -->
+    <section class="section" aria-labelledby="heroTitle">
+      <div class="container">
+        <div class="panel page-hero">
+          <div class="page-hero-text">
+            <span class="eyebrow eyebrow-olive"><img src="/assets/icons/forged/graduation.png" alt="" width="20" height="20">Free tutorials</span>
+            <h1 id="heroTitle">Learn SFM &amp; Blender</h1>
+            <p class="lead">Pick your level and I'll hand you the right tutorials, from first-timer basics to advanced deep-dives. Every technique behind the library is taught here, free.</p>
+            <ul class="tags lv-proof" aria-label="About the tutorials">
+              <li class="tag tag-free">Free</li>
+              <li class="tag"><img src="/assets/icons/forged/youtube.png" alt="" width="18" height="18">15 tutorials on YouTube</li>
+              <li class="tag">Easy · Medium · Hard</li>
+            </ul>
+            <div class="btn-row">
+              <a class="btn btn-patreon btn-lg" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Get the assets on Patreon</a>
+              <a class="btn btn-secondary btn-lg" href="#levels">Pick your level</a>
+            </div>
+            <p class="page-hero-note">Rather skip the build? The finished effects, animations and scenebuilds are on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a>; memberships start at $20/month.</p>
+          </div>
+          <div class="page-hero-media">
+            <img class="page-hero-art" src="/assets/icons/forged/badge-tutorials.png" alt="" width="390" height="513">
+          </div>
         </div>
-        <div class="level spot" data-level="medium">
-          <img src="/media/assets/level-medium.png" alt="Medium"><p>Level up your scenes.</p><span class="count">5 tutorials</span>
-        </div>
-        <div class="level spot" data-level="hard">
-          <img src="/media/assets/level-hard.png" alt="Hard"><p>Advanced deep-dives.</p><span class="count">4 tutorials</span>
-        </div>
-      </div>
-
-      <div class="level-panel" id="levelPanel" hidden>
-        <div class="level-panel-head">
-          <h3 id="lpTitle">Tutorials</h3>
-          <button class="lp-close" id="lpClose" aria-label="Collapse">✕</button>
-        </div>
-        <div class="vid-grid" id="vidGrid"></div>
       </div>
     </section>
 
-    <div class="divider"></div>
-
-    <!-- FULL PLAYLIST -->
-    <section>
-      <div class="section-head"><h2>Full playlist</h2><span class="muted">everything</span></div>
-      <div class="embed spot">
-        <iframe src="https://www.youtube.com/embed/videoseries?list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn"
-          title="HoovyTube SFM & Blender tutorials" loading="lazy"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+    <!-- 2. Pick your level -->
+    <section class="section" id="levels" aria-labelledby="levelsTitle">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Three levels</span>
+          <h2 id="levelsTitle">Pick your level</h2>
+          <p class="lead">Jump in exactly where you are. Each level is a short, focused set of videos.</p>
+        </header>
+        <div class="grid grid-3 lv-pick" data-reveal="stagger">
+          <a class="card" href="#easy">
+            <img class="lv-art" src="/media/assets/level-easy-336.png" alt="" width="336" height="336" loading="lazy">
+            <p class="meta"><span class="tag">7 tutorials</span></p>
+            <h3 class="card-title">Easy: start here</h3>
+            <p class="card-text">Absolute basics. Start here if you've never opened SFM.</p>
+          </a>
+          <a class="card" href="#medium">
+            <img class="lv-art" src="/media/assets/level-medium-336.png" alt="" width="336" height="336" loading="lazy">
+            <p class="meta"><span class="tag">4 tutorials</span></p>
+            <h3 class="card-title">Medium: level up</h3>
+            <p class="card-text">Level up your scenes: lighting, motion, composition.</p>
+          </a>
+          <a class="card" href="#hard">
+            <img class="lv-art" src="/media/assets/level-hard-336.png" alt="" width="336" height="336" loading="lazy">
+            <p class="meta"><span class="tag">4 tutorials</span></p>
+            <h3 class="card-title">Hard: deep dives</h3>
+            <p class="card-text">Advanced deep-dives into the techniques behind the packs.</p>
+          </a>
+        </div>
       </div>
     </section>
+
+    <!-- 3. Easy -->
+    <section class="section" id="easy" aria-labelledby="easyTitle">
+      <div class="container">
+        <header class="section-head section-head-split lv-head">
+          <img class="lv-head-art" src="/media/assets/level-easy-336.png" alt="" width="336" height="336" loading="lazy">
+          <div class="lv-head-text">
+            <span class="eyebrow eyebrow-olive">Easy · 7 tutorials</span>
+            <h2 id="easyTitle">Easy: start here</h2>
+            <p class="lead">Absolute basics. Start here if you've never opened SFM. This level includes lip synchronization, two ways, and animating in the Motion Editor.</p>
+          </div>
+        </header>
+        <div class="grid grid-4 lv-videos">
+          <a class="card lv-video" href="https://youtu.be/YmSwhRcUjhE" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/YmSwhRcUjhE/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Easy</span><span>Tutorial 1</span></p>
+            <h3 class="card-title">SFM How to: Lip Synchronization</h3>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/x1QJcaWRu80" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/x1QJcaWRu80/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Easy</span><span>Tutorial 2</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/_szeNOlH1iM" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/_szeNOlH1iM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Easy</span><span>Tutorial 3</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/JJ0fv2nM-WY" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/JJ0fv2nM-WY/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Easy</span><span>Tutorial 4</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/KaL8Ox3yCyU" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/KaL8Ox3yCyU/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Easy</span><span>Tutorial 5</span></p>
+            <h3 class="card-title">SFM How to: Animation in 5 Minutes (Motion Editor)</h3>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/GqgOMOyz6_Q" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/GqgOMOyz6_Q/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Easy</span><span>Tutorial 6</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/C4-EtGZaT9g" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/C4-EtGZaT9g/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Easy</span><span>Tutorial 7</span></p>
+            <h3 class="card-title">SFM How to: Lip Synchronization (Optimized/Export Based)</h3>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="panel lv-next" href="#medium">
+            <img src="/assets/icons/forged/star.png" alt="" width="64" height="64" loading="lazy">
+            <h3 class="h4">Done with Easy?</h3>
+            <p>Move on to Medium and level up your scenes.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. Medium -->
+    <section class="section" id="medium" aria-labelledby="mediumTitle">
+      <div class="container">
+        <header class="section-head section-head-split lv-head">
+          <img class="lv-head-art" src="/media/assets/level-medium-336.png" alt="" width="336" height="336" loading="lazy">
+          <div class="lv-head-text">
+            <span class="eyebrow eyebrow-olive">Medium · 4 tutorials</span>
+            <h2 id="mediumTitle">Medium: level up</h2>
+            <p class="lead">Level up your scenes: lighting, motion, composition. This level includes animation transposition with HoovyTools: SFM Transposition Addon, the same add-on that makes the 600+ animations in <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">the full library</a> transposable.</p>
+          </div>
+        </header>
+        <div class="grid grid-4 lv-videos">
+          <a class="card lv-video" href="https://youtu.be/SEUJu0mizQQ" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/SEUJu0mizQQ/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Medium</span><span>Tutorial 1</span></p>
+            <h3 class="card-title">SFM How to: Animation Transposition (Addon)</h3>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/2DxrbY0qxrE" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/2DxrbY0qxrE/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Medium</span><span>Tutorial 2</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/KBpNWf9fU6Y" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/KBpNWf9fU6Y/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Medium</span><span>Tutorial 3</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/B2SGgXCNj20" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/B2SGgXCNj20/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Medium</span><span>Tutorial 4</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+        </div>
+        <div class="notice notice-free" role="note">
+          <img src="/assets/icons/forged/blender-addon.png" alt="" width="28" height="28" loading="lazy">
+          <p>Moving your scenes to Blender? The free <a href="/hoovytools/">HoovyTools add-ons</a> import whole SFM sessions and rebuild <code>.pcf</code> particle effects as live geometry nodes.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. Hard -->
+    <section class="section" id="hard" aria-labelledby="hardTitle">
+      <div class="container">
+        <header class="section-head section-head-split lv-head">
+          <img class="lv-head-art" src="/media/assets/level-hard-336.png" alt="" width="336" height="336" loading="lazy">
+          <div class="lv-head-text">
+            <span class="eyebrow eyebrow-olive">Hard · 4 tutorials</span>
+            <h2 id="hardTitle">Hard: deep dives</h2>
+            <p class="lead">Advanced deep-dives into the techniques behind <a class="hl-patreon" href="/products/">the packs</a>. This level includes advanced polishing and SFM's Particle Editor.</p>
+          </div>
+        </header>
+        <div class="grid grid-4 lv-videos">
+          <a class="card lv-video" href="https://youtu.be/wFKL-Ncl6Vc" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/wFKL-Ncl6Vc/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Hard</span><span>Tutorial 1</span></p>
+            <h3 class="card-title">SFM How to: Polishing (Advanced)</h3>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/THCqLcG8MqM" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/THCqLcG8MqM/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Hard</span><span>Tutorial 2</span></p>
+            <h3 class="card-title">SFM How to: Particle Editor</h3>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/bzLlSpB_sMQ" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/bzLlSpB_sMQ/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Hard</span><span>Tutorial 3</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+          <a class="card lv-video" href="https://youtu.be/0nK5XmZHeec" target="_blank" rel="noopener">
+            <div class="card-media"><img src="https://i.ytimg.com/vi/0nK5XmZHeec/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div>
+            <p class="meta"><span class="tag">Hard</span><span>Tutorial 4</span></p>
+            <p class="card-text">Watch on YouTube</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. From watching to animating + YouTube -->
+    <section class="section" id="path" aria-labelledby="pathTitle">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Your path</span>
+          <h2 id="pathTitle">From watching to animating</h2>
+          <p class="lead">The assets are a shortcut. The tutorials mean you never need one.</p>
+        </header>
+        <div class="panel">
+          <ol class="steps steps-row lv-path-steps">
+            <li><h3 class="step-title">Watch</h3><p>Pick a level above and work through it at your own pace. The tutorials are free, with no paywall.</p></li>
+            <li><h3 class="step-title">Try</h3><p>Grab the free <a href="/hoovytools/">HoovyTools add-ons</a> and the free items on the <a href="/workshop/">Steam Workshop</a>.</p></li>
+            <li><h3 class="step-title">Skip ahead</h3><p>Want the finished effects instead of building them? They're in the <a class="hl-patreon" href="/products/">Patreon library</a>.</p></li>
+          </ol>
+        </div>
+        <div class="panel panel-invert callout lv-yt">
+          <img class="callout-icon" src="/assets/icons/forged/youtube.png" alt="" width="64" height="64" loading="lazy">
+          <div>
+            <h3 class="callout-title">The tutorials live on YouTube</h3>
+            <p>Subscribe to the HoovyTube channel for new videos, or play every tutorial back to back in the full playlist.</p>
+            <div class="btn-row">
+              <a class="btn btn-primary" href="https://www.youtube.com/@HoovyTube" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/youtube.png" alt="" width="26" height="26">Open the YouTube channel</a>
+              <a class="btn btn-ghost" href="https://www.youtube.com/playlist?list=PLdWxIcNTL_v26r9za13U7_Ptw0cBAD-Cn" target="_blank" rel="noopener">Play the full playlist</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. Upsell -->
+    <section class="section" id="assets" aria-labelledby="upsellTitle">
+      <div class="container">
+        <aside class="upsell" aria-labelledby="upsellTitle">
+          <img class="upsell-art" src="/assets/icons/forged/badge-patreon.png" alt="" width="108" height="142" loading="lazy">
+          <div class="upsell-body">
+            <span class="eyebrow eyebrow-patreon">Skip the build</span>
+            <h2 class="upsell-title" id="upsellTitle">Skip the build: the finished assets are on Patreon</h2>
+            <p>The tutorials teach every technique behind the library. If you'd rather spend the evening animating, the finished <mark class="hl">900+ particle effects</mark>, 600+ animations and 30+ scenebuilds are ready on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a>; memberships start at $20/month. Only need one effect? Single packs are in the <a class="hl-patreon no-icon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+          </div>
+          <div class="upsell-actions">
+            <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="26" height="26">Join from $20/month</a>
+            <a class="btn btn-ghost btn-sm" href="/products/">Compare tiers</a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 8. FAQ -->
+    <section class="section" id="faq" aria-labelledby="faqTitle">
+      <div class="container container-narrow">
+        <header class="section-head">
+          <span class="eyebrow">Answers</span>
+          <h2 id="faqTitle">Tutorial FAQ</h2>
+        </header>
+        <div class="faq" data-accordion>
+          <details class="faq-item" open>
+            <summary>Are the tutorials really free?</summary>
+            <div class="faq-body"><p>Yes. You don't have to pay a cent: every skill used to build the library is walked through on YouTube, with no paywall. You can rebuild all of it yourself.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary>Where should I start?</summary>
+            <div class="faq-body"><p>If you've never opened SFM, start with <a href="#easy">Easy</a>. Comfortable with the basics? <a href="#medium">Medium</a> levels up your scenes, and <a href="#hard">Hard</a> goes deep into the techniques behind the packs.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary>Can I get the finished assets instead?</summary>
+            <div class="faq-body"><p>Yes. The library is on <a class="hl-patreon" href="/products/">Patreon</a> in three tiers (memberships start at $20/month), single packs are in the Patreon shop, and free items are on the <a href="/workshop/">Steam Workshop</a>.</p></div>
+          </details>
+          <details class="faq-item">
+            <summary>Is there anything for Blender?</summary>
+            <div class="faq-body"><p>Yes: <a href="/hoovytools/">HoovyTools</a>, two free Blender add-ons. One imports a whole SFM session; the other rebuilds <code>.pcf</code> particle effects as editable geometry nodes.</p></div>
+          </details>
+        </div>
+      </div>
+    </section>
+
   </main>
-
-  <footer class="site"><small>© 2026 HoovyTube. All rights reserved.</small></footer>
-
-  <script>
-    var LEVELS = {
-      easy:   { title: 'Easy · Start here', ids: ['YmSwhRcUjhE','x1QJcaWRu80','_szeNOlH1iM','JJ0fv2nM-WY','KaL8Ox3yCyU','GqgOMOyz6_Q','C4-EtGZaT9g'] },
-      medium: { title: 'Medium · Level up', ids: ['SEUJu0mizQQ','GqgOMOyz6_Q','2DxrbY0qxrE','KBpNWf9fU6Y','B2SGgXCNj20'] },
-      hard:   { title: 'Hard · Deep dives', ids: ['wFKL-Ncl6Vc','THCqLcG8MqM','bzLlSpB_sMQ','0nK5XmZHeec'] }
-    };
-    var panel = document.getElementById('levelPanel');
-    var grid = document.getElementById('vidGrid');
-    var lpTitle = document.getElementById('lpTitle');
-    var cards = [].slice.call(document.querySelectorAll('.level'));
-    var current = null;
-    var PLAY = '<span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>';
-    function render(k) {
-      var L = LEVELS[k];
-      lpTitle.textContent = L.title;
-      grid.innerHTML = L.ids.map(function (id, i) {
-        return '<a class="vid" href="https://youtu.be/' + id + '" target="_blank" rel="noopener">' +
-          '<img loading="lazy" src="https://img.youtube.com/vi/' + id + '/hqdefault.jpg" alt="Tutorial ' + (i + 1) + '">' + PLAY + '</a>';
-      }).join('');
-    }
-    function collapse() {
-      current = null; panel.hidden = true;
-      cards.forEach(function (c) { c.classList.remove('active'); });
-    }
-    function openLevel(k) {
-      if (!LEVELS[k]) return;
-      if (current === k) { collapse(); return; }   // click the active level again to collapse
-      current = k;
-      render(k);
-      panel.hidden = false;
-      cards.forEach(function (c) { c.classList.toggle('active', c.dataset.level === k); });
-      panel.style.animation = 'none'; void panel.offsetHeight; panel.style.animation = '';  // restart reveal
-      panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-    }
-    cards.forEach(function (el) { el.addEventListener('click', function () { openLevel(el.dataset.level); }); });
-    document.getElementById('lpClose').addEventListener('click', collapse);
-  </script>
-  <script defer src="/shared/ht-nav.js?v=11"></script>
-  <script defer src="/shared/ht-ui.js?v=9"></script>
-  <script defer src="/shared/ht-newsletter.js?v=9"></script>
+  <footer class="site"></footer>
+  <script defer src="/shared/ht-nav.js?v=20"></script>
+  <script defer src="/shared/ht-ui.js?v=20"></script>
+  <script defer src="/shared/ht-newsletter.js?v=20"></script>
 </body>
 </html>

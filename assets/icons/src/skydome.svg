@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: skydome (posable sky spheres). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="9">
+        <path d="M128 72 L128 196"/>
+        <path d="M128 72 C92 96 84 160 88 196"/>
+        <path d="M128 72 C164 96 172 160 168 196"/>
+        <path d="M34 160 C80 150 176 150 222 160"/>
+        <path d="M58 112 C96 104 160 104 198 112"/>
+        <line x1="16" y1="200" x2="240" y2="200"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" mask="url(#cut)">
+    <path d="M24 196 C24 120 72 70 128 70 C184 70 232 120 232 196 Z"/>
+    <rect x="12" y="194" width="232" height="34" rx="12"/>
+  </g>
+  <path fill="#000" d="M150 54 C150 36 166 24 182 30 C190 14 216 14 224 32 C240 30 252 42 248 56 Z"/>
+  <circle cx="58" cy="44" r="22" fill="#000"/>
+</svg>

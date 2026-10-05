@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: camera (movie camera). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cam" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <circle cx="62" cy="70" r="13" fill="#000"/>
+      <circle cx="146" cy="70" r="13" fill="#000"/>
+      <line x1="16" y1="118" x2="186" y2="118" stroke="#000" stroke-width="12"/>
+    </mask>
+  </defs>
+  <g mask="url(#cam)" fill="#000" stroke="#000" stroke-linejoin="round">
+    <circle cx="62" cy="70" r="44"/>
+    <circle cx="146" cy="70" r="44"/>
+    <rect x="22" y="112" width="160" height="104" rx="16" stroke-width="12"/>
+    <polygon points="182,148 238,116 238,212 182,180" stroke-width="14"/>
+  </g>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: core. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="rings" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <circle cx="128" cy="128" r="72" fill="none" stroke="#000" stroke-width="12"/>
+      <circle cx="128" cy="128" r="40" fill="none" stroke="#000" stroke-width="10"/>
+      <circle cx="128" cy="30" r="9" fill="#000"/>
+      <circle cx="128" cy="226" r="9" fill="#000"/>
+      <circle cx="43" cy="79" r="9" fill="#000"/>
+      <circle cx="213" cy="79" r="9" fill="#000"/>
+      <circle cx="43" cy="177" r="9" fill="#000"/>
+      <circle cx="213" cy="177" r="9" fill="#000"/>
+    </mask>
+  </defs>
+  <polygon mask="url(#rings)" points="128,6 233.7,67 233.7,189 128,250 22.3,189 22.3,67" fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round"/>
+</svg>

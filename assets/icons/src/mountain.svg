@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: mountain (terrain packs). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <polyline points="64,96 82,112 98,96 114,112 130,94" fill="none" stroke="#000" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M150 132 L176 214" fill="none" stroke="#000" stroke-width="10" stroke-linecap="round"/>
+      <path d="M48 214 L232 214" fill="none" stroke="#000" stroke-width="9"/>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="12" stroke-linejoin="round" mask="url(#cut)">
+    <path d="M10 232 L98 34 L150 132 L176 96 L246 232 Z"/>
+    <path d="M28 238 C40 214 64 206 84 216 C100 204 126 208 134 226 C150 216 170 220 176 238 Z"/>
+  </g>
+</svg>

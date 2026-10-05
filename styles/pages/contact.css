@@ -1,0 +1,29 @@
+/* /contact/: layout glue only.
+   Every surface, colour, shadow and component look comes from /styles/ht.css (design system v2).
+   Nothing here redefines tokens or component looks. */
+
+/* Hero: text gets the room; the forged envelope stays modest (smaller on phones, where text + CTAs come first) */
+@media (min-width: 900px) { .c-hero .page-hero { grid-template-columns: minmax(0, 1.4fr) minmax(0, .6fr); } }
+@media (max-width: 899px) { .c-hero .page-hero-art.is-icon { width: min(42%, 150px); } }
+
+/* Form beside the two topic panels; columns align to the top */
+.c-split { align-items: start; }
+.c-form-panel h2, .c-topic h2 { margin-bottom: .35em; }
+.c-intro { color: var(--text-muted); margin-bottom: var(--s-5); }
+.c-row { display: grid; gap: 0 var(--s-4); grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 560px) { .c-row { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.c-opt { font-weight: 600; text-transform: none; letter-spacing: 0; }
+.c-form-panel .btn[type="submit"] { margin-top: var(--s-1); }
+
+/* Topic panels: icon + heading row */
+.c-topic-head { display: flex; align-items: center; gap: var(--s-3); margin-bottom: var(--s-3); }
+.c-topic-head img { width: 52px; height: 52px; object-fit: contain; flex: 0 0 auto; }
+.c-topic-head h2 { margin: 0; }
+.c-topic .check-list { margin-bottom: var(--s-4); }
+.c-topic .btn-row { margin-top: var(--s-4); }
+
+/* Newsletter + follow panels */
+.c-news .inline-form { margin-top: var(--s-3); }
+.c-news .inline-form .btn { margin-bottom: var(--depth-sm); }
+.c-follow .btn-row { margin-top: var(--s-3); }
+.c-form-panel .textarea { min-height: 200px; }

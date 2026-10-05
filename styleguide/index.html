@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Styleguide - HoovyTube design system v2</title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="HoovyTube design system v2 (glossy die-cut): tokens, components and copy-paste markup.">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
+  <style>
+    /* Styleguide-only layout (sg-*). Not part of the design system. */
+    .sg-layout { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); }
+    @media (min-width: 1120px) { .sg-layout { grid-template-columns: 230px minmax(0, 1fr); align-items: start; } }
+    .sg-toc { position: sticky; top: calc(var(--dock-space) + 4px); padding: var(--s-4); max-height: calc(100vh - var(--dock-space) - 24px); overflow: auto; }
+    .sg-toc h2 { font-size: 1.1rem; margin: 0 0 .5rem; }
+    .sg-toc ol { list-style: none; padding: 0; margin: 0; display: grid; gap: .1rem; font-size: .9rem; }
+    .sg-toc li { margin: 0; }
+    .sg-toc a { display: block; padding: .3rem .5rem; border-radius: 8px; color: var(--text); text-decoration: none; font-weight: 600; }
+    .sg-toc a:hover { background: var(--inset); }
+    @media (max-width: 1119px) {
+      .sg-toc { position: static; max-height: none; }
+      .sg-toc ol { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
+    }
+    .sg-main { min-width: 0; }
+    .sg-block { margin: 0 0 var(--section-space); }
+    .sg-block > .section-head { max-width: none; text-align: left; }
+    .sg-block > .section-head .lead { margin-left: 0; }
+    /* Demos use the documented .flow class, so copied markup gets exactly the spacing shown here
+       (inside a section's .container the same rhythm is automatic). */
+    .sg-demo { padding: var(--s-2) 0 var(--s-5); }
+    .sg-markup pre { max-height: 440px; overflow: auto; font-size: .8rem; }
+    .sg-swatches { display: grid; gap: .8rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 190px), 1fr)); }
+    .sg-swatch { display: grid; grid-template-columns: 44px 1fr; gap: .2rem .7rem; align-items: center; padding: .6rem; }
+    .sg-swatch i { grid-row: span 2; width: 44px; height: 44px; border-radius: 10px; border: 2px solid var(--outline); box-shadow: 0 3px 0 var(--depth-color); }
+    .sg-swatch b { font-size: .82rem; line-height: 1.2; overflow-wrap: anywhere; }
+    .sg-swatch code { font-size: .74rem; background: none; border: 0; padding: 0; color: var(--text-muted); }
+    .sg-type > * { margin: 0 0 .6rem; }
+    .sg-type small.muted { display: block; font-family: var(--font-mono); font-size: .72rem; margin: -.3rem 0 .9rem; }
+    .sg-space { display: grid; gap: .45rem; }
+    .sg-space div { display: grid; grid-template-columns: 70px 1fr; align-items: center; gap: .8rem; font: 600 .8rem/1 var(--font-mono); }
+    .sg-space span { display: block; height: 14px; background: var(--primary-lo); border-radius: 4px; border: 2px solid var(--primary-outline); }
+    .sg-row { display: flex; flex-wrap: wrap; gap: var(--gap); align-items: flex-start; }
+    .sg-row > .panel { flex: 1 1 240px; }
+  </style>
+</head>
+<body>
+  <main id="main">
+    <section class="section">
+      <div class="container container-wide">
+        <div class="panel page-hero is-text-only">
+          <div>
+            <span class="eyebrow">Design system v2</span>
+            <h1>HoovyTube styleguide</h1>
+            <p class="lead">Every component and variant, with the exact markup to copy. Flip the theme with the sun in the dock to check both looks. Rules, tokens and the page skeleton are also written up in <code>docs/DESIGN-SYSTEM.md</code>.</p>
+            <div class="btn-row center">
+              <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="" width="28" height="28">Join on Patreon</a>
+              <a class="btn btn-secondary" href="#sg-skeleton">Page skeleton</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container container-wide">
+      <div class="sg-layout">
+        <nav class="panel sg-toc" aria-label="Styleguide contents">
+          <h2>Contents</h2>
+          <ol>
+            <li><a href="#sg-rules">Rules checklist</a></li>
+            <li><a href="#sg-colors">Colour tokens</a></li>
+            <li><a href="#sg-type">Type scale</a></li>
+            <li><a href="#sg-space">Spacing &amp; shape</a></li>
+            <li><a href="#sg-rhythm">Block rhythm</a></li>
+            <li><a href="#sg-panels">Panels</a></li>
+            <li><a href="#sg-heads">Section heads</a></li>
+            <li><a href="#sg-buttons">Buttons</a></li>
+            <li><a href="#sg-highlight">Highlighted text</a></li>
+            <li><a href="#sg-stats">Stat tiles</a></li>
+            <li><a href="#sg-features">Feature list</a></li>
+            <li><a href="#sg-screen">Media screen</a></li>
+            <li><a href="#sg-grid">Card grid</a></li>
+            <li><a href="#sg-bento">Bento</a></li>
+            <li><a href="#sg-tiers">Pricing tiers</a></li>
+            <li><a href="#sg-compare">Comparison table</a></li>
+            <li><a href="#sg-steps">Steps</a></li>
+            <li><a href="#sg-faq">FAQ</a></li>
+            <li><a href="#sg-filter">Filter chips</a></li>
+            <li><a href="#sg-tags">Tags</a></li>
+            <li><a href="#sg-callout">Callout &amp; upsell</a></li>
+            <li><a href="#sg-item">Item card</a></li>
+            <li><a href="#sg-hero">Page hero</a></li>
+            <li><a href="#sg-notice">Notice</a></li>
+            <li><a href="#sg-forms">Forms</a></li>
+            <li><a href="#sg-code">Code block</a></li>
+            <li><a href="#sg-youtube">YouTube embed</a></li>
+            <li><a href="#sg-prose">Prose</a></li>
+            <li><a href="#sg-journal">Journal post</a></li>
+            <li><a href="#sg-motion">Motion</a></li>
+            <li><a href="#sg-chrome">Dock, CTA band, footer</a></li>
+            <li><a href="#sg-skeleton">Page skeleton</a></li>
+          </ol>
+        </nav>
+
+        <div class="sg-main">
+
+          <!-- RULES -->
+          <section class="sg-block" id="sg-rules">
+            <header class="section-head"><span class="eyebrow">Read first</span><h2>Rules checklist</h2></header>
+            <div class="panel">
+              <ul class="check-list">
+                <li><strong>Same chrome everywhere.</strong> The dock, CTA band and footer are injected by <code>ht-nav.js</code>. Never hand-build them.</li>
+                <li><strong>No floating text.</strong> Every heading, eyebrow, paragraph, caption, stat and label sits on a panel, plate, chip, button or table. Never put text on the page background or over video/imagery. Section titles go in <code>.section-head</code>.</li>
+                <li><strong>Every page sells Patreon.</strong> (a) a Patreon CTA in the first screen/hero, (b) at least two inline <code>a.hl-patreon</code> links, (c) one page-relevant <code>.upsell</code>, (d) the sitewide CTA band (automatic).</li>
+                <li><strong>Patreon Rust is for Patreon only.</strong> Never use <code>btn-patreon</code>, <code>panel-patreon</code>, <code>tag-patreon</code> or <code>hl-patreon</code> for anything else.</li>
+                <li><strong>Facts only.</strong> Numbers, prices and features come from the research files. No invented ratings, counts, reviews, testimonials or guarantees.</li>
+                <li><strong>Privacy.</strong> No real name, age, city or country. No age-revealing lines.</li>
+                <li><strong>Both themes, 390px, zero errors.</strong> No horizontal overflow at phone width; motion is subtle and off under reduced motion.</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- COLOURS -->
+          <section class="sg-block" id="sg-colors">
+            <header class="section-head"><span class="eyebrow">Tokens</span><h2>Colour tokens</h2><p class="lead">Values below are read live from the current theme. Brand constants (Patreon Rust, olive, gold) are the same in both themes.</p></header>
+            <div class="panel">
+              <h3 class="h4">Theme tokens</h3>
+              <div class="sg-swatches" data-swatches="--bg --bg-2 --plate-hi --plate-lo --plate --inset --text --text-muted --heading --outline --depth-color --screen-outline --line --invert-hi --invert-lo --invert-text --primary-hi --primary-lo --primary-ink --secondary-hi --secondary-lo --link --focus --patreon-text --hl-bg --ok --err"></div>
+              <h3 class="h4" style="margin-top:1.4rem">Brand constants</h3>
+              <div class="sg-swatches" data-swatches="--patreon --patreon-hi --patreon-lo --patreon-deep --patreon-depth --patreon-ink --olive-hi --olive-lo --olive-rim --olive-frame --olive-ink --gold --gold-hi --gold-ink --cream --cream-hi --slate --slate-deep"></div>
+            </div>
+          </section>
+
+          <!-- TYPE -->
+          <section class="sg-block" id="sg-type">
+            <header class="section-head"><span class="eyebrow">Tokens</span><h2>Type scale</h2><p class="lead">Lilita One (self-hosted) for headings and numbers, Inter (self-hosted, 400-800) for everything else. Sizes are fluid between phone and desktop.</p></header>
+            <div class="panel sg-type">
+              <p class="display">Display</p><small class="muted">.display - var(--fs-display) - hero titles only</small>
+              <h1>Heading 1</h1><small class="muted">h1 / .h1 - var(--fs-h1)</small>
+              <h2>Heading 2</h2><small class="muted">h2 / .h2 - var(--fs-h2)</small>
+              <h3>Heading 3</h3><small class="muted">h3 / .h3 - var(--fs-h3)</small>
+              <h4>Heading 4</h4><small class="muted">h4 / .h4 - var(--fs-h4)</small>
+              <p class="lead">Lead text sits under a heading inside a panel.</p><small class="muted">.lead - var(--fs-lg)</small>
+              <p>Body text. The assets are a shortcut. The tutorials mean you never need one.</p><small class="muted">body - var(--fs-base), line-height var(--lh-body)</small>
+              <p class="muted"><small>Small muted text for meta and footnotes.</small></p><small class="muted">small.muted - var(--fs-sm)</small>
+            </div>
+          </section>
+
+          <!-- SPACING -->
+          <section class="sg-block" id="sg-space">
+            <header class="section-head"><span class="eyebrow">Tokens</span><h2>Spacing &amp; shape</h2><p class="lead">Spacing scale <code>--s-1</code>..<code>--s-9</code>; sections are spaced by <code>--section-space</code>; grids use <code>--gap</code>; panels pad with <code>--panel-pad</code>.</p></header>
+            <div class="panel">
+              <div class="sg-space">
+                <div>--s-1<span style="width:.25rem"></span></div><div>--s-2<span style="width:.5rem"></span></div>
+                <div>--s-3<span style="width:.75rem"></span></div><div>--s-4<span style="width:1rem"></span></div>
+                <div>--s-5<span style="width:1.5rem"></span></div><div>--s-6<span style="width:2rem"></span></div>
+                <div>--s-7<span style="width:3rem"></span></div><div>--s-8<span style="width:4rem"></span></div>
+                <div>--s-9<span style="width:6rem"></span></div>
+              </div>
+              <hr class="rule">
+              <p>Shape: outline <code>--bw</code> 3px (chips 2px), hard depth edge <code>--depth</code> 6px (buttons 4px, chips 2px), radius <code>--r-lg</code> 18px for panels, <code>--r-md</code> 12px for buttons and tiles, pills for chips and tags. Containers: <code>.container</code> 1160px, <code>.container-narrow</code> 860px, <code>.container-wide</code> 1320px, all with a 16-32px gutter.</p>
+            </div>
+          </section>
+
+          <!-- RHYTHM -->
+          <section class="sg-block" id="sg-rhythm">
+            <header class="section-head"><span class="eyebrow">Layout</span><h2>Block rhythm</h2><p class="lead">Blocks stacked straight inside a section's <code>.container</code> are spaced automatically by <code>--flow-gap</code>: one <code>--gap</code> of clear space under every depth edge, the same as between grid rows. Wrap a group anywhere else (a <code>.split</code> column, a <code>&lt;div&gt;</code>) in <code>.flow</code> to get the same rhythm. <code>.split-fill</code> makes two columns end level. Never add your own margins between blocks.</p></header>
+            <div class="sg-demo flow" data-demo="rhythm"></div>
+            <template data-sg="rhythm">
+<!-- Inside <section class="section"><div class="container"> this spacing is automatic. -->
+<div class="flow">
+  <div class="panel">
+    <h3 class="h4">A panel</h3>
+    <p>Sits one gap above the next block.</p>
+  </div>
+  <div class="panel panel-invert">
+    <p>Any surface works the same way: panels, grids, tables, notices, upsells.</p>
+  </div>
+  <div class="notice notice-free" role="note">
+    <img src="/assets/icons/forged/heart.png" alt="">
+    <p>A notice gets the same clear gap.</p>
+  </div>
+  <div class="grid grid-3">
+    <div class="panel panel-sm"><p>Grid rows use</p></div>
+    <div class="panel panel-sm"><p>the same --gap</p></div>
+    <div class="panel panel-sm"><p>between plates.</p></div>
+  </div>
+  <!-- .split-fill: both columns end level (the shorter column's last panel grows), so no bare background shows beside a taller column -->
+  <div class="split split-fill">
+    <div class="panel">
+      <h3 class="h4">A tall column</h3>
+      <p>Release notes, steps, long explanations.</p>
+      <p>Its neighbour grows to match, so the row ends level.</p>
+      <p>Use it wherever two columns of plates sit side by side.</p>
+    </div>
+    <div class="flow">
+      <div class="panel panel-sm"><p>A short plate</p></div>
+      <div class="panel panel-sm"><p>The last plate in a .flow column stretches.</p></div>
+    </div>
+  </div>
+</div>
+            </template>
+          </section>
+
+          <!-- PANELS -->
+          <section class="sg-block" id="sg-panels">
+            <header class="section-head"><span class="eyebrow">Surfaces</span><h2>Panels</h2><p class="lead">The glossy die-cut plate. Cream in light, deep slate in dark. Variants: inverted, olive item badge, Patreon (Patreon only), inset. Put <code>.panel</code> on an <code>&lt;a&gt;</code> (or add <code>.is-link</code>) for the hover lift.</p></header>
+            <div class="sg-demo flow" data-demo="panels"></div>
+            <template data-sg="panels">
+<div class="grid grid-3">
+  <div class="panel">
+    <h3>.panel</h3>
+    <p>The default plate. Cream in light theme, deep slate in dark.</p>
+  </div>
+  <div class="panel panel-invert">
+    <h3>.panel-invert</h3>
+    <p>Slate in light theme, cream in dark. For emphasis.</p>
+  </div>
+  <div class="panel panel-olive">
+    <h3>.panel-olive</h3>
+    <p>Item-badge olive. Free things, HoovyTools, Workshop.</p>
+  </div>
+  <div class="panel panel-patreon">
+    <h3>.panel-patreon</h3>
+    <p>Patreon Rust. Only for Patreon calls to action.</p>
+  </div>
+  <a class="panel" href="/hoovytools/">
+    <h3>a.panel</h3>
+    <p>Interactive plate: gentle lift on hover, press on click.</p>
+  </a>
+  <div class="panel panel-sm">
+    <h3 class="h4">.panel-sm</h3>
+    <div class="panel-inset"><p>.panel-inset: a sunken surface inside a plate.</p></div>
+  </div>
+</div>
+            </template>
+          </section>
+
+          <!-- SECTION HEADS -->
+          <section class="sg-block" id="sg-heads">
+            <header class="section-head"><span class="eyebrow">Type on plates</span><h2>Section heads &amp; eyebrows</h2><p class="lead">Section titles never float: they sit on <code>.section-head</code>. Eyebrow chips label what follows.</p></header>
+            <div class="sg-demo flow" data-demo="heads"></div>
+            <template data-sg="heads">
+<header class="section-head">
+  <span class="eyebrow">Patreon membership</span>
+  <h2>One library, three tiers</h2>
+  <p class="lead">Particle effects, animations and scenebuilds, organised, documented and previewed.</p>
+</header>
+
+<header class="section-head section-head-split">
+  <div>
+    <span class="eyebrow eyebrow-olive">Free on Steam</span>
+    <h2>Workshop items</h2>
+  </div>
+  <div class="btn-row">
+    <a class="btn btn-secondary" href="https://steamcommunity.com/id/HoovyTube/myworkshopfiles/" target="_blank" rel="noopener">Open the Workshop</a>
+  </div>
+</header>
+
+<div class="panel">
+  <div class="cluster">
+    <span class="eyebrow">.eyebrow</span>
+    <span class="eyebrow eyebrow-olive">.eyebrow-olive</span>
+    <span class="eyebrow eyebrow-patreon"><img src="/assets/icons/forged/patreon.png" alt="">.eyebrow-patreon</span>
+    <span class="eyebrow eyebrow-cream">.eyebrow-cream</span>
+  </div>
+</div>
+
+<div class="panel panel-olive text-center">
+  <p class="display text-sticker">HoovyTube</p>
+  <p>.text-sticker: die-cut display lettering for olive, Patreon or slate plates (never on cream).</p>
+</div>
+            </template>
+          </section>
+
+          <!-- BUTTONS -->
+          <section class="sg-block" id="sg-buttons">
+            <header class="section-head"><span class="eyebrow">Actions</span><h2>Buttons</h2><p class="lead">Glossy die-cut buttons with a pressed state. One <code>.btn-patreon</code> per block at most; it is the money button. External links get <code>target="_blank" rel="noopener"</code>.</p></header>
+            <div class="sg-demo flow" data-demo="buttons"></div>
+            <template data-sg="buttons">
+<div class="panel">
+  <div class="btn-row">
+    <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="">Join on Patreon</a>
+    <a class="btn btn-primary" href="/learn/">Start learning</a>
+    <a class="btn btn-secondary" href="/hoovytools/">Get HoovyTools</a>
+    <a class="btn btn-olive" href="/workshop/"><img class="btn-icon" src="/assets/icons/forged/steam.png" alt="">Free on the Workshop</a>
+    <a class="btn btn-ghost" href="/blog/">Read the journal</a>
+  </div>
+  <div class="btn-row">
+    <a class="btn btn-patreon btn-lg" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Large</a>
+    <a class="btn btn-primary btn-sm" href="/learn/">Small</a>
+    <button class="btn btn-secondary" type="button" disabled>Disabled</button>
+    <a class="btn btn-secondary" href="/downloads/HoovyTools-1.3.1.zip" download><img class="btn-icon" src="/assets/icons/forged/download.png" alt="">Download .zip</a>
+  </div>
+  <a class="btn btn-patreon btn-block" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">.btn-block (full width)</a>
+</div>
+
+<div class="grid grid-3">
+  <div class="panel panel-patreon">
+    <div class="btn-row">
+      <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join</a>
+      <a class="btn btn-ghost" href="/products/">Tiers</a>
+    </div>
+  </div>
+  <div class="panel panel-invert">
+    <div class="btn-row">
+      <a class="btn btn-primary" href="/learn/">Primary</a>
+      <a class="btn btn-ghost" href="/blog/">Ghost</a>
+    </div>
+  </div>
+  <div class="panel panel-olive">
+    <div class="btn-row">
+      <a class="btn btn-olive" href="/hoovytools/">Download</a>
+      <a class="btn btn-secondary" href="/learn/">Secondary</a>
+    </div>
+  </div>
+</div>
+            </template>
+          </section>
+
+          <!-- HIGHLIGHT -->
+          <section class="sg-block" id="sg-highlight">
+            <header class="section-head"><span class="eyebrow">Emphasis</span><h2>Highlighted text</h2><p class="lead"><code>&lt;mark class="hl"&gt;</code> is the gold highlighter swipe for key facts. <code>a.hl-patreon</code> is the only way to link to Patreon inside text: bold, Patreon Rust, tinted swipe and a mini Patreon mark. Add <code>.no-icon</code> to drop the mark.</p></header>
+            <div class="sg-demo flow" data-demo="highlight"></div>
+            <template data-sg="highlight">
+<div class="panel">
+  <p>The library holds <mark class="hl">900+ particle effects</mark>, 600+ animations and 30+ scenebuilds. Every skill behind it is taught free, and the library is on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a>; memberships start at $20/month.</p>
+  <p>Prefer one pack at a time? Single packs are in the <a class="hl-patreon no-icon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Patreon shop</a>.</p>
+</div>
+<div class="grid grid-3">
+  <div class="panel panel-invert"><p>On an inverted plate: <mark class="hl">highlight</mark> and <a class="hl-patreon" href="/products/">the Patreon tiers</a>.</p></div>
+  <div class="panel panel-olive"><p>On olive: <mark class="hl">free forever</mark>, with <a class="hl-patreon" href="/products/">Patreon</a> for the rest.</p></div>
+  <div class="panel panel-patreon"><p>On Patreon Rust: <mark class="hl">$20/month</mark> and <a class="hl-patreon" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">the shop</a>.</p></div>
+</div>
+            </template>
+          </section>
+
+          <!-- STATS -->
+          <section class="sg-block" id="sg-stats">
+            <header class="section-head"><span class="eyebrow">Numbers</span><h2>Stat tiles</h2><p class="lead">Write the real final value in the HTML. <code>data-count</code> makes it count up once when it scrolls into view (skipped under reduced motion). Inside a panel the tiles turn into inset wells.</p></header>
+            <div class="sg-demo flow" data-demo="stats"></div>
+            <template data-sg="stats">
+<div class="stats">
+  <div class="stat"><img class="stat-icon" src="/assets/icons/forged/sparks.png" alt=""><b class="stat-num" data-count>900+</b><span class="stat-label">particle effects</span></div>
+  <div class="stat"><img class="stat-icon" src="/assets/icons/forged/film-reel.png" alt=""><b class="stat-num" data-count>600+</b><span class="stat-label">animations</span></div>
+  <div class="stat"><img class="stat-icon" src="/assets/icons/forged/scenebuild.png" alt=""><b class="stat-num" data-count>30+</b><span class="stat-label">scenebuilds</span></div>
+  <div class="stat"><img class="stat-icon" src="/assets/icons/forged/star.png" alt=""><b class="stat-num">1GB+</b><span class="stat-label">of new SFM sprites</span></div>
+</div>
+
+<div class="panel">
+  <div class="stats">
+    <div class="stat"><b class="stat-num" data-count>900+</b><span class="stat-label">particle effects</span></div>
+    <div class="stat"><b class="stat-num" data-count>300+</b><span class="stat-label">with size variations</span></div>
+    <div class="stat"><b class="stat-num">$20</b><span class="stat-label">per month to start</span></div>
+  </div>
+</div>
+            </template>
+          </section>
+
+          <!-- FEATURES -->
+          <section class="sg-block" id="sg-features">
+            <header class="section-head"><span class="eyebrow">Lists</span><h2>Feature list &amp; check list</h2><p class="lead">Forged icons as bullets (use <code>/assets/icons/forged/*.png</code>, empty <code>alt</code>). <code>.cols-2</code> splits it into two columns on wide screens.</p></header>
+            <div class="sg-demo flow" data-demo="features"></div>
+            <template data-sg="features">
+<div class="panel">
+  <ul class="feature-list cols-2">
+    <li>
+      <img class="feature-icon" src="/assets/icons/forged/sparks.png" alt="" width="52" height="52">
+      <div><h3 class="feature-title">The full system</h3><p>Emitters, initializers, operators, forces and constraints. Nothing is baked.</p></div>
+    </li>
+    <li>
+      <img class="feature-icon" src="/assets/icons/forged/fire.png" alt="" width="52" height="52">
+      <div><h3 class="feature-title">All three renderers</h3><p>Camera-facing animated sprites, render_rope and render_sprite_trail.</p></div>
+    </li>
+    <li>
+      <img class="feature-icon" src="/assets/icons/forged/script.png" alt="" width="52" height="52">
+      <div><h3 class="feature-title">Node to Code</h3><p>Export a script that rebuilds the effect without the add-on.</p></div>
+    </li>
+    <li>
+      <img class="feature-icon" src="/assets/icons/forged/blender-addon.png" alt="" width="52" height="52">
+      <div><h3 class="feature-title">Edit after import</h3><p>Every .pcf parameter in a panel organised by SFM's own sections.</p></div>
+    </li>
+  </ul>
+</div>
+
+<div class="panel">
+  <ul class="check-list">
+    <li>Sorted ENVIRONMENT / PHYSICS / IMPACTS / MISC</li>
+    <li>PNG previews and expanded docs</li>
+    <li>Consolidated usermod folders, all ported by hand</li>
+  </ul>
+</div>
+            </template>
+          </section>
+
+          <!-- SCREEN -->
+          <section class="sg-block" id="sg-screen">
+            <header class="section-head"><span class="eyebrow">Media</span><h2>Media screen</h2><p class="lead">Every video, poster and embed sits in a glossy bezel. Captions go in <code>.screen-cap</code> on the bezel, never over the picture. Videos: always <code>muted loop playsinline preload="none"</code> plus a <code>poster</code> from <code>/media/posters/</code>; <code>data-play="visible"</code> or <code>"hover"</code> handles playback.</p></header>
+            <div class="sg-demo flow" data-demo="screen"></div>
+            <template data-sg="screen">
+<div class="grid grid-2">
+  <figure class="screen">
+    <div class="screen-media">
+      <img src="/media/posters/home-particles.jpg" alt="An SFM battle scene lit by a cyan energy beam" loading="lazy" width="1280" height="720">
+    </div>
+    <figcaption class="screen-cap"><span class="screen-dot"></span><b>Particle library</b> preview still</figcaption>
+  </figure>
+  <figure class="screen">
+    <div class="screen-media">
+      <video src="/media/home/hoovytools.mp4" poster="/media/posters/home-hoovytools.jpg" muted loop playsinline preload="none" data-play="visible" aria-label="HoovyTools preview loop"></video>
+    </div>
+    <figcaption class="screen-cap"><span class="screen-dot"></span>Video with <b>data-play="visible"</b></figcaption>
+  </figure>
+</div>
+            </template>
+          </section>
+
+          <!-- GRID -->
+          <section class="sg-block" id="sg-grid">
+            <header class="section-head"><span class="eyebrow">Layout</span><h2>Card grid</h2><p class="lead"><code>.grid</code> auto-fits with <code>--min</code> (default 260px). <code>.grid-2 / .grid-3 / .grid-4</code> lock the column count on desktop and collapse on small screens. <code>.card</code> is a compact panel with media, title, text and actions.</p></header>
+            <div class="sg-demo flow" data-demo="grid"></div>
+            <template data-sg="grid">
+<div class="grid grid-3">
+  <article class="card">
+    <div class="card-media"><img src="/media/posters/home-particles.jpg" alt="" loading="lazy" width="1280" height="720"></div>
+    <h3 class="card-title">SFM assets</h3>
+    <p class="card-text">Particle effects, animations and scenebuilds, organised, documented and previewed.</p>
+    <div class="card-actions"><a class="btn btn-patreon btn-sm" href="/products/">See the tiers</a></div>
+  </article>
+  <article class="card">
+    <div class="card-media"><img src="/media/posters/home-hoovytools.jpg" alt="" loading="lazy" width="1280" height="720"></div>
+    <h3 class="card-title">Blender add-ons</h3>
+    <p class="card-text">HoovyTools imports SFM sessions and rebuilds .pcf particles as geometry nodes. Free.</p>
+    <div class="card-actions"><a class="btn btn-secondary btn-sm" href="/hoovytools/">Get HoovyTools</a></div>
+  </article>
+  <a class="card" href="/learn/">
+    <div class="card-media"><img src="/media/posters/home-tutorials.jpg" alt="" loading="lazy" width="1280" height="720"></div>
+    <h3 class="card-title">Tutorials</h3>
+    <p class="card-text">Every technique behind the library, sorted Easy, Medium and Hard. The whole card is a link.</p>
+  </a>
+</div>
+            </template>
+          </section>
+
+          <!-- BENTO -->
+          <section class="sg-block" id="sg-bento">
+            <header class="section-head"><span class="eyebrow">Layout</span><h2>Bento</h2><p class="lead">A 6-column mosaic: children take <code>.b-2 / .b-3 / .b-4 / .b-6</code> and optional <code>.b-tall</code>. Two columns under 900px, one under 600px.</p></header>
+            <div class="sg-demo flow" data-demo="bento"></div>
+            <template data-sg="bento">
+<div class="bento">
+  <div class="panel b-4 b-tall">
+    <span class="eyebrow">The library</span>
+    <h3>Skip the asset grind</h3>
+    <figure class="screen"><div class="screen-media"><img src="/media/posters/community-hoovytube.jpg" alt="An exploding scaffold tower with fire and debris" loading="lazy" width="1280" height="720"></div></figure>
+  </div>
+  <div class="stat b-2"><b class="stat-num">900+</b><span class="stat-label">particle effects</span></div>
+  <div class="stat b-2"><b class="stat-num">600+</b><span class="stat-label">animations</span></div>
+  <div class="panel panel-olive b-3"><h3 class="h4">Free on the Workshop</h3><p>Particle packs, models and free trials.</p></div>
+  <div class="panel b-3"><h3 class="h4">Free tutorials</h3><p>Easy, Medium and Hard.</p></div>
+</div>
+            </template>
+          </section>
+
+          <!-- TIERS -->
+          <section class="sg-block" id="sg-tiers">
+            <header class="section-head"><span class="eyebrow eyebrow-patreon"><img src="/assets/icons/forged/patreon.png" alt="">Patreon</span><h2>Pricing tiers</h2><p class="lead">Real tiers and points only (see <code>patreon.json</code>). <code>.is-featured</code> + <code>.tier-flag</code> marks the best-value tier. Every tier button is <code>.btn-patreon</code> to the membership URL.</p></header>
+            <div class="sg-demo flow" data-demo="tiers"></div>
+            <template data-sg="tiers">
+<div class="tiers">
+  <article class="tier">
+    <img class="tier-art" src="/assets/icons/forged/sparks.png" alt="" width="104" height="104">
+    <p class="tier-kicker">Tier 1</p>
+    <h3 class="tier-name">All Particles</h3>
+    <p class="tier-price"><b>$20</b><span>/month</span></p>
+    <ul class="tier-points">
+      <li>900+ particle effects, 1GB+ of new SFM sprites</li>
+      <li>300+ with size variations, from ants to giant mechs</li>
+      <li>Sorted environment / physics / impacts / misc</li>
+      <li>PNG previews and expanded docs</li>
+    </ul>
+    <a class="btn btn-patreon btn-block" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join All Particles</a>
+  </article>
+  <article class="tier">
+    <img class="tier-art" src="/assets/icons/forged/scenebuild.png" alt="" width="104" height="104">
+    <p class="tier-kicker">Tier 2</p>
+    <h3 class="tier-name">Scenebuilds + Particles</h3>
+    <p class="tier-price"><b>$25</b><span>/month</span></p>
+    <ul class="tier-points">
+      <li>1GB+ of new SFM models and scenebuilds: urban, sci-fi, nature</li>
+      <li>Biome types and HDRI setups to build your own</li>
+      <li>Consolidated usermod folders, all ported by me</li>
+      <li>Everything in All Particles</li>
+    </ul>
+    <a class="btn btn-patreon btn-block" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Join Scenebuilds + Particles</a>
+  </article>
+  <article class="tier is-featured">
+    <span class="tier-flag">Best value</span>
+    <img class="tier-art" src="/assets/icons/forged/film-reel.png" alt="" width="104" height="104">
+    <p class="tier-kicker">Tier 3</p>
+    <h3 class="tier-name">The full library</h3>
+    <p class="tier-price"><b>$30</b><span>/month</span></p>
+    <ul class="tier-points">
+      <li>600+ animations for HWM characters, HL2 rigs and cameras</li>
+      <li>Idle, walking, running, fighting, combat, shooting, dialog, crowd, parkour and more</li>
+      <li>Everything in the earlier tiers</li>
+    </ul>
+    <a class="btn btn-patreon btn-block" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Claim everything</a>
+  </article>
+</div>
+            </template>
+          </section>
+
+          <!-- COMPARE -->
+          <section class="sg-block" id="sg-compare">
+            <header class="section-head"><span class="eyebrow">Tables</span><h2>Comparison table</h2><p class="lead">The table scrolls inside its plate on phones (never the page). <code>.yes</code> / <code>.no</code> cells draw the tokens; keep a visually hidden label in each cell. <code>.col-featured</code> tints a column.</p></header>
+            <div class="sg-demo flow" data-demo="compare"></div>
+            <template data-sg="compare">
+<div class="panel table-wrap">
+  <div class="table-scroll">
+    <table class="compare">
+      <caption class="sr-only">What each Patreon tier includes</caption>
+      <thead>
+        <tr>
+          <th scope="col">What you get</th>
+          <th scope="col">All Particles<span class="th-sub">$20/month</span></th>
+          <th scope="col">Scenebuilds + Particles<span class="th-sub">$25/month</span></th>
+          <th scope="col" class="col-featured">The full library<span class="th-sub">$30/month</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><th scope="row">900+ particle effects</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+        <tr><th scope="row">300+ size variations</th><td class="yes"><span class="sr-only">Included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+        <tr><th scope="row">1GB+ models and scenebuilds</th><td class="no"><span class="sr-only">Not included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+        <tr><th scope="row">Biome types and HDRI setups</th><td class="no"><span class="sr-only">Not included</span></td><td class="yes"><span class="sr-only">Included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+        <tr><th scope="row">600+ animations</th><td class="no"><span class="sr-only">Not included</span></td><td class="no"><span class="sr-only">Not included</span></td><td class="yes col-featured"><span class="sr-only">Included</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+            </template>
+          </section>
+
+          <!-- STEPS -->
+          <section class="sg-block" id="sg-steps">
+            <header class="section-head"><span class="eyebrow">How-to</span><h2>Steps</h2><p class="lead">Numbered die-cut tokens from a CSS counter. Add <code>.steps-row</code> to lay them out side by side.</p></header>
+            <div class="sg-demo flow" data-demo="steps"></div>
+            <template data-sg="steps">
+<div class="panel">
+  <ol class="steps">
+    <li><h3 class="step-title">Download the .zip</h3><p>Don't unzip it.</p></li>
+    <li><h3 class="step-title">Drop it into Blender</h3><p>Drag the .zip onto the viewport, or use Preferences, Add-ons, Install.</p></li>
+    <li><h3 class="step-title">Build an effect</h3><p>Press N, open the Particle Import tab, pick a .pcf and a system, press Build, then play.</p></li>
+  </ol>
+</div>
+
+<div class="panel">
+  <ol class="steps steps-row">
+    <li><h3 class="step-title">Watch</h3><p>Pick a level on Learn.</p></li>
+    <li><h3 class="step-title">Try</h3><p>Grab the free items.</p></li>
+    <li><h3 class="step-title">Skip ahead</h3><p>Join the Patreon.</p></li>
+  </ol>
+</div>
+            </template>
+          </section>
+
+          <!-- FAQ -->
+          <section class="sg-block" id="sg-faq">
+            <header class="section-head"><span class="eyebrow">Answers</span><h2>FAQ accordion</h2><p class="lead">Native <code>&lt;details&gt;</code>: works without JS. Give every item the same <code>name</code> for one-open-at-a-time (or put <code>data-accordion</code> on the wrapper).</p></header>
+            <div class="sg-demo flow" data-demo="faq"></div>
+            <template data-sg="faq">
+<div class="faq" data-accordion>
+  <details class="faq-item" name="faq" open>
+    <summary>What's HoovyTools?</summary>
+    <div class="faq-body"><p>Two free Blender add-ons. One imports a whole SFM session: models, animation, cameras and audio, auto-timed to the frame. The other reads Source .pcf particle files and rebuilds them as editable geometry nodes.</p></div>
+  </details>
+  <details class="faq-item" name="faq">
+    <summary>Do I need anything else to run the add-ons?</summary>
+    <div class="faq-body"><p>Session import runs on top of SourceIO, so install that first. Particle import is standalone.</p></div>
+  </details>
+  <details class="faq-item" name="faq">
+    <summary>Can I use these in my own videos?</summary>
+    <div class="faq-body"><p>That's what they're for. Members get everything through <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a>.</p></div>
+  </details>
+</div>
+            </template>
+          </section>
+
+          <!-- FILTER -->
+          <section class="sg-block" id="sg-filter">
+            <header class="section-head"><span class="eyebrow">Browse</span><h2>Filter chips</h2><p class="lead">No page JS needed: name a group, give each chip a <code>data-filter</code>, give each item <code>data-tags</code>. Counts, the live status line and the empty state fill in automatically.</p></header>
+            <div class="sg-demo flow" data-demo="filter"></div>
+            <template data-sg="filter">
+<div class="panel panel-sm filter-bar">
+  <div class="chips" role="group" aria-label="Filter Workshop items" data-filter-group="ws">
+    <button class="chip" type="button" data-filter="all" aria-pressed="true">All <span class="chip-count"></span></button>
+    <button class="chip" type="button" data-filter="particles" aria-pressed="false">Particles <span class="chip-count"></span></button>
+    <button class="chip" type="button" data-filter="models" aria-pressed="false">Models <span class="chip-count"></span></button>
+    <button class="chip" type="button" data-filter="trial" aria-pressed="false">Free trials <span class="chip-count"></span></button>
+    <button class="chip" type="button" data-filter="tools" aria-pressed="false">Tools <span class="chip-count"></span></button>
+  </div>
+  <p class="filter-status" data-filter-status="ws" aria-live="polite"></p>
+</div>
+
+<div class="grid grid-3" data-filter-target="ws">
+  <article class="item-card" data-tags="particles">
+    <img class="item-icon" src="/assets/icons/forged/fire.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">HoovyTube's Fire Particles</h3>
+      <p class="item-meta"><span class="tag tag-free">Free</span><span>2.6 MB</span></p>
+    </div>
+    <a class="btn btn-secondary btn-sm item-action" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3020805489" target="_blank" rel="noopener">View on Steam</a>
+  </article>
+  <article class="item-card" data-tags="particles trial">
+    <img class="item-icon" src="/assets/icons/forged/explosion.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">Explosions {MEGA-PACK} (Free Trial)</h3>
+      <p class="item-meta"><span class="tag tag-trial">Free trial</span><span>34.7 MB</span></p>
+    </div>
+    <a class="btn btn-secondary btn-sm item-action" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3406058063" target="_blank" rel="noopener">View on Steam</a>
+  </article>
+  <article class="item-card" data-tags="models">
+    <img class="item-icon" src="/assets/icons/forged/model.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">HoovyTube's Medieval Pack</h3>
+      <p class="item-meta"><span class="tag tag-free">Free</span><span>66 MB</span></p>
+    </div>
+    <a class="btn btn-secondary btn-sm item-action" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3105907089" target="_blank" rel="noopener">View on Steam</a>
+  </article>
+  <article class="item-card" data-tags="models">
+    <img class="item-icon" src="/assets/icons/forged/electricity.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">Electric Arc (Poseable)</h3>
+      <p class="item-meta"><span class="tag tag-free">Free</span><span>718 KB</span></p>
+    </div>
+    <a class="btn btn-secondary btn-sm item-action" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3052203054" target="_blank" rel="noopener">View on Steam</a>
+  </article>
+  <article class="item-card" data-tags="particles trial">
+    <img class="item-icon" src="/assets/icons/forged/fire.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">Enhanced Fire Particles (Free Trial)</h3>
+      <p class="item-meta"><span class="tag tag-trial">Free trial</span><span>23.4 MB</span></p>
+    </div>
+    <a class="btn btn-secondary btn-sm item-action" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3362360301" target="_blank" rel="noopener">View on Steam</a>
+  </article>
+  <article class="item-card" data-tags="tools">
+    <img class="item-icon" src="/assets/icons/forged/blender-addon.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">SFM to BLENDER Session Importer</h3>
+      <p class="item-meta"><span class="tag tag-free">Free</span><span>11.3 MB</span></p>
+    </div>
+    <a class="btn btn-secondary btn-sm item-action" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3685022666" target="_blank" rel="noopener">View on Steam</a>
+  </article>
+</div>
+<div class="panel filter-empty" data-filter-empty="ws" hidden><p>Nothing here yet.</p></div>
+            </template>
+          </section>
+
+          <!-- TAGS -->
+          <section class="sg-block" id="sg-tags">
+            <header class="section-head"><span class="eyebrow">Labels</span><h2>Tags</h2><p class="lead">Short status labels. <code>.tag-patreon</code> only for things that need a membership or shop purchase.</p></header>
+            <div class="sg-demo flow" data-demo="tags"></div>
+            <template data-sg="tags">
+<div class="panel">
+  <div class="tags">
+    <span class="tag tag-free">Free</span>
+    <span class="tag tag-trial">Free trial</span>
+    <span class="tag tag-new">New</span>
+    <span class="tag tag-patreon"><img src="/assets/icons/forged/patreon.png" alt="">Patreon</span>
+    <span class="tag tag-version">v1.3.1</span>
+    <span class="tag">Neutral</span>
+    <span class="tag tag-muted">In progress</span>
+  </div>
+</div>
+            </template>
+          </section>
+
+          <!-- CALLOUT / UPSELL -->
+          <section class="sg-block" id="sg-callout">
+            <header class="section-head"><span class="eyebrow">Persuasion</span><h2>Callout &amp; upsell</h2><p class="lead"><code>.callout</code> is a panel with an icon (any variant). <code>.upsell</code> is the page-relevant Patreon pitch: plate with a Patreon strip, badge art, copy, and a <code>.btn-patreon</code>. Every page needs one upsell that fits its topic.</p></header>
+            <div class="sg-demo flow" data-demo="callout"></div>
+            <template data-sg="callout">
+<div class="panel panel-olive callout">
+  <img class="callout-icon" src="/assets/icons/forged/graduation.png" alt="" width="64" height="64">
+  <div>
+    <h3 class="callout-title">You don't have to pay a cent</h3>
+    <p>Every skill used to create these assets is taught free on YouTube, and a good chunk of the library sits on the Steam Workshop.</p>
+  </div>
+</div>
+
+<aside class="upsell" aria-label="Patreon membership">
+  <img class="upsell-art" src="/assets/icons/forged/badge-patreon.png" alt="" width="108" height="142">
+  <div class="upsell-body">
+    <span class="eyebrow eyebrow-patreon">All Particles tier</span>
+    <h3 class="upsell-title">Every particle pack in one membership</h3>
+    <p><mark class="hl">900+ particle effects</mark> with PNG previews, sorted by purpose. Liked the free packs? The rest live on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a>.</p>
+  </div>
+  <div class="upsell-actions">
+    <a class="btn btn-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="">Join from $20/month</a>
+    <a class="btn btn-ghost btn-sm" href="/products/">Compare tiers</a>
+  </div>
+</aside>
+            </template>
+          </section>
+
+          <!-- ITEM CARD -->
+          <section class="sg-block" id="sg-item">
+            <header class="section-head"><span class="eyebrow">Lists</span><h2>Item card</h2><p class="lead">Icon + title + meta + action. For Workshop items, packs and downloads. <code>.is-compact</code> puts the action on the right. Make the whole card a link with <code>a.item-card</code> (then leave out the button).</p></header>
+            <div class="sg-demo flow" data-demo="item"></div>
+            <template data-sg="item">
+<div class="grid grid-2">
+  <article class="item-card">
+    <img class="item-icon" src="/assets/icons/forged/smoke.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">HoovyTube's Smoke Particles</h3>
+      <p class="item-meta"><span class="tag tag-free">Free</span><span>7.7 MB</span><span>Steam Workshop</span></p>
+      <p class="item-desc">Smoke particle pack for SFM.</p>
+    </div>
+    <div class="item-actions">
+      <a class="btn btn-secondary btn-sm" href="https://steamcommunity.com/sharedfiles/filedetails/?id=3044947341" target="_blank" rel="noopener">View on Steam</a>
+    </div>
+  </article>
+  <article class="item-card">
+    <img class="item-icon" src="/assets/icons/forged/download.png" alt="" width="56" height="56">
+    <div class="item-body">
+      <h3 class="item-title">HoovyTools Particle Import</h3>
+      <p class="item-meta"><span class="tag tag-version">v0.23.0</span><span class="tag tag-free">Free</span><span>.zip, 655 KB</span></p>
+      <p class="item-desc">.pcf particle effects as live geometry nodes.</p>
+    </div>
+    <div class="item-actions">
+      <a class="btn btn-olive btn-sm" href="/downloads/HoovyToolsParticleImport-0.23.0.zip" download>Download</a>
+    </div>
+  </article>
+</div>
+<article class="item-card is-compact">
+  <img class="item-icon" src="/assets/icons/forged/patreon.png" alt="" width="56" height="56">
+  <div class="item-body">
+    <h3 class="item-title">Single packs in the Patreon shop</h3>
+    <p class="item-meta"><span class="tag tag-patreon">Patreon</span><span>Buy once</span></p>
+  </div>
+  <a class="btn btn-patreon btn-sm item-action" href="https://www.patreon.com/HoovyTube308/shop" target="_blank" rel="noopener">Open the shop</a>
+</article>
+            </template>
+          </section>
+
+          <!-- HERO -->
+          <section class="sg-block" id="sg-hero">
+            <header class="section-head"><span class="eyebrow">Page top</span><h2>Page hero panel</h2><p class="lead">The first thing in <code>&lt;main&gt;</code> on every page: one panel with eyebrow, h1, lead, a Patreon CTA plus one secondary action, and media on the right. No breadcrumbs. <code>.is-text-only</code> centres it without media.</p></header>
+            <div class="sg-demo flow" data-demo="hero"></div>
+            <template data-sg="hero">
+<section class="section">
+  <div class="container">
+    <div class="panel page-hero">
+      <div class="page-hero-text">
+        <span class="eyebrow eyebrow-olive">Steam Workshop</span>
+        <h1>Free SFM items, straight from the Workshop</h1>
+        <p class="lead">Particle packs, models and free trials of the Patreon packs. Subscribe on Steam and they show up in SFM.</p>
+        <div class="btn-row">
+          <a class="btn btn-patreon btn-lg" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener"><img class="btn-icon" src="/assets/icons/forged/patreon.png" alt="">Get the full packs</a>
+          <a class="btn btn-secondary btn-lg" href="https://steamcommunity.com/id/HoovyTube/myworkshopfiles/" target="_blank" rel="noopener">Open the Workshop</a>
+        </div>
+        <p class="page-hero-note">The library is on <a class="hl-patreon" href="/products/">Patreon</a>; memberships start at $20/month.</p>
+      </div>
+      <div class="page-hero-media">
+        <img class="page-hero-art" src="/assets/icons/forged/badge-workshop.png" alt="" width="300" height="395">
+      </div>
+    </div>
+  </div>
+</section>
+            </template>
+          </section>
+
+          <!-- NOTICE -->
+          <section class="sg-block" id="sg-notice">
+            <header class="section-head"><span class="eyebrow">Info</span><h2>Notice</h2><p class="lead">A slim plate for requirements and caveats. <code>.notice-warn</code> and <code>.notice-free</code> change the edge colour.</p></header>
+            <div class="sg-demo flow" data-demo="notice"></div>
+            <template data-sg="notice">
+<div class="notice" role="note">
+  <img src="/assets/icons/forged/script.png" alt="">
+  <p>Session import runs on top of <strong>SourceIO</strong>. Install that first, then HoovyTools.</p>
+</div>
+<div class="notice notice-warn" role="note">
+  <img src="/assets/icons/forged/electricity.png" alt="">
+  <p>Scenebuilds are made for stronger setups. A strong GPU is recommended.</p>
+</div>
+<div class="notice notice-free" role="note">
+  <img src="/assets/icons/forged/heart.png" alt="">
+  <p>HoovyTools is free. Credit appreciated, never required.</p>
+</div>
+            </template>
+          </section>
+
+          <!-- FORMS -->
+          <section class="sg-block" id="sg-forms">
+            <header class="section-head"><span class="eyebrow">Input</span><h2>Forms</h2><p class="lead">Inputs are sunken wells inside a plate. Labels use <code>.field</code>. Messages go in <code>.form-msg</code> with <code>.ok</code> / <code>.err</code>. Any element with <code>data-newsletter-open</code> opens the newsletter panel; <code>data-message-open</code> opens the send-a-message modal.</p></header>
+            <div class="sg-demo flow" data-demo="forms"></div>
+            <template data-sg="forms">
+<div class="grid grid-2">
+  <form class="panel" novalidate>
+    <h3 class="h4">Send a message</h3>
+    <div class="field"><label for="sgName">Name</label><input class="input" id="sgName" type="text" autocomplete="name"></div>
+    <div class="field"><label for="sgMsg">Message</label><textarea class="textarea" id="sgMsg"></textarea></div>
+    <button class="btn btn-primary" type="button" data-message-open>Open the message modal</button>
+    <p class="form-msg ok" role="status">Thanks - your message was sent!</p>
+  </form>
+  <div class="panel">
+    <h3 class="h4">Newsletter</h3>
+    <p>New videos, asset drops and HoovyTools updates. No spam.</p>
+    <form class="inline-form" novalidate>
+      <label class="sr-only" for="sgEmail">Email</label>
+      <input class="input" id="sgEmail" type="email" placeholder="you@example.com" autocomplete="email">
+      <button class="btn btn-primary" type="button" data-newsletter-open>Subscribe</button>
+    </form>
+    <p class="form-msg err" role="status">Please enter your email.</p>
+  </div>
+</div>
+            </template>
+          </section>
+
+          <!-- CODE -->
+          <section class="sg-block" id="sg-code">
+            <header class="section-head"><span class="eyebrow">Instructions</span><h2>Code block</h2><p class="lead">For install steps, file paths and snippets, inside or outside a panel. The bar label says what it is; the Copy button uses <code>data-copy</code>. Add <code>.is-wrap</code> for long paths that should wrap instead of scrolling. Long lines scroll inside the block, never the page.</p></header>
+            <div class="sg-demo flow" data-demo="code"></div>
+            <template data-sg="code">
+<div class="code-block">
+  <div class="code-block-bar"><span>Blender add-on install</span><button class="btn" type="button" data-copy="#codeInstall">Copy</button></div>
+  <pre><code id="codeInstall">Edit &gt; Preferences &gt; Add-ons &gt; Install from Disk
+HoovyTools-1.3.1.zip   (do not unzip)</code></pre>
+</div>
+<div class="code-block is-wrap">
+  <div class="code-block-bar"><span>Path</span></div>
+  <pre><code>steamapps/common/SourceFilmmaker/game/usermod/particles/</code></pre>
+</div>
+            </template>
+          </section>
+
+          <!-- YOUTUBE -->
+          <section class="sg-block" id="sg-youtube">
+            <header class="section-head"><span class="eyebrow">Media</span><h2>YouTube embed</h2><p class="lead">Never drop raw iframes on a page. Put a facade link in <code>.screen-media</code>: a poster and the forged play token. On click, <code>ht-ui.js</code> swaps in a <code>youtube-nocookie.com</code> player titled from <code>data-title</code>; nothing loads from YouTube before that. Without JS the link opens the video on YouTube. Write the real video title in <code>data-title</code> and the caption, or leave the title out if it is not confirmed.</p></header>
+            <div class="sg-demo flow" data-demo="youtube"></div>
+            <template data-sg="youtube">
+<div class="grid grid-2">
+  <figure class="screen">
+    <div class="screen-media">
+      <a class="yt-facade" href="https://www.youtube.com/watch?v=KaL8Ox3yCyU" data-youtube="KaL8Ox3yCyU" data-title="HoovyTube tutorial" target="_blank" rel="noopener" aria-label="Play the tutorial">
+        <img src="/media/posters/home-tutorials.jpg" alt="" loading="lazy" width="1280" height="720">
+      </a>
+    </div>
+    <figcaption class="screen-cap"><span class="screen-dot"></span><b>Easy</b> tutorial, plays here on click</figcaption>
+  </figure>
+</div>
+            </template>
+          </section>
+
+          <!-- PROSE -->
+          <section class="sg-block" id="sg-prose">
+            <header class="section-head"><span class="eyebrow">Long text</span><h2>Prose</h2><p class="lead">For journal posts and long explanations: a panel with <code>.prose</code> inside.</p></header>
+            <div class="sg-demo flow" data-demo="prose"></div>
+            <template data-sg="prose">
+<article class="panel">
+  <div class="prose">
+    <h2>Shoulders of giants</h2>
+    <p>The tool lineage runs from Crowbar, dmxconvert and VTF Edit to Blender Source Tools and SourceIO, and from there to HoovyTools.</p>
+    <blockquote>Anything I put out without a paywall is yours to do whatever you like with. Credit appreciated, never required.</blockquote>
+    <ul>
+      <li>Session import: SFM <code>.dmx</code> sessions into Blender</li>
+      <li>Particle Import: <code>.pcf</code> effects as geometry nodes</li>
+    </ul>
+  </div>
+</article>
+            </template>
+          </section>
+
+          <!-- JOURNAL -->
+          <section class="sg-block" id="sg-journal">
+            <header class="section-head"><span class="eyebrow">Long text</span><h2>Journal post &amp; post list</h2><p class="lead">A post is a text-only hero plate (eyebrow, title, dek, <code>.meta</code> line with the date and tags, no byline) followed by the <code>.prose</code> panel and the page's upsell. The list is a grid of whole-card links. Split very long posts into several <code>&lt;section&gt;</code>s if you like; reveal works at any height.</p></header>
+            <div class="sg-demo flow" data-demo="journal"></div>
+            <template data-sg="journal">
+<header class="panel page-hero is-text-only">
+  <div>
+    <span class="eyebrow">Journal</span>
+    <h1>Shoulders of Giants and the end of HoovyTools</h1>
+    <p class="lead">A note on free tools, the chain I came up through, and building the kind of thing the next person can walk away from.</p>
+    <p class="meta"><time datetime="2026-08-17">17 August 2026</time><span class="tag">Manifesto</span><span class="tag">HoovyTools</span></p>
+  </div>
+</header>
+
+<div class="grid grid-2">
+  <a class="card" href="/blog/#/shoulders-of-giants">
+    <div class="card-media"><img src="/media/posters/home-hoovytools.jpg" alt="" loading="lazy" width="1280" height="720"></div>
+    <p class="meta"><time datetime="2026-08-17">17 Aug 2026</time><span class="tag">Manifesto</span></p>
+    <h3 class="card-title">Shoulders of Giants and the end of HoovyTools</h3>
+    <p class="card-text">Free tools, the chain behind them, and why HoovyTools stays free.</p>
+  </a>
+</div>
+            </template>
+          </section>
+
+          <!-- MOTION -->
+          <section class="sg-block" id="sg-motion">
+            <header class="section-head"><span class="eyebrow">Motion</span><h2>Reveal &amp; count-up</h2><p class="lead">Automatic: every <code>main &gt; section</code> and the CTA band fade and rise in once, as soon as their top edge enters the viewport (any height works, a failsafe catches missed callbacks). Add <code>data-reveal</code> to any other block, or <code>data-reveal="stagger"</code> to reveal a grid's children in turn. Anything already on screen at load is never hidden; reduced motion turns it all off.</p></header>
+            <div class="sg-demo flow" data-demo="motion"></div>
+            <template data-sg="motion">
+<div class="stats" data-reveal="stagger">
+  <div class="stat"><b class="stat-num" data-count>900+</b><span class="stat-label">particle effects</span></div>
+  <div class="stat"><b class="stat-num" data-count>600+</b><span class="stat-label">animations</span></div>
+  <div class="stat"><b class="stat-num" data-count>30+</b><span class="stat-label">scenebuilds</span></div>
+  <div class="stat"><b class="stat-num" data-count>300+</b><span class="stat-label">size variations</span></div>
+</div>
+<div class="panel" data-reveal>
+  <p>This panel uses <code>data-reveal</code>.</p>
+</div>
+            </template>
+          </section>
+
+          <!-- CHROME -->
+          <section class="sg-block" id="sg-chrome">
+            <header class="section-head"><span class="eyebrow">Automatic</span><h2>Dock, CTA band, footer</h2><p class="lead">All injected by <code>/shared/ht-nav.js</code>. You only write <code>&lt;footer class="site"&gt;&lt;/footer&gt;</code>. Scroll down to see the live Patreon CTA band and footer on this page.</p></header>
+            <div class="panel">
+              <ul class="check-list">
+                <li><strong>Dock:</strong> Home, <a class="hl-patreon" href="/products/">Patreon</a>, Workshop, HoovyTools, Learn, Journal, Contact, then Search and Theme. The current page is marked automatically (<code>/patreon/</code> also lights Patreon).</li>
+                <li><strong>CTA band:</strong> inserted right before <code>footer.site</code>. Opt out only with <code>&lt;body data-no-cta&gt;</code> (for example the styleguide could, but it keeps it for reference).</li>
+                <li><strong>Footer:</strong> brand line, social chips, sitemap with Patreon highlighted, one copyright line. Keep page-specific notes with <code>&lt;p class="footer-note"&gt;</code> inside the footer; they are preserved.</li>
+                <li><strong>Newsletter:</strong> appears late (after real scrolling), never on the first screen, and remembers dismissal for 30 days.</li>
+                <li><strong>404 and /patreon/:</strong> <code>/404.html</code> is a real HoovyTube page on this skeleton (no redirects); <code>/patreon/</code> forwards to <code>/products/</code>. Both are owned by the design system.</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- SKELETON -->
+          <section class="sg-block" id="sg-skeleton">
+            <header class="section-head"><span class="eyebrow">Start here</span><h2>Page skeleton</h2><p class="lead">Copy this for every page. Keep the theme script inline in <code>&lt;head&gt;</code> before first paint and the asset versions exactly as written.</p></header>
+            <div class="code-block sg-markup"><div class="code-block-bar"><span>Markup</span><button class="btn" type="button" data-copy="#sgSkeletonCode">Copy</button></div><pre><code id="sgSkeletonCode"></code></pre></div>
+<script type="text/plain" id="sgSkeleton"><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page name - HoovyTube</title>
+  <meta name="description" content="One factual sentence about this page.">
+  <link rel="canonical" href="https://hoovytube.com/page/">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HoovyTube">
+  <meta property="og:url" content="https://hoovytube.com/page/">
+  <meta property="og:title" content="Page name - HoovyTube">
+  <meta property="og:description" content="One factual sentence about this page.">
+  <meta property="og:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HoovyTube - SFM assets, Blender add-ons and free tutorials">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Page name - HoovyTube">
+  <meta name="twitter:description" content="One factual sentence about this page.">
+  <meta name="twitter:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();<\/script>
+</head>
+<body>
+  <!-- ht-nav.js injects the skip link + dock here -->
+  <main id="main">
+    <section class="section">
+      <div class="container">
+        <div class="panel page-hero">...hero with a Patreon CTA...</div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <header class="section-head">
+          <span class="eyebrow">Eyebrow</span>
+          <h2>Section title</h2>
+          <p class="lead">One line on what this section shows.</p>
+        </header>
+        ...components...
+      </div>
+    </section>
+    <!-- one page-relevant .upsell somewhere in main -->
+  </main>
+  <!-- ht-nav.js inserts the Patreon CTA band here (opt out: <body data-no-cta>) -->
+  <footer class="site"></footer>
+  <script defer src="/shared/ht-nav.js?v=20"><\/script>
+  <script defer src="/shared/ht-ui.js?v=20"><\/script>
+  <script defer src="/shared/ht-newsletter.js?v=20"><\/script>
+</body>
+</html></script>
+          </section>
+
+        </div>
+      </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site"></footer>
+
+  <script>
+    /* Styleguide only: render each <template data-sg> live, and print its exact markup below it. */
+    (function () {
+      function dedent(s) {
+        var lines = s.replace(/^\n+|\s+$/g, '').split('\n');
+        var min = Infinity;
+        lines.forEach(function (l) { if (l.trim()) { var m = l.match(/^ */)[0].length; if (m < min) min = m; } });
+        return lines.map(function (l) { return l.slice(min === Infinity ? 0 : min); }).join('\n');
+      }
+      [].forEach.call(document.querySelectorAll('template[data-sg]'), function (t) {
+        var name = t.getAttribute('data-sg');
+        var demo = document.querySelector('[data-demo="' + name + '"]');
+        if (demo) demo.appendChild(t.content.cloneNode(true));
+        var code = dedent(t.innerHTML);
+        var box = document.createElement('div');
+        box.className = 'code-block sg-markup';
+        var id = 'sgcode-' + name;
+        box.innerHTML = '<div class="code-block-bar"><span>Markup</span><button class="btn" type="button" data-copy="#' + id + '">Copy</button></div><pre><code id="' + id + '"></code></pre>';
+        box.querySelector('code').textContent = code;
+        t.parentNode.insertBefore(box, t);
+      });
+      var sk = document.getElementById('sgSkeleton');
+      document.getElementById('sgSkeletonCode').textContent = sk.textContent.replace(/<\\\/script>/g, '</' + 'script>');
+
+      function swatches() {
+        var cs = getComputedStyle(document.documentElement);
+        [].forEach.call(document.querySelectorAll('[data-swatches]'), function (wrap) {
+          wrap.innerHTML = wrap.getAttribute('data-swatches').split(/\s+/).map(function (n) {
+            var v = cs.getPropertyValue(n).trim();
+            return '<div class="panel panel-sm sg-swatch"><i style="background:var(' + n + ')"></i><b>' + n + '</b><code>' + v + '</code></div>';
+          }).join('');
+        });
+      }
+      swatches();
+      new MutationObserver(swatches).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    })();
+  </script>
+  <script defer src="/shared/ht-nav.js?v=20"></script>
+  <script defer src="/shared/ht-ui.js?v=20"></script>
+  <script defer src="/shared/ht-newsletter.js?v=20"></script>
+</body>
+</html>

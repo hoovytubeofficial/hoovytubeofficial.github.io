@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!-- Source composition for /assets/og/og-default.jpg (1200x630).
+     Re-render: see "OG image" in /docs/DESIGN-SYSTEM.md (Playwright screenshot at 1200x630, then JPEG q88). -->
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <title>OG composition</title>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <style>
+    html, body { margin: 0; padding: 0; }
+    body { width: 1200px; height: 630px; overflow: hidden; padding: 0; min-height: 0;
+      background: radial-gradient(900px 520px at 30% 20%, #24384d, rgba(0,0,0,0) 70%), #111b26; }
+    .og { position: relative; width: 1200px; height: 630px; display: grid; grid-template-columns: 590px 1fr; gap: 34px; align-items: center; padding: 0 56px; }
+    .og .screen { margin: 0; padding: 12px; border-radius: 22px; transform: rotate(-1.6deg); }
+    .og .screen-media { border-radius: 12px; }
+    .og .screen-cap { font-size: 17px; padding-top: 10px; }
+    .og-right { display: grid; gap: 22px; }
+    .og-plate { padding: 28px 30px 30px; border-radius: 24px; margin: 0; }
+    .og-plate .eyebrow { font-size: 14px; margin-bottom: 16px; }
+    .og-word { font-family: var(--font-display); font-size: 76px; line-height: .95; margin: 0 0 14px; color: var(--slate); letter-spacing: .01em; }
+    .og-line { font-size: 22px; line-height: 1.38; color: #2b3e52; margin: 0; font-weight: 500; }
+    .og-line b { color: var(--slate); }
+    .og-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .og-chips .tag { font-size: 13px; padding: .55em .9em .5em; }
+    .og-chips .tag img { width: 22px; height: 22px; }
+    .og-icons { position: absolute; left: 56px; bottom: 26px; display: flex; gap: 14px; }
+    .og-icons img { width: 54px; height: 54px; }
+  </style>
+</head>
+<body>
+  <div class="og">
+    <figure class="screen">
+      <div class="screen-media"><img src="/assets/og/src/particles-frame.jpg" alt=""></div>
+      <figcaption class="screen-cap"><span class="screen-dot"></span><b>SFM particle library</b>&nbsp;preview</figcaption>
+    </figure>
+    <div class="og-right">
+      <div class="panel panel-invert og-plate">
+        <span class="eyebrow">Source Filmmaker &amp; Blender</span>
+        <p class="og-word">HoovyTube</p>
+        <p class="og-line"><b>900+ SFM particles</b>, 600+ animations and 30+ scenebuilds, free Blender add-ons and free tutorials.</p>
+      </div>
+      <div class="og-chips">
+        <span class="tag tag-patreon"><img src="/assets/icons/forged/patreon.png" alt="">Patreon library</span>
+        <span class="tag tag-free">Free HoovyTools</span>
+        <span class="tag tag-free">Free tutorials</span>
+      </div>
+    </div>
+    <div class="og-icons">
+      <img src="/assets/icons/forged/fire.png" alt=""><img src="/assets/icons/forged/explosion.png" alt=""><img src="/assets/icons/forged/sparks.png" alt=""><img src="/assets/icons/forged/smoke.png" alt=""><img src="/assets/icons/forged/electricity.png" alt="">
+    </div>
+  </div>
+</body>
+</html>

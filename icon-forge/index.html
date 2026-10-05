@@ -1,109 +1,128 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Icon Forge - HoovyTube</title>
+  <meta name="description" content="Internal tool: turn any icon into a HoovyTube-style cream, slate-outlined icon or olive item badge.">
   <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://hoovytube.com/icon-forge/">
   <link rel="icon" type="image/png" href="/favicon.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <title>Icon Forge - HoovyTube</title>
-  <meta name="description" content="Internal tool: turn any icon into a HoovyTube-style cream, slate-outlined sticker icon or olive item badge.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/styles/ht.css?v=10">
-  <script>try{var t=localStorage.getItem('ht-theme');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}</script>
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="HoovyTube">
+  <meta property="og:url" content="https://hoovytube.com/icon-forge/">
+  <meta property="og:title" content="Icon Forge - HoovyTube">
+  <meta property="og:description" content="Internal tool: turn any icon into a HoovyTube-style icon or item badge.">
+  <meta property="og:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="HoovyTube - SFM assets, Blender add-ons and free tutorials">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Icon Forge - HoovyTube">
+  <meta name="twitter:description" content="Internal tool: turn any icon into a HoovyTube-style icon or item badge.">
+  <meta name="twitter:image" content="https://hoovytube.com/assets/og/og-default.jpg">
+  <link rel="preload" href="/assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles/ht.css?v=20">
+  <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
   <style>
-    .forge-head h1 { color: var(--cream); -webkit-text-stroke: 2px var(--outline); paint-order: stroke fill;
-      text-shadow: 0 3px 0 var(--outline), 0 6px 0 var(--outline-deep); letter-spacing: .01em; }
+    /* Icon Forge: tool layout glue only. Surfaces, buttons, chips, inputs and notices come from /styles/ht.css. */
     .forge [hidden] { display: none !important; }
-    .forge { max-width: 1240px; margin: 0 auto; padding: 0 1.25rem 3rem; display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 1.4rem; align-items: start; }
+    @media (min-width: 900px) { .forge-hero .page-hero { grid-template-columns: minmax(0, 1.5fr) minmax(0, .5fr); } }
+    .forge-demo { display: flex; align-items: center; justify-content: center; gap: var(--s-3); }
+    .forge-demo figure { margin: 0; text-align: center; }
+    .forge-demo .stage { width: 112px; height: 112px; padding: 12px; }
+    .forge-demo img { width: 88px; height: 88px; object-fit: contain; }
+    .forge-demo figcaption { margin-top: var(--s-2); font-size: var(--fs-xs); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); }
+    .forge-demo .arrow { font-family: var(--font-display); font-size: 2rem; color: var(--text-muted); line-height: 1; padding-bottom: 1.4rem; }
+
+    .forge { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: var(--gap); align-items: start; }
     @media (max-width: 980px) { .forge { grid-template-columns: minmax(0, 1fr); } }
+    .forge-main > * + * { margin-top: var(--flow-gap); }
 
-    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; }
-    .controls { position: sticky; top: 92px; max-height: calc(100vh - 108px); overflow: auto; padding: .4rem 0; overscroll-behavior: contain; }
-    @media (max-width: 980px) { .controls { position: static; max-height: none; } }
-    .controls details { border-top: 1px solid var(--line); }
+    /* Settings plate */
+    .panel.controls { padding: var(--s-2) 0; position: sticky; top: calc(var(--dock-space) + var(--s-2)); max-height: calc(100vh - var(--dock-space) - var(--s-6)); overflow: auto; overscroll-behavior: contain; }
+    @media (max-width: 980px) { .panel.controls { position: static; max-height: none; } }
+    .controls details { border-top: 2px solid var(--line); }
     .controls details:first-of-type { border-top: 0; }
-    .controls summary { cursor: pointer; list-style: none; padding: .75rem 1.1rem; font: 600 .78rem/1.2 'Space Grotesk', system-ui, sans-serif; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; align-items: center; }
+    .controls summary { cursor: pointer; list-style: none; padding: .8rem 1.1rem; font: 800 var(--fs-xs) / 1.2 var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; border-radius: var(--r-sm); }
+    .controls summary:focus-visible { outline-offset: -4px; }
     .controls summary::-webkit-details-marker { display: none; }
-    .controls summary::after { content: '+'; font-size: 1.1rem; color: var(--muted); }
+    .controls summary::after { content: '+'; font: 400 1.3rem / 1 var(--font-display); color: var(--text-muted); }
     .controls details[open] > summary::after { content: '\2212'; }
-    .controls .body { padding: 0 1.1rem .95rem; display: grid; gap: .7rem; }
-    .ctl { display: grid; gap: .25rem; }
-    .ctl > label, .ctl .lbl { font-size: .8rem; color: var(--text); display: flex; justify-content: space-between; gap: .5rem; }
-    .ctl output { color: var(--muted); font-variant-numeric: tabular-nums; }
-    .ctl .hint { font-size: .72rem; color: var(--muted); margin: 0; }
-    .ctl select, .ctl input[type="text"], .paste textarea { width: 100%; font: inherit; font-size: .88rem; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: .5rem .6rem; }
-    .ctl select:focus-visible, .ctl input:focus-visible, .paste textarea:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-    input[type="range"] { width: 100%; accent-color: var(--accent); }
-    .colors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .55rem; }
+    .controls .body { padding: 0 1.1rem 1rem; display: grid; gap: .8rem; }
+    .controls .body-foot { padding-top: var(--s-3); border-top: 2px solid var(--line); }
+    .ctl { display: grid; gap: .3rem; }
+    .ctl > label, .ctl .lbl { font-size: var(--fs-sm); font-weight: 600; color: var(--text); display: flex; justify-content: space-between; gap: .5rem; }
+    .ctl output { color: var(--text-muted); font-variant-numeric: tabular-nums; }
+    .ctl .hint { font-size: var(--fs-xs); color: var(--text-muted); margin: 0; }
+    .ctl .select, .ctl .input { min-height: 40px; padding: .45em .65em; font-size: .92rem; }
+    input[type="range"] { width: 100%; accent-color: var(--primary-lo); }
+    .colors { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
     .colors .ctl { justify-items: start; }
-    .colors label { font-size: .74rem; color: var(--muted); }
-    input[type="color"] { width: 100%; height: 34px; border: 1px solid var(--line); border-radius: 9px; background: var(--bg); padding: 2px; cursor: pointer; }
-    .check { display: flex; align-items: center; gap: .55rem; font-size: .85rem; cursor: pointer; }
-    .check input { width: 18px; height: 18px; accent-color: var(--accent); }
-    .seg { display: grid; grid-template-columns: 1fr 1fr; background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: 3px; }
-    .seg button { font: 600 .85rem/1 Inter, system-ui, sans-serif; border: 0; border-radius: 999px; padding: .55rem .4rem; cursor: pointer; background: transparent; color: var(--muted); }
-    .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
-    .row-btns { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .colors label { font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted); }
+    input[type="color"] { width: 100%; height: 36px; border: var(--bw-sm) solid var(--outline); border-radius: var(--r-sm); background: var(--inset); padding: 2px; cursor: pointer; }
+    .check { display: flex; align-items: center; gap: .6rem; font-size: var(--fs-sm); cursor: pointer; }
+    .check input { width: 18px; height: 18px; flex: 0 0 auto; accent-color: var(--primary-lo); }
+    .seg { display: grid; grid-template-columns: 1fr 1fr; }
+    .seg .chip { justify-content: center; }
+    .row-btns { display: flex; gap: var(--s-2); flex-wrap: wrap; align-items: center; }
 
-    .btn-s { font: 600 .85rem/1 Inter, system-ui, sans-serif; border-radius: 999px; padding: .6rem .95rem; cursor: pointer; border: 1px solid var(--line); background: var(--panel); color: var(--text); display: inline-flex; align-items: center; gap: .4rem; transition: border-color .2s, background .2s, transform .15s; }
-    .btn-s:hover { border-color: var(--accent); }
-    .btn-s.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-    .btn-s.primary:hover { transform: translateY(-1px); }
-    .btn-s:disabled { opacity: .5; cursor: default; transform: none; }
-    .btn-s svg { width: 16px; height: 16px; }
+    /* Drop zone */
+    .drop-zone { border-style: dashed; border-width: var(--bw); text-align: center; padding: var(--panel-pad); transition: border-color var(--dur-fast), background-color var(--dur-fast); }
+    .drop.over .drop-zone { border-color: var(--focus); background-color: color-mix(in srgb, var(--focus) 10%, var(--inset)); }
+    .drop .big { font: 400 var(--fs-h3) / 1.1 var(--font-display); color: var(--heading); margin: 0 0 .3rem; }
+    .drop-zone p { color: var(--text-muted); }
+    .drop-zone .row-btns { justify-content: center; margin-top: var(--s-4); }
+    .drop .btn svg { width: 1.1em; height: 1.1em; }
+    .paste { margin-top: var(--s-4); text-align: left; display: grid; gap: .6rem; }
+    .paste .textarea { min-height: 120px; font-family: var(--font-mono); font-size: .82rem; }
 
-    .drop { padding: 1.4rem 1.2rem; text-align: center; border: 2px dashed color-mix(in srgb, var(--accent) 45%, var(--line)); background: color-mix(in srgb, var(--panel) 85%, transparent); transition: border-color .2s, background .2s; }
-    .drop.over { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--panel)); }
-    .drop .big { font: 700 1.15rem/1.3 'Space Grotesk', system-ui, sans-serif; margin: 0 0 .25rem; }
-    .drop p { margin: 0 0 .9rem; color: var(--muted); font-size: .9rem; }
-    .drop .row-btns { justify-content: center; }
-    .paste { margin-top: .9rem; text-align: left; display: grid; gap: .5rem; }
-    .paste[hidden] { display: none; }
-    .paste textarea { min-height: 120px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .8rem; resize: vertical; }
-
-    .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .7rem; margin: 1rem 0 .8rem; }
-    .toolbar .left { display: flex; align-items: center; gap: .6rem; color: var(--muted); font-size: .88rem; }
-    .toolbar .right { display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
-    .toolbar select { font: inherit; font-size: .85rem; color: var(--text); background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: .5rem .7rem; }
+    /* Toolbar */
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3); }
+    .toolbar .left { display: flex; align-items: center; gap: .6rem; color: var(--text-muted); font-size: var(--fs-sm); font-weight: 600; }
+    .toolbar .right { display: flex; align-items: center; gap: var(--s-2); flex-wrap: wrap; }
+    .toolbar .select { width: auto; min-height: 36px; padding: .35em .6em; font-size: .88rem; }
+    .toolbar .btn { margin-bottom: var(--depth-sm); }
     .status { min-height: 1.3em; }
 
-    .cards { display: grid; gap: 1rem; }
-    .icard { padding: .9rem; }
-    .icard header { display: flex; align-items: center; gap: .6rem; margin-bottom: .7rem; }
-    .icard header input { flex: 1; min-width: 0; font: 600 .95rem/1.2 'Space Grotesk', system-ui, sans-serif; color: var(--text); background: transparent; border: 1px solid transparent; border-radius: 8px; padding: .3rem .4rem; }
-    .icard header input:hover, .icard header input:focus { border-color: var(--line); background: var(--bg); outline: none; }
-    .icard .x { border: 0; background: transparent; color: var(--muted); cursor: pointer; width: 34px; height: 34px; border-radius: 50%; font-size: 1.2rem; line-height: 1; }
-    .icard .x:hover { background: var(--panel-2); color: var(--text); }
+    /* Icon cards */
+    .cards { display: grid; gap: var(--gap); }
+    .icard header { display: flex; align-items: center; gap: .6rem; margin-bottom: .75rem; }
+    .icard header input { flex: 1; min-width: 0; font: 400 var(--fs-h4) / 1.2 var(--font-display); color: var(--heading); background: transparent; border: var(--bw-sm) solid transparent; border-radius: var(--r-sm); padding: .25rem .45rem; }
+    .icard header input:hover, .icard header input:focus { border-color: var(--line); background: var(--inset); outline: none; }
+    .icard header input:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+    .icard .x { flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%; border: var(--bw-sm) solid var(--outline); background: linear-gradient(180deg, var(--secondary-hi), var(--secondary-lo)); color: var(--secondary-ink); font-size: 1.25rem; line-height: 1; cursor: pointer; box-shadow: inset 0 1px 0 var(--rim-light), 0 3px 0 var(--depth-color); }
+    .icard .x:hover { transform: translateY(-1px); }
     .cmp { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .6rem; }
     .cmp figure { margin: 0; min-width: 0; }
-    .cmp figcaption { font-size: .72rem; color: var(--muted); text-align: center; margin-top: .3rem; letter-spacing: .04em; text-transform: uppercase; }
-    .stage { aspect-ratio: 1 / 1; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid var(--line); position: relative; }
+    .cmp figcaption { font-size: var(--fs-xs); font-weight: 800; color: var(--text-muted); text-align: center; margin-top: .35rem; letter-spacing: .08em; text-transform: uppercase; }
+    .stage { aspect-ratio: 1 / 1; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; overflow: hidden; border: var(--bw-sm) solid var(--outline); position: relative; }
     .stage img { width: 100%; height: 100%; object-fit: contain; display: block; }
     .chk-light { background: repeating-conic-gradient(#e8e8e8 0% 25%, #ffffff 0% 50%) 0 0 / 16px 16px; }
     .chk-dark { background: repeating-conic-gradient(#1b2937 0% 25%, #243849 0% 50%) 0 0 / 16px 16px; }
-    .stage.busy::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--panel) 35%, transparent); animation: pulse 1s ease-in-out infinite alternate; }
+    .stage.busy::after { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--plate) 35%, transparent); animation: pulse 1s ease-in-out infinite alternate; }
     @keyframes pulse { from { opacity: .2; } to { opacity: .8; } }
-    .sizes { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .7rem; }
-    .strip { display: flex; align-items: flex-end; gap: 12px; padding: 10px 12px; border-radius: 12px; border: 1px solid var(--line); }
+    .sizes { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: .75rem; }
+    .strip { display: flex; align-items: flex-end; gap: 12px; padding: 10px 12px; border-radius: var(--r-md); border: var(--bw-sm) solid var(--outline); }
     .strip img { display: block; }
-    .icard .actions { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-top: .75rem; }
-    .icard .actions input { flex: 1 1 160px; min-width: 0; font: inherit; font-size: .88rem; color: var(--text); background: var(--bg); border: 1px solid var(--line); border-radius: 999px; padding: .5rem .8rem; }
-    .icard .warn { font-size: .78rem; color: #b5653a; margin: .5rem 0 0; }
-    .icard .tip { font-size: .78rem; color: var(--muted); margin: .5rem 0 0; }
-    .icard .err { font-size: .85rem; color: #c0504d; margin: .3rem 0 0; }
-    .empty { text-align: center; color: var(--muted); padding: 2.2rem 1rem; font-size: .92rem; }
-    .empty img { width: 96px; height: 96px; display: block; margin: 0 auto .6rem; opacity: .9; }
-    .tips { margin-top: 1.2rem; padding: 1rem 1.2rem; font-size: .88rem; color: var(--muted); }
-    .tips h2 { font-size: 1rem; margin: 0 0 .4rem; color: var(--text); }
-    .tips ul { margin: 0; padding-left: 1.1rem; }
-    .tips li { margin: .25rem 0; }
-    .tips code { font-size: .82em; background: var(--panel-2); padding: .05rem .3rem; border-radius: 4px; }
+    .icard .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); margin-top: .8rem; }
+    .icard .actions .input { flex: 1 1 160px; min-width: 0; width: auto; min-height: 38px; padding: .4em .7em; font-size: .92rem; }
+    .icard .actions .btn { margin-bottom: var(--depth-sm); }
+    .icard .notice, .icard .form-msg { margin: .6rem 0 0; }
+    .icard .err { color: var(--err); }
+    .empty { text-align: center; color: var(--text-muted); }
+    .empty img { display: block; margin: 0 auto var(--s-3); }
+    .tips h2 { margin: 0 0 .5rem; }
+    .tips ul { margin: 0; padding-left: 1.2rem; color: var(--text-muted); font-size: var(--fs-sm); }
+    .tips li { margin: .35rem 0; }
     @media (max-width: 560px) {
       .cmp { gap: .4rem; }
-      .cmp figcaption { font-size: .64rem; }
+      .cmp figcaption { font-size: .62rem; letter-spacing: .04em; }
       .strip { gap: 8px; padding: 8px; }
     }
     @media (prefers-reduced-motion: reduce) {
@@ -112,139 +131,159 @@
   </style>
 </head>
 <body>
-  <header class="pagehead forge-head">
-    <div class="inner">
-      <span class="eyebrow">Internal tool</span>
-      <h1>Icon Forge</h1>
-      <p class="ph-lead">Drop in any icon and get it back in the HoovyTube style: cream fill, chunky slate outline, 3D edge. Or stamp it onto an olive item badge.</p>
-    </div>
-  </header>
-
-  <main class="forge">
-    <aside class="panel controls" aria-label="Forge settings">
-      <details open>
-        <summary>Output</summary>
-        <div class="body">
-          <div class="seg" role="group" aria-label="Output type">
-            <button type="button" id="modeIcon" aria-pressed="true">Icon</button>
-            <button type="button" id="modeBadge" aria-pressed="false">Badge</button>
+  <main id="main">
+    <section class="section forge-hero">
+      <div class="container">
+        <div class="panel page-hero">
+          <div class="page-hero-text">
+            <span class="eyebrow">Internal tool</span>
+            <h1>Icon Forge</h1>
+            <p class="lead">Drop in any icon and get it back in the HoovyTube style: cream fill, chunky slate outline, 3D edge. Or stamp it onto an olive item badge.</p>
+            <p class="page-hero-note">The tool behind the icons on this site. Looking for the SFM assets themselves? The library is on <a class="hl-patreon" href="https://www.patreon.com/c/hoovytube308/membership" target="_blank" rel="noopener">Patreon</a>; memberships start at $20/month.</p>
           </div>
-          <div class="ctl">
-            <label for="preset">Preset</label>
-            <select id="preset">
-              <option value="cream">Cream - dock icons</option>
-              <option value="teal">Teal - big site icons</option>
-              <option value="olive">Olive - HoovyTools arrow</option>
-              <option value="slate">Slate - dark variant</option>
-              <option value="badge">Badge icon - dark olive</option>
-              <option value="custom">Custom</option>
-            </select>
+          <div class="page-hero-media">
+            <div class="forge-demo" aria-hidden="true">
+              <figure><div class="stage chk-light"><img src="/assets/icons/src/fire.svg" alt="" width="88" height="88"></div><figcaption>Source</figcaption></figure>
+              <span class="arrow">&rarr;</span>
+              <figure><div class="stage chk-light"><img src="/assets/icons/forged/fire.png" alt="" width="88" height="88"></div><figcaption>Forged</figcaption></figure>
+            </div>
           </div>
-          <div class="ctl" id="labelCtl" hidden>
-            <label for="badgeLabel">Default badge label</label>
-            <input type="text" id="badgeLabel" placeholder="Uses the icon name" maxlength="40">
-            <p class="hint">Each card can override it. Long labels wrap to two lines.</p>
-          </div>
-        </div>
-      </details>
-      <details open>
-        <summary>Colours</summary>
-        <div class="body">
-          <div class="colors" id="colors"></div>
-        </div>
-      </details>
-      <details open>
-        <summary>Shape</summary>
-        <div class="body" id="shapeCtls"></div>
-      </details>
-      <details>
-        <summary>Mask &amp; holes</summary>
-        <div class="body" id="maskCtls">
-          <div class="ctl">
-            <label for="mask">Read the shape from</label>
-            <select id="mask">
-              <option value="auto">Auto-detect</option>
-              <option value="alpha">Transparency (alpha)</option>
-              <option value="background">Anything unlike the background colour</option>
-              <option value="dark-on-light">Only parts darker than the background</option>
-              <option value="light-on-dark">Only parts lighter than the background</option>
-            </select>
-          </div>
-          <div class="ctl">
-            <label for="fillHoles">Holes</label>
-            <select id="fillHoles">
-              <option value="false">See-through with outline ring</option>
-              <option value="outline">Plug with outline colour</option>
-              <option value="depth">Plug with dark depth colour</option>
-            </select>
-          </div>
-          <label class="check"><input type="checkbox" id="detail"> Keep inner details (lines, knock-outs) as slate cuts</label>
-          <label class="check"><input type="checkbox" id="shadow"> Soft drop shadow</label>
-        </div>
-      </details>
-      <div class="body" style="padding-top:.4rem">
-        <div class="row-btns">
-          <button type="button" class="btn-s" id="resetBtn">Reset to preset</button>
         </div>
       </div>
-    </aside>
+    </section>
 
-    <section aria-label="Icons">
-      <div class="panel drop" id="drop">
-        <p class="big">Drop icons here</p>
-        <p>PNG, JPG, WebP, GIF or SVG. Several at once is fine. You can also paste an image or SVG code with Ctrl+V.</p>
-        <div class="row-btns">
-          <label class="btn-s primary" for="fileIn" tabindex="0" id="fileLbl">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-            Choose files</label>
-          <input type="file" id="fileIn" accept="image/*,.svg" multiple class="sr-only">
-          <button type="button" class="btn-s" id="pasteToggle" aria-expanded="false" aria-controls="pastePanel">Paste SVG code</button>
-          <button type="button" class="btn-s" id="samplesBtn">Load samples</button>
-        </div>
-        <div class="paste" id="pastePanel" hidden>
-          <label for="svgText" class="sr-only">SVG markup</label>
-          <textarea id="svgText" placeholder="&lt;svg viewBox=&quot;0 0 24 24&quot;&gt;...&lt;/svg&gt;" spellcheck="false"></textarea>
-          <div class="row-btns"><button type="button" class="btn-s primary" id="svgAdd">Add SVG</button></div>
-        </div>
-      </div>
+    <section class="section">
+      <div class="container">
+        <div class="forge">
+          <aside class="panel controls" aria-label="Forge settings">
+            <details open>
+              <summary>Output</summary>
+              <div class="body">
+                <div class="chips seg" role="group" aria-label="Output type">
+                  <button type="button" class="chip" id="modeIcon" aria-pressed="true">Icon</button>
+                  <button type="button" class="chip" id="modeBadge" aria-pressed="false">Badge</button>
+                </div>
+                <div class="ctl">
+                  <label for="preset">Preset</label>
+                  <select class="select" id="preset">
+                    <option value="cream">Cream - dock icons</option>
+                    <option value="teal">Teal - big site icons</option>
+                    <option value="olive">Olive - HoovyTools arrow</option>
+                    <option value="slate">Slate - dark variant</option>
+                    <option value="badge">Badge icon - dark olive</option>
+                    <option value="custom">Custom</option>
+                  </select>
+                </div>
+                <div class="ctl" id="labelCtl" hidden>
+                  <label for="badgeLabel">Default badge label</label>
+                  <input class="input" type="text" id="badgeLabel" placeholder="Uses the icon name" maxlength="40">
+                  <p class="hint">Each card can override it. Long labels wrap to two lines.</p>
+                </div>
+              </div>
+            </details>
+            <details open>
+              <summary>Colours</summary>
+              <div class="body">
+                <div class="colors" id="colors"></div>
+              </div>
+            </details>
+            <details open>
+              <summary>Shape</summary>
+              <div class="body" id="shapeCtls"></div>
+            </details>
+            <details>
+              <summary>Mask &amp; holes</summary>
+              <div class="body" id="maskCtls">
+                <div class="ctl">
+                  <label for="mask">Read the shape from</label>
+                  <select class="select" id="mask">
+                    <option value="auto">Auto-detect</option>
+                    <option value="alpha">Transparency (alpha)</option>
+                    <option value="background">Anything unlike the background colour</option>
+                    <option value="dark-on-light">Only parts darker than the background</option>
+                    <option value="light-on-dark">Only parts lighter than the background</option>
+                  </select>
+                </div>
+                <div class="ctl">
+                  <label for="fillHoles">Holes</label>
+                  <select class="select" id="fillHoles">
+                    <option value="false">See-through with outline ring</option>
+                    <option value="outline">Plug with outline colour</option>
+                    <option value="depth">Plug with dark depth colour</option>
+                  </select>
+                </div>
+                <label class="check"><input type="checkbox" id="detail"> Keep inner details (lines, knock-outs) as slate cuts</label>
+                <label class="check"><input type="checkbox" id="shadow"> Soft drop shadow</label>
+              </div>
+            </details>
+            <div class="body body-foot">
+              <div class="row-btns">
+                <button type="button" class="btn btn-ghost btn-sm" id="resetBtn">Reset to preset</button>
+              </div>
+            </div>
+          </aside>
 
-      <div class="toolbar">
-        <div class="left"><span id="count">No icons yet</span><span class="status" id="status" role="status" aria-live="polite"></span></div>
-        <div class="right">
-          <label for="exportSize" class="sr-only">Export size</label>
-          <select id="exportSize">
-            <option value="64">64 px</option>
-            <option value="128">128 px</option>
-            <option value="256" selected>256 px</option>
-            <option value="512">512 px</option>
-            <option value="1024">1024 px</option>
-          </select>
-          <button type="button" class="btn-s primary" id="dlAll" disabled>Download all (.zip)</button>
-          <button type="button" class="btn-s" id="clearAll" disabled>Clear</button>
-        </div>
-      </div>
+          <section class="forge-main" aria-label="Icons">
+            <div class="panel drop" id="drop">
+              <div class="panel-inset drop-zone">
+              <p class="big">Drop icons here</p>
+              <p>PNG, JPG, WebP, GIF or SVG. Several at once is fine. You can also paste an image or SVG code with Ctrl+V.</p>
+              <div class="row-btns">
+                <label class="btn btn-primary" for="fileIn" tabindex="0" id="fileLbl">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                  Choose files</label>
+                <input type="file" id="fileIn" accept="image/*,.svg" multiple class="sr-only">
+                <button type="button" class="btn btn-secondary" id="pasteToggle" aria-expanded="false" aria-controls="pastePanel">Paste SVG code</button>
+                <button type="button" class="btn btn-secondary" id="samplesBtn">Load samples</button>
+              </div>
+              </div>
+              <div class="paste" id="pastePanel" hidden>
+                <label for="svgText" class="sr-only">SVG markup</label>
+                <textarea class="textarea" id="svgText" placeholder="&lt;svg viewBox=&quot;0 0 24 24&quot;&gt;...&lt;/svg&gt;" spellcheck="false"></textarea>
+                <div class="row-btns"><button type="button" class="btn btn-primary btn-sm" id="svgAdd">Add SVG</button></div>
+              </div>
+            </div>
 
-      <div class="cards" id="cards">
-        <div class="panel empty" id="empty">
-          <img src="/assets/icons/tools.png" alt="">
-          Nothing forged yet. Drop an icon above, or load the samples to see how it works.
-        </div>
-      </div>
+            <div class="panel panel-sm toolbar">
+              <div class="left"><span id="count">No icons yet</span><span class="status" id="status" role="status" aria-live="polite"></span></div>
+              <div class="right">
+                <label for="exportSize" class="sr-only">Export size</label>
+                <select class="select" id="exportSize">
+                  <option value="64">64 px</option>
+                  <option value="128">128 px</option>
+                  <option value="256" selected>256 px</option>
+                  <option value="512">512 px</option>
+                  <option value="1024">1024 px</option>
+                </select>
+                <button type="button" class="btn btn-primary btn-sm" id="dlAll" disabled>Download all (.zip)</button>
+                <button type="button" class="btn btn-secondary btn-sm" id="clearAll" disabled>Clear</button>
+              </div>
+            </div>
 
-      <div class="panel tips">
-        <h2>Tips</h2>
-        <ul>
-          <li>Plain black icons (SVG or PNG) work best. Thin line icons look chunkier with a little <b>Grow</b>.</li>
-          <li>Opaque images (JPG, screenshots) are traced against their own background colour, so a white logo on orange or a dark one on blue works too. Lower <b>Threshold</b> if faint parts go missing, raise it if background bits sneak in.</li>
-          <li>Holes stay see-through like the house door and the Discord eyes (the dark crescent at the top is the 3D edge). <b>Plug with outline colour</b> gives a solid slate centre; <b>Only plug holes smaller than</b> fills small detail holes but keeps big ones open.</li>
-          <li>Colour logos with inner parts in another colour (line work, or a white play triangle on a red logo): tick <b>Keep inner details</b> to cut them out as slate. The card says when an image has such details.</li>
-          <li>Same engine in code: <code>import { forgeIcon } from '/shared/icon-forge.js'</code>. Batch: <code>node scripts/forge-icons.mjs</code>.</li>
-        </ul>
+            <div class="cards" id="cards">
+              <div class="panel empty" id="empty">
+                <img src="/assets/icons/forged/star.png" alt="" width="96" height="96">
+                <p>Nothing forged yet. Drop an icon above, or load the samples to see how it works.</p>
+              </div>
+            </div>
+
+            <div class="panel panel-sm tips">
+              <h2 class="h3">Tips</h2>
+              <ul>
+                <li>Plain black icons (SVG or PNG) work best. Thin line icons look chunkier with a little <b>Grow</b>.</li>
+                <li>Opaque images (JPG, screenshots) are traced against their own background colour, so a white logo on orange or a dark one on blue works too. Lower <b>Threshold</b> if faint parts go missing, raise it if background bits sneak in.</li>
+                <li>Holes stay see-through like the house door and the Discord eyes (the dark crescent at the top is the 3D edge). <b>Plug with outline colour</b> gives a solid slate centre; <b>Only plug holes smaller than</b> fills small detail holes but keeps big ones open.</li>
+                <li>Colour logos with inner parts in another colour (line work, or a white play triangle on a red logo): tick <b>Keep inner details</b> to cut them out as slate. The card says when an image has such details.</li>
+                <li>Same engine in code: <code>import { forgeIcon } from '/shared/icon-forge.js'</code>. Batch: <code>node scripts/forge-icons.mjs</code>.</li>
+              </ul>
+            </div>
+          </section>
+        </div>
       </div>
     </section>
   </main>
 
-  <footer class="site"><small>© 2026 HoovyTube. All rights reserved.</small></footer>
+  <footer class="site"></footer>
 
   <script type="module">
     import { PRESETS, resolveOptions, loadSource, forgeIcon, forgeBadge, canvasToBlob } from '/shared/icon-forge.js?v=2';
@@ -310,7 +349,7 @@
       $('colors').innerHTML = COLOR_KEYS.map(([k, l]) => `<div class="ctl"><label for="c-${k}">${l}</label><input type="color" id="c-${k}" data-color="${k}"></div>`).join('');
       const html = (s) => `<div class="ctl" id="${s.k}Ctl"><label for="r-${s.k}"><span>${s.label}</span><output id="o-${s.k}" for="r-${s.k}"></output></label>` +
         `<input type="range" id="r-${s.k}" data-key="${s.k}" min="${s.min}" max="${s.max}" step="${s.step}">${s.hint ? `<p class="hint">${s.hint}</p>` : ''}</div>`;
-      $('shapeCtls').innerHTML = `<div class="ctl"><label for="plate">Outline plate</label><select id="plate">
+      $('shapeCtls').innerHTML = `<div class="ctl"><label for="plate">Outline plate</label><select class="select" id="plate">
           <option value="shape">Follows the shape</option><option value="hull">One flat plate (convex, chamfered)</option></select></div>` +
         SHAPE.filter((s) => !s.group).map(html).join('');
       $('maskCtls').insertAdjacentHTML('beforeend', SHAPE.filter((s) => s.group === 'mask').map(html).join(''));
@@ -418,7 +457,7 @@
     function addCard(item) {
       $('empty').hidden = true;
       const el = document.createElement('article');
-      el.className = 'panel icard'; el.id = 'card-' + item.id;
+      el.className = 'panel panel-sm icard'; el.id = 'card-' + item.id;
       el.innerHTML = `
         <header><input type="text" class="nm" value="${item.name}" aria-label="File name" spellcheck="false">
           <button type="button" class="x" aria-label="Remove ${item.name}">&times;</button></header>
@@ -431,10 +470,10 @@
           <div class="strip chk-light"><img class="s32" width="32" alt="32 px"><img class="s64" width="64" alt="64 px"><img class="s128" width="128" alt="128 px"></div>
           <div class="strip chk-dark"><img class="s32" width="32" alt="32 px on dark"><img class="s64" width="64" alt="64 px on dark"><img class="s128" width="128" alt="128 px on dark"></div>
         </div>
-        <p class="warn" hidden></p><p class="tip" hidden></p><p class="err" hidden></p>
+        <p class="warn notice notice-warn" hidden></p><p class="tip notice" hidden></p><p class="err form-msg" hidden></p>
         <div class="actions">
-          <input type="text" class="lab" placeholder="Badge label" aria-label="Badge label" maxlength="40" ${state.mode === 'badge' ? '' : 'hidden'}>
-          <button type="button" class="btn-s primary dl">Download PNG</button>
+          <input type="text" class="input lab" placeholder="Badge label" aria-label="Badge label" maxlength="40" ${state.mode === 'badge' ? '' : 'hidden'}>
+          <button type="button" class="btn btn-primary btn-sm dl">Download PNG</button>
         </div>`;
       $('cards').appendChild(el);
       el.querySelector('.x').addEventListener('click', () => { items = items.filter((i) => i !== item); dropWorkerSource(item); el.remove(); updateCounts(); });
@@ -624,6 +663,8 @@
     wireControls();
     updateCounts();
   </script>
-  <script defer src="/shared/ht-nav.js?v=11"></script>
+  <script defer src="/shared/ht-nav.js?v=20"></script>
+  <script defer src="/shared/ht-ui.js?v=20"></script>
+  <script defer src="/shared/ht-newsletter.js?v=20"></script>
 </body>
 </html>

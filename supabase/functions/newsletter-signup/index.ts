@@ -56,7 +56,7 @@ function welcomeHtml(firstName: string) {
             </td>
           </tr></table>
         </td></tr>
-        ${feature(`${A}/product-particles.png`, "600+ SFM particles", "Explosions, magic, weather, impacts — drop them straight into your scenes.", "Browse the packs", "https://hoovytube.com/products/")}
+        ${feature(`${A}/product-particles.png`, "900+ SFM particle effects", "Explosions, magic, weather, impacts — drop them straight into your scenes.", "Browse the packs", "https://hoovytube.com/products/")}
         ${feature(`${A}/hoovytools-logo.jpg`, "HoovyTools add-on", "Import SFM sessions into Blender — models, animation &amp; audio, auto-timed.", "See HoovyTools", "https://hoovytube.com/hoovytools/")}
         <tr><td align="center" style="padding:28px 16px 4px;font-size:12px;line-height:1.6;color:#8494a5">
           &mdash; The HoovyTube team<br>

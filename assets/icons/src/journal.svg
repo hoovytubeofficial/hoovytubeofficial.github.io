@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: journal (folded newspaper). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="jn" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <rect x="62" y="62" width="64" height="52" rx="6" fill="#000"/>
+      <line x1="146" y1="68" x2="196" y2="68" stroke="#000" stroke-width="12" stroke-linecap="round"/>
+      <line x1="146" y1="96" x2="196" y2="96" stroke="#000" stroke-width="12" stroke-linecap="round"/>
+      <line x1="62" y1="140" x2="196" y2="140" stroke="#000" stroke-width="12" stroke-linecap="round"/>
+      <line x1="62" y1="168" x2="196" y2="168" stroke="#000" stroke-width="12" stroke-linecap="round"/>
+      <line x1="62" y1="196" x2="150" y2="196" stroke="#000" stroke-width="12" stroke-linecap="round"/>
+      <line x1="224" y1="96" x2="224" y2="214" stroke="#000" stroke-width="10" stroke-linecap="round"/>
+    </mask>
+  </defs>
+  <path mask="url(#jn)" fill="#000" d="M38 30 H202 Q220 30 220 48 V84 H236 Q248 84 248 96 V212 Q248 232 228 232 H52 Q30 232 30 210 V38 Q30 30 38 30 Z"/>
+</svg>

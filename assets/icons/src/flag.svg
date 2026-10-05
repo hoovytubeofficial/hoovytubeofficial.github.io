@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: flag. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="checks" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g fill="#000">
+        <rect x="90" y="46" width="36" height="34"/><rect x="162" y="46" width="36" height="34"/>
+        <rect x="54" y="80" width="36" height="34"/><rect x="126" y="80" width="36" height="34"/><rect x="198" y="80" width="30" height="34"/>
+        <rect x="90" y="114" width="36" height="20"/><rect x="162" y="114" width="36" height="22"/>
+      </g>
+    </mask>
+  </defs>
+  <rect x="24" y="16" width="22" height="234" rx="11" fill="#000"/>
+  <path mask="url(#checks)" fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round" d="M46 32 Q96 10 140 32 Q186 54 236 32 L236 140 Q186 162 140 140 Q96 118 46 140 Z"/>
+</svg>

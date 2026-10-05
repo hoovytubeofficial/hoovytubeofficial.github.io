@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: blood. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <g fill="#000">
+    <circle cx="126" cy="136" r="66"/>
+    <circle cx="70" cy="96" r="30"/>
+    <circle cx="180" cy="90" r="30"/>
+    <circle cx="190" cy="178" r="32"/>
+    <circle cx="76" cy="186" r="28"/>
+    <circle cx="128" cy="66" r="24"/>
+    <circle cx="132" cy="204" r="22"/>
+    <circle cx="34" cy="48" r="16"/>
+    <circle cx="224" cy="40" r="14"/>
+    <circle cx="232" cy="230" r="16"/>
+    <circle cx="28" cy="230" r="12"/>
+    <circle cx="236" cy="128" r="10"/>
+  </g>
+</svg>

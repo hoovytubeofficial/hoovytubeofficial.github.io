@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: castle (medieval scenebuild models). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <path d="M104 244 L104 196 C104 174 152 174 152 196 L152 244 Z" fill="#000"/>
+      <path d="M114 140 L114 112 C114 96 142 96 142 112 L142 140 Z" fill="#000"/>
+      <rect x="40" y="110" width="14" height="28" rx="7" fill="#000"/>
+      <rect x="202" y="110" width="14" height="28" rx="7" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round" mask="url(#cut)">
+    <path d="M16 244 L16 66 L30 66 L30 82 L44 82 L44 66 L58 66 L58 82 L72 82 L72 66 L86 66 L86 244 Z"/>
+    <path d="M170 244 L170 66 L184 66 L184 82 L198 82 L198 66 L212 66 L212 82 L226 82 L226 66 L240 66 L240 244 Z"/>
+    <path d="M80 244 L80 50 L96 50 L96 68 L112 68 L112 50 L144 50 L144 68 L160 68 L160 50 L176 50 L176 244 Z"/>
+    <rect x="122" y="6" width="10" height="48"/>
+    <path d="M132 8 L176 22 L132 36 Z"/>
+  </g>
+</svg>

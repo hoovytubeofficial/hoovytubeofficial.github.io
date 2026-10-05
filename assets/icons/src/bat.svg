@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: bat (Scout baseball bat + ball). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="ball" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <path d="M170 170 C186 184 188 210 176 230" fill="none" stroke="#000" stroke-width="9" stroke-linecap="round"/>
+      <path d="M232 160 C214 170 208 196 216 222" fill="none" stroke="#000" stroke-width="9" stroke-linecap="round"/>
+    </mask>
+    <mask id="tape" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g transform="rotate(42 128 128)">
+        <line x1="100" y1="170" x2="156" y2="170" stroke="#000" stroke-width="9"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="8" stroke-linejoin="round" mask="url(#tape)" transform="rotate(42 128 128)">
+    <path d="M104 22 C104 6 152 6 152 22 L142 168 L139 216 L117 216 L114 168 Z"/>
+    <rect x="104" y="214" width="48" height="20" rx="10"/>
+  </g>
+  <circle cx="200" cy="196" r="44" fill="#000" mask="url(#ball)"/>
+</svg>

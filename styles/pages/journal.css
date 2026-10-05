@@ -1,0 +1,61 @@
+/* /blog/ (Journal): layout glue and long-form type only.
+   Every surface, colour, shadow and component look comes from /styles/ht.css (design system v2).
+   Nothing here redefines tokens or component looks. */
+
+/* ---- Hero: the text column gets the room; the forged icon / cover stays modest ---- */
+@media (min-width: 900px) {
+  .j-hero .page-hero { grid-template-columns: minmax(0, 1.35fr) minmax(0, .65fr); }
+  .j-post-hero .page-hero { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); }
+}
+@media (max-width: 899px) { .j-hero .page-hero-art.is-icon { width: min(46%, 168px); } }
+.j-post-hero h1 { overflow-wrap: anywhere; }
+.j-post-hero .meta, .j-feature .meta { margin-bottom: var(--s-5); }
+
+/* ---- Latest post: one whole-plate link, cover left and text right on wide screens ---- */
+a.panel.j-feature { display: grid; gap: var(--s-5) var(--s-6); grid-template-columns: minmax(0, 1fr); align-items: center; }
+@media (min-width: 880px) { a.panel.j-feature { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.j-feature .card-media { margin: 0; }
+.j-feature-title { margin: 0 0 .35em; }
+.j-feature .lead { margin: 0 0 var(--s-5); }
+.j-feature .btn { margin-bottom: var(--depth-sm); }
+
+/* ---- Post: article plate + sidebar (sticky on wide screens) ---- */
+.j-layout { display: grid; gap: var(--gap); grid-template-columns: minmax(0, 1fr); align-items: start; }
+@media (min-width: 1040px) { .j-layout { grid-template-columns: minmax(0, 1fr) 300px; gap: calc(var(--gap) * 1.4); } }
+/* Sticky only where the whole sidebar (about 620px) fits under the dock */
+@media (min-width: 1040px) and (min-height: 760px) { .j-side { position: sticky; top: calc(var(--dock-space) + var(--s-3)); } }
+/* On phones and tablets the full upsell follows right after the post, so the small sidebar pitch steps aside */
+@media (max-width: 1039px) { .j-side-cta { display: none; } }
+
+/* Long-form type inside the article plate */
+.j-article { padding-block: clamp(1.4rem, 1rem + 2vw, 2.75rem); }
+.j-prose { margin-inline: auto; font-size: clamp(1.05rem, .98rem + .3vw, 1.1875rem); line-height: 1.78; }
+.j-prose > * + * { margin-top: 1.15em; }
+.j-prose > p:first-of-type::first-letter {
+  float: left; font-family: var(--font-display); font-weight: 400; color: var(--heading);
+  font-size: 3.35em; line-height: .86; margin: .06em .1em 0 0;
+}
+.j-prose blockquote { font-size: 1.1em; line-height: 1.55; }
+.j-prose a { font-weight: 600; }
+.j-prose .notice { font-size: .9em; line-height: 1.6; margin-block: 1.4em; }
+.j-prose .notice a { font-weight: 700; }
+
+/* Sidebar */
+.j-side .h4 { margin: 0 0 var(--s-3); }
+.j-facts { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--s-2) var(--s-4); margin: 0 0 var(--s-4); font-size: var(--fs-sm); }
+.j-facts dt { font-weight: 800; letter-spacing: .08em; text-transform: uppercase; font-size: var(--fs-xs); color: var(--text-muted); padding-top: .2em; }
+.j-facts dd { margin: 0; font-weight: 600; }
+.j-facts .tags { gap: .3rem; }
+.j-side .btn-row { gap: var(--s-2); }
+.j-side-cta p { font-size: var(--fs-sm); }
+.j-side-cta .btn { margin-top: var(--s-2); }
+
+/* Older / newer navigation */
+.j-postnav .card-title { overflow-wrap: anywhere; }
+.j-postnav .is-next { text-align: right; }
+
+/* Route changes move focus to the title (for screen readers); no ring on that programmatic focus */
+main h1[tabindex="-1"]:focus { outline: none; }
+.callout .btn-row { margin-top: var(--s-3); }
+/* "Keep exploring": 2 x 2 on tablets (grid-4 switches to one row of 4 from 1000px) */
+.j-explore { --min: 300px; }

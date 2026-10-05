@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: gasmask (Pyro particles). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <circle cx="84" cy="104" r="28" fill="#000"/>
+      <circle cx="172" cy="104" r="28" fill="#000"/>
+      <circle cx="128" cy="190" r="44" fill="none" stroke="#000" stroke-width="9"/>
+      <g stroke="#000" stroke-width="8" stroke-linecap="round">
+        <line x1="104" y1="176" x2="152" y2="176"/>
+        <line x1="100" y1="192" x2="156" y2="192"/>
+        <line x1="104" y1="208" x2="152" y2="208"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" mask="url(#cut)">
+    <path d="M128 12 C192 12 230 54 230 114 C230 168 200 206 166 222 L90 222 C56 206 26 168 26 114 C26 54 64 12 128 12 Z"/>
+    <circle cx="128" cy="190" r="40"/>
+    <rect x="6" y="94" width="30" height="34" rx="8"/>
+    <rect x="220" y="94" width="30" height="34" rx="8"/>
+  </g>
+</svg>

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: planet. Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="front" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <g transform="rotate(-20 128 128)"><path d="M6 128 A122 38 0 0 0 250 128" fill="none" stroke="#000" stroke-width="40"/></g>
+    </mask>
+  </defs>
+  <g transform="rotate(-20 128 128)" fill="none" stroke="#000" stroke-width="22">
+    <path d="M6 128 A122 38 0 0 1 250 128"/>
+  </g>
+  <circle mask="url(#front)" cx="128" cy="128" r="76" fill="#000"/>
+  <g transform="rotate(-20 128 128)" fill="none" stroke="#000" stroke-width="22" stroke-linecap="round">
+    <path d="M6 128 A122 38 0 0 0 250 128"/>
+  </g>
+</svg>

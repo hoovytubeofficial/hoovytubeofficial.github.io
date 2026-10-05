@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <!-- HoovyTube Icon Forge source: wave (water and sea-wave particles). Simple single-colour silhouette; holes = see-through, thin gaps = outline-coloured detail lines. -->
+  <defs>
+    <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+      <rect width="256" height="256" fill="#fff"/>
+      <path d="M30 196 C70 180 100 150 112 112" fill="none" stroke="#000" stroke-width="10" stroke-linecap="round"/>
+      <path d="M20 228 C80 214 160 214 236 228" fill="none" stroke="#000" stroke-width="9"/>
+    </mask>
+  </defs>
+  <path fill="#000" stroke="#000" stroke-width="10" stroke-linejoin="round" mask="url(#cut)"
+        d="M12 244 L12 196 C40 150 52 92 104 54 C150 22 214 26 238 70 C252 98 240 130 214 136 C222 116 214 96 192 94 C164 92 150 116 156 142 C162 168 190 184 222 178 C236 176 244 170 248 164 L248 244 Z"/>
+</svg>
