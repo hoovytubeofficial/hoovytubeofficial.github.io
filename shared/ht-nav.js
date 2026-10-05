@@ -228,30 +228,65 @@
     }).then(function () { mmSend.disabled = false; mmSend.textContent = 'Send'; });
   });
 
-  // --- Footer social bar: upgrade to PNG icons ---
-  var social = document.querySelector('footer.site .social');
-  if (!social) return;
+  // --- Footer: social bar + sitemap, built on every page that has <footer class="site"> ---
+  // Icons are inline SVG (they used to point at /assets/icons/social/*.png, which don't
+  // exist in the repo - that's why the footer rendered five broken images).
+  var SOC_SVG = {
+    youtube: '<path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>',
+    patreon: '<circle cx="15.2" cy="9.6" r="7.8"/><rect x="1" y="1.8" width="5.2" height="20.4"/>',
+    steam: '<path d="M11.979 0C5.678 0 .511 4.86.022 11.037l6.432 2.658c.545-.371 1.203-.59 1.912-.59.063 0 .125.004.188.006l2.861-4.142V8.91c0-2.495 2.028-4.524 4.524-4.524 2.494 0 4.522 2.031 4.522 4.527s-2.028 4.525-4.524 4.525h-.105l-4.076 2.911c0 .052.004.105.004.159 0 1.875-1.515 3.396-3.39 3.396-1.635 0-3.016-1.173-3.331-2.727L.436 15.27C1.862 20.307 6.486 24 11.979 24c6.627 0 11.999-5.373 11.999-12S18.605 0 11.979 0zM7.54 18.21l-1.473-.61c.262.543.714.999 1.314 1.25 1.297.539 2.793-.076 3.332-1.375.263-.63.264-1.319.005-1.949s-.75-1.121-1.377-1.383c-.624-.26-1.29-.249-1.878-.03l1.523.63c.956.4 1.409 1.5 1.009 2.455-.397.957-1.497 1.41-2.454 1.012H7.54zm11.415-9.303c0-1.662-1.353-3.015-3.015-3.015-1.665 0-3.015 1.353-3.015 3.015 0 1.665 1.35 3.015 3.015 3.015 1.663 0 3.015-1.35 3.015-3.015zm-5.273-.005c0-1.252 1.013-2.266 2.265-2.266 1.249 0 2.266 1.014 2.266 2.266 0 1.251-1.017 2.265-2.266 2.265-1.253 0-2.265-1.014-2.265-2.265z"/>',
+    discord: '<path d="M20.317 4.3698a19.7913 19.7913 0 0 0-4.8851-1.5152.0741.0741 0 0 0-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 0 0-.0785-.037 19.7363 19.7363 0 0 0-4.8852 1.515.0699.0699 0 0 0-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 0 0 .0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 0 0 .0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 0 0-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 0 1-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 0 1 .0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 0 1 .0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 0 1-.0066.1276 12.2986 12.2986 0 0 1-1.873.8914.0766.0766 0 0 0-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 0 0 .0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 0 0 .0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 0 0-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/>'
+  };
+  var MAIL_SVG = '<rect x="2" y="4" width="20" height="16"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>';
+
+  var foot = document.querySelector('footer.site');
+  if (!foot) return;
+
+  // Pages other than the homepage ship a bare footer - give them the bar too.
+  var social = foot.querySelector('.social');
+  if (!social) {
+    social = document.createElement('div');
+    social.className = 'social';
+    foot.insertBefore(social, foot.firstChild);
+  }
 
   var LINKS = [
     { n: 'youtube', label: 'YouTube', href: 'https://www.youtube.com/@HoovyTube' },
-    { n: 'patreon', label: 'Patreon', href: 'https://www.patreon.com/HoovyTube308' },
+    { n: 'patreon', label: 'Patreon', href: 'https://www.patreon.com/c/hoovytube308/membership' },
     { n: 'steam', label: 'Steam Workshop', href: 'https://steamcommunity.com/id/HoovyTube/myworkshopfiles/' },
     { n: 'discord', label: 'Discord', href: 'https://discord.gg/VhUCwuuE84' },
     { n: 'email', label: 'Send a message', href: '/contact/', msg: true }
   ];
   social.innerHTML = LINKS.map(function (l) {
-    var img = '<img class="soc-ic" src="/assets/icons/social/' + l.n + '.png" alt="" draggable="false">';
+    var g = l.msg
+      ? '<svg class="soc-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + MAIL_SVG + '</svg>'
+      : '<svg class="soc-ic" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">' + SOC_SVG[l.n] + '</svg>';
+    var inner = '<span class="soc-chip">' + g + '</span><span class="soc-label">' + l.label + '</span>';
     return l.msg
-      ? '<a class="soc soc-msg" href="' + l.href + '" aria-label="' + l.label + '">' + img + '</a>'
-      : '<a class="soc" href="' + l.href + '" target="_blank" rel="noopener" aria-label="' + l.label + '">' + img + '</a>';
+      ? '<a class="soc soc-msg" href="' + l.href + '" aria-label="' + l.label + '">' + inner + '</a>'
+      : '<a class="soc" href="' + l.href + '" target="_blank" rel="noopener" aria-label="' + l.label + '">' + inner + '</a>';
   }).join('');
+
+  // Sitemap row above the copyright line (once per page)
+  if (!foot.querySelector('.foot-nav')) {
+    var NAVL = [
+      { t: 'Home', h: '/' }, { t: 'SFM Assets', h: '/products/' }, { t: 'HoovyTools', h: '/hoovytools/' },
+      { t: 'Tutorials', h: '/learn/' }, { t: 'Journal', h: '/blog/' }, { t: 'Contact', h: '/contact/' }
+    ];
+    var fn = document.createElement('nav');
+    fn.className = 'foot-nav';
+    fn.setAttribute('aria-label', 'Footer');
+    fn.innerHTML = NAVL.map(function (l) { return '<a href="' + l.h + '">' + l.t + '</a>'; }).join('');
+    var small = foot.querySelector('small');
+    if (small) foot.insertBefore(fn, small); else foot.appendChild(fn);
+  }
 
   var msgLink = social.querySelector('.soc-msg');
   if (msgLink) msgLink.addEventListener('click', openModal);
 
   // Magnetic magnify (pointer:fine only) - same feel as the dock
   if (window.matchMedia && window.matchMedia('(pointer: fine)').matches) {
-    var items = [].slice.call(social.querySelectorAll('.soc'));
+    var items = [].slice.call(social.querySelectorAll('.soc-chip'));
     var RANGE = 120, MAXS = 1.55, mouseX = Infinity, cur = items.map(function () { return 1; });
     social.addEventListener('pointermove', function (e) { mouseX = e.clientX; });
     social.addEventListener('pointerleave', function () { mouseX = Infinity; });
