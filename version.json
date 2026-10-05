@@ -1,12 +1,12 @@
 {
-  "version": "v260903.03 9:22a",
-  "release": 3,
-  "sha": "20935f4",
-  "fullSha": "20935f492377bc79596ae37920cea93062101d53",
+  "version": "v261005.01 11:43a",
+  "release": 1,
+  "sha": "5c223eb",
+  "fullSha": "5c223eb03aed45b46f9f2a272ec1e423bea3f417",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervmgx7h7",
-  "pushedAt": "2026-09-03T11:22:07+02:00",
-  "commits": [{"sha":"20935f4","message":"site: HoovyTube channel avatar as the favicon","author":"HoovyTube"}]
+  "machine": "runnervm8df0l",
+  "pushedAt": "2026-10-05T11:43:21Z",
+  "commits": [{"sha":"229b1f7","message":"site: revamp the homepage and fix the missing footer icons","author":"Claude"},{"sha":"37d9f13","message":"docs: add handoff note for the homepage revamp branch","author":"Claude"},{"sha":"f2a81bd","message":"media: add poster frames for every site video","author":"Claude"},{"sha":"db0c9c8","message":"icon-forge: add TF2-style icon forge module, tool page and icon set","author":"Claude"},{"sha":"c43bee7","message":"icon-forge: fix QA findings from adversarial review","author":"Claude"},{"sha":"f8bdedb","message":"site: sales-focused revamp on a glossy die-cut design system","author":"Claude"},{"sha":"5c223eb","message":"tools: add offline single-file edition of the Icon Forge","author":"Claude"}]
 }
