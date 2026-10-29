@@ -1,12 +1,12 @@
 {
-  "version": "v261005.01 11:43a",
+  "version": "v261029.01 2:06a",
   "release": 1,
-  "sha": "5c223eb",
-  "fullSha": "5c223eb03aed45b46f9f2a272ec1e423bea3f417",
+  "sha": "3fef45e",
+  "fullSha": "3fef45e8664078318c4fd25a986d7dadba17c584",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
-  "machine": "runnervm8df0l",
-  "pushedAt": "2026-10-05T11:43:21Z",
-  "commits": [{"sha":"229b1f7","message":"site: revamp the homepage and fix the missing footer icons","author":"Claude"},{"sha":"37d9f13","message":"docs: add handoff note for the homepage revamp branch","author":"Claude"},{"sha":"f2a81bd","message":"media: add poster frames for every site video","author":"Claude"},{"sha":"db0c9c8","message":"icon-forge: add TF2-style icon forge module, tool page and icon set","author":"Claude"},{"sha":"c43bee7","message":"icon-forge: fix QA findings from adversarial review","author":"Claude"},{"sha":"f8bdedb","message":"site: sales-focused revamp on a glossy die-cut design system","author":"Claude"},{"sha":"5c223eb","message":"tools: add offline single-file edition of the Icon Forge","author":"Claude"}]
+  "machine": "runnervmnwato",
+  "pushedAt": "2026-10-29T03:06:37+01:00",
+  "commits": [{"sha":"3fef45e","message":"hoovytools: both add-ons at 3.0.0 - downloads from GitHub, log report and standalone tool docs","author":"HoovyTube"}]
 }
