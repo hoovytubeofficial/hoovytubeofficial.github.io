@@ -1,12 +1,12 @@
 {
-  "version": "v261029.01 2:06a",
+  "version": "v261031.01 1:01a",
   "release": 1,
-  "sha": "3fef45e",
-  "fullSha": "3fef45e8664078318c4fd25a986d7dadba17c584",
+  "sha": "3dda03a",
+  "fullSha": "3dda03a9b7e265901d1673bd4dd26dadb752b22c",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmnwato",
-  "pushedAt": "2026-10-29T03:06:37+01:00",
-  "commits": [{"sha":"3fef45e","message":"hoovytools: both add-ons at 3.0.0 - downloads from GitHub, log report and standalone tool docs","author":"HoovyTube"}]
+  "pushedAt": "2026-10-31T02:01:37+01:00",
+  "commits": [{"sha":"3dda03a","message":"hoovytools: Source Particle Import 3.0.1 (Ensure PIL) - downloads from the v3.0.1 release, 3.0.0 under previous versions","author":"HoovyTube"}]
 }
