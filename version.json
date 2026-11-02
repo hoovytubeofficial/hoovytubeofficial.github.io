@@ -1,12 +1,12 @@
 {
-  "version": "v261102.03 2:04a",
-  "release": 3,
-  "sha": "513b718",
-  "fullSha": "513b718e73faf4069750cd3b5a29bcc30e082fb5",
+  "version": "v261102.04 2:14a",
+  "release": 4,
+  "sha": "d59539f",
+  "fullSha": "d59539fc4d4560d88f632545899acb5c5aa40b48",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmnwato",
-  "pushedAt": "2026-11-02T03:04:17+01:00",
-  "commits": [{"sha":"513b718","message":"hoovytools: Read more in every session importer release - the longer story, with the technical details","author":"HoovyTube"}]
+  "pushedAt": "2026-11-02T03:14:24+01:00",
+  "commits": [{"sha":"d59539f","message":"hoovytools: Read more in every Particle Import release","author":"HoovyTube"}]
 }
