@@ -27,7 +27,7 @@
   <link rel="preload" href="/assets/fonts/inter-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/lilita-one-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/styles/ht.css?v=20">
-  <link rel="stylesheet" href="/styles/pages/hoovytools.css?v=1">
+  <link rel="stylesheet" href="/styles/pages/hoovytools.css?v=2">
   <script>(function(){try{var t=localStorage.getItem('ht-theme')}catch(e){}if(t!=='light'&&t!=='dark')t=window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t)})();</script>
   <script type="application/ld+json">
   {
@@ -453,6 +453,18 @@
                   <li><strong>Import VMT / Import VTF</strong> put each file on a preview sphere at the 3D cursor; a particle material shows its texture.</li>
                   <li>A session without lights no longer reports a failed step.</li>
                 </ul>
+                <div data-accordion>
+                  <details class="ht-readmore">
+                    <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                    <div class="ht-readmore-body">
+                      <p>Most of this release began with a log that said <em>3 missing</em> and nothing else. Three of what, missing from where, was left as an exercise for the reader. The import now answers both: step 1, the one-click summary and PRINT HELP name every <code>models/...mdl</code> the session asked for and could not find, and when one of them is sitting in another Source Filmmaker install on the same computer, they say which one. When none of the models turn up, the summary no longer suggests checking SourceIO, which was almost never the problem.</p>
+                      <p>Behind that was a quieter bug. A session import looked for models in exactly one SFM install, whichever the preference named, however many others you had set up. The default preference is <code>C:\Program Files (x86)\Steam\...</code>, a fine guess right up until your Steam library lives on D:. Loading a <code>.dmx</code> now walks up from the file to the <code>gameinfo.txt</code> it belongs to and adopts that install; the session's own SFM is searched first, then every other one. The new preference <strong>Look for SFM on every drive</strong> also checks the usual Steam folders on each local drive and every library Steam lists in <code>libraryfolders.vdf</code>. Network and CD drives are skipped: a disconnected network drive can hold a folder check hostage for half a minute, and nobody asked for that.</p>
+                      <p><strong>SFM Detective</strong> is the same investigation as a standalone script in <code># tools</code>. It needs nothing, not the add-on and not Blender: it reads the registry, every Steam library, the usual folders and, with <code>--deep</code>, whole drives, which is how it finds the renamed copy someone made in 2019 and forgot. Give it a session and it lists every model the session uses, where each one resolves, whether the <code>.vvd</code> and <code>.vtx</code> it needs are beside it, and which of its materials are missing, read straight out of the <code>.mdl</code> header. The report is written for whoever ends up helping.</p>
+                      <p>Import Animation grew an <strong>Easy Import</strong> mode. It fixes the rig's rest pose, stands the take upright by measuring which way the character actually stands across the whole take (every SFM DMX declares Y as its up axis, which is true of SFM and not always of the data), brings the model along from the file, from what you used with that animation before, or from a path, and either pins the root at the origin or bakes its motion into the object. The default profile is now Session-aware, so root motion is kept: the previous default quietly dropped it every time the dialog opened, and the character lay down in protest.</p>
+                      <p>Import VMT and Import VTF now put each file on a preview sphere at the 3D cursor, one beside the other in their own collection, since a material you cannot see is mostly a rumour. Particle materials (SpriteCard) have no recipe in the built-in importer and used to arrive as empty materials; they now show their <code>$basetexture</code>, drawn as light when the material is additive. And a session without lights no longer reports <em>6 Lights: FAILED</em>. It had nothing to import and did so successfully.</p>
+                    </div>
+                  </details>
+                </div>
               </div>
             </details>
             <details class="faq-item">
@@ -466,6 +478,17 @@
                   <li><strong>A progress bar on every step</strong>, the standalone ones included.</li>
                   <li><strong>Dev tab:</strong> Wiring, PRINT HELP, Configure, Credits and Developer Mode.</li>
                 </ul>
+                <div data-accordion>
+                  <details class="ht-readmore">
+                    <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                    <div class="ht-readmore-body">
+                      <p>3.0.0 is the first version built for other people's sessions, which turned out to be a different job from importing your own. Shots are listed by name, slugs included, and everything lands on SFM's movie time rather than the time inside the clip it was read from. The difference is not academic: a shot with a negative clip offset used to start its first few seconds before frame 0, where Blender clamps the scene range without a word and the beginning of the shot simply falls off the edge.</p>
+                      <p>Models come in through the add-on's own MDL reader, which is SourceIO's own code carried inside the add-on with its author's permission, so SourceIO is now only needed for maps. The map is an import step of its own, turned to line up with the session the way SFM shows it. Materials come in full, as small proxy textures (each material's smallest mip of 64 pixels or less, decoded straight from the VTF, so a 4K texture does not have to be unpacked to make a thumbnail), or as plain grey for when only the motion matters.</p>
+                      <p>Cameras got the most attention. SFM stores rotations as quaternions and happily writes q or -q for the same orientation; blend the two sets of numbers naively and a frame halfway through a perfectly still shot turns 180 degrees. The importer now keeps every key in one hemisphere, interpolates with slerp, never blends across a cut, and finishes on clean Euler curves. A separate pass finds spins that were baked into the keys themselves and rebuilds them, which is the polite way of saying it repairs the file.</p>
+                      <p>Lights and particles are steps too, particles through the twin add-on, Source Particle Import. Anything hidden in SFM stays hidden. Every step has a progress bar, so working and frozen no longer look the same. And the Dev tab gained Wiring, which shows what was found and where, and PRINT HELP, which writes one report file to send when something breaks. Reading a report beats guessing, for everyone involved.</p>
+                    </div>
+                  </details>
+                </div>
               </div>
             </details>
             <details class="faq-item">
@@ -476,6 +499,15 @@
                   <li><strong>Global Offset (seconds)</strong> shifts every placed game sound, for audio that should not start on frame 0.</li>
                   <li><strong>Tools Text Editor folder:</strong> Text Editor versions of the tools, so a single tool can be hot-reloaded (<kbd>Alt</kbd>+<kbd>P</kbd>) without reinstalling the add-on.</li>
                 </ul>
+                <div data-accordion>
+                  <details class="ht-readmore">
+                    <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                    <div class="ht-readmore-body">
+                      <p>Session Sounds in 1.3.0 worked, given time: a full session took about 38 seconds to parse. The culprit was the DMX reader's id-collision check, which scanned a list for every element it loaded. A session has around 17,000 elements, which came to roughly 140 million UUID comparisons, each one confirming that the element was, in fact, new. 1.3.1 keeps an index of ids for the length of the import, and the same session parses in about 0.3 seconds. The shared DMX library itself is left untouched, so every other tool reads DMX exactly as it did.</p>
+                      <p>Finding the sound track no longer walks the whole element graph either; it reads the Sound track group's tracks directly. <strong>Global Offset</strong> shifts every placed game sound by a number of seconds, applied as whole frames at the scene's frame rate (+1.0 s in a 30 fps scene is 30 frames), for audio that should not start on frame 0. The new Tools Text Editor folder holds Text Editor versions of the tools, so a single tool can be reloaded with <kbd>Alt</kbd>+<kbd>P</kbd> instead of reinstalling the add-on and restarting Blender out of habit.</p>
+                    </div>
+                  </details>
+                </div>
               </div>
             </details>
             <details class="faq-item">
@@ -486,6 +518,15 @@
                   <li>Clip times are retimed from the session's frame rate to your scene's, so wall-clock timing holds.</li>
                   <li>Sound paths resolve under your usermod <code>sound/</code> folder, and A/V sync plus audio scrubbing are switched on.</li>
                 </ul>
+                <div data-accordion>
+                  <details class="ht-readmore">
+                    <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                    <div class="ht-readmore-body">
+                      <p>1.3.0 added step 6, Session Sounds. It reads every DmeSoundClip in the session and lays each game sound into the Video Sequencer as a sound strip, trimmed and placed at its shot's time. The clip's offset sets the strip's in-point and its duration sets how much of it is heard, which is how SFM thinks about them too.</p>
+                      <p>Times in a session are authored at the session's own frame rate (the movie settings override if there is one, the render settings otherwise), so every clip is re-timed to the Blender scene's rate and wall-clock timing survives the trip from 24 to 30 fps. Sound paths are found under usermod's <code>sound/</code> folder and the tf and hl2 mounts, ignoring case, which Source never cared about either. A/V sync and audio scrubbing are switched on, so you can hear the shot while you scrub it.</p>
+                    </div>
+                  </details>
+                </div>
               </div>
             </details>
             <details class="faq-item">
@@ -495,6 +536,15 @@
                   <li><strong>Remove All Animation</strong> now clears a rig back to its pre-animation state: bone and shape-key animation are removed and rest poses restored.</li>
                   <li>Rigs no longer rotate 90° when you strip and re-import them.</li>
                 </ul>
+                <div data-accordion>
+                  <details class="ht-readmore">
+                    <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                    <div class="ht-readmore-body">
+                      <p>1.2.1 fixed a rig that turned 90 degrees every time its animation was removed and imported again. SFM is Y-up and Blender is Z-up, so each rig sits under an axis transform that turns it +90 degrees around X. Removing the animation unparented the rig and baked that turn into it, and the next import added another. The rig now keeps its own local transform when it is unparented, so the correction is applied exactly once, however many times you change your mind.</p>
+                      <p>1.2.2 made Remove All Animation mean it: the bone action and the shape-key animation on the rig's meshes both go, the flex sliders return to rest, and the rest pose is restored from the reference DMX. The rig's folder turns white last, so the scene reads as models only.</p>
+                    </div>
+                  </details>
+                </div>
               </div>
             </details>
             <details class="faq-item">
@@ -505,6 +555,15 @@
                   <li><strong>Anim Set</strong> shows a live status board for every rig, plus cleanup buttons.</li>
                   <li><strong>Animation Scale</strong> option multiplies location keys to fit a rescaled model.</li>
                 </ul>
+                <div data-accordion>
+                  <details class="ht-readmore">
+                    <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                    <div class="ht-readmore-body">
+                      <p>1.2.0 introduced the sidebar, with three tabs. Anim Set is a live status board for every rig in the scene: orange once the model is in, yellow once it has animation, green once its meshes carry shape-key animation, with buttons to clear out rigs that never got any animation, or to remove all of it. Import mirrors the File > Import entries, and Tutorial shows which usermod folder is in use and whether SourceIO is installed, with green and red ticks.</p>
+                      <p>DMX Animation and Animations (Folder) gained <strong>Animation Scale</strong>, which multiplies location keys, bones and root alike, to fit a model you have rescaled. Rotations are left alone, since a rotation does not get any bigger when the model does.</p>
+                    </div>
+                  </details>
+                </div>
               </div>
             </details>
           </div>

@@ -85,3 +85,26 @@
     font-size: var(--fs-xs); font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
   }
 }
+
+/* ---- Release notes: "Read more" prose inside an entry (its own [data-accordion], so it never closes the entry) ---- */
+.ht-readmore { margin-top: var(--s-4); padding-top: var(--s-3); border-top: var(--bw-sm) solid var(--line); }
+.ht-readmore > summary {
+  list-style: none; cursor: pointer;
+  display: inline-flex; align-items: center; gap: .55em;
+  font-weight: 700; color: var(--link); border-radius: var(--r-sm);
+}
+.ht-readmore > summary::-webkit-details-marker { display: none; }
+.ht-readmore > summary::after {
+  content: ""; width: .5em; height: .5em;
+  border-right: 3px solid currentColor; border-bottom: 3px solid currentColor;
+  transform: translateY(-.12em) rotate(45deg); transition: transform var(--dur) var(--ease);
+}
+.ht-readmore[open] > summary::after { transform: translateY(.12em) rotate(-135deg); }
+.ht-readmore > summary:hover { text-decoration: underline; text-underline-offset: .18em; }
+.ht-readmore > summary:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.ht-readmore .ht-rm-less, .ht-readmore[open] .ht-rm-more { display: none; }
+.ht-readmore[open] .ht-rm-less { display: inline; }
+.ht-readmore-body { margin-top: var(--s-3); max-width: 72ch; }
+.ht-readmore-body p { margin: 0 0 var(--s-3); }
+.ht-readmore-body > :last-child { margin-bottom: 0; }
+.ht-readmore[open] .ht-readmore-body { animation: faq-in var(--dur) var(--ease); }
