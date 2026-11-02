@@ -715,6 +715,16 @@ File &gt; Import &gt; Source Engine (.pcf)</code></pre>
                     <li><strong>Proxy View stand-in cards</strong> are scaled, not turned.</li>
                     <li><strong>More than one SFM on the computer:</strong> the install the <code>.pcf</code> sits in is used first, and materials are looked up in every mod folder of every install.</li>
                   </ul>
+                  <div data-accordion>
+                    <details class="ht-readmore">
+                      <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                      <div class="ht-readmore-body">
+                        <p>The headline fix is embarrassing in the way only one line of Python can be. An <code>import</code> tucked inside the camera branch of the build operator made Python treat the logger as a local name for the whole function, so every build that had something to report, a missing material being enough, reached the very last line and died with <em>UnboundLocalError</em>. On every Blender, for every such effect. The import is gone; the build now finishes and tells you what it could not find.</p>
+                        <p>The second fix is for Blender 4.2 to 4.5. The node builders count sockets the way Blender 5 does, and Blender 5 quietly renumbered a few nodes: Random Value and Compare keep only the sockets of the chosen type, and Transform, Curve to Mesh, Capture Attribute and the Principled BSDF each gained one. On 4.x the same numbers reached other sockets: random ranges landed in unused vector inputs, seeds and IDs were never connected, 422 integer compares compared nothing. Mostly without an error. Every node type the add-on makes was measured on both versions, and all 24,646 socket writes and links in a test set now reach the same socket on 4.3 as on 5.2. A discharge effect that rendered as a flat smear on 4.3 now matches 5.2 particle for particle.</p>
+                        <p>Along the way: the Proxy View stand-in cards were being rotated by one radian per axis instead of scaled, because socket 3 of Transform is Rotation in Blender 5. And with more than one Source Filmmaker on the computer, the add-on no longer simply takes the first install Steam reports; it prefers the one the <code>.pcf</code> sits in, then the one SFM Session Importer is set to, then the one holding the most, and looks for materials in every mod folder of every install.</p>
+                      </div>
+                    </details>
+                  </div>
                 </div>
               </details>
               <details class="faq-item">
@@ -725,6 +735,15 @@ File &gt; Import &gt; Source Engine (.pcf)</code></pre>
                     <li><strong>Rotation Yaw Random</strong> spins a card locked to a control point (orientation 2) in its own plane instead of squishing it, and reads Yaw Initial and Yaw Exponent from the file.</li>
                     <li><strong>New operator: Remap Percentage Between Two Control Points to Scalar.</strong> Where a particle sits between two control points, remapped into radius or alpha: how many beams taper from thick to thin. It was skipped before, so those beams drew at full width.</li>
                   </ul>
+                  <div data-accordion>
+                    <details class="ht-readmore">
+                      <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                      <div class="ht-readmore-body">
+                        <p>Forces were running one step ahead of gravity. Random Force, Pull towards control point and Twist around axis each stored their result and then read it back a moment later, already updated, so they applied one extra step of force every frame. The tell was arithmetic: a Random Force of -950 stopped a 365 units-per-second launch at 34 units, where Gravity -950 stops it at 70.1, which is also what the physics says. Both now come to 70.1, at 24 and at 60 fps, and a free fall under the force matches a free fall under gravity frame by frame. Sparks rise a little higher and fall a little slower, as written.</p>
+                        <p>Rotation Yaw Random turned out to be in over a thousand systems of the test library rather than the handful the notes claimed, so it got proper treatment: on cards locked to a control point it now spins the card in its own plane instead of squishing it, and Yaw Initial and Yaw Exponent are read from the file. Remap Percentage Between Two Control Points to Scalar, which tapers beams from thick to thin, is built at last; before, those beams drew at full width the whole way.</p>
+                      </div>
+                    </details>
+                  </div>
                 </div>
               </details>
               <details class="faq-item">
@@ -736,6 +755,15 @@ File &gt; Import &gt; Source Engine (.pcf)</code></pre>
                     <li><strong>Dev &gt; Wiring</strong> says whether Pillow is broken or missing, with a REPAIR / INSTALL button. Create PCF Preview and Whole Folder install it on their way the first time.</li>
                     <li><strong>A Text Editor version</strong>, <code>Ensure PIL (V1).py</code>, for when the add-on can't load at all: open it in Blender's Text Editor and press Run Script.</li>
                   </ul>
+                  <div data-accordion>
+                    <details class="ht-readmore">
+                      <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                      <div class="ht-readmore-body">
+                        <p>Pillow, the image library the PCF Preview cards are drawn with, has a habit of being installed for the wrong Python: another Blender, a system Python, or a Load Previous Settings that carried <code>scripts\modules</code> along. Blender then finds it, tries to load its compiled half, and fails with <em>cannot import name '_imaging'</em>. Until 3.0.1 that stopped the whole add-on from loading, which is a lot of consequence for a thumbnail.</p>
+                        <p>Now the add-on loads regardless and only the cards wait. Ensure PIL installs Pillow with your Blender's own Python, so it fits by construction, about 7 MB once and no restart. Dev > Wiring says whether Pillow is broken or missing, with a button for each, and for the case where nothing loads at all there is a Text Editor version that does the same job from a plain script.</p>
+                      </div>
+                    </details>
+                  </div>
                 </div>
               </details>
               <details class="faq-item">
@@ -748,6 +776,15 @@ File &gt; Import &gt; Source Engine (.pcf)</code></pre>
                     <li><strong>The Hammer unit grid</strong>, simplified: thin lines, 16 units a square.</li>
                     <li><strong>Dev tab:</strong> Wiring, PRINT HELP, Configure, Credits and Developer Mode. Every console line starts with <code>[Source Particle Import]</code>.</li>
                   </ul>
+                  <div data-accordion>
+                    <details class="ht-readmore">
+                      <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                      <div class="ht-readmore-body">
+                        <p>3.0.0 moved the add-on into the HoovyTools sidebar tab it shares with SFM Session Importer, and gave every tool the same shape: a row whose name runs it, an arrow that unfolds the settings the next press will use, and a mark that says how the last run went. Calculate Size estimates how big an effect gets without importing it, from spawn radius, speed with drag applied per 30 Hz tick, gravity and random forces: an upper bound, since turbulence and attraction only ever pull particles closer.</p>
+                        <p>Match .blend reads your scene's frame rate instead of assuming SFM's 24, Start Time follows the playhead, and an import into a scene without a camera gets one, framed on the size estimate. The Hammer grid lost its clutter: thin lines, 16 units a square. And the Dev tab arrived with Wiring and PRINT HELP, plus a console where every line starts with <code>[Source Particle Import]</code>, so it can be found among everything else Blender prints.</p>
+                      </div>
+                    </details>
+                  </div>
                 </div>
               </details>
               <details class="faq-item">
@@ -760,6 +797,15 @@ File &gt; Import &gt; Source Engine (.pcf)</code></pre>
                     <li><strong>Node to Code, four flavours:</strong> Geometry or Shader nodes, with or without embedded textures.</li>
                     <li><strong>Copy Console Output:</strong> a paste-ready support report in one click.</li>
                   </ul>
+                  <div data-accordion>
+                    <details class="ht-readmore">
+                      <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                      <div class="ht-readmore-body">
+                        <p>Some sprite sheets do not use a grid. Their frames are different sizes, packed wherever they fit, and the VTF carries a table with each frame's exact rectangle. 0.23.0 reads that table instead of assuming even tiles, which fixes over 2,000 systems in the wild, Valve's own blood, fire and debris among them. Spark trails now stretch along the direction they actually fly rather than a fixed axis.</p>
+                        <p>A system whose material cannot be found used to become an invisible driver: correct motion, nothing to look at. It now wears one of three bundled generics, a soft glow, a spark streak or a beam, chosen by renderer, and the console says which one stood in. Node to Code learned four flavours, and Copy Console Output turns the log into a support report in one click.</p>
+                      </div>
+                    </details>
+                  </div>
                 </div>
               </details>
               <details class="faq-item">
@@ -770,11 +816,28 @@ File &gt; Import &gt; Source Engine (.pcf)</code></pre>
                     <li><strong>Sheet preview, fixed.</strong> UnlitGeneric sprite sheets preview one frame instead of the whole strip.</li>
                     <li><strong>Install, fixed.</strong> Drag-and-drop onto Blender 4.2+ no longer errors with "ZIP packaged incorrectly."</li>
                   </ul>
+                  <div data-accordion>
+                    <details class="ht-readmore">
+                      <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                      <div class="ht-readmore-body">
+                        <p>Three fixes, each for something that looked like a different problem. Systems whose material did not resolve vanished along with their children; they now build as invisible drivers that still carry the particles parented to them. UnlitGeneric sprite sheets previewed as the whole strip at once; they now show one frame. And dragging the zip onto Blender 4.2 or newer complained that it was packaged incorrectly, which was true, and is no longer.</p>
+                      </div>
+                    </details>
+                  </div>
                 </div>
               </details>
               <details class="faq-item">
                 <summary><span class="ht-sum"><span class="tag tag-version">v0.21.0</span><span class="ht-date">Baseline</span></span></summary>
-                <div class="faq-body"><p>Baseline public release: full <code>.pcf</code> import as live geometry nodes, all three renderers (sprites, ropes, trails), Node to Code, and the performance tools.</p></div>
+                <div class="faq-body"><p>Baseline public release: full <code>.pcf</code> import as live geometry nodes, all three renderers (sprites, ropes, trails), Node to Code, and the performance tools.</p>
+                  <div data-accordion>
+                    <details class="ht-readmore">
+                      <summary><span class="ht-rm-more">Read more</span><span class="ht-rm-less">Read less</span></summary>
+                      <div class="ht-readmore-body">
+                        <p>The first public build. A <code>.pcf</code> came in as live geometry nodes rather than baked geometry: every system a node graph you can open, read and change, with the emitter, initializers, operators and renderer laid out the way Source itself organises them. All three renderers worked, animated sprites, ropes and trails, along with Node to Code and the performance tools. Everything since has been about making more of the world's particle files come out the way SFM draws them.</p>
+                      </div>
+                    </details>
+                  </div>
+                </div>
               </details>
             </div>
           </div>
