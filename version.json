@@ -1,12 +1,12 @@
 {
-  "version": "v261102.01 12:16a",
-  "release": 1,
-  "sha": "2933bef",
-  "fullSha": "2933bef8bb7c9de92be4468444b167fa13e7f45a",
+  "version": "v261102.02 1:44a",
+  "release": 2,
+  "sha": "57103af",
+  "fullSha": "57103af71092ef8bc80ac0765e01ffdcfd415db8",
   "actor": "hoovytubeofficial",
   "source": "cloudflare-pages-deploy",
   "model": "ci",
   "machine": "runnervmnwato",
-  "pushedAt": "2026-11-02T01:16:26+01:00",
-  "commits": [{"sha":"2933bef","message":"downloads: old HoovyTools and Particle Import zips without other add-on names (code comments only); 0.21.0 is 1.1 MB","author":"HoovyTube"}]
+  "pushedAt": "2026-11-02T02:43:51+01:00",
+  "commits": [{"sha":"57103af","message":"hoovytools: SFM Session Importer 3.0.10 and Source Particle Import 3.0.7 - downloads from the new releases, PI 3.0.2 under previous versions","author":"HoovyTube"}]
 }
